@@ -43,3 +43,6 @@ TAG_SAVE_AS = 'tag/{slug}/index.html'
 
 PAGE_URL = 'pages/{slug}/'
 PAGE_SAVE_AS = 'pages/{slug}/index.html'
+
+TWITTER_USERNAME = 'chuckpr'
+TWITTER_CARD_IMAGE_URL = 'https://pbs.twimg.com/profile_images/553730712973484032/cjWltsX1_400x400.jpeg'
