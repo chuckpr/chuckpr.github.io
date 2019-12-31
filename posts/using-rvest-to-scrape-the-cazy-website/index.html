@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="twitter:card" content="summary"/>
+  <meta name="twitter:creator" content="@chuckpr"/>
+  <link rel="stylesheet" href="https://unpkg.com/tachyons@4.10.0/css/tachyons.min.css"/>
+
+  <link rel="stylesheet" type="text/css" href="https://chuckpr.github.io/theme/css/article.css">
+  <link rel="stylesheet" type="text/css" href="https://chuckpr.github.io/theme/css/pygments.css">
+  <link rel="stylesheet" type="text/css" href="https://chuckpr.github.io/theme/css/notebook.css">
+</head>
+
+<body>
+  <div class="mw7 avenir ml-auto mr-auto ph3 flex flex-column min-vh-100">
+    <div id="header" class="flex flex-column">
+<div class="pt5 pb2">
+  <a href="https://chuckpr.github.io/" class="link dim f2 fw4 blue tracked-tight bb-ns bw1-ns lh-title b--moon-gray">
+    A microbiologist with a data science problem
+  </a>
+</div>    </div>
+    <div id="content" class="flex-auto mb5">
+  <div class="flex flex-column">
+    <div class="flex justify-between items-center article-title bb bw1 b--light-gray">
+      <div>
+        <div class="flex flex-column">
+          <div>
+            <p class="f3-ns f4 mv0 lh-title">
+              Using rvest to scrape the CAZy website
+            </p>
+          </div>
+          <div class="ml3">
+            <p class="f6 ttc mb0 mt1 mid-gray">
+              Sun 02 August 2015
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="w-40">
+        <div class="flex flex-wrap justify-end">
+<div class="mv1 mr2 bg-light-green br3 pa2 grow">
+  <a href="https://chuckpr.github.io/tag/R" class="link dark-pink underline-hover fw5">
+      #R
+  </a>
+</div><div class="mv1 mr2 bg-light-green br3 pa2 grow">
+  <a href="https://chuckpr.github.io/tag/genomics" class="link dark-pink underline-hover fw5">
+      #genomics
+  </a>
+</div>        </div>
+      </div>
+    </div>
+    <div class="ph3">
+      <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>I have been looking for a nice excuse to play with <code>rvest</code> and since we're starting to work with "CAZYme" gene annotations in the Buckley lab, scraping the <a href="http://www.cazy.org/">CAZy</a> website seemed like a good fit. I'm starting simple and will build as I go. This post is just an example of producing a table of <a href="https://en.wikipedia.org/wiki/EC_number">EC</a> numbers and "clan" groupings of the CAZy glycoside hydrolase families.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We'll pull in all the libraries we need first.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[16]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span>%<span class="n">load_ext</span> <span class="n">rpy2.ipython</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>The rpy2.ipython extension is already loaded. To reload it, use:
+  %reload_ext rpy2.ipython
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="o">%%</span><span class="n">R</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">rvest</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">plyr</span><span class="p">);</span> <span class="nf">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">magrittr</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">tidyr</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The first thing I will do is read in the CAZy website <a href="http://www.cazy.org/Glycoside-Hydrolases.html">glycoside hydrolase</a> page.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="o">%%</span><span class="n">R</span>
+<span class="n">cazy</span> <span class="o">=</span> <span class="nf">html_session</span><span class="p">(</span><span class="s">&quot;http://www.cazy.org/Glycoside-Hydrolases.html&quot;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>After inspecting the page, it's clear that the clan names are in table cells of the "thclan" <code>css</code> class and the corresponding families are in cells with the "clan" <code>css</code> class. We can use the <code>css</code> to quickly get the membership of each clan.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Try the <a href="http://selectorgadget.com/">SelectorGadget</a> for inspecting webpage elements. It's a great way to find <code>css</code> selectors for scraping.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>You can find a nice explanation of these <code>rvest</code> functions <a href="https://github.com/hadley/rvest">here</a>.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="o">%%</span><span class="n">R</span>
+<span class="n">clans</span> <span class="o">=</span> <span class="n">cazy</span> <span class="o">%&gt;%</span> <span class="nf">html_nodes</span><span class="p">(</span><span class="s">&quot;.thclan&quot;</span><span class="p">)</span> <span class="o">%&gt;%</span> <span class="nf">html_text</span><span class="p">()</span>
+<span class="n">families.clan</span> <span class="o">=</span> <span class="n">cazy</span> <span class="o">%&gt;%</span> <span class="nf">html_nodes</span><span class="p">(</span><span class="s">&quot;.clan&quot;</span><span class="p">)</span> <span class="o">%&gt;%</span> <span class="nf">html_text</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The following is just a quick function to parse the text that we just scraped into a dataframe. This took some trial and error but parsing the family string required the following steps:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ol>
+<li>trim leading and trailing whitespace (<code>trimws</code>), </li>
+<li>split on whitespace (<code>strsplit</code>), </li>
+<li>and <code>unlist</code>.</li>
+</ol>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This function takes an index and spits out a dataframe with two columns: one for the clan and one for the families.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="o">%%</span><span class="n">R</span>
+<span class="n">get_clan_df</span> <span class="o">=</span> <span class="nf">function</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nf">data.frame</span><span class="p">(</span><span class="n">clan</span> <span class="o">=</span> <span class="n">clans[i]</span><span class="p">,</span> 
+               <span class="n">family</span> <span class="o">=</span> <span class="n">families.clan[i]</span> <span class="o">%&gt;%</span> 
+                   <span class="n">trimws</span> <span class="o">%&gt;%</span> <span class="c1"># remove leading and trailing whitespace</span>
+                   <span class="nf">strsplit</span><span class="p">(</span><span class="s">&quot;\\s+&quot;</span><span class="p">,</span> <span class="n">perl</span> <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span> <span class="o">%&gt;%</span> <span class="c1"># split families into </span>
+                                                     <span class="c1"># individual elements</span>
+                   <span class="n">unlist</span><span class="p">,</span> <span class="c1"># make it a vector</span>
+               <span class="n">stringsAsFactors</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can loop through all the clans using <code>ldply</code> to build a single dataframe of all the clans.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="o">%%</span><span class="n">R</span>
+<span class="n">N</span> <span class="o">=</span> <span class="nf">length</span><span class="p">(</span><span class="n">clans</span><span class="p">)</span>
+<span class="n">clan_df</span> <span class="o">=</span> <span class="nf">ldply</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="n">N</span><span class="p">,</span> <span class="n">get_clan_df</span><span class="p">)</span>
+<span class="n">clan_df</span> <span class="o">%&gt;%</span> <span class="n">head</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+
+<div class="output_text output_subarea ">
+<pre>  clan family
+1 GH-A      1
+2 GH-A      2
+3 GH-A      5
+4 GH-A     10
+5 GH-A     17
+6 GH-A     26
+</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The EC information can be parsed similarly. Here the <code>css</code> selectors are "thec" for the EC numbers and "ec" for the families. For some reason two unrelated table cells earlier in the page have the "ec" class too so I had to omit those from the final families vector.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="o">%%</span><span class="n">R</span>
+<span class="n">ecs</span> <span class="o">=</span> <span class="n">cazy</span> <span class="o">%&gt;%</span> <span class="nf">html_nodes</span><span class="p">(</span><span class="s">&quot;.thec&quot;</span><span class="p">)</span> <span class="o">%&gt;%</span> <span class="nf">html_text</span><span class="p">()</span>
+<span class="n">families.ec</span> <span class="o">=</span> <span class="n">cazy</span> <span class="o">%&gt;%</span> <span class="nf">html_nodes</span><span class="p">(</span><span class="s">&quot;.ec&quot;</span><span class="p">)</span> <span class="o">%&gt;%</span> <span class="nf">html_text</span><span class="p">()</span>
+<span class="n">families.ec</span> <span class="o">=</span> <span class="n">families.ec[3</span><span class="o">:</span><span class="nf">length</span><span class="p">(</span><span class="n">families.ec</span><span class="p">)</span><span class="n">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="o">%%</span><span class="n">R</span>
+<span class="n">get_ec_df</span> <span class="o">=</span> <span class="nf">function</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nf">data.frame</span><span class="p">(</span><span class="n">ec</span> <span class="o">=</span> <span class="n">ecs[i]</span><span class="p">,</span> 
+               <span class="n">family</span> <span class="o">=</span> <span class="n">families.ec[i]</span> <span class="o">%&gt;%</span>
+                   <span class="n">trimws</span> <span class="o">%&gt;%</span>
+                   <span class="nf">strsplit</span><span class="p">(</span><span class="s">&quot;\\s+&quot;</span><span class="p">,</span> <span class="n">perl</span> <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span> <span class="o">%&gt;%</span>
+                   <span class="n">unlist</span><span class="p">,</span>
+               <span class="n">stringsAsFactors</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="o">%%</span><span class="n">R</span>
+<span class="n">N</span> <span class="o">=</span> <span class="nf">length</span><span class="p">(</span><span class="n">ecs</span><span class="p">)</span>
+<span class="n">ec_df</span> <span class="o">=</span> <span class="nf">ldply</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="n">N</span><span class="p">,</span> <span class="n">get_ec_df</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This information will be more useful when we're tallying the annotations in a real dataset, but, we can also do a quick analysis. It looks like the "GH-A" clan has the most glycoside hydrolase families and the most EC activities. Beyond that, the clans have similar numbers of families but vary with respect to number of EC activities. (Note how the "clan" column can be sorted using <code>magrittr</code> and <code>dplyr</code>. Graphs that aren't sensibly sorted are a huge pet peeve of mine :) . Also, I'm using <code>tidyr</code> to get the table in the proper orientation for plotting.)</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[17]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="o">%%</span><span class="n">R</span> <span class="o">-</span><span class="n">w</span> <span class="m">800</span> <span class="o">-</span><span class="n">h</span> <span class="m">350</span>
+<span class="n">d</span> <span class="o">=</span> <span class="n">ec_df</span> <span class="o">%&gt;%</span> 
+    <span class="nf">left_join</span><span class="p">(</span><span class="n">clan_df</span><span class="p">)</span> <span class="o">%&gt;%</span>
+    <span class="nf">group_by</span><span class="p">(</span><span class="n">clan</span><span class="p">)</span> <span class="o">%&gt;%</span>
+    <span class="nf">summarize</span><span class="p">(</span><span class="n">ec.count</span> <span class="o">=</span> <span class="nf">length</span><span class="p">(</span><span class="nf">unique</span><span class="p">(</span><span class="n">ec</span><span class="p">)),</span> 
+              <span class="n">family.count</span> <span class="o">=</span> <span class="nf">length</span><span class="p">(</span><span class="nf">unique</span><span class="p">(</span><span class="n">family</span><span class="p">)))</span> <span class="o">%&gt;%</span>
+    <span class="nf">gather</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="o">-</span><span class="n">clan</span><span class="p">)</span> <span class="o">%&gt;%</span> <span class="p">{</span>
+        <span class="n">ec.sort</span> <span class="o">=</span> <span class="nf">arrange</span><span class="p">(</span><span class="n">.,</span> <span class="nf">desc</span><span class="p">(</span><span class="n">count</span><span class="p">))</span> <span class="o">%&gt;%</span> <span class="c1"># sort by count </span>
+            <span class="nf">filter</span><span class="p">(</span><span class="n">key</span> <span class="o">==</span> <span class="s">&quot;ec.count&quot;</span><span class="p">)</span> <span class="o">%&gt;%</span>
+            <span class="nf">extract2</span><span class="p">(</span><span class="s">&quot;clan&quot;</span><span class="p">)</span> <span class="c1"># get a list of clans sorted by ec count</span>
+        <span class="nf">mutate</span><span class="p">(</span><span class="n">.,</span> <span class="n">clan</span> <span class="o">=</span> <span class="nf">factor</span><span class="p">(</span><span class="n">clan</span><span class="p">,</span> <span class="n">levels</span> <span class="o">=</span> <span class="n">ec.sort</span><span class="p">))</span> <span class="c1"># make the clan </span>
+                                                         <span class="c1"># a factor sorted </span>
+                                                         <span class="c1"># by ec count</span>
+    <span class="p">}</span>
+
+<span class="n">d</span> <span class="o">%&gt;%</span> <span class="nf">arrange</span><span class="p">(</span><span class="nf">desc</span><span class="p">(</span><span class="n">count</span><span class="p">))</span> <span class="o">%&gt;%</span> <span class="n">head</span> <span class="o">%&gt;%</span> <span class="n">print</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="nf">ggplot</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="nf">aes</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="n">clan</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">count</span><span class="p">,</span> <span class="n">fill</span> <span class="o">=</span> <span class="n">key</span><span class="p">))</span> <span class="o">+</span>
+    <span class="nf">geom_bar</span><span class="p">(</span><span class="n">stat</span> <span class="o">=</span> <span class="s">&quot;identity&quot;</span><span class="p">,</span> <span class="n">position</span> <span class="o">=</span> <span class="s">&quot;dodge&quot;</span><span class="p">)</span> <span class="o">+</span>
+    <span class="nf">theme</span><span class="p">(</span><span class="n">axis.text.x</span> <span class="o">=</span> <span class="nf">element_text</span><span class="p">(</span><span class="n">angle</span> <span class="o">=</span> <span class="m">45</span><span class="p">,</span> <span class="n">hjust</span> <span class="o">=</span> <span class="m">1</span><span class="p">))</span>
+
+<span class="n">p</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+
+<div class="output_text output_subarea ">
+<pre>Source: local data frame [6 x 3]
+
+  clan          key count
+1 GH-A     ec.count    58
+2 GH-H     ec.count    32
+3 GH-A family.count    19
+4 GH-B     ec.count    17
+5 GH-D     ec.count    15
+6 GH-J     ec.count    15
+</pre>
+</div>
+
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAyAAAAFeCAMAAABKGYvCAAACuFBMVEUAAAAAv8QCAgIDAwMEBAQF
+BQUGBgYHBwcICAgJCQkKCgoLCwsMDAwNDQ0ODg4PDw8TExMUFBQXFxcYGBgZGRkaGhobGxscHBwd
+HR0eHh4fHx8gICAhISEiIiIjIyMkJCQlJSUmJiYnJycoKCgtLS0vLy8wMDAxMTEyMjIzMzM0NDQ2
+NjY3Nzc4ODg5OTk7Ozs8PDw9PT0/Pz9AQEBBQUFCQkJDQ0NERERFRUVGRkZHR0dISEhKSkpLS0tM
+TExOTk5PT09QUFBRUVFSUlJTU1NUVFRVVVVWVlZXV1dYWFhZWVlaWlpbW1tdXV1eXl5fX19gYGBh
+YWFiYmJjY2NkZGRnZ2dra2tsbGxtbW1vb29wcHBxcXFzc3N0dHR2dnZ3d3d4eHh5eXl+fn5/f3+A
+gICBgYGCgoKDg4OEhISFhYWGhoaHh4eIiIiJiYmKioqLi4uMjIyNjY2Ojo6Pj4+QkJCRkZGSkpKT
+k5OUlJSVlZWWlpaXl5eYmJiZmZmampqbm5ucnJydnZ2enp6fn5+goKChoaGioqKjo6OkpKSlpaWm
+pqanp6eoqKipqamqqqqrq6usrKytra2urq6vr6+wsLCxsbGysrKzs7O0tLS1tbW2tra3t7e4uLi5
+ubm6urq7u7u8vLy9vb2+vr6/v7/AwMDBwcHCwsLDw8PExMTFxcXGxsbHx8fIyMjJycnKysrLy8vM
+zMzNzc3Ozs7Pz8/Q0NDR0dHS0tLT09PU1NTV1dXW1tbX19fY2NjZ2dna2trb29vc3Nzd3d3e3t7f
+39/g4ODh4eHi4uLj4+Pk5OTl5eXm5ubn5+fo6Ojp6enq6urr6+vs7Ozt7e3u7u7v7+/w8PDx8fHy
+8vLz8/P09PT19fX29vb39/f4dm34+Pj5+fn6lY76l5D6m5T6+vr7+/v8/Pz9/f3+/v7///8uAyJN
+AAAWEElEQVR4nO3d+4NU5XnAcaz2qmhN07RJ2qaxsaltURu1RZt7NbU1LZhUY9MmVCdhl4siFcrN
+RBFQ4gpIQSqgLFktGlZAgRVwDbJekIss7H1mNjNt53Lef6Mz78wKOM97znNmOTs7s9/vDwu7++Tl
+zLznM9ddM8kQkbNJtT4AovEcQIh8AgiRTwAh8gkgRD4BhMgngBD5BBAinwBC5BNAiHwCCJFPACHy
+CSBEPqmBpAYdJZzfqWg4qR5Nx7WTQ1n1ovG0ejQ5rB5NJdSjmSHtZDyjXjSp34BUJBugP9QLc65E
+6aEiJ5CXV/y419uyanWi/HnitKOhtOs7FQ3H1aO5fu3kGaNedCCrHk0k1aOZQfWo16Od7MupFx1K
+qUdTQ+rRXJ92ssdTLzqQUY8mnSfc6TGiUcoF5OQKr3Nj11qzt7X8BYC4Aoh60QYCsmO38RJtO033
+8sInp48fP97d5yiRcX2nonRSPZob0k72G/Wi8ax6dDilHs3G1aPegHZyMK9eNJlWj4bYgPygdnLA
+Uy8aYgNSw67v9I6lDyeQLRsff/zE5kMmvbjwydoFCxbszDnKe67vVOTloxg16skwhxrJpQpxqNFc
+qhCHOm43IDmWPpxAtm/KH3u4rb10D1KMh1iueIilXrSBHmJ1bjM9Dx9Zbzq2lb8AEFcAUS/aQEDy
+m5b/+D1vc0tLvPwFgLgCiHrRBgJSEUBcAUS9KED8AwhAtAHEP4CoFwVIlAFEDiAAsQFEDiAAsYUF
+8ovKAKIeBYh6FCD+AUS9KECiDCByAAGIDSByAAGIDSByAAGIDSByAAGIDSByAAGIDSByAAGIDSBy
+AAGIDSByAAGIDSByAAGIDSByAAGIDSByAAGIDSByAAGIDSByAAGIDSByAAGIDSByAAGIDSByAAGI
+DSByAAGIDSByAAGIDSByAAGIDSByAAGIDSByAAGIDSByAAGIDSByAAGIDSByAAGIDSByAAGIDSBy
+AAGIDSByAAGIDSByAAGIDSByAAGIDSByAAGIDSByAAGIDSByAAGIDSByAAGITQ0k3mcTgGT6tKWT
+6tHckHay36gXjWfVo8Mp9Wg2rh71BrSTg3n1osm0ejTEBuQHtZMDnnrREBuQGnZ9pzdKDxVxDyLH
+PQj3IDaAyAEEIDaAyAEEIDaAyAEEIDaAyAEEIDaAyAEEIDaAyAEEIDaAyAEEIDaAyAEEIDaAyAEE
+IDaAyAEEIDaAyAEEIDaAyAEEIDaAyAEEIDaAyAEEIDaAyAEEIDaAyAEEIDaAyAEEIDaAyAEEIDaA
+yAEEIDaAyAEEIDaAyAEEIDaAyAEEIDaAyAEEIDaAyAEEIDaAyAEEIDaAyAEEIDaAyAEEIDaAyAEE
+IDaAyAEEIDaAyAEEIDaAyAEEIDaAyAEEIDaAyAEEIDaAyAEEIDaAyAEEIDaAyAEEIDaAyAEEIDaA
+yAEEIDaAyAEEIDY3kOF/N96WVasT5U8B4gog6kUbCsiWZtO11uxtLX8KEFcAUS/aSECObVhk2naa
+7uXlzwHiCiDqRRsISH5VfJHZfMikFxc+eXnTpk0Hh20CkNywtlxWPeql1aNGPZnOq0ez+kPNZ9Sj
+JqWdTHvqRTMhNkB/qPoNSOk3IHMhNmBoLH04gbS/agr3IO2le5COl1566UjcJgGJa8um1aP5Ye1k
+wqgXHc6rRzMZ9WgupR41Ce1k0lMvms6qR0NsgJfUTobYgJT+XHFvwMBY+nAC+c/Hn2hefWS96dhW
+/gIPsVzxEEu9aAM9xCq0yHibW1ri5c8A4gog6kUbC8j5AcQVQNSLAsQ/gABEG0D8A4h6UYBEGUDk
+AAIQG0DkAAIQG0DkAAIQG0DkAAIQG0DkAAIQG0DkAAIQG0DkAAIQG0DkAAIQG0DkAAIQG0DkAAIQ
+G0DkAAIQG0DkAAIQG0DkAAIQG0DkAAIQG0DkAAIQG0DkAAIQG0DkAAIQG0DkAAIQG0DkAAIQG0Dk
+AAIQG0DkAFIfQB762IU3cV4AkQMIQGwAkQNIvQCJ/+ntx2+59JqOm28xKy9PAqQigExoIFd+eWr6
+7qtP3zFl9S/33/atC+4DII4AUidAJv3qjd4NV1z1qd8avGzl5DaAVAaQCQ3kij2/1PJPU4a2LjN3
+/u7v5AFSGUAmNJCPmbs+/sYNl0151rw4acaF9/ERIPFzPgJEGUDUi0b6PsjhSQcuKI1S5wLJZj+Z
+LdQ7WRoEiCuAqBeNEsjBy/81Ah/nAbn44kkXF/s7aTA8EGEUINpJgIzLd9KnugcB4gog6kXrHohP
+AHEFEPWiFx5I5TkWKZDt115VDCAAAYgE5JMzDnQWAghAACIB+bj7Z1kA4gog6kXrHsi8OVmA2AAC
+EAHIdZdO/izPQYoBpIGBnHymWiCdpQACkEYGsu/b1QLxKd5rE876TK+cMJp0jFaWG9RO9hn1okNZ
+9ejwsHo0G1ePev3ayYG8etFEWj2aTqhH8wPayX5PvegF2YCeICCpb0654a2+v7nxxiIl++fA16fe
+eGjFInNg2rpv/cN1z3z7M89XCeTPS0mD3IO44h5EvejY3IMs+57ZffN9C82TGwsD9s/ZMdP2pRKQ
+m7xd36j+HqS9vX3n2i+sBQhA6hjId26eNu3Lt71WGrB/Tt9uUn9UALJv2rom886to3yI1XM1QABS
+x0AWLjLHVty7yKxbVRiwf876gWn74qr7zIJp6+YUgYT4zUMByP4L9NO8AKkIIOrRUQBJ3Hb919tP
+f+mmvzp18PPG/tn/tak3HDp6420zSkC6P7elSiDFJyDXXPJdgACkjoFc0Cqeg7S3d3oAAQhAJCDG
+5E463ksHiCuAqBeteyAffOOS37jk1lMAAQhAJCBfvbPbnJ7+NYAApE6A/M//faT/jRTI5N7Ch57L
+AQKQOgFyUUWRAvnD7YUP2/lhRYAARASy7orpselXPA0QgABEAmK6Hprx0BFxECCuAKJetO6BpJe0
+mg3zUgABCEAkIP/4J3vM/uvvBAhA6hhI9i/Xn3fqLv3nlnk+BPx/fep8IJd1FT68dwVAAFLHQDr/
+/qMnry8Q/5/tPR/IH7xS+ND++wABSB0Dufv3nu299a+n7t5w61euvu+Lf5FYN6dl3h27zNxHqvn1
+qfOBtPzmPQ9+98qVAAFIHQPp/KZ5fYN54t4Nf2ua7zF3P18E8sz3vD/rr+bXpz7yKtabM++6b784
+CBBXAFEvOmZATt79na/O2NBklj1iYv9VBJL64313mGp+fYr/9KgcQOoayL0rzY++fy4QM/2Gbaaa
+X58CiBxA6hrIC1+4ZcbnHj0XyHOfyFX161MAkQNI/QIRe/rftGc6QDQBpLGAPHltN0ACA8iEBVJ1
+AJEDCEAA4hNAAAIQnwACEID4BJD6ABJ5AJEDCEBsAJEDCEBsAJEDCEBsAJEDCEBsAJEDCEBsAJED
+CEBsAJEDCEBsAJEDCEBsAJEDCEBsAJEDCEBsAJEDCEBsAJEDCEBsLiC5tSt/dMzbsmp1ovwFgLgC
+iHrRBgLy+kZz/JGutWZva/kLAHEFEPWiDQTkeLfpe7Rtp+leXvgklUwmB87YJCBn5ITRhGO0sly/
+drLHqBcdyKpHk0n1aGZQPer1aif78+pF4yn1aCquHtVvQK+nXnQwox712YCx9OHzHOTYw4c3HzLp
+xYW/Lo/FYj8tfVU4610LhBglUif+nw9ElguIt/2xk6atvXQPUoyHWK54iKVetIEeYh1clzfmyHrT
+sa38BYC4Aoh60QYC8sxDy5b9xNvc0hIvfwEgrgCiXrSBgFQEEFcAUS86MYFU/oclLnKNAkQ7CRCA
++AYQ9aIAiTKAyAEEIDaAyAEEIDaAyAEEIDaAyAEEIDaAyAEEIDaAyAEEIDaAyAEEILZxAUSY/AVA
+tAEkygAiBxCA2AAiBxCA2AAiBxCA2AAiBxCA2AAiBxCA2AAiBxCA2AAiBxCA2AAiBxCA2OoNiDDp
+AiKMAkQ9CpBSAJEDCEBsAJEDCEBsAJEDCEBsAJEDCEBsAJEDCEBsAJEDCEBsAJEDCEBsAJEDCEBs
+AJEDCEBsAJEDCEBsAJEDCEBsAJEDCEBsAJEDCEBsAJEDCEBsAJEDCEBsAJEDCEBsAJEDCEBsAJED
+CEBsAJEDCEBsAJEDCEBsaiDxPpsOiGs02ScmARlSjxp5UhrNOkYrG06pR7Nx9ag3oJ0czKsXTabV
+o2nHBgjlB7WTA5560bh+A1LDru/0RumhIu5BHKOuexBhlHsQbY18DwIQ5yhAtAEEIL4BRD0KkHMC
+SEUAAcjZAFIRQAByNoBUBBCAnA0gFQEEIGcDSEUAAcjZAFIRQABytsYEIl0qgGgDyDlJpxJAtAEk
+ygDiGAWIdhIgNoA4RwGiDSAA8b9UDiDCpAuIMAqQCAOIYxQg2kmA2ADiHAWINoAAxP9SAUQbQM5J
+OpUAoh51ARFGARI2gDhGAaKdBIgNIM5RgGgDCED8LxVAtAHknKRTCSDqUYBEGEAcoxMKiHSoALEB
+xDEKEMeqFQHEBhDnKEC0AQQg/pcKINoAck7S/gBEPQqQCAOIYxQgjlUrAogNIM5RgGgDCED8LxVA
+tAHknKT9AYh6FCARNrZAHKPS/uiBCIu6Vm1MICE2YPRAdP/+RfL/eEA9CRCA+I8CxPENgJQCyGiu
+ANcoQMIGEMcoQEbz7wOkuv0JAUQ/GgLI6A+1MS9VzQ8VION7fyb6par5oQJkfO/PRL9UNT9UgIzv
+/Znol6rmhwqQ8b0/E/1S1fxQATK+92eiX6o6OtRxBcTbsmp1ovx3gDTwpaqjQx1XQLrWmr2t5b8D
+pIEvVR0d6rgC0rbTdC8v/LmntbX150mb7pKEHFXuj37REKNcqvo61GRycIxolPIFsvmQSS825wGp
+LJ1zfaeibEY9mk9pJ4eNetF0Xj2azapH82n1qBnWTqY89aIZ/Qbk9BvgjdsNGEdA2tpL9yDFnC8q
+DKVd36lo2PHj7kI5x4+aVHbG9ePulQ24ftSksoTrR00qy/B/4qmt0X7c/ch607Gt/HeAuAKIetFG
+A+JtbmmJl/8OEFcAUS/aaEDODSCuAKJeFCD+AQQg2gDiH0DUiwIkygAiBxCA2AAiBxCA2AAiBxCA
+2AAiBxCA2AAiBxCA2EYP5MwZ9YUOM6qeDFFEhxrFsXbX+lDPdKtH9YW5qtyjUXqoSA3E2d6n1KOb
+XlaPLnlPOzkc87Sjhx9V//ttz6tHVx1Sjzarf9DuxAL1orvWq0fX71KPLjihnRxqUi/6xkr16PM/
+VY9GGkDkAAIQG0DkAAIQG0DkAAIQ2+iBpIbUo/Fh9ehAVjvp9aoXzeh/1yaZCJ4pN5hWj/bmtZPZ
+fvWiqXjwTLl4Sj3ar96AvH4D0voNSCTVo5E2eiBEDRxA6r+TNf731Q9x67ExBfKBejJxKoprfc9L
+ESwa4lIZ/SOcEB1pUY/u/u8I/v3d+udA+gdj46ZRA9m7L6cdHWzeqZx8bdbMrcrRxLv650Dvztqh
+GwxzIsfnaC+VeXX+GeVk7/731bcQ+ldJdj+gxnyytVV5NodYtKfpoHY0xGkVbaMFkmmOzf+Z9nzq
+UgrZ/cCx7odOZTSje+csm7lF/XxSKaRLfSIXe3+2VsgrMeXCB5pXLFA+S0+Z19Yo//niqfye7hn9
+gVlbn+tSvTpXXLRL+4pTx0ylkFCnVaSN+h5k81Mdi+dsV9yKF1/BeimmOZe6Ym+YQ7Gl8/qCRwuU
+TM+iZxWLlnp3luYAvI32RO5XvObSnw8hJDNvpUpI/P6jhQf2hzQveRUsv/rwmz2a0ROxV03X3LcV
+kyZZOID3585SnM2lRd/SLFpMLUR9WkXdqIH0zux+4ic/agp82+K94i3N3Bc19yGF8/O1uYe9R18M
+nDwW21s8hCb9Y9ufz9TcLlkh/QuD3zU4HGt67LnX92uEHC3cz/1s7VaNkCOrCh/yc98Iniwe6fML
+ljU1LVW8b7Rj1svKU/mtFSYzv+PFHyrO5tKi/asCX8G3D8Ry+zVCPtCfVpE3+ifp62Y/nfeCX0jx
+tt6/u3BNdjUfDV7S2xjbY/rndAZPvjD7/cLHx94MnrSd6OptVt1xF867txe+EDyXW9O0c+vy5lgs
+8FIdjjXvTKfnnd46P/gdlhMPFh80rlfdLxWuq+dMvuddzeyOmPI52NEFORM3uza9o1y0P/i6sk9A
+s08c6ph5KmjUPqtTnlaRNxogpduEEzHFQyFTFBJ7xQS/kGEXzW7QnZ8lIb1zg4+gdKyv/LD5Fd1k
+fmNM9e/n1iyJm/yp4Bvm3JrY8gd2tG7wFLfh3sPrc6Z3XuDpMXJdKe6UiqM5b8csFSSTW7wxZ07P
+DzqA0lW1Y9YBzV4Vn4A+vdHTvOhXfMyqPa2ibhRARm4THg/+qYzSNbnl/uArp7zoQcX5WVq0bfah
+hcE/wTJyrEOBz1FHJr3g+y97AJmnluie9xYovbN+Zixo2C56evF/rL0/8AHeh9dV8J1ScbRwoQoP
+iAJPO3sAp5bMXzUn6ABGrqodwXtVfgLap3hpbuRZneK0GotGcw9Svk14O/DF9ZGd3Hp/8LOu8qLB
+5+fI9ryguqkfuf26gJPlA3h9zZLAnzX5kFJvh27Rjrf29agPVWG5OGovVOA9yMileudA8C34yFUV
+uGiIJ6AfPqsLPq3GpKqBnL1NUJxLIzsZ9PAixA3N2e0JfqCsX7aaA8gFPu0MQUnvM8Shlka36N5Z
+0R5AmKsqxBNQ/bO6salaICFuE/TXZCSLhlk2ogNQUwqxaIhDrfVeFd901D0BLaZ+Vjc2VQtEf5sQ
+5vXdKBYtbM+TumX1k7U/6cLcKNd4r0pvOm5VPAEtZYWMm6oDEuY2QX1NRrKo3Z4j8zXL6idDHUAk
+J12I66rWezXypqPmCWipnOah6FhVFZAQtwn6azKSRUe258HgZfWTtT/pQlxXtd6rs2866h80BT+r
+G7uqARLiNkF/TUay6Ifb84MHA5fVT9b8pAtxXdV6r8K96TgOqwaI/jYhxDUZyaJnt+ftwGX1kzU/
+6ULcKNd4r4z6TcfxWjVA9LcJIa7JSBYNsz36yZqfdCFulGu8V8VOL1W86ThuqwaI/lQKcU1GsqgJ
+sz3qyZqfdCFulGu8V6VxzZuO47WqnqSrT6Uw12Qki5ow26OdrP1JF+JGubZ7Vf9V9zKv+qQLc01G
+smgk1f6kC3GjXNu9qvui/p30SK7Jmm9PY550NT+A8Rj/VZNo46Sr8wBC5BNAiHwCCJFPACHyCSBj
+1L6ra30EVE0AGaMAUp8BJPqe+szk6ZkikKWf+LUph03ndfN++9Pj5P/9goICSOS9eWX7kc8vLQA5
+9Ssvnp52l+m8dHbi+9fW+qhIF0Air+keY/a0FoAk3zape283nZOz5sBVtT4q0gWQyLvrweLHApD8
+7CnX3VQA8lljOgFSJwEk8u77F2P2bygAWXPNKfP47RYHQOolgETevit3Hb1+XgHIwmu7d14zNQeQ
+egog0ffYpy+fnioA6b3p16ds+dQTAKmnAELkE0CIfAIIkU8AIfIJIEQ+AYTIJ4AQ+QQQIp8AQuQT
+QIh8AgiRT/8P9c/4vRYYP0cAAAAASUVORK5CYII=
+"
+>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can also look at the families with the most associated EC activities. Family 13 is has 30 EC activities associated with it! I found this somewhat baffling but it looks like Family 13 and other CAZy glycoside hydrolase families have been broken down into subfamilies that have more specific activites:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<blockquote><p><b>Dividing the large glycoside hydrolase family 13 into subfamilies: 
+towards improved functional annotations of alpha-amylase-related proteins.</b>
+Stam MR, Danchin EG, Rancurel C, Coutinho PM, Henrissat B.
+Protein Eng Des Sel. 2006 Dec;19(12):555-62.</p>
+</blockquote>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="o">%%</span><span class="n">R</span> <span class="o">-</span><span class="n">h</span> <span class="m">350</span> <span class="o">-</span><span class="n">w</span> <span class="m">600</span>
+<span class="n">ec_df</span> <span class="o">%&gt;%</span>
+    <span class="nf">group_by</span><span class="p">(</span><span class="n">family</span><span class="p">)</span> <span class="o">%&gt;%</span>
+    <span class="nf">summarize</span><span class="p">(</span><span class="n">count</span> <span class="o">=</span> <span class="nf">n</span><span class="p">())</span> <span class="o">%&gt;%</span>
+    <span class="nf">arrange</span><span class="p">(</span><span class="nf">desc</span><span class="p">(</span><span class="n">count</span><span class="p">))</span> <span class="o">%&gt;%</span> <span class="p">{</span><span class="nf">print</span><span class="p">(</span><span class="nf">head</span><span class="p">(</span><span class="n">.)</span><span class="p">);</span> <span class="n">.}</span> <span class="o">%&gt;%</span>
+    <span class="nf">extract2</span><span class="p">(</span><span class="s">&quot;count&quot;</span><span class="p">)</span> <span class="o">%&gt;%</span>
+    <span class="nf">hist</span><span class="p">(</span><span class="n">breaks</span> <span class="o">=</span> <span class="m">100</span><span class="p">,</span> <span class="n">main</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="p">,</span> <span class="n">xlab</span> <span class="o">=</span> <span class="s">&quot;# of EC activities&quot;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+
+<div class="output_text output_subarea ">
+<pre>Source: local data frame [6 x 2]
+
+  family count
+1     13    30
+2      1    25
+3      5    23
+4     16    14
+5      3    14
+6     32    14
+</pre>
+</div>
+
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAlgAAAFeCAMAAABuCZFuAAAC2VBMVEUAAAABAQECAgIDAwMEBAQF
+BQUGBgYHBwcICAgJCQkKCgoLCwsMDAwNDQ0ODg4PDw8QEBARERESEhITExMUFBQXFxcYGBgZGRka
+GhobGxscHBwdHR0eHh4fHx8gICAhISEiIiIjIyMkJCQlJSUmJiYnJycoKCgpKSkqKiorKyssLCwt
+LS0uLi4vLy8wMDAxMTEyMjIzMzM0NDQ2NjY3Nzc4ODg5OTk6Ojo7Ozs8PDw9PT0+Pj4/Pz9AQEBB
+QUFCQkJDQ0NERERFRUVGRkZHR0dISEhJSUlKSkpMTExNTU1OTk5PT09QUFBRUVFSUlJTU1NVVVVW
+VlZXV1dYWFhZWVlaWlpbW1tcXFxdXV1eXl5fX19gYGBhYWFiYmJjY2NkZGRlZWVmZmZnZ2doaGhp
+aWlqampra2tsbGxtbW1wcHBxcXFycnJzc3N0dHR1dXV2dnZ3d3d4eHh5eXl6enp7e3t8fHx9fX1+
+fn5/f3+CgoKDg4OEhISFhYWGhoaHh4eIiIiJiYmKioqLi4uMjIyNjY2Ojo6Pj4+QkJCRkZGSkpKT
+k5OUlJSVlZWWlpaXl5eYmJiZmZmbm5ucnJydnZ2enp6fn5+goKChoaGioqKjo6OlpaWmpqanp6eo
+qKipqamqqqqrq6usrKytra2urq6vr6+wsLCxsbGysrKzs7O0tLS1tbW2tra3t7e4uLi5ubm6urq7
+u7u8vLy9vb2+vr6/v7/AwMDBwcHCwsLDw8PExMTFxcXGxsbHx8fIyMjJycnKysrLy8vMzMzNzc3O
+zs7Pz8/Q0NDR0dHT09PU1NTW1tbX19fY2NjZ2dna2trb29vc3Nzd3d3e3t7f39/g4ODh4eHi4uLj
+4+Pk5OTl5eXm5ubn5+fo6Ojp6enq6urr6+vs7Ozt7e3u7u7v7+/w8PDx8fHy8vLz8/P09PT19fX2
+9vb39/f4+Pj5+fn6+vr7+/v8/Pz9/f3+/v7///8kVUu3AAAO3UlEQVR4nO3d+X9U1RmA8ShYhBAT
+CUsCRJYQ9hhihYqKyiKtAipoK4KFSgF3RdGCaGUTrFUruKFWDNaAoNQGBKwaNahoiQsQF/aEhEXZ
+spy/oDNzz0AyM4eZO3NeQybP94fcTOaeMyf5PCSZS+7cBAUISKjvBSA+ERZEEBZEEBZEEBZEEBZE
+EBZEEBZEEBZEEBZEEBZEEBZEEBZEEBZEEBZEEBZEEBZEEBZEEBZEEBZEEBZEEBZEEBZEEBZEEBZE
+EBZEEBZEEBZEEBZEEBZEEBZEEBZEEBZEEBZEEBZEEBZEEBZEEBZEEBZEEBZEEBZEEBZEEBZEEBZE
+EBZEEBZEEBZEEBZEEBZEEBZEEBZEEBZEEBZEEBZEEBZEEBZEEBZEEBZEEBZEEBZEEBZEEBZEEBZE
+EBZEEBZE2A2rNE/bYXVaNDx2w3rqD7N9Jj5sdVo0PHbDejLP2RbMsjotGh7CggjCggjCggjCggjC
+ggjCggjCggjCggjCggjCggjCggjCggjCggjCggjCggjCggjCggjCggjCggjCggjCggjCggjCggjC
+ggjCgoiIwqo+UB3ZbIQFLXxYR2ZkNk1o0nXm0QhmIyxo4cMaO2R92fF9H4z6YwSzERa08GEl7/Rt
+fm4dwWyEBS18WNnP+zZv5EQwG2FBCx9WUbueoyeM7pO2MYLZCAtaBM8KKwsWzV5UUHnyA3mDfX69
+IGhXwoIW6XGswuAnha89FfQhwoIWaVipPwZ9iLBgFj6sxCZeCWc2CbyDsGAWPqzNA67bWlp67hel
+gXcQFswi+FFYtTDrLX4Uwp2IfsfaMujGJMKCG5H98l69aExZ0AcJC2Yx/NkMYcGMsCCCsCCCsCCC
+sCCCsCCCsCCCsCCCsCCCsCCCsCCCsCCCsCCCsCCCsCCCsCCCsCCCsCCCsCCCsCCCsCCCsCCCsCCC
+sCCCsCCCsCCCsCCCsCAihitTEBbMYrgyBWHBLIYrUxAWzHRYt22oMu1hvDIFYcFMhzWjb5vJaytD
+7mG8MgVhwezEj8Ktj13c5k/vHA/ew3hlCsKC2YmwKvLGn9trQNobwbsEXZliWa5P57uDdiUsaDqs
+uZcmDn1im1Lr2hr2C3G1Qr5jwUyHdfO/Dvq2PwV/x9o7ZeA9u7MTLvg28A7CgpkO69hTBSp/XsiL
+qF595dIJ7WaXP3Bl4B2EBTMd1k39itSmgTeH2iNxvypL2KcOJgXeQVgw02G13Op5831yqD06Fqma
+pUoVB/32RVgw02F1+cjzprBzqD2eTx5RpdSSzAcD7yAsmOmwXk29bf7trV8Mucu3S6qVWpxfE/hx
+woKZ/zjWVw9NmrHJ3VDCghl/jwUROqw1A7K8XA0lLJjpsDpO+7LYw9VQwoKZDqvdYfdDCQtmOqx5
+j4b+m5lTISyY6bAuSkzqxu9YsEeHVexwNZSwYHbicEPVrqAjoGEQFsx0WDuuSEwpuXCrq6GEBTMd
+1tCpRzKqZ1zuaihhwUyH1bxCZajyFq6GEhbMdFh9V3rCWtvL1VDCgpkOa33qtUnjWq92NZSwYOZ/
+Vlj24qzFO90NJSyY8dcNEKHDutDhaihhwUyHVVhY+GHepXmuhhIWzGr/KNyX7WooYcGsdlibgs7w
+OiXCglmt37Fym97uaihhwezk71iFhcXu/huasGDG4QaI0GGlpyRrkQ8lLJjpsJ4Z9P7OwsGPV1RU
+RD6UsGCmw2q/3fNmd3tXQwkLZjqsDu953nyQ5mooYcFMh7Wo1X2L7281x9VQwoKZ/1nhx3eOubXA
+dLiBK1PArfAnU3BlCkQh/MkUXJkCUQh/MgVXpkAUwp9MwZUpEIXwJ1NwZQpEIYKTKYKuTJE32KfP
+HUG7Eha0SE6mKPc+X6wqDfww37FgpsPq87lxj829zui8UqmSoL+DICyY6Vxm3XLMtMclfzm2Ib2I
+sOCKzuXS5JZdDa+P1fygUstzqwgLboR/faxuq5SqGTmdsOCGL5fECqVeOWTYI7/lwD2qNOd8woIL
+vlwSPGEll5h22ZXv+WF4dOm9gR8nLJhFEJYJYcGMsCDCCevdoqLEFUVFRa6GEhbMfGGl+rkaSlgw
+47xCiCAsiCAsiCAsiBAK64Fyh/tLPyE+yIT1eCvnbwEH3hL99GjQZMKac4Wz/WFs9NOjQSMsiCAs
+iPiFwrok1+HuMlBouH6hsAYFbBHvCAsiCAsiCAsiCAsiCAsiCAsiCAsiCAsiCAsiCAsiCAsiCAsi
+CAsiIgrL9ZUpCKvRCx9WNFemIKxGL3xY0VyZgrAavfBhRXNlCsJq9MKHFc2VKQir0QsfVjRXpiCs
+Ri+CZ4VRXJmCsBo9jmNBBGFBRPiwiosNLwJPWDALH9bwhBbpPoF32Azrs+u0ZWHXgwYhgh+FE6eG
+/rjNsP65wHnZo/V3hl8PGoIIwlozL/THrYb1jLP9lLDixGnyyzthxZt6CqtgtqYvr0lY8aaewrrh
+tQKfseuc24QVb+orLH2Z4JmEFacICyIICyIICyIICyIICyIICyIICyIICyIICyIICyIICyIICyII
+CyIICyJO07Aqb9QnV9wb/fpQn07TsH4eoi8qfUn060N9Ol3D+m3AADQwhAURDSWsFfrki7mHnNub
+/WdjbIr+Ezi19/yP8KPUI8S1hhLW4H87Z19c/T/n9hMznNuzH4n+Ezi1yc85jzA5X+oR4lqDCUu/
+jNJUf1ivO9t35MLa7GwXElY0CMuEsGISt2F94fwgK1hXE/r+42v0Dl8ZJiCsmMRtWAP0r959d4e+
+/9OLnfsf+p1hAsKKSdyG5R84xhDWxruc7SHCEkFYhCWCsBpQWD/r/+c6YNqhQu8QdBWRaB3VE1a4
+HklYDSis/vp/5jvsD33/p92d+0deZ+sRR49wZuwe9GLs4dTTRZoIKxr+z+nastD3fzTN2VaMtPWI
+o8qd7X2FbkfW00WaCCsa8RWWyEWaCCsa8RVW8EWaluX6ZM0J2vf1Ps5d3dKdbXaGs81N09sOetvx
+fGfbqace0NnZ9j7P2fZrq3f0T9DRv9WP0KWbs+2hB+Z01TtkBQxI14+U2dfZ9uyuH6m9fiT/I/TQ
+226Bj6Rn7K3vyMkMeCT/wMx+dR+ph36kbP+MmQEDTnxcLzGrV8AjGT+nHD2B/5H0jL30lzcn8HPy
+T5CpB2b1DvNI/oEd9IBs02HkGMIyXqQJMIvhIk2AWTQXaQLCiuE4FmBGWBBBWBBBWBARW1iD9KEb
+a/p0DL+PO/7jWNZkt7c8YW6HvpYnzEkLv487XQUOkJ7K0GMxDQ9m/xR705H3qG272fKE6s9Bl4KM
+kb0j734SR95PhbBsIKwghGUDYQUhLBsIKwhh2UBYQQjLBsIKMvx4TMODbbrb8oTqhr2WJ/x+guUJ
+1ZRvLE944BrLE6rpn7gdEVtY1v5o36/G+ozWJ7Q/YwNY4jHDab9mHHmHCMKCCMKCCMKCCMKCCMKC
+CMKCCMKCiFjC2piTMs7uobghzZo1M52ZHI3h3v8ssblM34QWV7k8q8WgzTaXqCe0uMQXzms5stT9
+EmMIqzLtuR2DZ0Q/PoSO7xYX/2BttjUTE4qtLtOZ0OIqdyWtOvBgb4tL1BNaXOKW5E/Kh01xv8QY
+wlrTQ6n1mdGPD3a8mdWzF+dNbVFsdZnOhBZXmT9QqWNnlNtbop7Q4hKXjFBq6UD3X8UYwlo0Wqmy
+pqFe4ChaW1Ku6ny9zdfrTy+2vEzvhBZXeXCPUhs61dhbop7Q4hKrq2oqJt7j/qsYQ1izJ3j+9SYY
+X10uCu93X1V80wCLE3o7sLpM74RWV1mzPP1Nq0v0TWh1iUsT2u1xv8QYv2Pta2LzO5bXT2da/DsX
+/3csa8tM1386ZWuVZaNyi6wu0ZnQy94XsuzRbPdLjCGsgj5KfdAl+vHBPlrn+WdxlvvXuzTydmB1
+md4JLa7yaL/pVcrmEvWEFpe4eIlS5QlHXS8xpmeFyw9fMzP68cHWpfx3/7TLLE6YXmx5md4JLa5y
+aXaJR5W9JeoJLS4xP/PrQw/muv8qxnIc65O+qePtHsd6rF3SiB0W5/P95LK5TN+E9lZ5b4JXqb0l
++ie0t8SaB9q0HPqN+68iR94hgrAggrAggrAggrAggrAggrAggrAggrAggrAggrAggrAggrAggrAg
+grAggrAggrAggrAggrAggrDqemdT6bP1vYa4QFh1jXp/9e9r3747ZY/nbarvHIVvlXppQGLnBSFe
+QbhJ5epm+l3vO7VuNlaEVVfm/vmP1L6dssv7NvXdCo8q9ViHldtXpy0OHtakcscr+l3vO7VuNlaE
+Vdur6U0zzm6z0Pvu693OGbVHjTyjg/d84lTn7OKK5I3enQb7bjydfnb/b5Ra2jVp/PEhCR03Zqlh
+i5SaO6Y4Szk31YbsFsN2qqrJKakP1dcnVH8Iq46iYeqCEu87W5ML9o0frVTyIe8tHdZ/epzcc8+v
+1peOm6S+al24Jedpz7coT0//uFqp3+R73nFulrVaUT7lCrWs27bPmm355T+VekZYdbxwV3Vb3wsU
+LByn1N6mVf6wEpOTk9PUs0NP7nl4mzp6/xg16zZPjQVOSTtbHtmVcuREWC9eq9SRxOpXu36hSm1f
+c+j0R1i1DUlKTTsrw/v6P9O8p5O32OUPa0VJScl3alVf743DLxzxvK3+a/+LLh+jJs33DfSVpPqv
+XjROnQhrVlJGRkbKrsoFGZ3mH6mvz6jeEFYdwz9+a6zvnYXjva8HVVn3R+GuFl963r7Z1vu08LXc
+PeqlMWrGHUptytdhzbl1+OqTYS32fNOrLqnZ9n3N5+c/WV+fUL0hrDq6lC982PfOluS15eOvOfE7
+lu9Z4TE1vdPK7Ws7+/b424C9H+YOqfq89cc/DJynmpR7e/o6Pe24E5b35o7W6ypmXqjmZm//LjfE
+E8k4R1i1HWurJi9z3s3LTBqx+0RYvuNYL6uav/dr3vkR38swll/evP/bGS+r5887Z/xRdX2S92mg
+6jlJ+cJybr7do/llW9SBqxLPncjvWIAVhAURhAURhAURhAURhAURhAURhAURhAURhAURhAURhAUR
+hAURhAURhAURhAURhAURhAURhAUR/wcoCyCKqgvgUgAAAABJRU5ErkJggg==
+"
+>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This was so painless! It's so easy to use css selectors to get the information we're after.</p>
+
+</div>
+</div>
+</div>
+ 
+
+
+    </div>
+  </div>
+    </div>
+    <div id="footer" class="pv3 flex justify-between mb4">
+      <div class="flex flex-column">
+        <div class="mid-gray fw4 f6-ns f7 mb2">
+          Copyright &copy; 2020 Chuck&nbsp;Pepe&#8209;Ranney
+        </div>
+        <div class="mid-gray fw4 f6-ns f7">
+          Powered by <a href="https://getpelican.com/" class="link dim mid-gray fw6">Pelican</a>
+        </div>
+      </div>
+      <div class="flex justify-end w-50-ns w-30 mr4-ns mr0 ml2">
+              <div class="w-10-ns w2-ns ml2 grow">
+                <a href="https://github.com/chuckpr" class="light-purple dim link">
+                  <div class="o-50 pa1-l">
+<svg viewBox="0 0 24 24" fill="currentColor">
+  <title>GitHub icon</title>
+  <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
+</svg>                  </div>
+                </a>
+              </div>
+              <div class="w-10-ns w2-ns ml2 grow">
+                <a href="https://www.linkedin.com/in/chuckpr/" class="light-purple dim link">
+                  <div class="o-50 pa1-l">
+<svg viewBox="0 0 24 24" fill="currentColor">
+  <title>LinkedIn icon</title>
+  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+</svg>                  </div>
+                </a>
+              </div>
+              <div class="w-10-ns w2-ns ml2 grow">
+                <a href="https://twitter.com/chuck_pr" class="light-purple dim link">
+                  <div class="o-50 pa1-l">
+<svg viewBox="0 0 24 24" fill="currentColor">
+  <title>Twitter icon</title>
+  <path d="M23.954 4.569c-.885.389-1.83.654-2.825.775 1.014-.611 1.794-1.574 2.163-2.723-.951.555-2.005.959-3.127 1.184-.896-.959-2.173-1.559-3.591-1.559-2.717 0-4.92 2.203-4.92 4.917 0 .39.045.765.127 1.124C7.691 8.094 4.066 6.13 1.64 3.161c-.427.722-.666 1.561-.666 2.475 0 1.71.87 3.213 2.188 4.096-.807-.026-1.566-.248-2.228-.616v.061c0 2.385 1.693 4.374 3.946 4.827-.413.111-.849.171-1.296.171-.314 0-.615-.03-.916-.086.631 1.953 2.445 3.377 4.604 3.417-1.68 1.319-3.809 2.105-6.102 2.105-.39 0-.779-.023-1.17-.067 2.189 1.394 4.768 2.209 7.557 2.209 9.054 0 13.999-7.496 13.999-13.986 0-.209 0-.42-.015-.63.961-.689 1.8-1.56 2.46-2.548l-.047-.02z"/>
+</svg>                  </div>
+                </a>
+              </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
