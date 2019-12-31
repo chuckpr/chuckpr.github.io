@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*- #
 from __future__ import unicode_literals
+from pelican.plugins import pelican_jupyter_reader
 
 AUTHOR = 'Chuck Pepe-Ranney'
 SITENAME = 'A microbiologist with a data science problem'
@@ -45,4 +46,8 @@ PAGE_URL = 'pages/{slug}/'
 PAGE_SAVE_AS = 'pages/{slug}/index.html'
 
 TWITTER_USERNAME = 'chuckpr'
-TWITTER_CARD_IMAGE_URL = 'https://pbs.twimg.com/profile_images/553730712973484032/cjWltsX1_400x400.jpeg'
+TWITTER_CARD_IMAGE_URL = 'https://www.biorxiv.org/content/biorxiv/early/2019/09/08/758359/F4.large.jpg'
+
+PLUGINS = [pelican_jupyter_reader,]
+IGNORE_FILES = ['.ipynb_checkpoints*']
+SUMMARY_MAX_LENGTH = 5
