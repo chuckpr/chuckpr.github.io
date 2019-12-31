@@ -9,6 +9,7 @@ markdown = "*"
 invoke = "*"
 livereload = "*"
 ghp-import = "*"
+pelican-jupyter-reader = "==0.1.7"
 
 [packages]
 
