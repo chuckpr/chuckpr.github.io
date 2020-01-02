@@ -1,3 +1,20 @@
 .article-title {
   min-height: 100px;
 }
+
+ol, ul {
+  font-size: 17px;
+}
+
+strong {
+  font-weight: 600;
+}
+
+code {
+  background: #eeeeee;
+  font-size: 15px;
+  font-weight: bold;
+  line-height: 1.5;
+  padding-left: 4px;
+  padding-right: 4px;
+}
