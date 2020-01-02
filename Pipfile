@@ -4,14 +4,9 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
-pelican = "*"
-markdown = "*"
-invoke = "*"
-livereload = "*"
-ghp-import = "*"
-pelican-jupyter-reader = "==0.1.7"
 
 [packages]
+pelican = "==4.2.0"
 
 [requires]
 python_version = "3.7"
