@@ -5,7 +5,7 @@
 &lt;p&gt;This post will work with …&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</summary><content type="html">&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;p&gt;This post will work with the tree and information we produced in the &lt;a href="trees1.html"&gt;last post&lt;/a&gt;. This time we'll use a Python plotting library called &lt;a href="http://bokeh.pydata.org/en/latest/"&gt;Bokeh&lt;/a&gt; to visualize the tree.&lt;/p&gt;
+&lt;p&gt;This post will work with the tree and information we produced in the &lt;a href="https://chuckpr.github.io/posts/trees1/"&gt;last post&lt;/a&gt;. This time we'll use a Python plotting library called &lt;a href="http://bokeh.pydata.org/en/latest/"&gt;Bokeh&lt;/a&gt; to visualize the tree.&lt;/p&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
@@ -2945,7 +2945,7 @@ Joining by: &amp;#34;SampleID&amp;#34;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;p&gt;Let's start by summarizing a few key findings from the &lt;a href="http://chuckpr.github.io/blog/515.html"&gt;last post&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Let's start by summarizing a few key findings from the &lt;a href="https://chuckpr.github.io/posts/primers1/"&gt;last post&lt;/a&gt;.&lt;/p&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
@@ -3091,7 +3091,7 @@ Joining by: &amp;#34;SampleID&amp;#34;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;p&gt;We'll make the same 515F target dataframe as in the &lt;a href="http://chuckpr.github.io/blog/515.html"&gt;previous post&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;We'll make the same 515F target dataframe as in the &lt;a href="https://chuckpr.github.io/posts/primers1/"&gt;previous post&lt;/a&gt;.&lt;/p&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
