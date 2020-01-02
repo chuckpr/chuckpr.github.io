@@ -7,6 +7,7 @@ verify_ssl = true
 
 [packages]
 pelican = "==4.2.0"
+markdown = "*"
 
 [requires]
 python_version = "3.7"
