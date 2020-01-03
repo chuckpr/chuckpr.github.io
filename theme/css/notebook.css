@@ -1,10 +1,10 @@
 .output_stream pre {
-  padding: 10px 20px 10px 20px;
+  padding: 0.625em 1.25em 0.625em 1.25em;
   overflow: scroll;
 }
 
 .output_text pre {
-  padding: 10px 20px 10px 20px;
+  padding: 0.625em 1.25em 0.625em 1.25em;
   color: #777777;
   background-color: #eeeeee;
   overflow: scroll;

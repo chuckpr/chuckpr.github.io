@@ -1,7 +1,7 @@
 .highlight code, .highlight pre {
-  padding: 10px 25px 10px 25px;
+  padding: 0.625em 1.5625em 0.625em 1.5625em;
   overflow: scroll;
-  font-size: 14px;
+  font-size: 0.875em;
 }
 
 body a {
@@ -18,7 +18,7 @@ body a:hover {
 
 body blockquote {
   border-left-style: solid;
-  border-left-width: 1px;
+  border-left-width: 0.0625em;
   border-color: #408bc9;
   border-width: .25rem;
   margin-left: 0;
@@ -47,7 +47,7 @@ body h6 {
 }
 
 body p {
-  font-size: 17px;
+  font-size: 1.0625em;
   line-height: 1.5;
 }
 
