@@ -1,9 +1,3 @@
-.highlight code, .highlight pre {
-  padding: 10px 25px 10px 25px;
-  overflow: scroll;
-  font-size: 14px;
-}
-
 .output_stream pre {
   padding: 10px 20px 10px 20px;
   overflow: scroll;
@@ -20,50 +14,10 @@
   text-align: center;
 }
 
-.text_cell_render a {
-  text-decoration: none;
-  color: #357EDD;
-  opacity: 1;
-  transition: opacity .15s ease-in;
-}
-.text_cell_render a:hover {
-  opacity: 0.5;
-  transition: opacity .15s ease-in;
-}
-
-.text_cell_render blockquote {
-  border-left-style: solid;
-  border-left-width: 1px;
-  border-color: #408bc9;
-  border-width: .25rem;
-  margin-left: 0;
-  margin-top: 0;
-  padding-left: 2rem;
-}
-
 .input_prompt, .output_prompt {
   display: none;
 }
 
 .anchor-link {
   display: none;
-}
-
-.text_cell_render h1,
-.text_cell_render h2,
-.text_cell_render h3,
-.text_cell_render h4,
-.text_cell_render h5,
-.text_cell_render h6 {
-  font-weight: 550;
-}
-
-.text_cell_render p {
-  font-size: 17px;
-  line-height: 1.5;
-}
-
-.text_cell_render ul,
-.text_cell_render ol {
-  line-height: 1.5;
 }
