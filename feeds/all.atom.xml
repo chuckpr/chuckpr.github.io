@@ -1,5 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>A microbiologist with a data science problem</title><link href="https://chuckpr.github.io/" rel="alternate"></link><link href="https://chuckpr.github.io/feeds/all.atom.xml" rel="self"></link><id>https://chuckpr.github.io/</id><updated>2015-08-12T00:00:00-04:00</updated><entry><title>Making trees in the Jupyter notebook (part 2 - Bokeh)</title><link href="https://chuckpr.github.io/posts/trees2/" rel="alternate"></link><published>2015-08-12T00:00:00-04:00</published><updated>2015-08-12T00:00:00-04:00</updated><author><name>Chuck Pepe-Ranney</name></author><id>tag:chuckpr.github.io,2015-08-12:/posts/trees2/</id><summary type="html">&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>A microbiologist with a data science problem</title><link href="https://chuckpr.github.io/" rel="alternate"></link><link href="https://chuckpr.github.io/feeds/all.atom.xml" rel="self"></link><id>https://chuckpr.github.io/</id><updated>2019-01-02T00:00:00-05:00</updated><entry><title>This is a test</title><link href="https://chuckpr.github.io/posts/test/" rel="alternate"></link><published>2019-01-02T00:00:00-05:00</published><updated>2019-01-02T00:00:00-05:00</updated><author><name>Chuck Pepe-Ranney</name></author><id>tag:chuckpr.github.io,2019-01-02:/posts/test/</id><summary type="html">&lt;h1&gt;Header 1&lt;/h1&gt;
+&lt;h2&gt;Header 2&lt;/h2&gt;
+&lt;h3&gt;Header …&lt;/h3&gt;</summary><content type="html">&lt;h1&gt;Header 1&lt;/h1&gt;
+&lt;h2&gt;Header 2&lt;/h2&gt;
+&lt;h3&gt;Header 3&lt;/h3&gt;
+&lt;h4&gt;Header 4&lt;/h4&gt;
+&lt;p&gt;This is some text. &lt;strong&gt;Bold&lt;/strong&gt; &lt;em&gt;italics&lt;/em&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;one&lt;/li&gt;
+&lt;li&gt;two&lt;/li&gt;
+&lt;li&gt;three&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr&gt;
+&lt;ul&gt;
+&lt;li&gt;one&lt;/li&gt;
+&lt;li&gt;two&lt;/li&gt;
+&lt;li&gt;three&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;This is a blockquote.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;hr&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;s&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;JavaScript syntax highlighting&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="nx"&gt;alert&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;s&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Python syntax highlighting&amp;quot;&lt;/span&gt;
+&lt;span class="nb"&gt;print&lt;/span&gt; &lt;span class="n"&gt;s&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nf"&gt;library&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;tidyverse&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;p&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nf"&gt;ggplot&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nf"&gt;aes&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;TRUE&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</content><category term="misc"></category></entry><entry><title>Making trees in the Jupyter notebook (part 2 - Bokeh)</title><link href="https://chuckpr.github.io/posts/trees2/" rel="alternate"></link><published>2015-08-12T00:00:00-04:00</published><updated>2015-08-12T00:00:00-04:00</updated><author><name>Chuck Pepe-Ranney</name></author><id>tag:chuckpr.github.io,2015-08-12:/posts/trees2/</id><summary type="html">&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;This post will work with …&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</summary><content type="html">&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
