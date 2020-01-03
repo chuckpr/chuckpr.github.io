@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*- #
 from __future__ import unicode_literals
-from pelican.plugins import pelican_jupyter_reader
+import os
 
 AUTHOR = 'Chuck Pepe-Ranney'
 SITENAME = 'A microbiologist with a data science problem'
@@ -48,6 +48,17 @@ PAGE_SAVE_AS = 'pages/{slug}/index.html'
 TWITTER_USERNAME = 'chuckpr'
 TWITTER_CARD_IMAGE_URL = 'https://www.biorxiv.org/content/biorxiv/early/2019/09/08/758359/F4.large.jpg'
 
-PLUGINS = [pelican_jupyter_reader,]
 IGNORE_FILES = ['.ipynb_checkpoints*']
 SUMMARY_MAX_LENGTH = 5
+STATIC_PATHS = ['images', 'notebooks/images']
+
+if os.environ.get('PELICAN_THEME', None) is not None:
+    THEME = os.environ['PELICAN_THEME']
+
+from pelican.plugins import pelican_jupyter_reader
+PLUGINS = [pelican_jupyter_reader,]
+
+# # Uncomment for plugin development
+# if os.environ.get('PELICAN_PLUGIN_PATHS', None) is not None:
+#     PLUGIN_PATHS = os.environ['PELICAN_PLUGIN_PATHS'].split(':')
+#     PLUGINS = ['pelican_jupyter_reader',]
