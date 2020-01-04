@@ -3,7 +3,7 @@
 }
 
 ol, ul {
-  font-size: 17px;
+  font-size: 1.0625em;
 }
 
 strong {
@@ -17,4 +17,15 @@ code {
   line-height: 1.5;
   padding-left: 4px;
   padding-right: 4px;
+}
+
+.toggle {
+  padding-left: 2rem;
+  padding-right: .5rem;
+  border-left-style: solid;
+  border-left-width: 0.0625em;
+  border-color: #137752;
+  border-width: .125rem;
+  background-color: #e8fdf5;
+  color: #137752;
 }
