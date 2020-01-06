@@ -6,8 +6,13 @@ verify_ssl = true
 [dev-packages]
 
 [packages]
-pelican = "==4.2.0"
 markdown = "*"
+pelican-jupyter-reader = "==0.2.0"
+invoke = "*"
+livereload = "*"
+pelican = "==4.2.0"
+ghp-import = "*"
+pelican-extended-sitemap = "*"
 
 [requires]
 python_version = "3.7"
