@@ -6,6 +6,7 @@ import os
 AUTHOR = 'Chuck Pepe-Ranney'
 SITENAME = 'A microbiologist with a data science problem'
 SITEURL = ''
+DESCRIPTION = '''A microbiology-themed technical blog for data scientists.'''
 
 PATH = 'content'
 
@@ -46,11 +47,13 @@ PAGE_URL = 'pages/{slug}/'
 PAGE_SAVE_AS = 'pages/{slug}/index.html'
 
 TWITTER_USERNAME = 'chuckpr'
-TWITTER_CARD_IMAGE_URL = 'https://www.biorxiv.org/content/biorxiv/early/2019/09/08/758359/F4.large.jpg'
 
 IGNORE_FILES = ['.ipynb_checkpoints*']
-SUMMARY_MAX_LENGTH = 5
-STATIC_PATHS = ['images', 'notebooks/images']
+SUMMARY_MAX_LENGTH = 120
+STATIC_PATHS = ['images', 'notebooks/images',]
+EXTRA_PATH_METADATA = {
+    'images/favicon.ico': {'path': 'favicon.ico'}
+}
 
 if os.environ.get('PELICAN_THEME', None) is not None:
     THEME = os.environ['PELICAN_THEME']
@@ -62,3 +65,12 @@ PLUGINS = [pelican_jupyter_reader,]
 # if os.environ.get('PELICAN_PLUGIN_PATHS', None) is not None:
 #     PLUGIN_PATHS = os.environ['PELICAN_PLUGIN_PATHS'].split(':')
 #     PLUGINS = ['pelican_jupyter_reader',]
+
+import extended_sitemap
+PLUGINS.append(extended_sitemap)
+
+TOGGLE_ALL_TAG = 'toggle_all'
+TOGGLE_CODE_TAG = 'toggle_code'
+TOGGLE_CODE_BUTTON_TEXT = 'toggle code'
+TOGGLE_ALL_BUTTON_TEXT = 'show me'
+HIDE_CELL_TAG = 'disappear'
