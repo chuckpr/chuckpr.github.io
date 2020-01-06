@@ -2005,7 +2005,7 @@ width=600
 </content><category term="notebooks"></category><category term="Python"></category><category term="R"></category><category term="genomics"></category></entry><entry><title>Using rvest to scrape the CAZy website</title><link href="https://chuckpr.github.io/posts/rvest/" rel="alternate"></link><published>2015-08-02T00:00:00-04:00</published><updated>2015-08-02T00:00:00-04:00</updated><author><name>Chuck Pepe-Ranney</name></author><id>tag:chuckpr.github.io,2015-08-02:/posts/rvest/</id><summary type="html">&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;p&gt;I have been looking for a nice excuse to play with &lt;code&gt;rvest&lt;/code&gt; and since we're starting to work with "CAZYme" gene annotations in the Buckley lab, scraping the &lt;a href="http://www.cazy.org/"&gt;CAZy&lt;/a&gt; website seemed like a good fit. I'm starting simple and will build as I go. This post is just an example of producing a table of &lt;a href="https://en.wikipedia.org/wiki/EC_number"&gt;EC&lt;/a&gt; numbers and "clan" groupings of the CAZy glycoside hydrolase families.&lt;/p&gt;
+&lt;p&gt;I have been looking for a nice excuse to play with &lt;code&gt;rvest&lt;/code&gt; and since we're starting to work with &amp;quot;CAZYme&amp;quot; gene annotations in the Buckley lab, scraping the &lt;a href="http://www.cazy.org/"&gt;CAZy&lt;/a&gt; website seemed like a good fit. I'm starting simple and will build as I go. This post is just an example of producing a table of &lt;a href="https://en.wikipedia.org/wiki/EC_number"&gt;EC&lt;/a&gt; numbers and &amp;quot;clan&amp;quot; groupings of the CAZy glycoside hydrolase families.&lt;/p&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
@@ -2074,7 +2074,7 @@ width=600
 &lt;p&gt;The first thing I will do is read in the CAZy …&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</summary><content type="html">&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;p&gt;I have been looking for a nice excuse to play with &lt;code&gt;rvest&lt;/code&gt; and since we're starting to work with "CAZYme" gene annotations in the Buckley lab, scraping the &lt;a href="http://www.cazy.org/"&gt;CAZy&lt;/a&gt; website seemed like a good fit. I'm starting simple and will build as I go. This post is just an example of producing a table of &lt;a href="https://en.wikipedia.org/wiki/EC_number"&gt;EC&lt;/a&gt; numbers and "clan" groupings of the CAZy glycoside hydrolase families.&lt;/p&gt;
+&lt;p&gt;I have been looking for a nice excuse to play with &lt;code&gt;rvest&lt;/code&gt; and since we're starting to work with &amp;quot;CAZYme&amp;quot; gene annotations in the Buckley lab, scraping the &lt;a href="http://www.cazy.org/"&gt;CAZy&lt;/a&gt; website seemed like a good fit. I'm starting simple and will build as I go. This post is just an example of producing a table of &lt;a href="https://en.wikipedia.org/wiki/EC_number"&gt;EC&lt;/a&gt; numbers and &amp;quot;clan&amp;quot; groupings of the CAZy glycoside hydrolase families.&lt;/p&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
