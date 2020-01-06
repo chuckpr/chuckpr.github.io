@@ -2,19 +2,52 @@
 <html lang="en">
 
 <head>
+
   <title>Making trees in the Jupyter notebook (part&nbsp;1&nbsp;-&nbsp;IToL)</title>
-    <meta charset="utf-8" />
+  
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+  <!-- Open Graph tags -->
+  <meta property="og:locale" content="en_US">
+  <meta property="og:site_name" content="SITENAME"/>
+  <meta property="article:author" content="Chuck Pepe-Ranney"/>
+
+  <!-- Twitter card tags -->
   <meta name="twitter:card" content="summary"/>
   <meta name="twitter:creator" content="@chuckpr"/>
+
   <link rel="stylesheet" href="https://unpkg.com/tachyons@4.10.0/css/tachyons.min.css"/>
 
-  <link rel="stylesheet" type="text/css" href="https://chuckpr.github.io/theme/css/article.css">
-  <link rel="stylesheet" type="text/css" href="https://chuckpr.github.io/theme/css/notebook.css">
-  <link rel="stylesheet" type="text/css" href="https://chuckpr.github.io/theme/css/pygments.css">
   <link rel="stylesheet" type="text/css" href="https://chuckpr.github.io/theme/css/site.css">
+
   <link rel="shortcut icon" type="image/x-icon" href="https://chuckpr.github.io/favicon.ico"/>
   <link rel="icon" type="image/x-icon" href="https://chuckpr.github.io/favicon.ico"/>
+
+
+  <meta itemprop="description"
+        name="description"
+        content="Let's extend the previous post by scraping the CAZy website for accession numbers from genes in the glycoside hydrolase 5 (GH5) family. Then we can build a phylogenetic tree from these sequences and visualize how well the EC activities correspond to the phylogeny. Unfortunately the CAZy website spreads the information we need across multiple pages in tables that are not easily parsed. Luckily we have rvest. Let's start by loading the libraries we'll use. In [21]: %load_ext rpy2.ipython The rpy2.ipython extension is already loaded. To reload it, use: %reload_ext rpy2.ipython In [22]: %%R library(rvest) library(magrittr) library(plyr); library(dplyr) library(rentrez) library(ggplot2) library(rwantshue) CAZy distinguishes between genes that have been biochemically characterized and …"/>
+
+  <!-- Open Graph tags -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Making trees in the Jupyter notebook (part&nbsp;1&nbsp;-&nbsp;IToL)"/>
+  <meta property="og:url" content="https://chuckpr.github.io/posts/trees1/"/>
+  <meta property="article:published_time" content="2015-08-07 00:00:00-04:00"/>
+  <meta property="og:description"
+        content="Let's extend the previous post by scraping the CAZy website for accession numbers from genes in the glycoside hydrolase 5 (GH5) family. Then we can build a phylogenetic tree from these sequences and visualize how well the EC activities correspond to the phylogeny. Unfortunately the CAZy website spreads the information we need across multiple pages in tables that are not easily parsed. Luckily we have rvest. Let's start by loading the libraries we'll use. In [21]: %load_ext rpy2.ipython The rpy2.ipython extension is already loaded. To reload it, use: %reload_ext rpy2.ipython In [22]: %%R library(rvest) library(magrittr) library(plyr); library(dplyr) library(rentrez) library(ggplot2) library(rwantshue) CAZy distinguishes between genes that have been biochemically characterized and …"/>
+
+  <!-- Twitter card tags -->
+  <meta name="twitter:title" content="Making trees in the Jupyter notebook (part&nbsp;1&nbsp;-&nbsp;IToL)">
+  <meta name="twitter:description"
+        content="Let's extend the previous post by scraping the CAZy website for accession numbers from genes in the glycoside hydrolase 5 (GH5) family. Then we can build a phylogenetic tree from these sequences and visualize how well the EC activities correspond to the phylogeny. Unfortunately the CAZy website spreads the information we need across multiple pages in tables that are not easily parsed. Luckily we have rvest. Let's start by loading the libraries we'll use. In [21]: %load_ext rpy2.ipython The rpy2.ipython extension is already loaded. To reload it, use: %reload_ext rpy2.ipython In [22]: %%R library(rvest) library(magrittr) library(plyr); library(dplyr) library(rentrez) library(ggplot2) library(rwantshue) CAZy distinguishes between genes that have been biochemically characterized and …"/>
+
+  <link rel="canonical" href="https://chuckpr.github.io/posts/trees1/">
+
+  <link rel="stylesheet" type="text/css" href="https://chuckpr.github.io/theme/css/pygments.css">
+  <link rel="stylesheet" type="text/css" href="https://chuckpr.github.io/theme/css/article.css">
+  <link rel="stylesheet" type="text/css" href="https://chuckpr.github.io/theme/css/notebook.css">
+
 </head>
 
 <body>

@@ -2,7 +2,25 @@
 <feed xmlns="http://www.w3.org/2005/Atom"><title>A microbiologist with a data science problem</title><link href="https://chuckpr.github.io/" rel="alternate"></link><link href="https://chuckpr.github.io/feeds/all.atom.xml" rel="self"></link><id>https://chuckpr.github.io/</id><updated>2015-08-12T00:00:00-04:00</updated><entry><title>Making trees in the Jupyter notebook (part 2 - Bokeh)</title><link href="https://chuckpr.github.io/posts/trees2/" rel="alternate"></link><published>2015-08-12T00:00:00-04:00</published><updated>2015-08-12T00:00:00-04:00</updated><author><name>Chuck Pepe-Ranney</name></author><id>tag:chuckpr.github.io,2015-08-12:/posts/trees2/</id><summary type="html">&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;p&gt;This post will work with …&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</summary><content type="html">&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;p&gt;This post will work with the tree and information we produced in the &lt;a href="https://chuckpr.github.io/posts/trees1/"&gt;last post&lt;/a&gt;. This time we'll use a Python plotting library called &lt;a href="http://bokeh.pydata.org/en/latest/"&gt;Bokeh&lt;/a&gt; to visualize the tree.&lt;/p&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
+&lt;p&gt;IToL is a great and flexible tool but on the flexibility front it can't compete with charting libraries like &lt;a href="http://www.matplotlib.org"&gt;Matplotlib&lt;/a&gt;, &lt;a href="http://ggvis.rstudio.com/"&gt;ggvis&lt;/a&gt;, &lt;a href="http://ggplot2.org/"&gt;ggplot2&lt;/a&gt;, or &lt;a href="http://bokeh.pydata.org/en/latest/"&gt;Bokeh&lt;/a&gt;. To demonstrate the power of such flexibility let's make a tree with the new-ish &lt;code&gt;Bokeh&lt;/code&gt;. There are several features I want to include in this visualization:&lt;/p&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
+&lt;ol&gt;
+&lt;li&gt;I want the tree to be unrooted. I didn't include an explicit outgroup in the tree from the previous post so I think it's probably just best to display the tree in radial (as opposed to circular) format.&lt;/li&gt;
+&lt;li&gt;I want the …&lt;/li&gt;&lt;/ol&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</summary><content type="html">&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;This post will work with the tree and information we produced in the &lt;a href="https://chuckpr.github.io/posts/trees1/"&gt;last post&lt;/a&gt;. This time we'll use a Python plotting library called &lt;a href="http://bokeh.pydata.org/en/latest/"&gt;Bokeh&lt;/a&gt; to visualize the tree.&lt;/p&gt;
@@ -907,7 +925,74 @@
 </content><category term="notebooks"></category><category term="Python"></category><category term="genomics"></category></entry><entry><title>Making trees in the Jupyter notebook (part 1 - IToL)</title><link href="https://chuckpr.github.io/posts/trees1/" rel="alternate"></link><published>2015-08-07T00:00:00-04:00</published><updated>2015-08-07T00:00:00-04:00</updated><author><name>Chuck Pepe-Ranney</name></author><id>tag:chuckpr.github.io,2015-08-07:/posts/trees1/</id><summary type="html">&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;p&gt;Let's extend the previous post …&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</summary><content type="html">&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;p&gt;Let's extend the previous post by scraping the CAZy website for accession numbers from genes in the glycoside hydrolase 5 (GH5) family. Then we can build a phylogenetic tree from these sequences and visualize how well the EC activities correspond to the phylogeny.&lt;/p&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
+&lt;p&gt;Unfortunately the CAZy website spreads the information we need across multiple pages in tables that are not easily parsed. Luckily we have &lt;code&gt;rvest&lt;/code&gt;. Let's start by loading the libraries we'll use.&lt;/p&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="input"&gt;
+&lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[21]:&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+    &lt;div class="input_area"&gt;
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;load_ext&lt;/span&gt; &lt;span class="n"&gt;rpy2&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ipython&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="output_wrapper"&gt;
+&lt;div class="output"&gt;
+
+
+&lt;div class="output_area"&gt;
+
+    &lt;div class="prompt"&gt;&lt;/div&gt;
+
+
+&lt;div class="output_subarea output_stream output_stdout output_text"&gt;
+&lt;pre&gt;The rpy2.ipython extension is already loaded. To reload it, use:
+  %reload_ext rpy2.ipython
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="input"&gt;
+&lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[22]:&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+    &lt;div class="input_area"&gt;
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;%%&lt;/span&gt;&lt;span class="n"&gt;R&lt;/span&gt;
+&lt;span class="nf"&gt;library&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;rvest&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="nf"&gt;library&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;magrittr&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="nf"&gt;library&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;plyr&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt; &lt;span class="nf"&gt;library&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;dplyr&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="nf"&gt;library&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;rentrez&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="nf"&gt;library&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ggplot2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="nf"&gt;library&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;rwantshue&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
+&lt;p&gt;CAZy distinguishes between genes that have been biochemically characterized and …&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</summary><content type="html">&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;Let's extend the previous post by scraping the CAZy website for accession numbers from genes in the glycoside hydrolase 5 (GH5) family. Then we can build a phylogenetic tree from these sequences and visualize how well the EC activities correspond to the phylogeny.&lt;/p&gt;
@@ -1920,7 +2005,73 @@ width=600
 </content><category term="notebooks"></category><category term="Python"></category><category term="R"></category><category term="genomics"></category></entry><entry><title>Using rvest to scrape the CAZy website</title><link href="https://chuckpr.github.io/posts/rvest/" rel="alternate"></link><published>2015-08-02T00:00:00-04:00</published><updated>2015-08-02T00:00:00-04:00</updated><author><name>Chuck Pepe-Ranney</name></author><id>tag:chuckpr.github.io,2015-08-02:/posts/rvest/</id><summary type="html">&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;p&gt;I have been looking for …&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</summary><content type="html">&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;p&gt;I have been looking for a nice excuse to play with &lt;code&gt;rvest&lt;/code&gt; and since we're starting to work with "CAZYme" gene annotations in the Buckley lab, scraping the &lt;a href="http://www.cazy.org/"&gt;CAZy&lt;/a&gt; website seemed like a good fit. I'm starting simple and will build as I go. This post is just an example of producing a table of &lt;a href="https://en.wikipedia.org/wiki/EC_number"&gt;EC&lt;/a&gt; numbers and "clan" groupings of the CAZy glycoside hydrolase families.&lt;/p&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
+&lt;p&gt;We'll pull in all the libraries we need first.&lt;/p&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="input"&gt;
+&lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[16]:&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+    &lt;div class="input_area"&gt;
+&lt;div class=" highlight hl-r"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;%&lt;span class="n"&gt;load_ext&lt;/span&gt; &lt;span class="n"&gt;rpy2.ipython&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="output_wrapper"&gt;
+&lt;div class="output"&gt;
+
+
+&lt;div class="output_area"&gt;
+
+    &lt;div class="prompt"&gt;&lt;/div&gt;
+
+
+&lt;div class="output_subarea output_stream output_stdout output_text"&gt;
+&lt;pre&gt;The rpy2.ipython extension is already loaded. To reload it, use:
+  %reload_ext rpy2.ipython
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="input"&gt;
+&lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[15]:&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+    &lt;div class="input_area"&gt;
+&lt;div class=" highlight hl-r"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;%%&lt;/span&gt;&lt;span class="n"&gt;R&lt;/span&gt;
+&lt;span class="nf"&gt;library&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;rvest&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="nf"&gt;library&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;plyr&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt; &lt;span class="nf"&gt;library&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;dplyr&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="nf"&gt;library&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;magrittr&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="nf"&gt;library&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;tidyr&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="nf"&gt;library&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ggplot2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
+&lt;p&gt;The first thing I will do is read in the CAZy …&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</summary><content type="html">&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;I have been looking for a nice excuse to play with &lt;code&gt;rvest&lt;/code&gt; and since we're starting to work with "CAZYme" gene annotations in the Buckley lab, scraping the &lt;a href="http://www.cazy.org/"&gt;CAZy&lt;/a&gt; website seemed like a good fit. I'm starting simple and will build as I go. This post is just an example of producing a table of &lt;a href="https://en.wikipedia.org/wiki/EC_number"&gt;EC&lt;/a&gt; numbers and "clan" groupings of the CAZy glycoside hydrolase families.&lt;/p&gt;
@@ -2388,7 +2539,39 @@ Protein Eng Des Sel. 2006 Dec;19(12):555-62.&lt;/p&gt;
 </content><category term="notebooks"></category><category term="R"></category><category term="genomics"></category></entry><entry><title>Melting your phyloseq object with dplyr/tidyr</title><link href="https://chuckpr.github.io/posts/melt/" rel="alternate"></link><published>2015-04-20T00:00:00-04:00</published><updated>2015-04-20T00:00:00-04:00</updated><author><name>Chuck Pepe-Ranney</name></author><id>tag:chuckpr.github.io,2015-04-20:/posts/melt/</id><summary type="html">&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;p&gt;If you're a microbial ecologist …&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</summary><content type="html">&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;p&gt;If you're a microbial ecologist and you haven't used &lt;a href="http://joey711.github.io/phyloseq/"&gt;phyloseq&lt;/a&gt;, put away your vintage scarf and thick-rimmed glasses because you are not hip. &lt;a href="http://joey711.github.io/phyloseq/"&gt;phyloseq&lt;/a&gt; is the nexus of all that is good in the universe. In this post we'll look at one of the greatest &lt;a href="http://joey711.github.io/phyloseq/"&gt;phyloseq&lt;/a&gt; functions, &lt;code&gt;psmelt&lt;/code&gt;. &lt;code&gt;psmelt&lt;/code&gt; combines your sample info, OTU counts, and taxonomic annotations into a single dataframe where every row represents an OTU-sample combination. Hhhhwhat!?! Amazing, I know. From this omnipotent dataframe you can do anything. So, how do we use &lt;code&gt;psmelt&lt;/code&gt;? And can we re-create &lt;code&gt;psmelt&lt;/code&gt; with &lt;a href="https://github.com/hadley/dplyr"&gt;dplyr&lt;/a&gt; and &lt;a href="https://github.com/hadley/tidyr"&gt;tidyr&lt;/a&gt;?&lt;/p&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
+&lt;p&gt;Let's start by bringing in some R packages and loading the &lt;code&gt;rmagic&lt;/code&gt; extension for IPython.&lt;/p&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="input"&gt;
+&lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[1]:&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+    &lt;div class="input_area"&gt;
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;load_ext&lt;/span&gt; &lt;span class="n"&gt;rpy2&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ipython&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="input"&gt;
+&lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[2]:&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+    &lt;div class="input_area"&gt;
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;%%&lt;/span&gt;&lt;span class="n"&gt;R&lt;/span&gt;
+&lt;span class="nf"&gt;library …&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</summary><content type="html">&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;If you're a microbial ecologist and you haven't used &lt;a href="http://joey711.github.io/phyloseq/"&gt;phyloseq&lt;/a&gt;, put away your vintage scarf and thick-rimmed glasses because you are not hip. &lt;a href="http://joey711.github.io/phyloseq/"&gt;phyloseq&lt;/a&gt; is the nexus of all that is good in the universe. In this post we'll look at one of the greatest &lt;a href="http://joey711.github.io/phyloseq/"&gt;phyloseq&lt;/a&gt; functions, &lt;code&gt;psmelt&lt;/code&gt;. &lt;code&gt;psmelt&lt;/code&gt; combines your sample info, OTU counts, and taxonomic annotations into a single dataframe where every row represents an OTU-sample combination. Hhhhwhat!?! Amazing, I know. From this omnipotent dataframe you can do anything. So, how do we use &lt;code&gt;psmelt&lt;/code&gt;? And can we re-create &lt;code&gt;psmelt&lt;/code&gt; with &lt;a href="https://github.com/hadley/dplyr"&gt;dplyr&lt;/a&gt; and &lt;a href="https://github.com/hadley/tidyr"&gt;tidyr&lt;/a&gt;?&lt;/p&gt;
@@ -2934,7 +3117,27 @@ Joining by: &amp;#34;SampleID&amp;#34;
 </content><category term="notebooks"></category><category term="R"></category><category term="amplicon"></category></entry><entry><title>Evaluating 515F primers</title><link href="https://chuckpr.github.io/posts/primers2/" rel="alternate"></link><published>2015-04-17T00:00:00-04:00</published><updated>2015-04-17T00:00:00-04:00</updated><author><name>Chuck Pepe-Ranney</name></author><id>tag:chuckpr.github.io,2015-04-17:/posts/primers2/</id><summary type="html">&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;p&gt;Before we begin, I stumbled …&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</summary><content type="html">&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;p&gt;Before we begin, I stumbled across &lt;a href="http://microbe.net/2014/10/22/comparing-the-new-16s-rrna-v4-and-its-primers-to-the-old-primers-results/"&gt;&lt;strong&gt;this really great blog post&lt;/strong&gt;&lt;/a&gt; from the Knight lab that you should &lt;strong&gt;definitely&lt;/strong&gt; check out if you're interested in SSU rRNA gene primers. They have some experimental data up which is great to see.&lt;/p&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
+&lt;p&gt;Let's start by summarizing a few key findings from the &lt;a href="https://chuckpr.github.io/posts/primers1/"&gt;last post&lt;/a&gt;.&lt;/p&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
+&lt;ol&gt;
+&lt;li&gt;The 515F target in Bacteria is extremely conserved -- one sequence is found many many times more than any other.&lt;/li&gt;
+&lt;li&gt;Although the bacterial 515F targets are predominantly one sequence, the second and third most abundant bacterial 515F targets differ from the most abundant target near the 3' end.&lt;/li&gt;
+&lt;li&gt;The 515F targets in Archaea and Bacteria have little overlap.&lt;/li&gt;
+&lt;li&gt;Archaeal 515F targets are more evenly distributed than bacterial 515F targets …&lt;/li&gt;&lt;/ol&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</summary><content type="html">&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;Before we begin, I stumbled across &lt;a href="http://microbe.net/2014/10/22/comparing-the-new-16s-rrna-v4-and-its-primers-to-the-old-primers-results/"&gt;&lt;strong&gt;this really great blog post&lt;/strong&gt;&lt;/a&gt; from the Knight lab that you should &lt;strong&gt;definitely&lt;/strong&gt; check out if you're interested in SSU rRNA gene primers. They have some experimental data up which is great to see.&lt;/p&gt;
@@ -3612,7 +3815,15 @@ Joining by: &amp;#34;SampleID&amp;#34;
 </content><category term="notebooks"></category><category term="R"></category><category term="Python"></category><category term="amplicon"></category></entry><entry><title>Exploring 515F primer targets in archaeal and bacterial SSU rRNA genes</title><link href="https://chuckpr.github.io/posts/primers1/" rel="alternate"></link><published>2015-04-14T00:00:00-04:00</published><updated>2015-04-14T00:00:00-04:00</updated><author><name>Chuck Pepe-Ranney</name></author><id>tag:chuckpr.github.io,2015-04-14:/posts/primers1/</id><summary type="html">&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;p&gt;Microbial ecologists have long considered …&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</summary><content type="html">&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;p&gt;Microbial ecologists have long considered the 515F SSU rRNA gene PCR primer to be "universal." That is, the 515F primer is thought to amplify Eukarya, Archaea, and Bacteria. Indeed the target of the 515F primer is well conserved across each domain, however, the there are some differences in the primer target between domains that should be considered when evaluating 515F for use in a microbial diversity studies.&lt;/p&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
+&lt;p&gt;To make matters more complicated the 515F primer has changed from its inception to account for new sequence information and it's not clear from the literature which 515F version is most effective. &lt;em&gt;In this post, we'll take a look at tbe 515F primer target across a broad diversity of SSU rRNA genes&lt;/em&gt;. In …&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</summary><content type="html">&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;Microbial ecologists have long considered the 515F SSU rRNA gene PCR primer to be "universal." That is, the 515F primer is thought to amplify Eukarya, Archaea, and Bacteria. Indeed the target of the 515F primer is well conserved across each domain, however, the there are some differences in the primer target between domains that should be considered when evaluating 515F for use in a microbial diversity studies.&lt;/p&gt;

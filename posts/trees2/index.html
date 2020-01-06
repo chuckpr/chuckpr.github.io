@@ -2,19 +2,52 @@
 <html lang="en">
 
 <head>
+
   <title>Making trees in the Jupyter notebook (part&nbsp;2&nbsp;-&nbsp;Bokeh)</title>
-    <meta charset="utf-8" />
+  
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+  <!-- Open Graph tags -->
+  <meta property="og:locale" content="en_US">
+  <meta property="og:site_name" content="SITENAME"/>
+  <meta property="article:author" content="Chuck Pepe-Ranney"/>
+
+  <!-- Twitter card tags -->
   <meta name="twitter:card" content="summary"/>
   <meta name="twitter:creator" content="@chuckpr"/>
+
   <link rel="stylesheet" href="https://unpkg.com/tachyons@4.10.0/css/tachyons.min.css"/>
 
-  <link rel="stylesheet" type="text/css" href="https://chuckpr.github.io/theme/css/article.css">
-  <link rel="stylesheet" type="text/css" href="https://chuckpr.github.io/theme/css/notebook.css">
-  <link rel="stylesheet" type="text/css" href="https://chuckpr.github.io/theme/css/pygments.css">
   <link rel="stylesheet" type="text/css" href="https://chuckpr.github.io/theme/css/site.css">
+
   <link rel="shortcut icon" type="image/x-icon" href="https://chuckpr.github.io/favicon.ico"/>
   <link rel="icon" type="image/x-icon" href="https://chuckpr.github.io/favicon.ico"/>
+
+
+  <meta itemprop="description"
+        name="description"
+        content="This post will work with the tree and information we produced in the last post. This time we'll use a Python plotting library called Bokeh to visualize the tree. IToL is a great and flexible tool but on the flexibility front it can't compete with charting libraries like Matplotlib, ggvis, ggplot2, or Bokeh. To demonstrate the power of such flexibility let's make a tree with the new-ish Bokeh. There are several features I want to include in this visualization: I want the tree to be unrooted. I didn't include an explicit outgroup in the tree from the previous post so I think it's probably just best to display the tree in radial (as opposed to circular) format. I want the …"/>
+
+  <!-- Open Graph tags -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Making trees in the Jupyter notebook (part&nbsp;2&nbsp;-&nbsp;Bokeh)"/>
+  <meta property="og:url" content="https://chuckpr.github.io/posts/trees2/"/>
+  <meta property="article:published_time" content="2015-08-12 00:00:00-04:00"/>
+  <meta property="og:description"
+        content="This post will work with the tree and information we produced in the last post. This time we'll use a Python plotting library called Bokeh to visualize the tree. IToL is a great and flexible tool but on the flexibility front it can't compete with charting libraries like Matplotlib, ggvis, ggplot2, or Bokeh. To demonstrate the power of such flexibility let's make a tree with the new-ish Bokeh. There are several features I want to include in this visualization: I want the tree to be unrooted. I didn't include an explicit outgroup in the tree from the previous post so I think it's probably just best to display the tree in radial (as opposed to circular) format. I want the …"/>
+
+  <!-- Twitter card tags -->
+  <meta name="twitter:title" content="Making trees in the Jupyter notebook (part&nbsp;2&nbsp;-&nbsp;Bokeh)">
+  <meta name="twitter:description"
+        content="This post will work with the tree and information we produced in the last post. This time we'll use a Python plotting library called Bokeh to visualize the tree. IToL is a great and flexible tool but on the flexibility front it can't compete with charting libraries like Matplotlib, ggvis, ggplot2, or Bokeh. To demonstrate the power of such flexibility let's make a tree with the new-ish Bokeh. There are several features I want to include in this visualization: I want the tree to be unrooted. I didn't include an explicit outgroup in the tree from the previous post so I think it's probably just best to display the tree in radial (as opposed to circular) format. I want the …"/>
+
+  <link rel="canonical" href="https://chuckpr.github.io/posts/trees2/">
+
+  <link rel="stylesheet" type="text/css" href="https://chuckpr.github.io/theme/css/pygments.css">
+  <link rel="stylesheet" type="text/css" href="https://chuckpr.github.io/theme/css/article.css">
+  <link rel="stylesheet" type="text/css" href="https://chuckpr.github.io/theme/css/notebook.css">
+
 </head>
 
 <body>

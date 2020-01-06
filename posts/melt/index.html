@@ -2,19 +2,52 @@
 <html lang="en">
 
 <head>
+
   <title>Melting your phyloseq object with dplyr/tidyr</title>
-    <meta charset="utf-8" />
+  
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+  <!-- Open Graph tags -->
+  <meta property="og:locale" content="en_US">
+  <meta property="og:site_name" content="SITENAME"/>
+  <meta property="article:author" content="Chuck Pepe-Ranney"/>
+
+  <!-- Twitter card tags -->
   <meta name="twitter:card" content="summary"/>
   <meta name="twitter:creator" content="@chuckpr"/>
+
   <link rel="stylesheet" href="https://unpkg.com/tachyons@4.10.0/css/tachyons.min.css"/>
 
-  <link rel="stylesheet" type="text/css" href="https://chuckpr.github.io/theme/css/article.css">
-  <link rel="stylesheet" type="text/css" href="https://chuckpr.github.io/theme/css/notebook.css">
-  <link rel="stylesheet" type="text/css" href="https://chuckpr.github.io/theme/css/pygments.css">
   <link rel="stylesheet" type="text/css" href="https://chuckpr.github.io/theme/css/site.css">
+
   <link rel="shortcut icon" type="image/x-icon" href="https://chuckpr.github.io/favicon.ico"/>
   <link rel="icon" type="image/x-icon" href="https://chuckpr.github.io/favicon.ico"/>
+
+
+  <meta itemprop="description"
+        name="description"
+        content="If you're a microbial ecologist and you haven't used phyloseq, put away your vintage scarf and thick-rimmed glasses because you are not hip. phyloseq is the nexus of all that is good in the universe. In this post we'll look at one of the greatest phyloseq functions, psmelt. psmelt combines your sample info, OTU counts, and taxonomic annotations into a single dataframe where every row represents an OTU-sample combination. Hhhhwhat!?! Amazing, I know. From this omnipotent dataframe you can do anything. So, how do we use psmelt? And can we re-create psmelt with dplyr and tidyr? Let's start by bringing in some R packages and loading the rmagic extension for IPython. In [1]: %load_ext rpy2.ipython In [2]: %%R library …"/>
+
+  <!-- Open Graph tags -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Melting your phyloseq object with dplyr/tidyr"/>
+  <meta property="og:url" content="https://chuckpr.github.io/posts/melt/"/>
+  <meta property="article:published_time" content="2015-04-20 00:00:00-04:00"/>
+  <meta property="og:description"
+        content="If you're a microbial ecologist and you haven't used phyloseq, put away your vintage scarf and thick-rimmed glasses because you are not hip. phyloseq is the nexus of all that is good in the universe. In this post we'll look at one of the greatest phyloseq functions, psmelt. psmelt combines your sample info, OTU counts, and taxonomic annotations into a single dataframe where every row represents an OTU-sample combination. Hhhhwhat!?! Amazing, I know. From this omnipotent dataframe you can do anything. So, how do we use psmelt? And can we re-create psmelt with dplyr and tidyr? Let's start by bringing in some R packages and loading the rmagic extension for IPython. In [1]: %load_ext rpy2.ipython In [2]: %%R library …"/>
+
+  <!-- Twitter card tags -->
+  <meta name="twitter:title" content="Melting your phyloseq object with dplyr/tidyr">
+  <meta name="twitter:description"
+        content="If you're a microbial ecologist and you haven't used phyloseq, put away your vintage scarf and thick-rimmed glasses because you are not hip. phyloseq is the nexus of all that is good in the universe. In this post we'll look at one of the greatest phyloseq functions, psmelt. psmelt combines your sample info, OTU counts, and taxonomic annotations into a single dataframe where every row represents an OTU-sample combination. Hhhhwhat!?! Amazing, I know. From this omnipotent dataframe you can do anything. So, how do we use psmelt? And can we re-create psmelt with dplyr and tidyr? Let's start by bringing in some R packages and loading the rmagic extension for IPython. In [1]: %load_ext rpy2.ipython In [2]: %%R library …"/>
+
+  <link rel="canonical" href="https://chuckpr.github.io/posts/melt/">
+
+  <link rel="stylesheet" type="text/css" href="https://chuckpr.github.io/theme/css/pygments.css">
+  <link rel="stylesheet" type="text/css" href="https://chuckpr.github.io/theme/css/article.css">
+  <link rel="stylesheet" type="text/css" href="https://chuckpr.github.io/theme/css/notebook.css">
+
 </head>
 
 <body>
