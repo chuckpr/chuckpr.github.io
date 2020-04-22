@@ -3,11 +3,20 @@
   overflow: scroll;
 }
 
+.output {
+  max-width: 100%;
+}
+
 .output_text pre {
   padding: 0.625em 1.25em 0.625em 1.25em;
   color: #777777;
   background-color: #eeeeee;
   overflow: scroll;
+}
+
+.output_wrapper {
+  display: flex;
+  justify-content: center;
 }
 
 .output_png {
@@ -20,4 +29,10 @@
 
 .anchor-link {
   display: none;
+}
+
+.celltag_tldr {
+  border-color: #ccc;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
 }
