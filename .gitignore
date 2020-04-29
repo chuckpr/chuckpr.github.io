@@ -1,3 +1,6 @@
 output
 **.ipynb_checkpoints
 content/notebooks/**/images/
+.DS_Store
+*.swp
+__pycache__
