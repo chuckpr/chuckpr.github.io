@@ -1,3 +1,23 @@
+.celltag_hide-code .input {
+  display: none;
+}
+
+.celltag_hide-all {
+  display: none;
+}
+
+.celltag_codepen .output {
+  width: 700px;
+}
+
+.celltag_aside {
+  border-left: thick solid #219;
+  padding-left: 15px;
+  padding-right: 15px;
+  font-size: 16px;
+  background: rgb(34, 17, 153, 0.05);
+}
+
 .output_stream pre {
   padding: 0.625em 1.25em 0.625em 1.25em;
   overflow: scroll;
@@ -27,9 +47,9 @@
   display: none;
 }
 
-.anchor-link {
-  display: none;
-}
+/* .anchor-link { */
+/*   display: none; */
+/* } */
 
 .celltag_tldr {
   border-color: #ccc;
