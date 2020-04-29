@@ -49,7 +49,7 @@ PAGE_SAVE_AS = 'pages/{slug}/index.html'
 TWITTER_USERNAME = 'chuckpr'
 
 IGNORE_FILES = ['.ipynb_checkpoints*']
-SUMMARY_MAX_LENGTH = 120
+SUMMARY_MAX_LENGTH = 15
 STATIC_PATHS = ['images', 'notebooks/images',]
 EXTRA_PATH_METADATA = {
     'images/favicon.ico': {'path': 'favicon.ico'}
@@ -74,3 +74,28 @@ TOGGLE_CODE_TAG = 'toggle_code'
 TOGGLE_CODE_BUTTON_TEXT = 'toggle code'
 TOGGLE_ALL_BUTTON_TEXT = 'show me'
 HIDE_CELL_TAG = 'disappear'
+
+# Instantiate a config object and call it NBCONVERT_CONFIG
+from traitlets.config import Config
+NBCONVERT_CONFIG = Config()
+
+# This removes Jupyter input prompts
+NBCONVERT_CONFIG.HTMLExporter.exclude_input_prompt = True
+
+# This makes Jupyter magic cells have proper code highlighting
+# regardless of the language of the notebook kernel
+NBCONVERT_CONFIG.HighlightMagicsPreprocessor.enabled = True
+NBCONVERT_CONFIG.HighlightMagicsPreprocessor.languages.update({"%%svg": "xml",
+                                                               "%%html": "html"})
+
+# select the nbconvert template
+NBCONVERT_CONFIG.HTMLExporter.template_path.append('.')
+NBCONVERT_CONFIG.HTMLExporter.template_file = 'blog'
+
+# extract images to files
+NBCONVERT_CONFIG.ExtractOutputPreprocessor.enabled = True
+NBCONVERT_CONFIG.ExtractOutputPreprocessor.output_filename_template = \
+    'images/{unique_key}_{cell_index}_{index}{extension}'
+
+# adujst the anchor links
+NBCONVERT_CONFIG.HTMLExporter.anchor_link_text = u' ¶'

@@ -79,11 +79,17 @@ def livereload(c):
     server.watch(CONFIG['settings_base'],
                  lambda: build(c))
 
+    # Watch the template
+    server.watch('blog.tpl', lambda: build(c))
+
     # Watch content source files
     content_file_extensions = ['.md', '.rst', '.ipynb']
     for extension in content_file_extensions:
-        content_blob = '{0}/**/*{1}'.format(SETTINGS['PATH'], extension)
-        server.watch(content_blob, lambda: build(c))
+        # content_blob = '{0}/**/*{1}'.format(SETTINGS['PATH'], extension)
+        content_blob1 = '{0}/notebooks/*/*{1}'.format(SETTINGS['PATH'], extension)
+        content_blob2 = '{0}/notebooks/*{1}'.format(SETTINGS['PATH'], extension)
+        server.watch(content_blob1, lambda: build(c))
+        server.watch(content_blob2, lambda: build(c))
 
     # Watch the theme's templates and static assets
     if SETTINGS.get('THEME', None) is not None:
