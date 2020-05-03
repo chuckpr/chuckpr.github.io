@@ -1,10 +1,19 @@
-.article-title {
-  min-height: 100px;
+.highlight pre {
+  line-height: 1.5;
+  font-family: Menlo, Consolas, Monaco, monospace;
+  font-size: 14px;
+  margin-top: 6px;
+  margin-bottom: 6px;
 }
 
-.highlight {
+div .highlight {
   border: thin solid #ddd;
-  margin-bottom: 1em;
+  margin-bottom: 0.5em;
+  border-radius: 0.6em;
+}
+
+.article-title {
+  min-height: 100px;
 }
 
 ol, ul {
@@ -13,6 +22,11 @@ ol, ul {
 
 strong {
   font-weight: 600 !important;
+}
+
+article h1,
+article h2 {
+  margin-top: 2em;
 }
 
 article h1,
@@ -27,12 +41,11 @@ article h6 {
 }
 
 code {
-  background: #e7f0fd;
   font-size: 15px;
   font-weight: 500;
   line-height: 1.5;
-  padding-left: 4px;
-  padding-right: 4px;
+  text-decoration: underline;
+  font-family: Menlo, Consolas, Monaco, monospace;
 }
 
 .toggle {

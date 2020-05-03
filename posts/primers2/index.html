@@ -46,13 +46,13 @@
 
   <link rel="stylesheet" type="text/css" href="https://chuckpr.github.io/theme/css/pygments.css">
   <link rel="stylesheet" type="text/css" href="https://chuckpr.github.io/theme/css/article.css">
-  <link rel="stylesheet" type="text/css" href="https://chuckpr.github.io/theme/css/notebook.css">
+    <link rel="stylesheet" type="text/css" href="https://chuckpr.github.io/extra/css/notebook.css">
 
 </head>
 
 <body>
   <header class="flex flex-column avenir mw7 ml-auto mr-auto">
-<div class="pt5 pb2">
+<div class="pt5 pb2 pl0-l pl2">
   <a href="https://chuckpr.github.io/" class="link dim f2-ns f3 fw4 blue tracked-tight bb-l bw1-ns lh-title b--moon-gray">
     A microbiologist with a data science problem
   </a>
@@ -138,7 +138,7 @@
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">versions</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;EMP&quot;</span> <span class="p">:</span> <span class="s2">&quot;(GTG[CT]CAGC[CA]GCCGCGGTAA)</span><span class="si">{e}</span><span class="s2">&quot;</span><span class="p">,</span> 
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">versions</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;EMP&quot;</span> <span class="p">:</span> <span class="s2">&quot;(GTG[CT]CAGC[CA]GCCGCGGTAA)</span><span class="si">{e}</span><span class="s2">&quot;</span><span class="p">,</span> 
             <span class="s2">&quot;Bates&quot;</span> <span class="p">:</span> <span class="s2">&quot;(GTGCCAGC[CA]GCCGCGGTAA)</span><span class="si">{e}</span><span class="s2">&quot;</span><span class="p">}</span>
 </pre></div>
 
@@ -156,7 +156,7 @@
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
 <span class="o">%</span><span class="n">load_ext</span> <span class="n">rpy2</span><span class="o">.</span><span class="n">ipython</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">from</span> <span class="nn">align</span> <span class="kn">import</span> <span class="n">aligner</span>
@@ -175,7 +175,7 @@
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="o">%%</span><span class="n">R</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="n">R</span>
 <span class="nf">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span>
 <span class="nf">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">);</span> <span class="nf">library</span><span class="p">(</span><span class="n">tidyr</span><span class="p">)</span>
 <span class="nf">library</span><span class="p">(</span><span class="n">magrittr</span><span class="p">)</span>
@@ -218,7 +218,7 @@
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="k">def</span> <span class="nf">parse_tax</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">parse_tax</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
     <span class="nb">id</span><span class="p">,</span> <span class="n">tax_str</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="n">k</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">o</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">s</span> <span class="o">=</span> <span class="n">tax_str</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;;&quot;</span><span class="p">)</span>
     <span class="n">tax_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;kingdom&quot;</span> <span class="p">:</span> <span class="n">k</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;__&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">],</span>
@@ -272,7 +272,7 @@
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="k">def</span> <span class="nf">count_subs</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">primer_regex</span><span class="p">):</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">count_subs</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">primer_regex</span><span class="p">):</span>
     <span class="n">subs</span><span class="p">,</span> <span class="n">ins</span><span class="p">,</span> <span class="n">dels</span> <span class="o">=</span> <span class="n">regex</span><span class="o">.</span><span class="n">fullmatch</span><span class="p">(</span><span class="n">primer_regex</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">fuzzy_counts</span>
     <span class="k">if</span> <span class="n">ins</span> <span class="ow">or</span> <span class="n">dels</span><span class="p">:</span>
         <span class="k">return</span> <span class="s2">&quot;&quot;</span>
@@ -294,7 +294,7 @@
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">versions</span><span class="p">:</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">versions</span><span class="p">:</span>
     <span class="n">df_targets</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_targets</span><span class="p">[</span><span class="s2">&quot;515F&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">count_subs</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">versions</span><span class="p">[</span><span class="n">key</span><span class="p">]))</span>
 </pre></div>
 
@@ -324,7 +324,7 @@
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="o">%</span><span class="n">R</span> <span class="o">-</span><span class="n">i</span> <span class="n">df_targets</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="n">R</span> <span class="o">-</span><span class="n">i</span> <span class="n">df_targets</span>
 </pre></div>
 
     </div>
@@ -337,7 +337,7 @@
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="o">%%</span><span class="n">R</span> <span class="o">-</span><span class="n">w</span> <span class="m">650</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="n">R</span> <span class="o">-</span><span class="n">w</span> <span class="m">650</span>
 <span class="n">d</span> <span class="o">=</span> <span class="n">df_targets</span> <span class="o">%&gt;%</span>
     <span class="nf">group_by</span><span class="p">(</span><span class="n">kingdom</span><span class="p">,</span> <span class="n">X515F</span><span class="p">)</span> <span class="o">%&gt;%</span>
     <span class="nf">summarize</span><span class="p">(</span><span class="n">count</span> <span class="o">=</span> <span class="nf">n</span><span class="p">(),</span> <span class="n">EMP</span> <span class="o">=</span> <span class="nf">first</span><span class="p">(</span><span class="n">EMP</span><span class="p">),</span> <span class="n">Bates</span> <span class="o">=</span> <span class="nf">first</span><span class="p">(</span><span class="n">Bates</span><span class="p">))</span> <span class="o">%&gt;%</span>
@@ -413,12 +413,12 @@
 <p>Let's explore what the implications of the 3' end mismatch between primers and bacterial targets might be. I want to look at how each primer hits bacterial phyla. Let's define a function to make this plot. The function will take a couple arguments. One argument will specify the taxon to plot (right now just Bacteria or Archaea) and the other will specify the primer. In this figure rows will be targets (10 most abundant targets) and columns will be taxa. The colors will represent mismatches against the selected primer. Size will be based on relative abundance for the target within the given column. <strong>These figures are somewhat small but you can zoom in by right clicking and opening the figure in a new browser window or tab.</strong></p>
 
 
-<div class="cell border-box-sizing code_cell rendered">
+<div class="cell border-box-sizing code_cell rendered celltag_fullwidth">
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="o">%%</span><span class="n">R</span> <span class="o">-</span><span class="n">w</span> <span class="m">1300</span> <span class="o">-</span><span class="n">h</span> <span class="m">1000</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="n">R</span> <span class="o">-</span><span class="n">w</span> <span class="m">1300</span> <span class="o">-</span><span class="n">h</span> <span class="m">1000</span>
 <span class="n">primer_plot</span> <span class="o">=</span> <span class="nf">function</span><span class="p">(</span><span class="n">taxon</span> <span class="o">=</span> <span class="s">&quot;Bacteria&quot;</span><span class="p">,</span> <span class="n">primer</span> <span class="o">=</span> <span class="s">&quot;EMP&quot;</span><span class="p">)</span> <span class="p">{</span>
     <span class="n">d</span> <span class="o">=</span> <span class="n">df_targets</span> <span class="o">%&gt;%</span>
         <span class="p">{</span>
@@ -514,12 +514,12 @@
 <p>We can make the same plot for Archaea. This highlights how the EMP 515F version hits the Crenarchaea with zero mismatches but neither primer matches the Nanoarchaea targets well.</p>
 
 
-<div class="cell border-box-sizing code_cell rendered">
+<div class="cell border-box-sizing code_cell rendered celltag_fullwidth">
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="o">%%</span><span class="n">R</span> <span class="o">-</span><span class="n">w</span> <span class="m">1200</span> <span class="o">-</span><span class="n">h</span> <span class="m">400</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="n">R</span> <span class="o">-</span><span class="n">w</span> <span class="m">1200</span> <span class="o">-</span><span class="n">h</span> <span class="m">400</span>
 <span class="nf">grid.arrange</span><span class="p">(</span><span class="nf">primer_plot</span><span class="p">(</span><span class="n">taxon</span> <span class="o">=</span> <span class="s">&quot;Archaea&quot;</span><span class="p">),</span> 
              <span class="nf">primer_plot</span><span class="p">(</span><span class="n">taxon</span> <span class="o">=</span> <span class="s">&quot;Archaea&quot;</span><span class="p">,</span> <span class="n">primer</span> <span class="o">=</span> <span class="s">&quot;Bates&quot;</span><span class="p">),</span> <span class="n">ncol</span> <span class="o">=</span> <span class="m">2</span><span class="p">)</span>
 </pre></div>
@@ -567,7 +567,7 @@
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">df_targets</span><span class="p">[</span><span class="s2">&quot;proposed&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_targets</span><span class="p">[</span><span class="s2">&quot;515F&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">count_subs</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s2">&quot;(GTG[CT]CAGC[CA]GCCGCGGT[AGC]A)</span><span class="si">{e}</span><span class="s2">&quot;</span><span class="p">))</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df_targets</span><span class="p">[</span><span class="s2">&quot;proposed&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_targets</span><span class="p">[</span><span class="s2">&quot;515F&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">count_subs</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s2">&quot;(GTG[CT]CAGC[CA]GCCGCGGT[AGC]A)</span><span class="si">{e}</span><span class="s2">&quot;</span><span class="p">))</span>
 <span class="o">%</span><span class="n">R</span> <span class="o">-</span><span class="n">i</span> <span class="n">df_targets</span>
 </pre></div>
 
@@ -576,12 +576,12 @@
 </div>
 
 </div>
-<div class="cell border-box-sizing code_cell rendered">
+<div class="cell border-box-sizing code_cell rendered celltag_fullwidth">
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="o">%%</span><span class="n">R</span> <span class="o">-</span><span class="n">w</span> <span class="m">1300</span> <span class="o">-</span><span class="n">h</span> <span class="m">500</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="n">R</span> <span class="o">-</span><span class="n">w</span> <span class="m">1300</span> <span class="o">-</span><span class="n">h</span> <span class="m">500</span>
 <span class="nf">primer_plot</span><span class="p">(</span><span class="n">primer</span> <span class="o">=</span> <span class="s">&quot;proposed&quot;</span><span class="p">)</span>
 </pre></div>
 
@@ -622,7 +622,7 @@
 
 
 
-<blockquote><p><strong>No. Current 515F primers are biased against TM7 and have mismatches at the 3' end with sequences throughout the most commonly found bacterial phyla (although current primers do hit the most abundant target in Archaea and Bacteria with zero mismatches and there's only one mismatch between current targets and most bacterial targets). So, on the whole, the latest primers are great but still room for improvement.</strong></p>
+<blockquote><p>No. Current 515F primers are biased against TM7 and have mismatches at the 3' end with sequences throughout the most commonly found bacterial phyla (although current primers do hit the most abundant target in Archaea and Bacteria with zero mismatches and there's only one mismatch between current targets and most bacterial targets). So, on the whole, the latest primers are great but still room for improvement.</p>
 </blockquote>
 
 
@@ -633,7 +633,7 @@
 
 
 
-<blockquote><p><strong>I would say yes, tentatively. The latest EMP primer appears to hit most Archaea with zero mismatches. It also hits most Bacteria with one mismatch or less.</strong></p>
+<blockquote><p>I would say yes, tentatively. The latest EMP primer appears to hit most Archaea with zero mismatches. It also hits most Bacteria with one mismatch or less.</p>
 </blockquote>
 
 
@@ -644,7 +644,7 @@
 
 
 
-<blockquote><p><strong>No. Nanoarchaea have distinct 515F targets and 515F primers are biased against Nanoarchaea <em>in silico.</em></strong></p>
+<blockquote><p>No. Nanoarchaea have distinct 515F targets and 515F primers are biased against Nanoarchaea <em>in silico.</em></p>
 </blockquote>
 
 

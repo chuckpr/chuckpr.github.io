@@ -27,7 +27,7 @@
 &lt;p&gt;Let's make a little toy DataFrame. This is how the DataFrame is rendered by default:&lt;/p&gt;
 
 
-&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="cell border-box-sizing code_cell rendered celltag_center"&gt;
 &lt;div class="input"&gt;
 
 &lt;div class="inner_cell"&gt;
@@ -205,7 +205,7 @@
 &lt;p&gt;All that's left is to feed the data from our toy DataFrame to the template. Again, this is pretty intuitive syntax (one of the great features of Jinja).&lt;/p&gt;
 
 
-&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="cell border-box-sizing code_cell rendered celltag_center"&gt;
 &lt;div class="input"&gt;
 
 &lt;div class="inner_cell"&gt;
@@ -331,7 +331,7 @@ table.example .red-circle {
 
 &lt;/div&gt;
 
-&lt;h2 id="The-FiveThiryEight-example"&gt;The FiveThiryEight example&lt;a class="anchor-link" href="#The-FiveThiryEight-example"&gt; &amp;#182;&lt;/a&gt;&lt;/h2&gt;
+&lt;h2 id="The-FiveThiryEight-example"&gt;The FiveThiryEight example&lt;a class="anchor-link" href="#The-FiveThiryEight-example"&gt; &amp;#8678;&lt;/a&gt;&lt;/h2&gt;
 
 
 &lt;p&gt;Ok we've got the gist of it now let's apply the same technique to re-create a FiveThirtyEight-like table. I'm going to try to make &lt;a href="https://projects.fivethirtyeight.com/congress-generic-ballot-polls/"&gt;this table&lt;/a&gt; of polls data for 2020 US congress races. I already have a template prepared named &lt;code&gt;fivethirtyeight.tpl&lt;/code&gt; (you can find it in this &lt;a href="https://gist.github.com/chuckpr/191383974ec46769b877427d5b06ad9b"&gt;GitHub gist&lt;/a&gt;). But, before we can use it, we have to prepare our data. The polls data is &lt;a href="https://projects.fivethirtyeight.com/generic-ballot-data/generic_polllist.csv"&gt;linked right in the FiveThiryEight page&lt;/a&gt; (super convenient!).&lt;/p&gt;
@@ -1413,7 +1413,7 @@ div .polls3 {
 
 
 
-&lt;h2 id="Bonus:-styling-the-table-header"&gt;Bonus: styling the table header&lt;a class="anchor-link" href="#Bonus:-styling-the-table-header"&gt; &amp;#182;&lt;/a&gt;&lt;/h2&gt;
+&lt;h2 id="Bonus:-styling-the-table-header"&gt;Bonus: styling the table header&lt;a class="anchor-link" href="#Bonus:-styling-the-table-header"&gt; &amp;#8678;&lt;/a&gt;&lt;/h2&gt;
 
 
 &lt;p&gt;Here's how I created the table header. It was tedious work but I was eventually able to wrap my head around how FiveThirtyEight achieves that rotated text effect for specific table column headers. The rotated column style is produced with a combination of &lt;code&gt;SVG&lt;/code&gt; transforms and &lt;code&gt;CSS&lt;/code&gt; positioning. We'll begin with the &lt;code&gt;SVG&lt;/code&gt;.&lt;/p&gt;
@@ -1810,7 +1810,7 @@ div.polls2 {
 
 &lt;/div&gt;
 
-&lt;h2 id="Bonus:-making-the-&amp;quot;signal-strength&amp;quot;-icon"&gt;Bonus: making the "signal strength" icon&lt;a class="anchor-link" href="#Bonus:-making-the-&amp;quot;signal-strength&amp;quot;-icon"&gt; &amp;#182;&lt;/a&gt;&lt;/h2&gt;
+&lt;h2 id="Bonus:-making-the-&amp;quot;signal-strength&amp;quot;-icon"&gt;Bonus: making the "signal strength" icon&lt;a class="anchor-link" href="#Bonus:-making-the-&amp;quot;signal-strength&amp;quot;-icon"&gt; &amp;#8678;&lt;/a&gt;&lt;/h2&gt;
 
 
 &lt;p&gt;The "signal strengh" icon in the &lt;code&gt;weight&lt;/code&gt; column is a nice touch. This icon can be created simply with just &lt;code&gt;divs&lt;/code&gt;. Here's how I did it:&lt;/p&gt;
@@ -2662,7 +2662,7 @@ div.polls2 {
 &lt;p&gt;...and we render the plot inline with the &lt;code&gt;show&lt;/code&gt; command. Voila! Pretty cool but no interaction yet...&lt;/p&gt;
 
 
-&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="cell border-box-sizing code_cell rendered celltag_fullwidth celltag_center"&gt;
 &lt;div class="input"&gt;
 
 &lt;div class="inner_cell"&gt;
@@ -2790,7 +2790,7 @@ div.polls2 {
 &lt;p&gt;Now &lt;strong&gt;hover over the points&lt;/strong&gt; to see the accession and EC information for each tip. Also note the toolbar on the left. You can box zoom into the tree with your mouse to explore the topology at better resolution. &lt;strong&gt;Try it out!&lt;/strong&gt; The reset button will get you back to the original orientation.&lt;/p&gt;
 
 
-&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="cell border-box-sizing code_cell rendered celltag_fullwidth celltag_center"&gt;
 &lt;div class="input"&gt;
 
 &lt;div class="inner_cell"&gt;
@@ -2861,7 +2861,7 @@ div.polls2 {
 &lt;/div&gt;
 
 &lt;/div&gt;
-&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="cell border-box-sizing code_cell rendered celltag_fullwidth celltag_center"&gt;
 &lt;div class="input"&gt;
 
 &lt;div class="inner_cell"&gt;
@@ -3217,7 +3217,7 @@ div.polls2 {
 &lt;p&gt;We now have all the information we need to make our tree in IToL that will give us a sense of how phylogenetically conserved the EC annotations are with phylogeny. But first let's plot some counts of the different EC activities. There is clearly one predominant activity for this set of sequences.&lt;/p&gt;
 
 
-&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="cell border-box-sizing code_cell rendered celltag_fullwidth"&gt;
 &lt;div class="input"&gt;
 
 &lt;div class="inner_cell"&gt;
@@ -3496,7 +3496,7 @@ QTPTTPSPQTPTTPTALPTPSPTPTAPSATVTETTSPQTPTTTITTETTTTPAPQPQVVFLKLPEGEEPK
 &lt;p&gt;Our alignment is a bit gappy as you can see below. There are quite a few positions with few characters.&lt;/p&gt;
 
 
-&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="cell border-box-sizing code_cell rendered celltag_fullwidth"&gt;
 &lt;div class="input"&gt;
 
 &lt;div class="inner_cell"&gt;
@@ -3570,7 +3570,7 @@ QTPTTPSPQTPTTPTALPTPSPTPTAPSATVTETTSPQTPTTTITTETTTTPAPQPQVVFLKLPEGEEPK
 &lt;p&gt;Ok, that looks better. We'll use this filtered alignment to build the tree.&lt;/p&gt;
 
 
-&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="cell border-box-sizing code_cell rendered celltag_fullwidth"&gt;
 &lt;div class="input"&gt;
 
 &lt;div class="inner_cell"&gt;
@@ -3787,7 +3787,7 @@ FastTree &amp;lt;&lt;span class="o"&gt;(&lt;/span&gt;sed &lt;span class="s1"&gt;
 &lt;p&gt;You can also use &lt;code&gt;itolapi&lt;/code&gt; to download the tree but I don't think the IToL API supports exporting trees with full clade coloring. I could be wrong but I really wanted the full clade coloring as opposed to just a ring of colors around the tree. Anyway, I had to manually visit IToL to export this visualization (frown).&lt;/p&gt;
 
 
-&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="cell border-box-sizing code_cell rendered celltag_fullwidth"&gt;
 &lt;div class="input"&gt;
 
 &lt;div class="inner_cell"&gt;
@@ -4083,7 +4083,7 @@ width=600
 &lt;p&gt;This information will be more useful when we're tallying the annotations in a real dataset, but, we can also do a quick analysis. It looks like the "GH-A" clan has the most glycoside hydrolase families and the most EC activities. Beyond that, the clans have similar numbers of families but vary with respect to number of EC activities. (Note how the "clan" column can be sorted using &lt;code&gt;magrittr&lt;/code&gt; and &lt;code&gt;dplyr&lt;/code&gt;. Graphs that aren't sensibly sorted are a huge pet peeve of mine :) . Also, I'm using &lt;code&gt;tidyr&lt;/code&gt; to get the table in the proper orientation for plotting.)&lt;/p&gt;
 
 
-&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="cell border-box-sizing code_cell rendered celltag_fullwidth"&gt;
 &lt;div class="input"&gt;
 
 &lt;div class="inner_cell"&gt;
@@ -4603,7 +4603,8 @@ Joining by: &amp;#34;SampleID&amp;#34;
 
 &lt;/div&gt;
 
-&lt;h3 id="Wow.-Roughly-an-order-of-magnitude-faster.-dplyr-and-tidyr-are-so-great.-And-look-at-that-syntax!"&gt;Wow. Roughly an order of magnitude faster. dplyr and tidyr are so great. And look at that syntax!&lt;a class="anchor-link" href="#Wow.-Roughly-an-order-of-magnitude-faster.-dplyr-and-tidyr-are-so-great.-And-look-at-that-syntax!"&gt; &amp;#182;&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;Wow. Roughly an order of magnitude faster. dplyr and tidyr are so great. And look at that syntax!&lt;/strong&gt;&lt;/p&gt;
+
 
 
 &lt;p&gt;I shold note that I'm using phyloseq version &lt;strong&gt;1.9.15&lt;/strong&gt; in this demo.&lt;/p&gt;
@@ -4617,7 +4618,7 @@ Joining by: &amp;#34;SampleID&amp;#34;
 &lt;p&gt;Let's do one quick example from the melted &lt;code&gt;phyloseq object&lt;/code&gt; to give you a taste of how useful it is. Let's say we want to make phylum level stacked bar charts for all the studies in the example data. Here's how you might do it from the melted &lt;code&gt;phyloseq object&lt;/code&gt;.&lt;/p&gt;
 
 
-&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="cell border-box-sizing code_cell rendered celltag_fullwidth"&gt;
 &lt;div class="input"&gt;
 
 &lt;div class="inner_cell"&gt;
@@ -4752,7 +4753,7 @@ Joining by: &amp;#34;SampleID&amp;#34;
 
 &lt;div class="inner_cell"&gt;
     &lt;div class="input_area"&gt;
-&lt;div class=" highlight hl-ipython2"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;versions&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;EMP&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;(GTG[CT]CAGC[CA]GCCGCGGTAA)&lt;/span&gt;&lt;span class="si"&gt;{e}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; 
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;versions&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;EMP&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;(GTG[CT]CAGC[CA]GCCGCGGTAA)&lt;/span&gt;&lt;span class="si"&gt;{e}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; 
             &lt;span class="s2"&gt;&amp;quot;Bates&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;(GTGCCAGC[CA]GCCGCGGTAA)&lt;/span&gt;&lt;span class="si"&gt;{e}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -4770,7 +4771,7 @@ Joining by: &amp;#34;SampleID&amp;#34;
 
 &lt;div class="inner_cell"&gt;
     &lt;div class="input_area"&gt;
-&lt;div class=" highlight hl-ipython2"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;matplotlib&lt;/span&gt; &lt;span class="n"&gt;inline&lt;/span&gt;
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;matplotlib&lt;/span&gt; &lt;span class="n"&gt;inline&lt;/span&gt;
 &lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;load_ext&lt;/span&gt; &lt;span class="n"&gt;rpy2&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ipython&lt;/span&gt;
 &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;matplotlib.pyplot&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;plt&lt;/span&gt;
 &lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;align&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;aligner&lt;/span&gt;
@@ -4789,7 +4790,7 @@ Joining by: &amp;#34;SampleID&amp;#34;
 
 &lt;div class="inner_cell"&gt;
     &lt;div class="input_area"&gt;
-&lt;div class=" highlight hl-ipython2"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;%%&lt;/span&gt;&lt;span class="n"&gt;R&lt;/span&gt;
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;%%&lt;/span&gt;&lt;span class="n"&gt;R&lt;/span&gt;
 &lt;span class="nf"&gt;library&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ggplot2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="nf"&gt;library&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;dplyr&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt; &lt;span class="nf"&gt;library&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;tidyr&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="nf"&gt;library&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;magrittr&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
@@ -4832,7 +4833,7 @@ Joining by: &amp;#34;SampleID&amp;#34;
 
 &lt;div class="inner_cell"&gt;
     &lt;div class="input_area"&gt;
-&lt;div class=" highlight hl-ipython2"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;parse_tax&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;line&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;parse_tax&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;line&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
     &lt;span class="nb"&gt;id&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;tax_str&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;line&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;split&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="se"&gt;\t&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
     &lt;span class="n"&gt;k&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;o&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;s&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;tax_str&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;rstrip&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;split&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
     &lt;span class="n"&gt;tax_dict&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;kingdom&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;k&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;split&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;__&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
@@ -4886,7 +4887,7 @@ Joining by: &amp;#34;SampleID&amp;#34;
 
 &lt;div class="inner_cell"&gt;
     &lt;div class="input_area"&gt;
-&lt;div class=" highlight hl-ipython2"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;count_subs&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;primer_regex&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;count_subs&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;primer_regex&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
     &lt;span class="n"&gt;subs&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ins&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;dels&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;regex&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;fullmatch&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;primer_regex&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;s&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;fuzzy_counts&lt;/span&gt;
     &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;ins&lt;/span&gt; &lt;span class="ow"&gt;or&lt;/span&gt; &lt;span class="n"&gt;dels&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
         &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&amp;quot;&lt;/span&gt;
@@ -4908,7 +4909,7 @@ Joining by: &amp;#34;SampleID&amp;#34;
 
 &lt;div class="inner_cell"&gt;
     &lt;div class="input_area"&gt;
-&lt;div class=" highlight hl-ipython2"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;key&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;versions&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;key&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;versions&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
     &lt;span class="n"&gt;df_targets&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;df_targets&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;515F&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;apply&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;lambda&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;count_subs&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;versions&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="p"&gt;]))&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -4938,7 +4939,7 @@ Joining by: &amp;#34;SampleID&amp;#34;
 
 &lt;div class="inner_cell"&gt;
     &lt;div class="input_area"&gt;
-&lt;div class=" highlight hl-ipython2"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;R&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="n"&gt;df_targets&lt;/span&gt;
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;R&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="n"&gt;df_targets&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
     &lt;/div&gt;
@@ -4951,7 +4952,7 @@ Joining by: &amp;#34;SampleID&amp;#34;
 
 &lt;div class="inner_cell"&gt;
     &lt;div class="input_area"&gt;
-&lt;div class=" highlight hl-ipython2"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;%%&lt;/span&gt;&lt;span class="n"&gt;R&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;w&lt;/span&gt; &lt;span class="m"&gt;650&lt;/span&gt;
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;%%&lt;/span&gt;&lt;span class="n"&gt;R&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;w&lt;/span&gt; &lt;span class="m"&gt;650&lt;/span&gt;
 &lt;span class="n"&gt;d&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;df_targets&lt;/span&gt; &lt;span class="o"&gt;%&amp;gt;%&lt;/span&gt;
     &lt;span class="nf"&gt;group_by&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;kingdom&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;X515F&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;%&amp;gt;%&lt;/span&gt;
     &lt;span class="nf"&gt;summarize&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;count&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nf"&gt;n&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt; &lt;span class="n"&gt;EMP&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nf"&gt;first&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;EMP&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;Bates&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nf"&gt;first&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Bates&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt; &lt;span class="o"&gt;%&amp;gt;%&lt;/span&gt;
@@ -5027,12 +5028,12 @@ Joining by: &amp;#34;SampleID&amp;#34;
 &lt;p&gt;Let's explore what the implications of the 3' end mismatch between primers and bacterial targets might be. I want to look at how each primer hits bacterial phyla. Let's define a function to make this plot. The function will take a couple arguments. One argument will specify the taxon to plot (right now just Bacteria or Archaea) and the other will specify the primer. In this figure rows will be targets (10 most abundant targets) and columns will be taxa. The colors will represent mismatches against the selected primer. Size will be based on relative abundance for the target within the given column. &lt;strong&gt;These figures are somewhat small but you can zoom in by right clicking and opening the figure in a new browser window or tab.&lt;/strong&gt;&lt;/p&gt;
 
 
-&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="cell border-box-sizing code_cell rendered celltag_fullwidth"&gt;
 &lt;div class="input"&gt;
 
 &lt;div class="inner_cell"&gt;
     &lt;div class="input_area"&gt;
-&lt;div class=" highlight hl-ipython2"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;%%&lt;/span&gt;&lt;span class="n"&gt;R&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;w&lt;/span&gt; &lt;span class="m"&gt;1300&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;h&lt;/span&gt; &lt;span class="m"&gt;1000&lt;/span&gt;
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;%%&lt;/span&gt;&lt;span class="n"&gt;R&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;w&lt;/span&gt; &lt;span class="m"&gt;1300&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;h&lt;/span&gt; &lt;span class="m"&gt;1000&lt;/span&gt;
 &lt;span class="n"&gt;primer_plot&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nf"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;taxon&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Bacteria&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;primer&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;EMP&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
     &lt;span class="n"&gt;d&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;df_targets&lt;/span&gt; &lt;span class="o"&gt;%&amp;gt;%&lt;/span&gt;
         &lt;span class="p"&gt;{&lt;/span&gt;
@@ -5128,12 +5129,12 @@ Joining by: &amp;#34;SampleID&amp;#34;
 &lt;p&gt;We can make the same plot for Archaea. This highlights how the EMP 515F version hits the Crenarchaea with zero mismatches but neither primer matches the Nanoarchaea targets well.&lt;/p&gt;
 
 
-&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="cell border-box-sizing code_cell rendered celltag_fullwidth"&gt;
 &lt;div class="input"&gt;
 
 &lt;div class="inner_cell"&gt;
     &lt;div class="input_area"&gt;
-&lt;div class=" highlight hl-ipython2"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;%%&lt;/span&gt;&lt;span class="n"&gt;R&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;w&lt;/span&gt; &lt;span class="m"&gt;1200&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;h&lt;/span&gt; &lt;span class="m"&gt;400&lt;/span&gt;
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;%%&lt;/span&gt;&lt;span class="n"&gt;R&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;w&lt;/span&gt; &lt;span class="m"&gt;1200&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;h&lt;/span&gt; &lt;span class="m"&gt;400&lt;/span&gt;
 &lt;span class="nf"&gt;grid.arrange&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;primer_plot&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;taxon&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Archaea&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; 
              &lt;span class="nf"&gt;primer_plot&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;taxon&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Archaea&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;primer&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Bates&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;ncol&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="m"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
@@ -5181,7 +5182,7 @@ Joining by: &amp;#34;SampleID&amp;#34;
 
 &lt;div class="inner_cell"&gt;
     &lt;div class="input_area"&gt;
-&lt;div class=" highlight hl-ipython2"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;df_targets&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;proposed&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;df_targets&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;515F&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;apply&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;lambda&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;count_subs&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;(GTG[CT]CAGC[CA]GCCGCGGT[AGC]A)&lt;/span&gt;&lt;span class="si"&gt;{e}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;df_targets&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;proposed&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;df_targets&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;515F&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;apply&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;lambda&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;count_subs&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;(GTG[CT]CAGC[CA]GCCGCGGT[AGC]A)&lt;/span&gt;&lt;span class="si"&gt;{e}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
 &lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;R&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="n"&gt;df_targets&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -5190,12 +5191,12 @@ Joining by: &amp;#34;SampleID&amp;#34;
 &lt;/div&gt;
 
 &lt;/div&gt;
-&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="cell border-box-sizing code_cell rendered celltag_fullwidth"&gt;
 &lt;div class="input"&gt;
 
 &lt;div class="inner_cell"&gt;
     &lt;div class="input_area"&gt;
-&lt;div class=" highlight hl-ipython2"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;%%&lt;/span&gt;&lt;span class="n"&gt;R&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;w&lt;/span&gt; &lt;span class="m"&gt;1300&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;h&lt;/span&gt; &lt;span class="m"&gt;500&lt;/span&gt;
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;%%&lt;/span&gt;&lt;span class="n"&gt;R&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;w&lt;/span&gt; &lt;span class="m"&gt;1300&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;h&lt;/span&gt; &lt;span class="m"&gt;500&lt;/span&gt;
 &lt;span class="nf"&gt;primer_plot&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;primer&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;proposed&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -5236,7 +5237,7 @@ Joining by: &amp;#34;SampleID&amp;#34;
 
 
 
-&lt;blockquote&gt;&lt;p&gt;&lt;strong&gt;No. Current 515F primers are biased against TM7 and have mismatches at the 3' end with sequences throughout the most commonly found bacterial phyla (although current primers do hit the most abundant target in Archaea and Bacteria with zero mismatches and there's only one mismatch between current targets and most bacterial targets). So, on the whole, the latest primers are great but still room for improvement.&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;&lt;p&gt;No. Current 515F primers are biased against TM7 and have mismatches at the 3' end with sequences throughout the most commonly found bacterial phyla (although current primers do hit the most abundant target in Archaea and Bacteria with zero mismatches and there's only one mismatch between current targets and most bacterial targets). So, on the whole, the latest primers are great but still room for improvement.&lt;/p&gt;
 &lt;/blockquote&gt;
 
 
@@ -5247,7 +5248,7 @@ Joining by: &amp;#34;SampleID&amp;#34;
 
 
 
-&lt;blockquote&gt;&lt;p&gt;&lt;strong&gt;I would say yes, tentatively. The latest EMP primer appears to hit most Archaea with zero mismatches. It also hits most Bacteria with one mismatch or less.&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;&lt;p&gt;I would say yes, tentatively. The latest EMP primer appears to hit most Archaea with zero mismatches. It also hits most Bacteria with one mismatch or less.&lt;/p&gt;
 &lt;/blockquote&gt;
 
 
@@ -5258,7 +5259,7 @@ Joining by: &amp;#34;SampleID&amp;#34;
 
 
 
-&lt;blockquote&gt;&lt;p&gt;&lt;strong&gt;No. Nanoarchaea have distinct 515F targets and 515F primers are biased against Nanoarchaea &lt;em&gt;in silico.&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;&lt;p&gt;No. Nanoarchaea have distinct 515F targets and 515F primers are biased against Nanoarchaea &lt;em&gt;in silico.&lt;/em&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 
 
@@ -5802,7 +5803,7 @@ The following objects are masked from ‘package:base’:
 
 
 
-&lt;h4 id="In-the-next-post-we'll-test-that-hypothesis-by-evaluating-how-well-the-515F-primer-matches-the-targets-we've-identified..."&gt;In the next post we'll test that hypothesis by evaluating how well the 515F primer matches the targets we've identified...&lt;a class="anchor-link" href="#In-the-next-post-we'll-test-that-hypothesis-by-evaluating-how-well-the-515F-primer-matches-the-targets-we've-identified..."&gt; &amp;#182;&lt;/a&gt;&lt;/h4&gt;
+&lt;h4 id="In-the-next-post-we'll-test-that-hypothesis-by-evaluating-how-well-the-515F-primer-matches-the-targets-we've-identified..."&gt;In the next post we'll test that hypothesis by evaluating how well the 515F primer matches the targets we've identified...&lt;a class="anchor-link" href="#In-the-next-post-we'll-test-that-hypothesis-by-evaluating-how-well-the-515F-primer-matches-the-targets-we've-identified..."&gt; &amp;#8678;&lt;/a&gt;&lt;/h4&gt;
 
  
 

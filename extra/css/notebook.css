@@ -12,6 +12,24 @@
   margin-bottom: 2.5em;
 }
 
+.celltag_fullwidth .output_wrapper .output .output_area .output_png,
+.celltag_fullwidth .output_wrapper .output .output_area .output_html {
+  width: 100vw;
+  padding-left: 5vw;
+  padding-right: 5vw;
+  position: relative;
+  left: 50%;
+  margin-left: -50vw;
+  right: 50%;
+  margin-right: -50vw;
+}
+
+.celltag_center .output_wrapper .output .output_area .output_png,
+.celltag_center .output_wrapper .output .output_area .output_html {
+  display: flex;
+  justify-content: center;
+}
+
 .celltag_aside {
   border-left: thick solid #219;
   padding-left: 15px;

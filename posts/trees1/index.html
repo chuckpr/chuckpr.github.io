@@ -46,13 +46,13 @@
 
   <link rel="stylesheet" type="text/css" href="https://chuckpr.github.io/theme/css/pygments.css">
   <link rel="stylesheet" type="text/css" href="https://chuckpr.github.io/theme/css/article.css">
-  <link rel="stylesheet" type="text/css" href="https://chuckpr.github.io/theme/css/notebook.css">
+    <link rel="stylesheet" type="text/css" href="https://chuckpr.github.io/extra/css/notebook.css">
 
 </head>
 
 <body>
   <header class="flex flex-column avenir mw7 ml-auto mr-auto">
-<div class="pt5 pb2">
+<div class="pt5 pb2 pl0-l pl2">
   <a href="https://chuckpr.github.io/" class="link dim f2-ns f3 fw4 blue tracked-tight bb-l bw1-ns lh-title b--moon-gray">
     A microbiologist with a data science problem
   </a>
@@ -374,7 +374,7 @@
 <p>We now have all the information we need to make our tree in IToL that will give us a sense of how phylogenetically conserved the EC annotations are with phylogeny. But first let's plot some counts of the different EC activities. There is clearly one predominant activity for this set of sequences.</p>
 
 
-<div class="cell border-box-sizing code_cell rendered">
+<div class="cell border-box-sizing code_cell rendered celltag_fullwidth">
 <div class="input">
 
 <div class="inner_cell">
@@ -653,7 +653,7 @@ QTPTTPSPQTPTTPTALPTPSPTPTAPSATVTETTSPQTPTTTITTETTTTPAPQPQVVFLKLPEGEEPK
 <p>Our alignment is a bit gappy as you can see below. There are quite a few positions with few characters.</p>
 
 
-<div class="cell border-box-sizing code_cell rendered">
+<div class="cell border-box-sizing code_cell rendered celltag_fullwidth">
 <div class="input">
 
 <div class="inner_cell">
@@ -727,7 +727,7 @@ QTPTTPSPQTPTTPTALPTPSPTPTAPSATVTETTSPQTPTTTITTETTTTPAPQPQVVFLKLPEGEEPK
 <p>Ok, that looks better. We'll use this filtered alignment to build the tree.</p>
 
 
-<div class="cell border-box-sizing code_cell rendered">
+<div class="cell border-box-sizing code_cell rendered celltag_fullwidth">
 <div class="input">
 
 <div class="inner_cell">
@@ -944,7 +944,7 @@ FastTree &lt;<span class="o">(</span>sed <span class="s1">&#39;/^&gt;/ s/.*|.*|.
 <p>You can also use <code>itolapi</code> to download the tree but I don't think the IToL API supports exporting trees with full clade coloring. I could be wrong but I really wanted the full clade coloring as opposed to just a ring of colors around the tree. Anyway, I had to manually visit IToL to export this visualization (frown).</p>
 
 
-<div class="cell border-box-sizing code_cell rendered">
+<div class="cell border-box-sizing code_cell rendered celltag_fullwidth">
 <div class="input">
 
 <div class="inner_cell">

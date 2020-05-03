@@ -46,13 +46,13 @@
 
   <link rel="stylesheet" type="text/css" href="https://chuckpr.github.io/theme/css/pygments.css">
   <link rel="stylesheet" type="text/css" href="https://chuckpr.github.io/theme/css/article.css">
-  <link rel="stylesheet" type="text/css" href="https://chuckpr.github.io/theme/css/notebook.css">
+    <link rel="stylesheet" type="text/css" href="https://chuckpr.github.io/extra/css/notebook.css">
 
 </head>
 
 <body>
   <header class="flex flex-column avenir mw7 ml-auto mr-auto">
-<div class="pt5 pb2">
+<div class="pt5 pb2 pl0-l pl2">
   <a href="https://chuckpr.github.io/" class="link dim f2-ns f3 fw4 blue tracked-tight bb-l bw1-ns lh-title b--moon-gray">
     A microbiologist with a data science problem
   </a>
@@ -116,7 +116,7 @@
 <p>Let's make a little toy DataFrame. This is how the DataFrame is rendered by default:</p>
 
 
-<div class="cell border-box-sizing code_cell rendered">
+<div class="cell border-box-sizing code_cell rendered celltag_center">
 <div class="input">
 
 <div class="inner_cell">
@@ -294,7 +294,7 @@
 <p>All that's left is to feed the data from our toy DataFrame to the template. Again, this is pretty intuitive syntax (one of the great features of Jinja).</p>
 
 
-<div class="cell border-box-sizing code_cell rendered">
+<div class="cell border-box-sizing code_cell rendered celltag_center">
 <div class="input">
 
 <div class="inner_cell">
@@ -420,7 +420,7 @@ table.example .red-circle {
 
 </div>
 
-<h2 id="The-FiveThiryEight-example">The FiveThiryEight example<a class="anchor-link" href="#The-FiveThiryEight-example"> &#182;</a></h2>
+<h2 id="The-FiveThiryEight-example">The FiveThiryEight example<a class="anchor-link" href="#The-FiveThiryEight-example"> &#8678;</a></h2>
 
 
 <p>Ok we've got the gist of it now let's apply the same technique to re-create a FiveThirtyEight-like table. I'm going to try to make <a href="https://projects.fivethirtyeight.com/congress-generic-ballot-polls/">this table</a> of polls data for 2020 US congress races. I already have a template prepared named <code>fivethirtyeight.tpl</code> (you can find it in this <a href="https://gist.github.com/chuckpr/191383974ec46769b877427d5b06ad9b">GitHub gist</a>). But, before we can use it, we have to prepare our data. The polls data is <a href="https://projects.fivethirtyeight.com/generic-ballot-data/generic_polllist.csv">linked right in the FiveThiryEight page</a> (super convenient!).</p>
@@ -1502,7 +1502,7 @@ div .polls3 {
 
 
 
-<h2 id="Bonus:-styling-the-table-header">Bonus: styling the table header<a class="anchor-link" href="#Bonus:-styling-the-table-header"> &#182;</a></h2>
+<h2 id="Bonus:-styling-the-table-header">Bonus: styling the table header<a class="anchor-link" href="#Bonus:-styling-the-table-header"> &#8678;</a></h2>
 
 
 <p>Here's how I created the table header. It was tedious work but I was eventually able to wrap my head around how FiveThirtyEight achieves that rotated text effect for specific table column headers. The rotated column style is produced with a combination of <code>SVG</code> transforms and <code>CSS</code> positioning. We'll begin with the <code>SVG</code>.</p>
@@ -1899,7 +1899,7 @@ div.polls2 {
 
 </div>
 
-<h2 id="Bonus:-making-the-&quot;signal-strength&quot;-icon">Bonus: making the "signal strength" icon<a class="anchor-link" href="#Bonus:-making-the-&quot;signal-strength&quot;-icon"> &#182;</a></h2>
+<h2 id="Bonus:-making-the-&quot;signal-strength&quot;-icon">Bonus: making the "signal strength" icon<a class="anchor-link" href="#Bonus:-making-the-&quot;signal-strength&quot;-icon"> &#8678;</a></h2>
 
 
 <p>The "signal strengh" icon in the <code>weight</code> column is a nice touch. This icon can be created simply with just <code>divs</code>. Here's how I did it:</p>
