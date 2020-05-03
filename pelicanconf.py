@@ -50,7 +50,7 @@ TWITTER_USERNAME = 'chuckpr'
 
 IGNORE_FILES = ['.ipynb_checkpoints*']
 SUMMARY_MAX_LENGTH = 15
-STATIC_PATHS = ['images', 'notebooks/images',]
+STATIC_PATHS = ['images', 'notebooks/images', 'extra']
 EXTRA_PATH_METADATA = {
     'images/favicon.ico': {'path': 'favicon.ico'}
 }
@@ -75,6 +75,16 @@ TOGGLE_CODE_BUTTON_TEXT = 'toggle code'
 TOGGLE_ALL_BUTTON_TEXT = 'show me'
 HIDE_CELL_TAG = 'disappear'
 
+
+# Theme settings
+NAV_LINKS = [
+    ('about', 'pages/about/'),
+]
+EXTRA_CSS = dict(
+    article="extra/css/notebook.css"
+)
+
+
 # Instantiate a config object and call it NBCONVERT_CONFIG
 from traitlets.config import Config
 NBCONVERT_CONFIG = Config()
@@ -98,4 +108,5 @@ NBCONVERT_CONFIG.ExtractOutputPreprocessor.output_filename_template = \
     'images/{unique_key}_{cell_index}_{index}{extension}'
 
 # adujst the anchor links
-NBCONVERT_CONFIG.HTMLExporter.anchor_link_text = u' ¶'
+# NBCONVERT_CONFIG.HTMLExporter.anchor_link_text = u' ¶'
+NBCONVERT_CONFIG.HTMLExporter.anchor_link_text = u' ⇦'
