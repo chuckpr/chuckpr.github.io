@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>A microbiologist with a data science problem</title><link href="https://chuckpr.github.io/" rel="alternate"></link><link href="https://chuckpr.github.io/feeds/all.atom.xml" rel="self"></link><id>https://chuckpr.github.io/</id><updated>2020-04-26T00:00:00-04:00</updated><entry><title>Making FiveThirtyEight-like tables in Jupyter with Jinja2 and Pandas</title><link href="https://chuckpr.github.io/posts/fivethirtyeight-tables/" rel="alternate"></link><published>2020-04-26T00:00:00-04:00</published><updated>2020-04-26T00:00:00-04:00</updated><author><name>Chuck Pepe-Ranney</name></author><id>tag:chuckpr.github.io,2020-04-26:/posts/fivethirtyeight-tables/</id><summary type="html">&lt;p&gt;I love the tables on &lt;a href="https://fivethirtyeight.com/"&gt;FiveThirtyEight&lt;/a&gt;. I often want to similarly visualize a &lt;a href="https://pandas.pydata.org/"&gt;Pandas DataFrame …&lt;/a&gt;&lt;/p&gt;</summary><content type="html">&lt;p&gt;I love the tables on &lt;a href="https://fivethirtyeight.com/"&gt;FiveThirtyEight&lt;/a&gt;. I often want to similarly visualize a &lt;a href="https://pandas.pydata.org/"&gt;Pandas DataFrame&lt;/a&gt; in &lt;a href="https://jupyter.org/"&gt;Jupyter&lt;/a&gt;. In this post we'll take a shot at re-creating a FiveThirtyEight-styled table in a Jupyter notebook. Pandas has a great &lt;a href="https://pandas.pydata.org/pandas-docs/stable/user_guide/style.html"&gt;styling API&lt;/a&gt; but it's not enough to achieve all the great styling touches that FiveThirtyEight uses. To get more control of the table visualization, we can create a &lt;a href="https://jinja.palletsprojects.com/en/2.11.x/"&gt;Jinja&lt;/a&gt; template that will accept our data and return a styled &lt;code&gt;HTML&lt;/code&gt; table.&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>A microbiologist with a data science problem</title><link href="https://chuckpr.github.io/" rel="alternate"></link><link href="https://chuckpr.github.io/feeds/all.atom.xml" rel="self"></link><id>https://chuckpr.github.io/</id><updated>2020-05-04T00:00:00-04:00</updated><entry><title>Making FiveThirtyEight-like tables in Jupyter with Jinja2 and Pandas</title><link href="https://chuckpr.github.io/posts/fivethirtyeight-tables/" rel="alternate"></link><published>2020-05-04T00:00:00-04:00</published><updated>2020-05-04T00:00:00-04:00</updated><author><name>Chuck Pepe-Ranney</name></author><id>tag:chuckpr.github.io,2020-05-04:/posts/fivethirtyeight-tables/</id><summary type="html">&lt;p&gt;I love the tables on &lt;a href="https://fivethirtyeight.com/"&gt;FiveThirtyEight&lt;/a&gt;. I often want to similarly visualize a &lt;a href="https://pandas.pydata.org/"&gt;Pandas DataFrame …&lt;/a&gt;&lt;/p&gt;</summary><content type="html">&lt;p&gt;I love the tables on &lt;a href="https://fivethirtyeight.com/"&gt;FiveThirtyEight&lt;/a&gt;. I often want to similarly visualize a &lt;a href="https://pandas.pydata.org/"&gt;Pandas DataFrame&lt;/a&gt; in &lt;a href="https://jupyter.org/"&gt;Jupyter&lt;/a&gt;. In this post we'll take a shot at creating a FiveThirtyEight-styled table in a Jupyter notebook. Let's make a something like this &lt;a href="https://projects.fivethirtyeight.com/congress-generic-ballot-polls/"&gt;table of 2020 congressional race polls results&lt;/a&gt;. Pandas has a great &lt;a href="https://pandas.pydata.org/pandas-docs/stable/user_guide/style.html"&gt;styling API&lt;/a&gt; but it's not enough to achieve all the styling touches that FiveThirtyEight uses. Instead of using the Pandas styling API, we'll create an &lt;code&gt;HTML&lt;/code&gt; table from scratch using a &lt;a href="https://jinja.palletsprojects.com/en/2.11.x/"&gt;Jinja&lt;/a&gt; template that will accept polls data and return a styled &lt;code&gt;HTML&lt;/code&gt; table.&lt;/p&gt;
 
 
 
@@ -27,6 +27,12 @@
 &lt;p&gt;Let's make a little toy DataFrame. This is how the DataFrame is rendered by default:&lt;/p&gt;
 
 
+
+&lt;div class=" celltag_aside"&gt;
+&lt;p&gt;Every now and then I'll be applying a &lt;code&gt;CSS&lt;/code&gt; class from the &lt;a href="https://tachyons.io/"&gt;Tachyons &lt;code&gt;CSS&lt;/code&gt; framework&lt;/a&gt; which I use to style this blog. In the table below I'm adding a Tachyons class "collapse" tot the &lt;code&gt;HTML&lt;/code&gt; output from Pandas.&lt;/p&gt;
+
+&lt;/div&gt;
+
 &lt;div class="cell border-box-sizing code_cell rendered celltag_center"&gt;
 &lt;div class="input"&gt;
 
@@ -38,7 +44,7 @@
         &lt;span class="n"&gt;other_data&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;56&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
     &lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="n"&gt;df&lt;/span&gt;
+&lt;span class="n"&gt;HTML&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;to_html&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;classes&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;collapse&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
     &lt;/div&gt;
@@ -56,21 +62,7 @@
 
 
 &lt;div class="output_html rendered_html output_subarea output_execute_result"&gt;
-&lt;div&gt;
-&lt;style scoped&gt;
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-&lt;/style&gt;
-&lt;table border="1" class="dataframe"&gt;
+&lt;table border="1" class="dataframe collapse"&gt;
   &lt;thead&gt;
     &lt;tr style="text-align: right;"&gt;
       &lt;th&gt;&lt;/th&gt;
@@ -102,7 +94,6 @@
   &lt;/tbody&gt;
 &lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;
 
 &lt;/div&gt;
 
@@ -115,12 +106,54 @@
 
 
 
-&lt;p&gt;Let's say we want to encompass all "a" values with red circles. We can do this by using Jinja to create an &lt;code&gt;HTML&lt;/code&gt; table from our DataFrame. The code below shows how we can build an &lt;code&gt;HTML&lt;/code&gt; table from a Jinja template that accepts &lt;code&gt;rows&lt;/code&gt; which is a list of dictionaries representing our DataFrame rows, and, &lt;code&gt;columns&lt;/code&gt; which is a list that represents our DataFrame column names. For a review of the Jinja template syntax check out &lt;a href="https://jinja.palletsprojects.com/en/2.11.x/"&gt;the documentation&lt;/a&gt; -- templating systems are incredibly powerful so it's well worth your time.&lt;/p&gt;
+&lt;p&gt;Let's say we want to draw a red circle around all the "a" values. We can do this easily with &lt;code&gt;HTML&lt;/code&gt; and &lt;code&gt;CSS&lt;/code&gt;.&lt;/p&gt;
+
+
+&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="input"&gt;
+
+&lt;div class="inner_cell"&gt;
+    &lt;div class="input_area"&gt;
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;%%html
+&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;style&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;border: thin solid red; border-radius: 50%; width: 24px; text-align: center&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+a
+&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="output_wrapper"&gt;
+&lt;div class="output"&gt;
+
+
+&lt;div class="output_area"&gt;
+
+    &lt;div class="prompt"&gt;&lt;/div&gt;
+
+
+
+&lt;div class="output_html rendered_html output_subarea "&gt;
+&lt;div style="border: thin solid red; border-radius: 50%; width: 24px; text-align: center"&gt;
+a
+&lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;p&gt;But we don't want to hand code &lt;code&gt;HTML&lt;/code&gt; for an entire table. This is where Jinja comes in. We can create a Jinja &lt;em&gt;template&lt;/em&gt; for our &lt;code&gt;HTML&lt;/code&gt; table that will loop through our data and output the full table. The code below builds a Jinja template that accepts &lt;code&gt;rows&lt;/code&gt; — which is a list of dictionaries representing our DataFrame rows — and, &lt;code&gt;columns&lt;/code&gt; — which is a list that represents our DataFrame column names. The template takes the input data and returns an &lt;code&gt;HTML&lt;/code&gt; table. For a review of the Jinja template syntax check out &lt;a href="https://jinja.palletsprojects.com/en/2.11.x/"&gt;the documentation&lt;/a&gt;. Templating systems are incredibly powerful so it's well worth your time.&lt;/p&gt;
 
 
 
 &lt;div class=" celltag_aside"&gt;
-&lt;p&gt;I also added the &lt;code&gt;collapse&lt;/code&gt; class to the table which is defined in the &lt;a href="https://tachyons.io/docs/elements/tables/"&gt;CSS framework&lt;/a&gt; I'm using on this blog. The &lt;code&gt;collapse&lt;/code&gt; class adjusts the cell/table borders so they aren't doubled like in the above table.&lt;/p&gt;
+&lt;p&gt;I added the &lt;code&gt;collapse&lt;/code&gt; class again to the table which is defined in the &lt;a href="https://tachyons.io/docs/elements/tables/"&gt;CSS framework&lt;/a&gt; I'm using on this blog. The &lt;code&gt;collapse&lt;/code&gt; class adjusts the cell/table borders so they aren't doubled in appearance.&lt;/p&gt;
 
 &lt;/div&gt;
 
@@ -162,7 +195,7 @@
 
 &lt;/div&gt;
 
-&lt;p&gt;I think the &lt;code&gt;HTML&lt;/code&gt; table markup is pretty intuitive: nested in &lt;code&gt;&amp;lt;table&amp;gt;&lt;/code&gt; we have a header &lt;code&gt;&amp;lt;head&amp;gt;&lt;/code&gt; and a body &lt;code&gt;&amp;lt;tbody&amp;gt;&lt;/code&gt; and so on. &lt;code&gt;CSS&lt;/code&gt;, on the other hand, feels pretty foreign at first but you get the hang of it. Let's append some &lt;code&gt;CSS&lt;/code&gt; styles to our template. The styles below are what make the &lt;code&gt;red-circle&lt;/code&gt; &lt;code&gt;divs&lt;/code&gt; (see above) actually into &lt;span style="color:red"&gt;red circles&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;I think the &lt;code&gt;HTML&lt;/code&gt; table markup is pretty intuitive: nested in &lt;code&gt;&amp;lt;table&amp;gt;&lt;/code&gt; we have a header &lt;code&gt;&amp;lt;head&amp;gt;&lt;/code&gt; and a body &lt;code&gt;&amp;lt;tbody&amp;gt;&lt;/code&gt; and so on. The Jinja magic is happening in the curly braced bits (e.g. &lt;code&gt;{% for k, v in row.items() %}&lt;/code&gt;). &lt;strong&gt;Jinja lets us use &lt;code&gt;Python&lt;/code&gt; syntax to generate &lt;code&gt;HTML&lt;/code&gt;&lt;/strong&gt;. &lt;code&gt;CSS&lt;/code&gt;, on the other hand, feels pretty foreign at first but you get the hang of it. Let's append some &lt;code&gt;CSS&lt;/code&gt; styles to our template. The styles below are what make the &lt;code&gt;red-circle&lt;/code&gt; &lt;code&gt;divs&lt;/code&gt; (see above) actually into &lt;span style="color:red"&gt;red circles&lt;/span&gt;.&lt;/p&gt;
 
 
 &lt;div class="cell border-box-sizing code_cell rendered"&gt;
@@ -191,6 +224,7 @@
 &lt;span class="s1"&gt;  height: 24px;&lt;/span&gt;
 &lt;span class="s1"&gt;  border-radius: 50%;&lt;/span&gt;
 &lt;span class="s1"&gt;  text-align: center;&lt;/span&gt;
+&lt;span class="s1"&gt;  margin: auto;&lt;/span&gt;
 &lt;span class="s1"&gt;}&lt;/span&gt;
 &lt;span class="s1"&gt;&amp;lt;/style&amp;gt;&lt;/span&gt;
 &lt;span class="s1"&gt;&amp;#39;&amp;#39;&amp;#39;&lt;/span&gt;
@@ -217,7 +251,7 @@
     &lt;span class="n"&gt;columns&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;columns&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;to_list&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;span class="p"&gt;)&lt;/span&gt;
 
-&lt;span class="n"&gt;display&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;HTML&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;html&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;span class="n"&gt;HTML&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;html&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
     &lt;/div&gt;
@@ -230,11 +264,11 @@
 
 &lt;div class="output_area"&gt;
 
-    &lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt output_prompt"&gt;Out[6]:&lt;/div&gt;
 
 
 
-&lt;div class="output_html rendered_html output_subarea "&gt;
+&lt;div class="output_html rendered_html output_subarea output_execute_result"&gt;
 
 &lt;table class="example collapse"&gt;
   &lt;thead&gt;
@@ -320,6 +354,7 @@ table.example .red-circle {
   height: 24px;
   border-radius: 50%;
   text-align: center;
+  margin: auto;
 }
 &lt;/style&gt;
 &lt;/div&gt;
@@ -334,11 +369,11 @@ table.example .red-circle {
 &lt;h2 id="The-FiveThiryEight-example"&gt;The FiveThiryEight example&lt;a class="anchor-link" href="#The-FiveThiryEight-example"&gt; &amp;#8678;&lt;/a&gt;&lt;/h2&gt;
 
 
-&lt;p&gt;Ok we've got the gist of it now let's apply the same technique to re-create a FiveThirtyEight-like table. I'm going to try to make &lt;a href="https://projects.fivethirtyeight.com/congress-generic-ballot-polls/"&gt;this table&lt;/a&gt; of polls data for 2020 US congress races. I already have a template prepared named &lt;code&gt;fivethirtyeight.tpl&lt;/code&gt; (you can find it in this &lt;a href="https://gist.github.com/chuckpr/191383974ec46769b877427d5b06ad9b"&gt;GitHub gist&lt;/a&gt;). But, before we can use it, we have to prepare our data. The polls data is &lt;a href="https://projects.fivethirtyeight.com/generic-ballot-data/generic_polllist.csv"&gt;linked right in the FiveThiryEight page&lt;/a&gt; (super convenient!).&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Ok we've got the gist of it now let's apply the same technique to re-create a FiveThirtyEight-like table.&lt;/strong&gt; I'm going to try to make &lt;a href="https://projects.fivethirtyeight.com/congress-generic-ballot-polls/"&gt;this table&lt;/a&gt; of polls data for 2020 US Congress elections. I already have a template ready named &lt;code&gt;fivethirtyeight.tpl&lt;/code&gt; (you can find it in this &lt;a href="https://gist.github.com/chuckpr/191383974ec46769b877427d5b06ad9b"&gt;GitHub gist&lt;/a&gt;). Before we can use the template, we have to prepare our data. The polls data is &lt;a href="https://projects.fivethirtyeight.com/generic-ballot-data/generic_polllist.csv"&gt;linked right in the FiveThiryEight page&lt;/a&gt; (super convenient!).&lt;/p&gt;
 
 
 
-&lt;p&gt;Below are some formatting functions I'm applying to the FiveThirtyEight polls data to prep it for our Jinja template (basically I'm just calculating colors and "prettifying" other values).&lt;/p&gt;
+&lt;p&gt;Below are some formatting functions I'm applying to the FiveThirtyEight polls data to prep it for our Jinja template. I'm just calculating colors and "prettifying" other values.&lt;/p&gt;
 
 
 &lt;div class="cell border-box-sizing code_cell rendered"&gt;
@@ -443,7 +478,7 @@ table.example .red-circle {
         &lt;span class="s1"&gt;&amp;#39;democrat&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;leader&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;adjusted leader&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;    
     
 &lt;span class="n"&gt;html&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;template&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;render&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;cols&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;cols&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;rows&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;rows&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="n"&gt;display&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;HTML&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;html&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;span class="n"&gt;HTML&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;html&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
     &lt;/div&gt;
@@ -456,11 +491,11 @@ table.example .red-circle {
 
 &lt;div class="output_area"&gt;
 
-    &lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt output_prompt"&gt;Out[9]:&lt;/div&gt;
 
 
 
-&lt;div class="output_html rendered_html output_subarea "&gt;
+&lt;div class="output_html rendered_html output_subarea output_execute_result"&gt;
 
 &lt;div class="polls3"&gt;
   &lt;table&gt;
@@ -1416,7 +1451,7 @@ div .polls3 {
 &lt;h2 id="Bonus:-styling-the-table-header"&gt;Bonus: styling the table header&lt;a class="anchor-link" href="#Bonus:-styling-the-table-header"&gt; &amp;#8678;&lt;/a&gt;&lt;/h2&gt;
 
 
-&lt;p&gt;Here's how I created the table header. It was tedious work but I was eventually able to wrap my head around how FiveThirtyEight achieves that rotated text effect for specific table column headers. The rotated column style is produced with a combination of &lt;code&gt;SVG&lt;/code&gt; transforms and &lt;code&gt;CSS&lt;/code&gt; positioning. We'll begin with the &lt;code&gt;SVG&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Here's how I created the table header. It was tedious work but I was eventually able to wrap my head around how FiveThirtyEight achieves that rotated text effect in table column headers. The rotated column style is produced with a combination of &lt;code&gt;SVG&lt;/code&gt; transforms and &lt;code&gt;CSS&lt;/code&gt; positioning. We'll begin with the &lt;code&gt;SVG&lt;/code&gt;.&lt;/p&gt;
 
 
 
@@ -1522,7 +1557,7 @@ div .polls3 {
 
 
 
-&lt;p&gt;The trick is to position the &lt;code&gt;div&lt;/code&gt; that holds your &lt;code&gt;SVG&lt;/code&gt; flush with the table header cell by adding  &lt;code&gt;position: absolute; left: 0, top: 0&lt;/code&gt; styles to the &lt;code&gt;SVG&lt;/code&gt;. You also have to set a height on the table header cell that works with your &lt;code&gt;SVG transform&lt;/code&gt; (in this case &lt;code&gt;height: 65px&lt;/code&gt;). Essentially this let's our &lt;code&gt;SVG&lt;/code&gt; text positioning take over. The gray background shows the bounds of our table header cell and the red border surrounds our &lt;code&gt;SVG&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Our column header element &lt;code&gt;th&lt;/code&gt; will contain a &lt;code&gt;div&lt;/code&gt; and this &lt;code&gt;div&lt;/code&gt; will hold the &lt;code&gt;SVG&lt;/code&gt; that defines our table header text. The trick is to position the &lt;code&gt;SVG&lt;/code&gt; inside the &lt;code&gt;div&lt;/code&gt; so it's flush with the table header cell by adding  &lt;code&gt;position: absolute; left: 0, top: 0&lt;/code&gt; styles to the &lt;code&gt;SVG&lt;/code&gt;. You also have to set a height on the table header cell that works with your &lt;code&gt;SVG transform&lt;/code&gt; (in this case &lt;code&gt;height: 65px&lt;/code&gt;). Essentially this let's our &lt;code&gt;SVG&lt;/code&gt; position the text &lt;em&gt;in the table header element&lt;/em&gt;. In the example below the gray background shows the bounds of our table header cell and the red border surrounds our &lt;code&gt;SVG&lt;/code&gt;.&lt;/p&gt;
 
 
 &lt;div class="cell border-box-sizing code_cell rendered celltag_codepen celltag_hide-code"&gt;
@@ -1570,7 +1605,7 @@ div .polls3 {
 
 &lt;/div&gt;
 
-&lt;p&gt;The rest of the table header is pretty straightforward: left-aligned, uppercase text. I made a minimal Jinja template for the header and we can see it in action below. &lt;strong&gt;I really like the rotated text -- it's readable and allows for narrow heatmap cells because of the reduced width.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;The rest of the table header is pretty straightforward: left-aligned, uppercase text. I made a minimal Jinja template for the header and we can see it in action below. &lt;strong&gt;I really like the rotated text — it's readable and allows for narrow heatmap cells because of the reduced width.&lt;/strong&gt;&lt;/p&gt;
 
 
 &lt;div class="cell border-box-sizing code_cell rendered celltag_hide-all"&gt;
@@ -1696,7 +1731,7 @@ div .polls3 {
         &lt;span class="s1"&gt;&amp;#39;democrat&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;leader&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;adjusted leader&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
     
 &lt;span class="n"&gt;html&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;template&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;render&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;cols&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;cols&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="n"&gt;display&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;HTML&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;html&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;span class="n"&gt;HTML&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;html&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
     &lt;/div&gt;
@@ -1709,11 +1744,11 @@ div .polls3 {
 
 &lt;div class="output_area"&gt;
 
-    &lt;div class="prompt"&gt;&lt;/div&gt;
+    &lt;div class="prompt output_prompt"&gt;Out[14]:&lt;/div&gt;
 
 
 
-&lt;div class="output_html rendered_html output_subarea "&gt;
+&lt;div class="output_html rendered_html output_subarea output_execute_result"&gt;
 
 &lt;div class="polls2"&gt;
   &lt;table&gt;
@@ -1813,7 +1848,7 @@ div.polls2 {
 &lt;h2 id="Bonus:-making-the-&amp;quot;signal-strength&amp;quot;-icon"&gt;Bonus: making the "signal strength" icon&lt;a class="anchor-link" href="#Bonus:-making-the-&amp;quot;signal-strength&amp;quot;-icon"&gt; &amp;#8678;&lt;/a&gt;&lt;/h2&gt;
 
 
-&lt;p&gt;The "signal strengh" icon in the &lt;code&gt;weight&lt;/code&gt; column is a nice touch. This icon can be created simply with just &lt;code&gt;divs&lt;/code&gt;. Here's how I did it:&lt;/p&gt;
+&lt;p&gt;The "signal strengh" icon in the &lt;code&gt;weight&lt;/code&gt; column is a nice touch. This icon can be created simply with &lt;code&gt;div&lt;/code&gt; elements. Here's how I did it:&lt;/p&gt;
 
 
 &lt;div class="cell border-box-sizing code_cell rendered celltag_codepen celltag_hide-code"&gt;
