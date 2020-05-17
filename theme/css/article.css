@@ -16,7 +16,8 @@ div .highlight {
   min-height: 100px;
 }
 
-ol, ul {
+ol,
+ul {
   font-size: 1.0625em;
 }
 
@@ -50,11 +51,15 @@ code {
 
 .toggle {
   padding-left: 2rem;
-  padding-right: .5rem;
+  padding-right: 0.5rem;
   border-left-style: solid;
   border-left-width: 0.0625em;
   border-color: #137752;
-  border-width: .125rem;
+  border-width: 0.125rem;
   background-color: #e8fdf5;
   color: #137752;
+}
+
+#article-content p {
+  padding-top: 0.5rem;
 }

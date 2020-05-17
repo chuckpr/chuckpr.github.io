@@ -53,7 +53,7 @@
 <body>
   <header class="flex flex-column avenir mw7 ml-auto mr-auto">
 <div class="pt5 pb2 pl0-l pl2">
-  <a href="https://chuckpr.github.io/" class="link dim f2-ns f3 fw4 blue tracked-tight bb-l bw1-ns lh-title b--moon-gray">
+  <a href="https://chuckpr.github.io/" class="link dim f2-ns f3 fw4 blue tracked-tight lh-title">
     A microbiologist with a data science problem
   </a>
 </div>  </header>
@@ -92,14 +92,25 @@
       </div>
     </section>
     <section id="article-content" class="ph3 garamond near-black" style="font-size: 17px">
-      <p>Before we begin, I stumbled across <a href="http://microbe.net/2014/10/22/comparing-the-new-16s-rrna-v4-and-its-primers-to-the-old-primers-results/"><strong>this really great blog post</strong></a> from the Knight lab that you should <strong>definitely</strong> check out if you're interested in SSU rRNA gene primers. They have some experimental data up which is great to see.</p>
+      <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Before we begin, I stumbled across <a href="http://microbe.net/2014/10/22/comparing-the-new-16s-rrna-v4-and-its-primers-to-the-old-primers-results/"><strong>this really great blog post</strong></a> from the Knight lab that you should <strong>definitely</strong> check out if you're interested in SSU rRNA gene primers. They have some experimental data up which is great to see.</p>
 
-
-
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>Let's start by summarizing a few key findings from the <a href="https://chuckpr.github.io/posts/primers1/">last post</a>.</p>
 
-
-
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <ol>
 <li>The 515F target in Bacteria is extremely conserved -- one sequence is found many many times more than any other.</li>
 <li>Although the bacterial 515F targets are predominantly one sequence, the second and third most abundant bacterial 515F targets differ from the most abundant target near the 3' end.</li>
@@ -108,34 +119,56 @@
 <li>The Nanoarchaea appear to have a diagnostic 515F sequence. </li>
 </ol>
 
-
-
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>Based on these findings we might ask a few questions:</p>
 
-
-
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <ul>
 <li>Does the 515F primer account for the 3' differences between the three most abundant bacterial targets? If not, what are the implications?</li>
 <li>Does 515F hit Archaea <strong>and</strong> Bacteria equally well?</li>
 <li>Does 515F hit Nanoarchaea in particular?</li>
 </ul>
 
-
-
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>The questions above imply one version of 515F. In reality, the 515F primer has been modified over time so we should address those questions over a representative collection of 515F primers.</p>
 
-
-
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>In this post we'll look at two 515F versions and propose an updated version and see how it compares. Let's evaluate the 515F version used by <a href="http://www.nature.com/ismej/journal/v5/n5/full/ismej2010171a.html">Bates <em>et al.</em> (2010)</a> because the authors provide a nice primer analysis in their paper. We'll also look at the 515F version that is on the <a href="http://www.earthmicrobiome.org/emp-standard-protocols/16s/">Earth Microbiome Project (EMP)</a> website.</p>
 
-
-
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>I'm just going to use the <code>regex</code> <code>Python</code> module (<a href="https://pypi.python.org/pypi/regex">here</a>) to evaluate the primers. We need to represent the primers with the degeneracy in regular expression syntax. The <code>{e}</code> at the end will allow us to enable fuzzy matching.</p>
 
-
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">versions</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;EMP&quot;</span> <span class="p">:</span> <span class="s2">&quot;(GTG[CT]CAGC[CA]GCCGCGGTAA)</span><span class="si">{e}</span><span class="s2">&quot;</span><span class="p">,</span> 
@@ -147,13 +180,17 @@
 </div>
 
 </div>
-
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>Ok, let's bring in the <code>Python</code> modules we need and some IPython extensions.</p>
 
-
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
@@ -172,7 +209,7 @@
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[72]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="n">R</span>
@@ -209,13 +246,17 @@
 </div>
 
 </div>
-
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>We'll make the same 515F target dataframe as in the <a href="https://chuckpr.github.io/posts/primers1/">previous post</a>.</p>
 
-
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">parse_tax</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
@@ -263,13 +304,17 @@
 </div>
 
 </div>
-
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>Ok, now the fun stuff. Let's define a function that counts substitutions between the target and the primer. If there's an indel in the target, this function returns an empty string. Eventually we'll pass this dataframe into R and it's easy to replace empty strings with R NA values. One quick note: we'll just be working with the ten most abundant targets in Bacteria and Archaea for the following figures.</p>
 
-
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">count_subs</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">primer_regex</span><span class="p">):</span>
@@ -285,13 +330,17 @@
 </div>
 
 </div>
-
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>Now we'll add a column to the target dataframe for each primer version. The values are the number of substitutions between the target and the primer.</p>
 
-
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">versions</span><span class="p">:</span>
@@ -303,25 +352,37 @@
 </div>
 
 </div>
-
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>Push the dataframe into R and we're ready to go! I want to make a figure that conveys three bits of information:</p>
 
-
-
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <ol>
 <li>The target,</li>
 <li>the number of mismatches between the primer and the target, and</li>
 <li>the representation of the target in selected taxonomic groups.</li>
 </ol>
 
-
-
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>So, let's make a heatmap (sort of) figure where columns are targets (10 most abundant archaeal and bacterial), rows represent 515F primer versions and the color of each cell represents the mismatches between primer and target. We can scale the size of each cell to the count of each target within the given taxon (log scaled).</p>
 
-
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="n">R</span> <span class="o">-</span><span class="n">i</span> <span class="n">df_targets</span>
@@ -334,7 +395,7 @@
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[17]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="n">R</span> <span class="o">-</span><span class="n">w</span> <span class="m">650</span>
@@ -343,9 +404,9 @@
     <span class="nf">summarize</span><span class="p">(</span><span class="n">count</span> <span class="o">=</span> <span class="nf">n</span><span class="p">(),</span> <span class="n">EMP</span> <span class="o">=</span> <span class="nf">first</span><span class="p">(</span><span class="n">EMP</span><span class="p">),</span> <span class="n">Bates</span> <span class="o">=</span> <span class="nf">first</span><span class="p">(</span><span class="n">Bates</span><span class="p">))</span> <span class="o">%&gt;%</span>
     <span class="nf">filter</span><span class="p">(</span><span class="nf">rank</span><span class="p">(</span><span class="nf">desc</span><span class="p">(</span><span class="n">count</span><span class="p">),</span> <span class="n">ties.method</span> <span class="o">=</span> <span class="s">&quot;random&quot;</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="m">10</span><span class="p">)</span> <span class="o">%&gt;%</span>
     <span class="nf">arrange</span><span class="p">(</span><span class="nf">desc</span><span class="p">(</span><span class="n">count</span><span class="p">),</span> <span class="n">kingdom</span><span class="p">)</span> <span class="o">%&gt;%</span>
-    <span class="nf">mutate</span><span class="p">(</span><span class="n">X515F</span> <span class="o">=</span> <span class="nf">factor</span><span class="p">(</span><span class="n">X515F</span><span class="p">,</span> <span class="n">levels</span> <span class="o">=</span> <span class="nf">unique</span><span class="p">(</span><span class="n">.$X515F</span><span class="p">)))</span> <span class="o">%&gt;%</span> 
+    <span class="nf">mutate</span><span class="p">(</span><span class="n">X515F</span> <span class="o">=</span> <span class="nf">factor</span><span class="p">(</span><span class="n">X515F</span><span class="p">,</span> <span class="n">levels</span> <span class="o">=</span> <span class="nf">unique</span><span class="p">(</span><span class="n">.</span><span class="o">$</span><span class="n">X515F</span><span class="p">)))</span> <span class="o">%&gt;%</span> 
     <span class="p">{</span>
-        <span class="n">.[.</span><span class="o">==</span><span class="s">&quot;&quot;</span><span class="n">]</span> <span class="o">=</span> <span class="kc">NA</span>
+        <span class="n">.</span><span class="p">[</span><span class="n">.</span><span class="o">==</span><span class="s">&quot;&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">NA</span>
         <span class="n">.</span>
     <span class="p">}</span> <span class="o">%&gt;%</span>
     <span class="nf">gather</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="o">-</span><span class="n">count</span><span class="p">,</span> <span class="o">-</span><span class="n">kingdom</span><span class="p">,</span> <span class="o">-</span><span class="n">X515F</span><span class="p">)</span>
@@ -395,7 +456,7 @@
 
 
 <div class="output_png output_subarea ">
-<img src="https://chuckpr.github.io/notebooks/images/output_22_0.png"
+<img src="https://chuckpr.github.io/notebooks/images/primers2_22_0.png"
 >
 </div>
 
@@ -405,45 +466,53 @@
 </div>
 
 </div>
-
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>Cool! You can see that the EMP primer has improved zero mismatch coverage of Archaea (also discussed in <a href="http://microbe.net/2014/10/22/comparing-the-new-16s-rrna-v4-and-its-primers-to-the-old-primers-results/">this post</a>). There are still mismatches at the 3' end between second and third most abundant bacterial 515F targets with each primer version.</p>
 
-
-
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>Let's explore what the implications of the 3' end mismatch between primers and bacterial targets might be. I want to look at how each primer hits bacterial phyla. Let's define a function to make this plot. The function will take a couple arguments. One argument will specify the taxon to plot (right now just Bacteria or Archaea) and the other will specify the primer. In this figure rows will be targets (10 most abundant targets) and columns will be taxa. The colors will represent mismatches against the selected primer. Size will be based on relative abundance for the target within the given column. <strong>These figures are somewhat small but you can zoom in by right clicking and opening the figure in a new browser window or tab.</strong></p>
 
-
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered celltag_fullwidth">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[83]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="n">R</span> <span class="o">-</span><span class="n">w</span> <span class="m">1300</span> <span class="o">-</span><span class="n">h</span> <span class="m">1000</span>
 <span class="n">primer_plot</span> <span class="o">=</span> <span class="nf">function</span><span class="p">(</span><span class="n">taxon</span> <span class="o">=</span> <span class="s">&quot;Bacteria&quot;</span><span class="p">,</span> <span class="n">primer</span> <span class="o">=</span> <span class="s">&quot;EMP&quot;</span><span class="p">)</span> <span class="p">{</span>
     <span class="n">d</span> <span class="o">=</span> <span class="n">df_targets</span> <span class="o">%&gt;%</span>
         <span class="p">{</span>
-            <span class="n">.[.</span><span class="o">==</span><span class="s">&quot;&quot;</span><span class="n">]</span> <span class="o">=</span> <span class="kc">NA</span>
+            <span class="n">.</span><span class="p">[</span><span class="n">.</span><span class="o">==</span><span class="s">&quot;&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">NA</span>
             <span class="n">.</span>
         <span class="p">}</span> <span class="o">%&gt;%</span>
         <span class="nf">filter</span><span class="p">(</span><span class="o">!</span><span class="nf">is.na</span><span class="p">(</span><span class="n">phylum</span><span class="p">),</span> <span class="n">kingdom</span> <span class="o">==</span> <span class="n">taxon</span><span class="p">)</span> <span class="o">%&gt;%</span>
         <span class="p">{</span>
-            <span class="n">psort</span> <span class="o">=</span> <span class="nf">group_by</span><span class="p">(</span><span class="n">.,</span> <span class="n">phylum</span><span class="p">)</span> <span class="o">%&gt;%</span> 
+            <span class="n">psort</span> <span class="o">=</span> <span class="nf">group_by</span><span class="p">(</span><span class="n">.</span><span class="p">,</span> <span class="n">phylum</span><span class="p">)</span> <span class="o">%&gt;%</span> 
                 <span class="nf">summarize</span><span class="p">(</span><span class="n">count</span> <span class="o">=</span> <span class="nf">n</span><span class="p">())</span> <span class="o">%&gt;%</span> 
                 <span class="nf">arrange</span><span class="p">(</span><span class="nf">desc</span><span class="p">(</span><span class="n">count</span><span class="p">))</span> <span class="o">%&gt;%</span>
                 <span class="nf">extract2</span><span class="p">(</span><span class="s">&quot;phylum&quot;</span><span class="p">)</span> <span class="o">%&gt;%</span> <span class="n">as.character</span>
-            <span class="nf">mutate</span><span class="p">(</span><span class="n">.,</span> <span class="n">phylum</span> <span class="o">=</span> <span class="nf">factor</span><span class="p">(</span><span class="n">phylum</span><span class="p">,</span> <span class="n">levels</span> <span class="o">=</span> <span class="n">psort</span><span class="p">))</span>
+            <span class="nf">mutate</span><span class="p">(</span><span class="n">.</span><span class="p">,</span> <span class="n">phylum</span> <span class="o">=</span> <span class="nf">factor</span><span class="p">(</span><span class="n">phylum</span><span class="p">,</span> <span class="n">levels</span> <span class="o">=</span> <span class="n">psort</span><span class="p">))</span>
         <span class="p">}</span> <span class="o">%&gt;%</span>
         <span class="nf">group_by</span><span class="p">(</span><span class="n">phylum</span><span class="p">,</span> <span class="n">X515F</span><span class="p">)</span> <span class="o">%&gt;%</span>
-        <span class="nf">do</span><span class="p">(</span><span class="nf">summarize</span><span class="p">(</span><span class="n">.,</span> <span class="n">count</span> <span class="o">=</span> <span class="nf">n</span><span class="p">(),</span> <span class="n">primer</span> <span class="o">=</span> <span class="nf">first</span><span class="p">(</span><span class="n">.[[primer]]</span><span class="p">)))</span> <span class="o">%&gt;%</span>
+        <span class="nf">do</span><span class="p">(</span><span class="nf">summarize</span><span class="p">(</span><span class="n">.</span><span class="p">,</span> <span class="n">count</span> <span class="o">=</span> <span class="nf">n</span><span class="p">(),</span> <span class="n">primer</span> <span class="o">=</span> <span class="nf">first</span><span class="p">(</span><span class="n">.</span><span class="p">[[</span><span class="n">primer</span><span class="p">]])))</span> <span class="o">%&gt;%</span>
         <span class="nf">group_by</span><span class="p">(</span><span class="n">phylum</span><span class="p">)</span> <span class="o">%&gt;%</span>
         <span class="nf">mutate</span><span class="p">(</span><span class="n">count.relative</span> <span class="o">=</span> <span class="n">count</span> <span class="o">/</span> <span class="nf">sum</span><span class="p">(</span><span class="n">count</span><span class="p">))</span> <span class="o">%&gt;%</span>
         <span class="p">{</span>
-            <span class="n">keep</span> <span class="o">=</span> <span class="nf">group_by</span><span class="p">(</span><span class="n">.,</span> <span class="n">X515F</span><span class="p">)</span> <span class="o">%&gt;%</span>
+            <span class="n">keep</span> <span class="o">=</span> <span class="nf">group_by</span><span class="p">(</span><span class="n">.</span><span class="p">,</span> <span class="n">X515F</span><span class="p">)</span> <span class="o">%&gt;%</span>
                 <span class="nf">summarize</span><span class="p">(</span><span class="n">tmp</span> <span class="o">=</span> <span class="nf">sum</span><span class="p">(</span><span class="n">count</span><span class="p">))</span> <span class="o">%&gt;%</span>
                 <span class="nf">filter</span><span class="p">(</span><span class="nf">rank</span><span class="p">(</span><span class="nf">desc</span><span class="p">(</span><span class="n">tmp</span><span class="p">),</span> <span class="n">ties.method</span> <span class="o">=</span> <span class="s">&quot;random&quot;</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="m">10</span><span class="p">)</span> <span class="o">%&gt;%</span>
                 <span class="nf">arrange</span><span class="p">(</span><span class="n">tmp</span><span class="p">)</span> <span class="o">%&gt;%</span>
                 <span class="nf">extract2</span><span class="p">(</span><span class="s">&quot;X515F&quot;</span><span class="p">)</span> <span class="o">%&gt;%</span> <span class="n">as.character</span>
-            <span class="nf">filter</span><span class="p">(</span><span class="n">.,</span> <span class="n">X515F</span> <span class="o">%in%</span> <span class="n">keep</span><span class="p">)</span> <span class="o">%&gt;%</span>
+            <span class="nf">filter</span><span class="p">(</span><span class="n">.</span><span class="p">,</span> <span class="n">X515F</span> <span class="o">%in%</span> <span class="n">keep</span><span class="p">)</span> <span class="o">%&gt;%</span>
                 <span class="nf">mutate</span><span class="p">(</span><span class="n">X515F</span> <span class="o">=</span> <span class="nf">factor</span><span class="p">(</span><span class="n">X515F</span><span class="p">,</span> <span class="n">levels</span> <span class="o">=</span> <span class="n">keep</span><span class="p">),</span> <span class="n">primer</span> <span class="o">=</span> <span class="nf">factor</span><span class="p">(</span><span class="n">primer</span><span class="p">,</span> <span class="n">levels</span> <span class="o">=</span> <span class="m">0</span><span class="o">:</span><span class="m">4</span><span class="p">))</span>
         <span class="p">}</span>
 
@@ -496,7 +565,7 @@
 
 
 <div class="output_png output_subarea ">
-<img src="https://chuckpr.github.io/notebooks/images/output_25_0.png"
+<img src="https://chuckpr.github.io/notebooks/images/primers2_25_0.png"
 >
 </div>
 
@@ -506,17 +575,25 @@
 </div>
 
 </div>
-
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>As you can see, the 3' mismatch will probably effect recovery of <strong>TM7</strong> as well as a smattering of sequences throughout the most abundant phyla.</p>
 
-
-
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>We can make the same plot for Archaea. This highlights how the EMP 515F version hits the Crenarchaea with zero mismatches but neither primer matches the Nanoarchaea targets well.</p>
 
-
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered celltag_fullwidth">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[84]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="n">R</span> <span class="o">-</span><span class="n">w</span> <span class="m">1200</span> <span class="o">-</span><span class="n">h</span> <span class="m">400</span>
@@ -540,7 +617,7 @@
 
 
 <div class="output_png output_subarea ">
-<img src="https://chuckpr.github.io/notebooks/images/output_28_0.png"
+<img src="https://chuckpr.github.io/notebooks/images/primers2_28_0.png"
 >
 </div>
 
@@ -550,21 +627,33 @@
 </div>
 
 </div>
-
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>It's a bit unrealistic to design the perfect primer. But, it's certainly possible to quantify and explore <em>in silico</em> primer bias and to interpret results with the bias in mind. It's really great to see how the EMP folks have improved the 515F primer to hit more Crenarchaea. One suggestion from our analysis today is to add degeneracy at the 3' end to account for TM7 and many members of more abundant groups. The current EMP 515F primer is <strong>5'-GTGYCAGCMGCCGCGGTAA-3'</strong> but it might be useful to change that to <strong>5'-GTGYCAGCMGCCGCGGTVA-3'</strong>.</p>
 
-
-
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>I'm also wondering if you could just chop off the last two nucleotides? This would drop the annealing temp but perhaps it would be negligible(?).</p>
 
-
-
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Here is what the proposed 515F looks like against Bacteria.</strong> You can see that it hits TM7 and the second most abundant target with zero mismatches.</p>
 
-
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[87]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df_targets</span><span class="p">[</span><span class="s2">&quot;proposed&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_targets</span><span class="p">[</span><span class="s2">&quot;515F&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">count_subs</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s2">&quot;(GTG[CT]CAGC[CA]GCCGCGGT[AGC]A)</span><span class="si">{e}</span><span class="s2">&quot;</span><span class="p">))</span>
@@ -578,7 +667,7 @@
 </div>
 <div class="cell border-box-sizing code_cell rendered celltag_fullwidth">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[90]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="n">R</span> <span class="o">-</span><span class="n">w</span> <span class="m">1300</span> <span class="o">-</span><span class="n">h</span> <span class="m">500</span>
@@ -601,7 +690,7 @@
 
 
 <div class="output_png output_subarea ">
-<img src="https://chuckpr.github.io/notebooks/images/output_33_0.png"
+<img src="https://chuckpr.github.io/notebooks/images/primers2_33_0.png"
 >
 </div>
 
@@ -611,43 +700,71 @@
 </div>
 
 </div>
-
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>And we can address the questions from above.</p>
 
-
-
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <ul>
 <li>Do 515F primers account for the 3' differences between the three most abundant targets? If not, what are the implications?</li>
 </ul>
 
-
-
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <blockquote><p>No. Current 515F primers are biased against TM7 and have mismatches at the 3' end with sequences throughout the most commonly found bacterial phyla (although current primers do hit the most abundant target in Archaea and Bacteria with zero mismatches and there's only one mismatch between current targets and most bacterial targets). So, on the whole, the latest primers are great but still room for improvement.</p>
 </blockquote>
 
-
-
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <ul>
 <li>Does 515F hit Archaea <strong>and</strong> Bacteria equally well?</li>
 </ul>
 
-
-
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <blockquote><p>I would say yes, tentatively. The latest EMP primer appears to hit most Archaea with zero mismatches. It also hits most Bacteria with one mismatch or less.</p>
 </blockquote>
 
-
-
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <ul>
 <li>Does 515F hit Nanoarchaea in particular?</li>
 </ul>
 
-
-
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <blockquote><p>No. Nanoarchaea have distinct 515F targets and 515F primers are biased against Nanoarchaea <em>in silico.</em></p>
 </blockquote>
 
-
+</div>
+</div>
+</div>
  
 
 

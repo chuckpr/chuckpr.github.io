@@ -53,7 +53,7 @@
 <body>
   <header class="flex flex-column avenir mw7 ml-auto mr-auto">
 <div class="pt5 pb2 pl0-l pl2">
-  <a href="https://chuckpr.github.io/" class="link dim f2-ns f3 fw4 blue tracked-tight bb-l bw1-ns lh-title b--moon-gray">
+  <a href="https://chuckpr.github.io/" class="link dim f2-ns f3 fw4 blue tracked-tight lh-title">
     A microbiologist with a data science problem
   </a>
 </div>  </header>
@@ -88,14 +88,25 @@
       </div>
     </section>
     <section id="article-content" class="ph3 garamond near-black" style="font-size: 17px">
-      <p>This post will work with the tree and information we produced in the <a href="https://chuckpr.github.io/posts/trees1/">last post</a>. This time we'll use a Python plotting library called <a href="http://bokeh.pydata.org/en/latest/">Bokeh</a> to visualize the tree.</p>
+      <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This post will work with the tree and information we produced in the <a href="https://chuckpr.github.io/posts/trees1/">last post</a>. This time we'll use a Python plotting library called <a href="http://bokeh.pydata.org/en/latest/">Bokeh</a> to visualize the tree.</p>
 
-
-
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>IToL is a great and flexible tool but on the flexibility front it can't compete with charting libraries like <a href="http://www.matplotlib.org">Matplotlib</a>, <a href="http://ggvis.rstudio.com/">ggvis</a>, <a href="http://ggplot2.org/">ggplot2</a>, or <a href="http://bokeh.pydata.org/en/latest/">Bokeh</a>. To demonstrate the power of such flexibility let's make a tree with the new-ish <code>Bokeh</code>. There are several features I want to include in this visualization:</p>
 
-
-
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <ol>
 <li>I want the tree to be unrooted. I didn't include an explicit outgroup in the tree from the previous post so I think it's probably just best to display the tree in radial (as opposed to circular) format.</li>
 <li>I want the tips to show information when you mouse over them. I think interactive graphics are a great way to include collaborators in the data exploration. Also, interactive graphics can dramatically cut down on communication overhead. Luckily <code>Bokeh</code> makes adding hover interaction really easy as we'll see.</li>
@@ -103,14 +114,20 @@
 <li>Last, the tree figure should be "zoomable" so that users can drill down into the figure to investigate the details.</li>
 </ol>
 
-
-
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>Ok, so (as always) we will first bring in all the modules we need. To get <code>Bokeh</code> plots to render inline in the <a href="https://jupyter.org/">Jupyter</a> notebook you have to call the <code>output_notebook</code> function.</p>
 
-
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">bokeh.io</span> <span class="kn">import</span> <span class="n">output_notebook</span><span class="p">,</span> <span class="n">show</span>
@@ -363,21 +380,33 @@
 </div>
 
 </div>
-
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>Next we'll load our tree. I'm using <a href="http://pycogent.org/">pycogent</a> for this post but there are many great tree objects and parsers out there for both Python and R. Pycogent was the only module that had code for plotting an unrooted tree layout that I could find. I didn't do an exhaustiv search and I wouldn't be surprise if there are other implementations. <a href="http://biopython.org/wiki/Main_Page">Biopython</a> appears to use <code>graphviz</code> for displaying trees in the radial format and the network layout makes from some interesting looking trees. I prefer the unrooted tree layout algorithm in PyCogent. (FYI, I expect the tree layout code will be moved to <a href="http://scikit-bio.org/">scikit-bio</a> at some point if it hasn't already.)</p>
 
-
-
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>The <code>coords</code> method below returns a 2D array where every row represents a node.</p>
 
-
-
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>The rows/nodes information in the array are in order the node name, node ID, x position , y position, and a list of child nodes.</p>
 
-
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">tree</span> <span class="o">=</span> <span class="n">LoadTree</span><span class="p">(</span><span class="s2">&quot;data/GH5.tree&quot;</span><span class="p">)</span>
@@ -390,13 +419,17 @@
 </div>
 
 </div>
-
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>Now I'll define a couple functions to help us work with the <code>coords</code> array. The first just checks to see if the child nodes list is empty (an empty list denotes the node is a terminal node). The second function expands each row. That is to say it makes a row for each child of each parent node. This effectively converts our <code>coords</code> array from an array of nodes to an array of node <em>connections</em>. This is useful because when we plot the tree we are really drawing connections or edges as opposed to nodes. The <code>expand</code> functions skips terminal nodes (aka tips) because they don't connect to any downstream nodes (hence "terminal").</p>
 
-
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">is_tip</span><span class="p">(</span><span class="n">coord</span><span class="p">):</span>
@@ -424,13 +457,17 @@
 </div>
 
 </div>
-
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>We will also want an dictionary of the x, y coordinates for each node keyed by node ID, a list/set of the tip node IDs, and a dictionary of tip node accessions keyed by corresponding node IDs. If you remember from our last post, the tree sequences are identified by their accession numbers and therefore each tip in the tree has an associated accession number.</p>
 
-
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">node_locs</span> <span class="o">=</span> <span class="p">{</span><span class="n">r</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span> <span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">r</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">coords</span><span class="p">}</span>
@@ -443,13 +480,17 @@
 </div>
 
 </div>
-
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>Let's also bring in the color definitions file from the last post. We uploaded this file to IToL last time to get the tree coloring we wanted. We'll use it for the same purpose here.</p>
 
-
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">tip_info</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;data/color_defs.tsv&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;acc&quot;</span><span class="p">,</span><span class="s2">&quot;type&quot;</span><span class="p">,</span><span class="s2">&quot;color&quot;</span><span class="p">,</span><span class="s2">&quot;ec&quot;</span><span class="p">])</span>
@@ -460,13 +501,17 @@
 </div>
 
 </div>
-
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>As I wrote above, we plot edges not nodes. So, I want a dataframe where each row represents an edge and has all the information I need for plotting that edge. This information includes the beginning and ending coordinates of the edge, the accession number for terminal edges, and a column denoting whether the edge leads to a tip or not.</p>
 
-
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">expand</span><span class="p">(</span><span class="n">coords</span><span class="p">),</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;parent&quot;</span><span class="p">,</span><span class="s2">&quot;x0&quot;</span><span class="p">,</span><span class="s2">&quot;y0&quot;</span><span class="p">,</span><span class="s2">&quot;child&quot;</span><span class="p">])</span>
@@ -482,13 +527,17 @@
 </div>
 
 </div>
-
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>Now I'll merge the color definition file info to our edge dataframe. For convenience I also want a dataframe of just terminal edges (<code>df_tips</code> below).</p>
 
-
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df_all</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">tip_info</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;acc&quot;</span><span class="p">],</span> <span class="n">how</span><span class="o">=</span><span class="s2">&quot;left&quot;</span><span class="p">)</span>
@@ -500,17 +549,25 @@
 </div>
 
 </div>
-
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>This is all the we need to make an unrooted tree figure in any charting library!</p>
 
-
-
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>To make the tree in <code>Bokeh</code> I'm going to use the <code>chart</code> interface. First I'll set up a dictionary of plot options.</p>
 
-
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">plot_options</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">plot_width</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span> <span class="n">plot_height</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span> <span class="n">toolbar_location</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
@@ -522,13 +579,17 @@
 </div>
 
 </div>
-
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>Now I'll make all the glyphs I want. We'll use circle glyphs for terminal nodes and segment glyphs for edges. I am going to make the backbone tree in black and overlay segment glyphs for just the tip edges; the tip edges will be colored by their respective EC activities.</p>
 
-
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[21]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">radius</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s2">&quot;data&quot;</span><span class="p">)</span>
@@ -555,13 +616,17 @@
 </div>
 
 </div>
-
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>When we add these glyphs to our plot we need to upload a corresponding <code>ColumnDataSource</code>. This function just converts or <code>Pandas</code> dataframes to <code>Bokeh</code> data sources.</p>
 
-
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[22]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">df2ds</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
@@ -573,13 +638,17 @@
 </div>
 
 </div>
-
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>Below I make the plot and add the glyphs.</p>
 
-
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[23]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">ydr</span> <span class="o">=</span> <span class="n">DataRange1d</span><span class="p">(</span><span class="n">range_padding</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>  
@@ -616,13 +685,17 @@
 </div>
 
 </div>
-
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>...and we render the plot inline with the <code>show</code> command. Voila! Pretty cool but no interaction yet...</p>
 
-
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered celltag_fullwidth celltag_center">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[24]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">show</span><span class="p">(</span><span class="n">plot</span><span class="p">)</span>
@@ -674,13 +747,17 @@
 </div>
 
 </div>
-
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>Let's make the same plot with the hover and zoom action. We start as before but this time I'm going to put a toolbar on the plot that will let us hit a reset button to get back the original figure (It's pretty essential to add the reset function in addition to box zoom).</p>
 
-
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[25]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">plot_options</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">plot_width</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span> <span class="n">plot_height</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span> <span class="n">toolbar_location</span><span class="o">=</span><span class="s2">&quot;left&quot;</span><span class="p">,</span> 
@@ -700,13 +777,17 @@
 </div>
 
 </div>
-
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>Let's make the hover tool tip. It's just defined in <code>html</code>. I want to display the accession and EC information for each tip (add and "@" symbol to denote columns in the data source that you want to display in the tooltip).</p>
 
-
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[26]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">tooltip</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
@@ -726,13 +807,17 @@
 </div>
 
 </div>
-
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>Now we make our hover tool and add it to the plot. Be cause we assigned the renderer for our "nodes" (i.e. <code>leaf</code>) we can specify that we want this hover tool to be specific to that glyph in the plot.</p>
 
-
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[27]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">hover</span> <span class="o">=</span> <span class="n">HoverTool</span><span class="p">(</span><span class="n">renderers</span> <span class="o">=</span> <span class="p">[</span><span class="n">leaf</span><span class="p">],</span> <span class="n">tooltips</span><span class="o">=</span><span class="n">tooltip</span><span class="p">)</span>
@@ -744,13 +829,17 @@
 </div>
 
 </div>
-
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>Now <strong>hover over the points</strong> to see the accession and EC information for each tip. Also note the toolbar on the left. You can box zoom into the tree with your mouse to explore the topology at better resolution. <strong>Try it out!</strong> The reset button will get you back to the original orientation.</p>
 
-
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered celltag_fullwidth celltag_center">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[28]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">show</span><span class="p">(</span><span class="n">plot</span><span class="p">)</span>
@@ -802,13 +891,17 @@
 </div>
 
 </div>
-
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>That's everything I wanted to do except for the click action. As I stated above, it would be great if clicking on tip nodes brought you to the GenBank webpage for the protein that the each node represents. We can get this interaction with the <code>tap tool</code>. The following is a bit of a hack but the url takes the accession info and returns a url to a CGI script that searches the GenBank protein database for that accession value. In the end, clicking a tip takes you to a GenBank page. <strong>Give it a shot!</strong></p>
 
-
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">taptool</span> <span class="o">=</span> <span class="n">TapTool</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="n">OpenURL</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s2">&quot;http://www.ncbi.nlm.nih.gov/protein/?term=@acc%5Bacc%5D&quot;</span><span class="p">))</span>
@@ -821,7 +914,7 @@
 </div>
 <div class="cell border-box-sizing code_cell rendered celltag_fullwidth celltag_center">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[30]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">plot_options</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">plot_width</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span> <span class="n">plot_height</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span> <span class="n">toolbar_location</span><span class="o">=</span><span class="s2">&quot;left&quot;</span><span class="p">,</span> 
@@ -887,10 +980,14 @@
 </div>
 
 </div>
-
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>This would be a great way to show some results to collaborators without having to clobber it all up with a bunch of labels. And the syntax is really concise. <code>Bokeh</code> is an exciting tool that allows you to make clean, rich visualizations quickly and in my experience it works seamlessly with the <code>Jupyter</code> notebook. Exciting stuff!!!</p>
 
-
+</div>
+</div>
+</div>
  
 
 

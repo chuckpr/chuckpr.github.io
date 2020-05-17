@@ -53,7 +53,7 @@
 <body>
   <header class="flex flex-column avenir mw7 ml-auto mr-auto">
 <div class="pt5 pb2 pl0-l pl2">
-  <a href="https://chuckpr.github.io/" class="link dim f2-ns f3 fw4 blue tracked-tight bb-l bw1-ns lh-title b--moon-gray">
+  <a href="https://chuckpr.github.io/" class="link dim f2-ns f3 fw4 blue tracked-tight lh-title">
     A microbiologist with a data science problem
   </a>
 </div>  </header>
@@ -92,16 +92,25 @@
       </div>
     </section>
     <section id="article-content" class="ph3 garamond near-black" style="font-size: 17px">
-      <p>Let's extend the previous post by scraping the CAZy website for accession numbers from genes in the glycoside hydrolase 5 (GH5) family. Then we can build a phylogenetic tree from these sequences and visualize how well the EC activities correspond to the phylogeny.</p>
+      <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Let's extend the previous post by scraping the CAZy website for accession numbers from genes in the glycoside hydrolase 5 (GH5) family. Then we can build a phylogenetic tree from these sequences and visualize how well the EC activities correspond to the phylogeny.</p>
 
-
-
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>Unfortunately the CAZy website spreads the information we need across multiple pages in tables that are not easily parsed. Luckily we have <code>rvest</code>. Let's start by loading the libraries we'll use.</p>
 
-
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[21]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="n">load_ext</span> <span class="n">rpy2</span><span class="o">.</span><span class="n">ipython</span>
@@ -133,7 +142,7 @@
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[22]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="n">R</span>
@@ -150,22 +159,34 @@
 </div>
 
 </div>
-
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>CAZy distinguishes between genes that have been biochemically characterized and those that haven't. For this analysis we'll stick the characterized genes. This is the website that we'll be scraping:<br>
 <a href="http://www.cazy.org/GH5_characterized.html">www.cazy.org/GH5_characterized.html</a></p>
 
-
-
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>All we really need is a table of accessions and corresponding EC numbers but we might as well grab some other information provided by CAZy such as the subfamily membership of each gene and the organism.</p>
 
-
-
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>We'll start by creating a session from the webpage above.</p>
 
-
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[23]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="n">R</span>
@@ -177,13 +198,17 @@
 </div>
 
 </div>
-
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>We need to grab the links to the pages that contain continued sections for our table. I use Chrome's inspector tools or the <a href="http://selectorgadget.com/">SelectorGadget</a> to find the attributes and element data associated with the information I want to scrape. In this case, the webpage links we want are in span elements of the "pages" class. Each span element has a hyperlink tag ("a" below in <code>html_nodes</code>) and from that tag we want the value of the "href" attribute.</p>
 
-
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[24]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="n">R</span>
@@ -221,17 +246,25 @@
 </div>
 
 </div>
-
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>Let's start by scraping the first page (the page we're currently on).</p>
 
-
-
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>The table has some rows that we don't want (like the row that just points out the Domain of the organisms) which makes parsing this info a bit tricky. We need to scrub rows with the "royaume" class and rows with id "line_titre" (I think those are French words). So, to briefly summarize the command below, we're grabbing rows ("tr") from the table of class "listing" excluding rows of class "royaume" and id "line_titre".</p>
 
-
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[25]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="n">R</span>
@@ -243,13 +276,17 @@
 </div>
 
 </div>
-
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>We'll parse each row to get the accession, EC number, organism, and subfamily. I'm only grabbing the linked accession number. Some of the genes have multiple associated accession numbers but I think we'll only need one. Also, I'm creating one row for each EC number so some of the genes will have two entries. I think I'll eventually remove the genes with multiple EC activities from the tree but it might also be nice to point them out. Note how we use the <code>extract2</code> function from <code>magrittr</code> to get the correct column.</p>
 
-
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[26]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="n">R</span>
@@ -271,13 +308,17 @@
 </div>
 
 </div>
-
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>And now we'll <code>ldply</code> it into a handy dataframe.</p>
 
-
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[27]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="n">R</span>
@@ -317,13 +358,17 @@
 </div>
 
 </div>
-
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>Now we need to do that for all the other pages of the table. This function uses <code>jump_to</code> to go to a link and extract the information we need with the same code as we had above. We can append our page 1 information with <code>rbind</code> and we're ready to go.</p>
 
-
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[31]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="n">R</span>
@@ -370,21 +415,25 @@
 </div>
 
 </div>
-
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>We now have all the information we need to make our tree in IToL that will give us a sense of how phylogenetically conserved the EC annotations are with phylogeny. But first let's plot some counts of the different EC activities. There is clearly one predominant activity for this set of sequences.</p>
 
-
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered celltag_fullwidth">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[32]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="n">R</span> <span class="o">-</span><span class="n">h</span> <span class="m">300</span> <span class="o">-</span><span class="n">w</span> <span class="m">600</span>
 <span class="n">df.all</span> <span class="o">%&gt;%</span>
     <span class="nf">group_by</span><span class="p">(</span><span class="n">ec</span><span class="p">)</span> <span class="o">%&gt;%</span>
     <span class="nf">summarize</span><span class="p">(</span><span class="n">count</span> <span class="o">=</span> <span class="nf">n</span><span class="p">())</span> <span class="o">%&gt;%</span> <span class="p">{</span>
-        <span class="n">xsort</span> <span class="o">=</span> <span class="nf">arrange</span><span class="p">(</span><span class="n">.,</span> <span class="nf">desc</span><span class="p">(</span><span class="n">count</span><span class="p">))</span> <span class="o">%&gt;%</span> <span class="nf">extract2</span><span class="p">(</span><span class="s">&quot;ec&quot;</span><span class="p">)</span>
-        <span class="nf">mutate</span><span class="p">(</span><span class="n">.,</span> <span class="n">ec</span> <span class="o">=</span> <span class="nf">factor</span><span class="p">(</span><span class="n">ec</span><span class="p">,</span> <span class="n">levels</span> <span class="o">=</span> <span class="n">xsort</span><span class="p">))</span> <span class="o">%&gt;%</span>
+        <span class="n">xsort</span> <span class="o">=</span> <span class="nf">arrange</span><span class="p">(</span><span class="n">.</span><span class="p">,</span> <span class="nf">desc</span><span class="p">(</span><span class="n">count</span><span class="p">))</span> <span class="o">%&gt;%</span> <span class="nf">extract2</span><span class="p">(</span><span class="s">&quot;ec&quot;</span><span class="p">)</span>
+        <span class="nf">mutate</span><span class="p">(</span><span class="n">.</span><span class="p">,</span> <span class="n">ec</span> <span class="o">=</span> <span class="nf">factor</span><span class="p">(</span><span class="n">ec</span><span class="p">,</span> <span class="n">levels</span> <span class="o">=</span> <span class="n">xsort</span><span class="p">))</span> <span class="o">%&gt;%</span>
         <span class="nf">ggplot</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="n">ec</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">count</span><span class="p">))</span> <span class="o">+</span>
             <span class="nf">geom_bar</span><span class="p">(</span><span class="n">stat</span> <span class="o">=</span> <span class="s">&quot;identity&quot;</span><span class="p">)</span> <span class="o">+</span> 
             <span class="nf">theme_bw</span><span class="p">()</span> <span class="o">+</span>
@@ -409,7 +458,7 @@
 
 
 <div class="output_png output_subarea ">
-<img src="https://chuckpr.github.io/notebooks/images/output_20_0.png"
+<img src="https://chuckpr.github.io/notebooks/images/trees1_20_0.png"
 >
 </div>
 
@@ -421,7 +470,7 @@
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[33]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="n">R</span>
@@ -433,13 +482,17 @@
 </div>
 
 </div>
-
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>We should add one more bit of information to the dataframe, the colors for each EC number. We need to send this information to IToL. Below I'm using <a href="https://github.com/hoesler/rwantshue">rwantshue</a> to get a list of colors the same length as the number of observed EC numbers. We collect the colors for each EC number in a dataframe and then we can join that colors dataframe to our CAZy dataframe. We'll also save the IToL information to a file. I am making what IToL refers to as a "colors definition" file. This file should include (in order) a column for the tip names on the tree (in our case this will be accessions), a column specifying what you want to color ("range" here see IToL website for details), the actual color, and the label (EC numbers in our case).</p>
 
-
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[38]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="n">R</span>
@@ -464,13 +517,17 @@
 </div>
 
 </div>
-
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>Here's what that file looks like,</p>
 
-
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[36]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="err">!</span><span class="n">head</span> <span class="o">-</span><span class="n">n5</span> <span class="n">data</span><span class="o">/</span><span class="n">color_defs</span><span class="o">.</span><span class="n">tsv</span>
@@ -503,17 +560,25 @@ BAA12826.1	range	#CA55E1	3.2.1.4
 </div>
 
 </div>
-
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>Great! Now on to building the tree...</p>
 
-
-
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>We need to get the sequences first. Let's use <a href="https://github.com/ropensci/rentrez">rentrez</a> to query Genbank for our accessions.</p>
 
-
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[134]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="n">R</span>
@@ -529,7 +594,7 @@ BAA12826.1	range	#CA55E1	3.2.1.4
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[135]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="err">!</span><span class="n">head</span> <span class="o">-</span><span class="n">n3</span> <span class="n">data</span><span class="o">/</span><span class="n">GH5_characterized</span><span class="o">.</span><span class="n">fasta</span>
@@ -560,13 +625,17 @@ QTPTTPSPQTPTTPTALPTPSPTPTAPSATVTETTSPQTPTTTITTETTTTPAPQPQVVFLKLPEGEEPK
 </div>
 
 </div>
-
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>I'm going to align these sequences with <a href="http://www.drive5.com/muscle/">Muscle</a>.</p>
 
-
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[136]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="err">!</span><span class="n">muscle</span> <span class="o">-</span><span class="ow">in</span> <span class="n">data</span><span class="o">/</span><span class="n">GH5_characterized</span><span class="o">.</span><span class="n">fasta</span> <span class="o">-</span><span class="n">out</span> <span class="n">data</span><span class="o">/</span><span class="n">GH5_characterized</span><span class="o">.</span><span class="n">aln</span><span class="o">.</span><span class="n">fasta</span>
@@ -579,7 +648,7 @@ QTPTTPSPQTPTTPTALPTPSPTPTAPSATVTETTSPQTPTTTITTETTTTPAPQPQVVFLKLPEGEEPK
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[137]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="err">!</span><span class="n">head</span> <span class="o">-</span><span class="n">n5</span> <span class="n">data</span><span class="o">/</span><span class="n">GH5_characterized</span><span class="o">.</span><span class="n">aln</span><span class="o">.</span><span class="n">fasta</span>
@@ -612,13 +681,17 @@ QTPTTPSPQTPTTPTALPTPSPTPTAPSATVTETTSPQTPTTTITTETTTTPAPQPQVVFLKLPEGEEPK
 </div>
 
 </div>
-
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>Ok, we're going to switch into Python mode now as we have a look at this alignment. Also, we'll use Python to talk to IToL. Let's just plot gap frequency by position.</p>
 
-
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">skbio.alignment</span> <span class="kn">import</span> <span class="n">Alignment</span>
@@ -638,7 +711,7 @@ QTPTTPSPQTPTTPTALPTPSPTPTAPSATVTETTSPQTPTTTITTETTTTPAPQPQVVFLKLPEGEEPK
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[144]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">aln</span> <span class="o">=</span> <span class="n">Alignment</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">file</span> <span class="o">=</span> <span class="s2">&quot;data/GH5_characterized.aln.fasta&quot;</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;fasta&quot;</span><span class="p">)</span>
@@ -649,13 +722,17 @@ QTPTTPSPQTPTTPTALPTPSPTPTAPSATVTETTSPQTPTTTITTETTTTPAPQPQVVFLKLPEGEEPK
 </div>
 
 </div>
-
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>Our alignment is a bit gappy as you can see below. There are quite a few positions with few characters.</p>
 
-
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered celltag_fullwidth">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[145]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">gap_freq</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span><span class="p">[</span><span class="s2">&quot;-&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">aln</span><span class="o">.</span><span class="n">position_frequencies</span><span class="p">()]</span>
@@ -695,7 +772,7 @@ QTPTTPSPQTPTTPTALPTPSPTPTAPSATVTETTSPQTPTTTITTETTTTPAPQPQVVFLKLPEGEEPK
 
 
 <div class="output_png output_subarea ">
-<img src="https://chuckpr.github.io/notebooks/images/output_37_1.png"
+<img src="https://chuckpr.github.io/notebooks/images/trees1_37_1.png"
 >
 </div>
 
@@ -705,13 +782,17 @@ QTPTTPSPQTPTTPTALPTPSPTPTAPSATVTETTSPQTPTTTITTETTTTPAPQPQVVFLKLPEGEEPK
 </div>
 
 </div>
-
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>Let's make a gap frequency filter to remove columns with greater than 60% gaps.</p>
 
-
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[146]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">keepers</span><span class="p">,</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">gap_freq</span><span class="p">)</span><span class="o">&lt;=</span><span class="mf">0.60</span><span class="p">)</span>
@@ -723,13 +804,17 @@ QTPTTPSPQTPTTPTALPTPSPTPTAPSATVTETTSPQTPTTTITTETTTTPAPQPQVVFLKLPEGEEPK
 </div>
 
 </div>
-
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>Ok, that looks better. We'll use this filtered alignment to build the tree.</p>
 
-
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered celltag_fullwidth">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[147]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">gap_freq2</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span><span class="p">[</span><span class="s2">&quot;-&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">aln_masked</span><span class="o">.</span><span class="n">position_frequencies</span><span class="p">()]</span>
@@ -769,7 +854,7 @@ QTPTTPSPQTPTTPTALPTPSPTPTAPSATVTETTSPQTPTTTITTETTTTPAPQPQVVFLKLPEGEEPK
 
 
 <div class="output_png output_subarea ">
-<img src="https://chuckpr.github.io/notebooks/images/output_41_1.png"
+<img src="https://chuckpr.github.io/notebooks/images/trees1_41_1.png"
 >
 </div>
 
@@ -781,7 +866,7 @@ QTPTTPSPQTPTTPTALPTPSPTPTAPSATVTETTSPQTPTTTITTETTTTPAPQPQVVFLKLPEGEEPK
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[148]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">aln_masked</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;data/GH5_characterized.aln.masked.fasta&quot;</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;fasta&quot;</span><span class="p">)</span>
@@ -814,7 +899,7 @@ QTPTTPSPQTPTTPTALPTPSPTPTAPSATVTETTSPQTPTTTITTETTTTPAPQPQVVFLKLPEGEEPK
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[149]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="err">!</span><span class="n">head</span> <span class="o">-</span><span class="n">n2</span> <span class="n">data</span><span class="o">/</span><span class="n">GH5_characterized</span><span class="o">.</span><span class="n">aln</span><span class="o">.</span><span class="n">masked</span><span class="o">.</span><span class="n">fasta</span> <span class="o">|</span> <span class="n">cut</span> <span class="o">-</span><span class="n">c1</span><span class="o">-</span><span class="mi">100</span>
@@ -844,13 +929,17 @@ HLISPRILTGLFVIGLAPAWSSSVSSSGIIVGAQCNWYGPVCQSGASLPAPGNSVL-SGSSPEGNSWLSPYS-SKVMDGT
 </div>
 
 </div>
-
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>I'm going to make the tree with <a href="http://www.microbesonline.org/fasttree/">FastTree</a>. I'm doing a quick hack to make sure that the tips of our tree are just accession numbers and not the long identifiers returned from <code>rentrez</code>. The sed command just grabs the accession from each FASTA identifier line and scrubs the rest. I am using <a href="http://tldp.org/LDP/abs/html/process-sub.html">process substitution</a> but you could just as easily write the scrubbed FASTA to a file and send it to FastTree.</p>
 
-
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="err">!</span><span class="n">head</span> <span class="o">-</span><span class="n">n6</span> <span class="n">data</span><span class="o">/</span><span class="n">GH5_characterized</span><span class="o">.</span><span class="n">aln</span><span class="o">.</span><span class="n">masked</span><span class="o">.</span><span class="n">fasta</span> <span class="o">|</span> <span class="n">sed</span> <span class="s1">&#39;/^&gt;/ s/.*|.*|.*|\(.*\)|.*/&gt;</span><span class="se">\1</span><span class="s1">/&#39;</span> <span class="o">|</span> <span class="n">cut</span> <span class="o">-</span><span class="n">c</span> <span class="mi">1</span><span class="o">-</span><span class="mi">80</span> <span class="c1">#for example...</span>
@@ -886,7 +975,7 @@ MKAMTSVILPPVAAPALCLAAV---------WTTFNAVG------ANL-G-GW---LIDTTGAVDEWCGPVLEWITIDTL
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[140]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span>%%bash
@@ -898,13 +987,17 @@ FastTree &lt;<span class="o">(</span>sed <span class="s1">&#39;/^&gt;/ s/.*|.*|.
 </div>
 
 </div>
-
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>Cool, now we just need to upload the tree and the color definition file from above to IToL. There is a nice Python library to talk to IToL programatically called <a href="https://github.com/albertyw/itolapi">itolapi</a>. We're using that to upload our info. The <code>itolapi</code> page has all the documentation required to use it effectively.</p>
 
-
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[37]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">itol_uploader</span> <span class="o">=</span> <span class="n">Itol</span><span class="o">.</span><span class="n">Itol</span><span class="p">()</span>
@@ -940,13 +1033,17 @@ FastTree &lt;<span class="o">(</span>sed <span class="s1">&#39;/^&gt;/ s/.*|.*|.
 </div>
 
 </div>
-
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>You can also use <code>itolapi</code> to download the tree but I don't think the IToL API supports exporting trees with full clade coloring. I could be wrong but I really wanted the full clade coloring as opposed to just a ring of colors around the tree. Anyway, I had to manually visit IToL to export this visualization (frown).</p>
 
-
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered celltag_fullwidth">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[16]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">Image</span><span class="p">(</span><span class="s2">&quot;data/GH5.tree.png&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">600</span><span class="p">)</span>
@@ -968,7 +1065,7 @@ FastTree &lt;<span class="o">(</span>sed <span class="s1">&#39;/^&gt;/ s/.*|.*|.
 
 
 <div class="output_png output_subarea output_execute_result">
-<img src="https://chuckpr.github.io/notebooks/images/output_50_0.png"
+<img src="https://chuckpr.github.io/notebooks/images/trees1_50_0.png"
 width=600
 >
 </div>
@@ -979,18 +1076,30 @@ width=600
 </div>
 
 </div>
-
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>So it looks like there's some coherence to the EC numbers. The two main EC annotations do not appear to overlap much but the minor annotations are dispersed throughout in small groups.</p>
 
-
-
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>You can explore this tree in IToL by visiting <a href="http://itol.embl.de/shared/chuckpr">this page</a>.</p>
 
-
-
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>Disclaimer: I don't want to go down the rabbit hole of finding all the inconsistencies in this CAZy table for this small example. There are most definitely some wonky rows in the information we scraped. I think the accessions are the least consistent field in CAZy and it's tiresome to account for all the seemingly arbitrary little ways that rows can differ from the consensus. The moral of the story? <strong>Don't make people scrape your webpage to get information!!!</strong> I don't see why that table can't be provided by the CAZy team as a nice CSV...</p>
 
-
+</div>
+</div>
+</div>
  
 
 

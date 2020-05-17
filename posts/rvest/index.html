@@ -54,7 +54,7 @@
 <body>
   <header class="flex flex-column avenir mw7 ml-auto mr-auto">
 <div class="pt5 pb2 pl0-l pl2">
-  <a href="https://chuckpr.github.io/" class="link dim f2-ns f3 fw4 blue tracked-tight bb-l bw1-ns lh-title b--moon-gray">
+  <a href="https://chuckpr.github.io/" class="link dim f2-ns f3 fw4 blue tracked-tight lh-title">
     A microbiologist with a data science problem
   </a>
 </div>  </header>
@@ -89,16 +89,25 @@
       </div>
     </section>
     <section id="article-content" class="ph3 garamond near-black" style="font-size: 17px">
-      <p>I have been looking for a nice excuse to play with <code>rvest</code> and since we're starting to work with "CAZYme" gene annotations in the Buckley lab, scraping the <a href="http://www.cazy.org/">CAZy</a> website seemed like a good fit. I'm starting simple and will build as I go. This post is just an example of producing a table of <a href="https://en.wikipedia.org/wiki/EC_number">EC</a> numbers and "clan" groupings of the CAZy glycoside hydrolase families.</p>
+      <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>I have been looking for a nice excuse to play with <code>rvest</code> and since we're starting to work with "CAZYme" gene annotations in the Buckley lab, scraping the <a href="http://www.cazy.org/">CAZy</a> website seemed like a good fit. I'm starting simple and will build as I go. This post is just an example of producing a table of <a href="https://en.wikipedia.org/wiki/EC_number">EC</a> numbers and "clan" groupings of the CAZy glycoside hydrolase families.</p>
 
-
-
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>We'll pull in all the libraries we need first.</p>
 
-
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[16]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>%<span class="n">load_ext</span> <span class="n">rpy2.ipython</span>
@@ -130,7 +139,7 @@
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="o">%%</span><span class="n">R</span>
@@ -146,13 +155,17 @@
 </div>
 
 </div>
-
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>The first thing I will do is read in the CAZy website <a href="http://www.cazy.org/Glycoside-Hydrolases.html">glycoside hydrolase</a> page.</p>
 
-
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="o">%%</span><span class="n">R</span>
@@ -164,21 +177,33 @@
 </div>
 
 </div>
-
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>After inspecting the page, it's clear that the clan names are in table cells of the "thclan" <code>css</code> class and the corresponding families are in cells with the "clan" <code>css</code> class. We can use the <code>css</code> to quickly get the membership of each clan.</p>
 
-
-
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>Try the <a href="http://selectorgadget.com/">SelectorGadget</a> for inspecting webpage elements. It's a great way to find <code>css</code> selectors for scraping.</p>
 
-
-
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>You can find a nice explanation of these <code>rvest</code> functions <a href="https://github.com/hadley/rvest">here</a>.</p>
 
-
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="o">%%</span><span class="n">R</span>
@@ -191,31 +216,43 @@
 </div>
 
 </div>
-
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>The following is just a quick function to parse the text that we just scraped into a dataframe. This took some trial and error but parsing the family string required the following steps:</p>
 
-
-
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <ol>
 <li>trim leading and trailing whitespace (<code>trimws</code>), </li>
 <li>split on whitespace (<code>strsplit</code>), </li>
 <li>and <code>unlist</code>.</li>
 </ol>
 
-
-
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>This function takes an index and spits out a dataframe with two columns: one for the clan and one for the families.</p>
 
-
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="o">%%</span><span class="n">R</span>
 <span class="n">get_clan_df</span> <span class="o">=</span> <span class="nf">function</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nf">data.frame</span><span class="p">(</span><span class="n">clan</span> <span class="o">=</span> <span class="n">clans[i]</span><span class="p">,</span> 
-               <span class="n">family</span> <span class="o">=</span> <span class="n">families.clan[i]</span> <span class="o">%&gt;%</span> 
+    <span class="nf">data.frame</span><span class="p">(</span><span class="n">clan</span> <span class="o">=</span> <span class="n">clans</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> 
+               <span class="n">family</span> <span class="o">=</span> <span class="n">families.clan</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">%&gt;%</span> 
                    <span class="n">trimws</span> <span class="o">%&gt;%</span> <span class="c1"># remove leading and trailing whitespace</span>
                    <span class="nf">strsplit</span><span class="p">(</span><span class="s">&quot;\\s+&quot;</span><span class="p">,</span> <span class="n">perl</span> <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span> <span class="o">%&gt;%</span> <span class="c1"># split families into </span>
                                                      <span class="c1"># individual elements</span>
@@ -229,13 +266,17 @@
 </div>
 
 </div>
-
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>We can loop through all the clans using <code>ldply</code> to build a single dataframe of all the clans.</p>
 
-
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="o">%%</span><span class="n">R</span>
@@ -276,19 +317,23 @@
 </div>
 
 </div>
-
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>The EC information can be parsed similarly. Here the <code>css</code> selectors are "thec" for the EC numbers and "ec" for the families. For some reason two unrelated table cells earlier in the page have the "ec" class too so I had to omit those from the final families vector.</p>
 
-
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="o">%%</span><span class="n">R</span>
 <span class="n">ecs</span> <span class="o">=</span> <span class="n">cazy</span> <span class="o">%&gt;%</span> <span class="nf">html_nodes</span><span class="p">(</span><span class="s">&quot;.thec&quot;</span><span class="p">)</span> <span class="o">%&gt;%</span> <span class="nf">html_text</span><span class="p">()</span>
 <span class="n">families.ec</span> <span class="o">=</span> <span class="n">cazy</span> <span class="o">%&gt;%</span> <span class="nf">html_nodes</span><span class="p">(</span><span class="s">&quot;.ec&quot;</span><span class="p">)</span> <span class="o">%&gt;%</span> <span class="nf">html_text</span><span class="p">()</span>
-<span class="n">families.ec</span> <span class="o">=</span> <span class="n">families.ec[3</span><span class="o">:</span><span class="nf">length</span><span class="p">(</span><span class="n">families.ec</span><span class="p">)</span><span class="n">]</span>
+<span class="n">families.ec</span> <span class="o">=</span> <span class="n">families.ec</span><span class="p">[</span><span class="m">3</span><span class="o">:</span><span class="nf">length</span><span class="p">(</span><span class="n">families.ec</span><span class="p">)]</span>
 </pre></div>
 
     </div>
@@ -298,13 +343,13 @@
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="o">%%</span><span class="n">R</span>
 <span class="n">get_ec_df</span> <span class="o">=</span> <span class="nf">function</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nf">data.frame</span><span class="p">(</span><span class="n">ec</span> <span class="o">=</span> <span class="n">ecs[i]</span><span class="p">,</span> 
-               <span class="n">family</span> <span class="o">=</span> <span class="n">families.ec[i]</span> <span class="o">%&gt;%</span>
+    <span class="nf">data.frame</span><span class="p">(</span><span class="n">ec</span> <span class="o">=</span> <span class="n">ecs</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> 
+               <span class="n">family</span> <span class="o">=</span> <span class="n">families.ec</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">%&gt;%</span>
                    <span class="n">trimws</span> <span class="o">%&gt;%</span>
                    <span class="nf">strsplit</span><span class="p">(</span><span class="s">&quot;\\s+&quot;</span><span class="p">,</span> <span class="n">perl</span> <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span> <span class="o">%&gt;%</span>
                    <span class="n">unlist</span><span class="p">,</span>
@@ -319,7 +364,7 @@
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="o">%%</span><span class="n">R</span>
@@ -332,13 +377,17 @@
 </div>
 
 </div>
-
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>This information will be more useful when we're tallying the annotations in a real dataset, but, we can also do a quick analysis. It looks like the "GH-A" clan has the most glycoside hydrolase families and the most EC activities. Beyond that, the clans have similar numbers of families but vary with respect to number of EC activities. (Note how the "clan" column can be sorted using <code>magrittr</code> and <code>dplyr</code>. Graphs that aren't sensibly sorted are a huge pet peeve of mine :) . Also, I'm using <code>tidyr</code> to get the table in the proper orientation for plotting.)</p>
 
-
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered celltag_fullwidth">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[17]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="o">%%</span><span class="n">R</span> <span class="o">-</span><span class="n">w</span> <span class="m">800</span> <span class="o">-</span><span class="n">h</span> <span class="m">350</span>
@@ -348,10 +397,10 @@
     <span class="nf">summarize</span><span class="p">(</span><span class="n">ec.count</span> <span class="o">=</span> <span class="nf">length</span><span class="p">(</span><span class="nf">unique</span><span class="p">(</span><span class="n">ec</span><span class="p">)),</span> 
               <span class="n">family.count</span> <span class="o">=</span> <span class="nf">length</span><span class="p">(</span><span class="nf">unique</span><span class="p">(</span><span class="n">family</span><span class="p">)))</span> <span class="o">%&gt;%</span>
     <span class="nf">gather</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="o">-</span><span class="n">clan</span><span class="p">)</span> <span class="o">%&gt;%</span> <span class="p">{</span>
-        <span class="n">ec.sort</span> <span class="o">=</span> <span class="nf">arrange</span><span class="p">(</span><span class="n">.,</span> <span class="nf">desc</span><span class="p">(</span><span class="n">count</span><span class="p">))</span> <span class="o">%&gt;%</span> <span class="c1"># sort by count </span>
+        <span class="n">ec.sort</span> <span class="o">=</span> <span class="nf">arrange</span><span class="p">(</span><span class="n">.</span><span class="p">,</span> <span class="nf">desc</span><span class="p">(</span><span class="n">count</span><span class="p">))</span> <span class="o">%&gt;%</span> <span class="c1"># sort by count </span>
             <span class="nf">filter</span><span class="p">(</span><span class="n">key</span> <span class="o">==</span> <span class="s">&quot;ec.count&quot;</span><span class="p">)</span> <span class="o">%&gt;%</span>
             <span class="nf">extract2</span><span class="p">(</span><span class="s">&quot;clan&quot;</span><span class="p">)</span> <span class="c1"># get a list of clans sorted by ec count</span>
-        <span class="nf">mutate</span><span class="p">(</span><span class="n">.,</span> <span class="n">clan</span> <span class="o">=</span> <span class="nf">factor</span><span class="p">(</span><span class="n">clan</span><span class="p">,</span> <span class="n">levels</span> <span class="o">=</span> <span class="n">ec.sort</span><span class="p">))</span> <span class="c1"># make the clan </span>
+        <span class="nf">mutate</span><span class="p">(</span><span class="n">.</span><span class="p">,</span> <span class="n">clan</span> <span class="o">=</span> <span class="nf">factor</span><span class="p">(</span><span class="n">clan</span><span class="p">,</span> <span class="n">levels</span> <span class="o">=</span> <span class="n">ec.sort</span><span class="p">))</span> <span class="c1"># make the clan </span>
                                                          <span class="c1"># a factor sorted </span>
                                                          <span class="c1"># by ec count</span>
     <span class="p">}</span>
@@ -403,7 +452,7 @@
 
 
 <div class="output_png output_subarea ">
-<img src="https://chuckpr.github.io/notebooks/images/output_21_1.png"
+<img src="https://chuckpr.github.io/notebooks/images/rvest1_21_1.png"
 >
 </div>
 
@@ -413,28 +462,36 @@
 </div>
 
 </div>
-
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>We can also look at the families with the most associated EC activities. Family 13 is has 30 EC activities associated with it! I found this somewhat baffling but it looks like Family 13 and other CAZy glycoside hydrolase families have been broken down into subfamilies that have more specific activites:</p>
 
-
-
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <blockquote><p><b>Dividing the large glycoside hydrolase family 13 into subfamilies: 
 towards improved functional annotations of alpha-amylase-related proteins.</b>
 Stam MR, Danchin EG, Rancurel C, Coutinho PM, Henrissat B.
 Protein Eng Des Sel. 2006 Dec;19(12):555-62.</p>
 </blockquote>
 
-
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="o">%%</span><span class="n">R</span> <span class="o">-</span><span class="n">h</span> <span class="m">350</span> <span class="o">-</span><span class="n">w</span> <span class="m">600</span>
 <span class="n">ec_df</span> <span class="o">%&gt;%</span>
     <span class="nf">group_by</span><span class="p">(</span><span class="n">family</span><span class="p">)</span> <span class="o">%&gt;%</span>
     <span class="nf">summarize</span><span class="p">(</span><span class="n">count</span> <span class="o">=</span> <span class="nf">n</span><span class="p">())</span> <span class="o">%&gt;%</span>
-    <span class="nf">arrange</span><span class="p">(</span><span class="nf">desc</span><span class="p">(</span><span class="n">count</span><span class="p">))</span> <span class="o">%&gt;%</span> <span class="p">{</span><span class="nf">print</span><span class="p">(</span><span class="nf">head</span><span class="p">(</span><span class="n">.)</span><span class="p">);</span> <span class="n">.}</span> <span class="o">%&gt;%</span>
+    <span class="nf">arrange</span><span class="p">(</span><span class="nf">desc</span><span class="p">(</span><span class="n">count</span><span class="p">))</span> <span class="o">%&gt;%</span> <span class="p">{</span><span class="nf">print</span><span class="p">(</span><span class="nf">head</span><span class="p">(</span><span class="n">.</span><span class="p">));</span> <span class="n">.</span><span class="p">}</span> <span class="o">%&gt;%</span>
     <span class="nf">extract2</span><span class="p">(</span><span class="s">&quot;count&quot;</span><span class="p">)</span> <span class="o">%&gt;%</span>
     <span class="nf">hist</span><span class="p">(</span><span class="n">breaks</span> <span class="o">=</span> <span class="m">100</span><span class="p">,</span> <span class="n">main</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="p">,</span> <span class="n">xlab</span> <span class="o">=</span> <span class="s">&quot;# of EC activities&quot;</span><span class="p">)</span>
 </pre></div>
@@ -477,7 +534,7 @@ Protein Eng Des Sel. 2006 Dec;19(12):555-62.</p>
 
 
 <div class="output_png output_subarea ">
-<img src="https://chuckpr.github.io/notebooks/images/output_24_1.png"
+<img src="https://chuckpr.github.io/notebooks/images/rvest1_24_1.png"
 >
 </div>
 
@@ -487,10 +544,14 @@ Protein Eng Des Sel. 2006 Dec;19(12):555-62.</p>
 </div>
 
 </div>
-
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>This was so painless! It's so easy to use css selectors to get the information we're after.</p>
 
-
+</div>
+</div>
+</div>
  
 
 

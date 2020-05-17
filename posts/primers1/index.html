@@ -53,7 +53,7 @@
 <body>
   <header class="flex flex-column avenir mw7 ml-auto mr-auto">
 <div class="pt5 pb2 pl0-l pl2">
-  <a href="https://chuckpr.github.io/" class="link dim f2-ns f3 fw4 blue tracked-tight bb-l bw1-ns lh-title b--moon-gray">
+  <a href="https://chuckpr.github.io/" class="link dim f2-ns f3 fw4 blue tracked-tight lh-title">
     A microbiologist with a data science problem
   </a>
 </div>  </header>
@@ -92,24 +92,41 @@
       </div>
     </section>
     <section id="article-content" class="ph3 garamond near-black" style="font-size: 17px">
-      <p>Microbial ecologists have long considered the 515F SSU rRNA gene PCR primer to be "universal." That is, the 515F primer is thought to amplify Eukarya, Archaea, and Bacteria. Indeed the target of the 515F primer is well conserved across each domain, however, the there are some differences in the primer target between domains that should be considered when evaluating 515F for use in a microbial diversity studies.</p>
+      <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Microbial ecologists have long considered the 515F SSU rRNA gene PCR primer to be "universal." That is, the 515F primer is thought to amplify Eukarya, Archaea, and Bacteria. Indeed the target of the 515F primer is well conserved across each domain, however, the there are some differences in the primer target between domains that should be considered when evaluating 515F for use in a microbial diversity studies.</p>
 
-
-
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>To make matters more complicated the 515F primer has changed from its inception to account for new sequence information and it's not clear from the literature which 515F version is most effective. <em>In this post, we'll take a look at tbe 515F primer target across a broad diversity of SSU rRNA genes</em>. In subsequent posts we'll evaluate different 515F versions and we'll also evaluate reverse primers that can be paired with 515F. While there are excellent tools avaliable for SSU rRNA gene PCR primer analysis (see <a href="http://pprospector.sourceforge.net/">PrimerProspector</a>, <a href="http://www.arb-silva.de/search/testprime/">TestPrime</a>), most tools focus on nucleotide frequecies in aligments. In this post, we'll evaluate 515F by looking at the distribution of 515F target oligos.</p>
 
-
-
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>We'll use the 99% OTU seed sequences for the GreenGenes database as reference. You can download the GreenGenes files from <a href="http://greengenes.secondgenome.com/downloads/database/13_5">here</a>. This analysis will focus on Archaea and Bacteria.</p>
 
-
-
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>First we need to import some python functions and modules as well as load some extensions for the IPython notebook.</p>
 
-
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
@@ -126,13 +143,17 @@
 </div>
 
 </div>
-
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>Eventually we'll want to explore target sites by their taxonomic affiliation so we need to get the taxonomic information from the GreenGenes files we downloaded (above). The following code is a quick and dirty way to populate a <a href="http://pandas.pydata.org/">pandas</a> DataFrame with the taxonomic annotations for the gene sequences we'll be working with.</p>
 
-
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">parse_tax</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
@@ -160,13 +181,17 @@
 </div>
 
 </div>
-
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>Now that we have the taxonomy for each sequence, let's get the 515F target site. To do this we just align one combination of the degenerate 515F primer to each SSU rRNA gene sequence. We then pull out the aligned region from the SSU rRNA gene sequence -- this is the 515F target! I'm using the <code>glocal</code> method for the <code>Python</code> <a href="https://github.com/brentp/align">aligner</a> package for the alignment and I'm using <a href="http://scikit-bio.org/">scikit-bio</a> to parse and manage the SSU rRNA gene sequenes.</p>
 
-
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">fn</span> <span class="o">=</span> <span class="s2">&quot;data/gg_13_5_otus/rep_set/99_otus.fasta&quot;</span>
@@ -185,7 +210,7 @@
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="n">time</span>
@@ -221,13 +246,17 @@ Wall time: 20min 31s
 </div>
 
 </div>
-
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>Now we can join our target and taxonomy information into a single DataFrame. Each row represents one target from one gene. Specifically, each row has the target sequence and corresponding taxonomic information.</p>
 
-
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df_targets</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">primer_targets_515</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">ids</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;515F&quot;</span><span class="p">),</span> <span class="n">how</span> <span class="o">=</span> <span class="s2">&quot;left&quot;</span><span class="p">)</span>
@@ -239,13 +268,17 @@ Wall time: 20min 31s
 </div>
 
 </div>
-
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>I love <a href="http://pandas.pydata.org/">pandas</a> but I think for this application it will be best to use the (mind-blowingly amazing) R package <a href="http://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html">dplyR</a>. So, we need to push our pandas DataFrame into  an R session. I'm using the <code>rmagic</code> functions from <a href="http://ipython.org/">IPython</a>/<a href="http://rpy.sourceforge.net/">rpy2</a> to move from Python to R.</p>
 
-
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="n">R</span> <span class="o">-</span><span class="n">i</span> <span class="n">df_targets</span>
@@ -258,7 +291,7 @@ Wall time: 20min 31s
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="n">R</span>
@@ -305,13 +338,17 @@ The following objects are masked from ‘package:base’:
 </div>
 
 </div>
-
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>Ok, now we can make some figures! Let's first look at the ten most abundant archaeal and bacterial 515F targets. You can see below that the bacterial 515F targets are dominated by a single sequence, and, that although the nineteen targets are similar in sequence there is little overlap in target representation between Archaea and Bacteria.</p>
 
-
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="n">R</span> <span class="o">-</span><span class="n">w</span> <span class="m">600</span>
@@ -320,7 +357,7 @@ The following objects are masked from ‘package:base’:
     <span class="nf">summarize</span><span class="p">(</span><span class="n">count</span> <span class="o">=</span> <span class="nf">n</span><span class="p">())</span> <span class="o">%&gt;%</span>
     <span class="nf">filter</span><span class="p">(</span><span class="nf">rank</span><span class="p">(</span><span class="nf">desc</span><span class="p">(</span><span class="n">count</span><span class="p">),</span> <span class="n">ties.method</span> <span class="o">=</span> <span class="s">&quot;random&quot;</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="m">10</span><span class="p">)</span> <span class="o">%&gt;%</span>
     <span class="nf">arrange</span><span class="p">(</span><span class="nf">desc</span><span class="p">(</span><span class="n">count</span><span class="p">),</span> <span class="n">kingdom</span><span class="p">)</span> <span class="o">%&gt;%</span>
-    <span class="nf">mutate</span><span class="p">(</span><span class="n">X515F</span> <span class="o">=</span> <span class="nf">factor</span><span class="p">(</span><span class="n">X515F</span><span class="p">,</span> <span class="n">levels</span> <span class="o">=</span> <span class="nf">unique</span><span class="p">(</span><span class="n">.$X515F</span><span class="p">)))</span>
+    <span class="nf">mutate</span><span class="p">(</span><span class="n">X515F</span> <span class="o">=</span> <span class="nf">factor</span><span class="p">(</span><span class="n">X515F</span><span class="p">,</span> <span class="n">levels</span> <span class="o">=</span> <span class="nf">unique</span><span class="p">(</span><span class="n">.</span><span class="o">$</span><span class="n">X515F</span><span class="p">)))</span>
 
 <span class="n">p</span> <span class="o">=</span> <span class="nf">ggplot</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="nf">aes</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="n">X515F</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">count</span><span class="p">))</span>
 
@@ -360,7 +397,7 @@ The following objects are masked from ‘package:base’:
 
 
 <div class="output_png output_subarea ">
-<img src="https://chuckpr.github.io/notebooks/images/output_16_0.png"
+<img src="https://chuckpr.github.io/notebooks/images/primers1_16_0.png"
 >
 </div>
 
@@ -370,35 +407,39 @@ The following objects are masked from ‘package:base’:
 </div>
 
 </div>
-
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>If we dig a little deeper into to archaeal 515F targets, we see some interesting trends among phyla. There are very few Nanoarchaea sequences in the reference database but they all have the same 515F target sequence which appears to be unique to Nanoarchaea. Also, there are a couple relatively abundant 515F target sequences with insertions. Eight of the ten most abundant archaeal 515F targets are identical over the last six nucleotides at the 3' end of the 515F primer.</p>
 
-
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="n">R</span> <span class="o">-</span><span class="n">h</span> <span class="m">550</span> <span class="o">-</span><span class="n">w</span> <span class="m">400</span>
 <span class="n">d</span> <span class="o">=</span> <span class="n">df_targets</span> <span class="o">%&gt;%</span>
     <span class="nf">filter</span><span class="p">(</span><span class="n">kingdom</span> <span class="o">==</span> <span class="s">&quot;Archaea&quot;</span><span class="p">,</span> <span class="n">phylum</span> <span class="o">!=</span> <span class="s">&quot;&quot;</span><span class="p">)</span> <span class="o">%&gt;%</span>
     <span class="p">{</span>
-        <span class="n">top10</span> <span class="o">=</span> <span class="nf">group_by</span><span class="p">(</span><span class="n">.,</span> <span class="n">X515F</span><span class="p">)</span> <span class="o">%&gt;%</span>
+        <span class="n">top10</span> <span class="o">=</span> <span class="nf">group_by</span><span class="p">(</span><span class="n">.</span><span class="p">,</span> <span class="n">X515F</span><span class="p">)</span> <span class="o">%&gt;%</span>
             <span class="nf">summarize</span><span class="p">(</span><span class="n">count</span> <span class="o">=</span> <span class="nf">n</span><span class="p">())</span> <span class="o">%&gt;%</span>
             <span class="nf">filter</span><span class="p">(</span><span class="nf">rank</span><span class="p">(</span><span class="nf">desc</span><span class="p">(</span><span class="n">count</span><span class="p">),</span> <span class="n">ties.method</span> <span class="o">=</span> <span class="s">&quot;random&quot;</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="m">10</span><span class="p">)</span> <span class="o">%&gt;%</span>
             <span class="nf">extract2</span><span class="p">(</span><span class="s">&quot;X515F&quot;</span><span class="p">)</span> <span class="o">%&gt;%</span> 
             <span class="n">unique</span> <span class="o">%&gt;%</span>
             <span class="n">as.character</span>
-        <span class="nf">filter</span><span class="p">(</span><span class="n">.,</span> <span class="n">X515F</span> <span class="o">%in%</span> <span class="n">top10</span><span class="p">)</span> 
+        <span class="nf">filter</span><span class="p">(</span><span class="n">.</span><span class="p">,</span> <span class="n">X515F</span> <span class="o">%in%</span> <span class="n">top10</span><span class="p">)</span> 
     <span class="p">}</span> <span class="o">%&gt;%</span>
     <span class="nf">group_by</span><span class="p">(</span><span class="n">phylum</span><span class="p">,</span> <span class="n">X515F</span><span class="p">)</span> <span class="o">%&gt;%</span>
     <span class="nf">summarize</span><span class="p">(</span><span class="n">count</span> <span class="o">=</span> <span class="nf">n</span><span class="p">())</span> <span class="o">%&gt;%</span>
     <span class="p">{</span>
-        <span class="n">psort</span> <span class="o">=</span> <span class="nf">group_by</span><span class="p">(</span><span class="n">.,</span> <span class="n">X515F</span><span class="p">)</span> <span class="o">%&gt;%</span>
+        <span class="n">psort</span> <span class="o">=</span> <span class="nf">group_by</span><span class="p">(</span><span class="n">.</span><span class="p">,</span> <span class="n">X515F</span><span class="p">)</span> <span class="o">%&gt;%</span>
             <span class="nf">summarize</span><span class="p">(</span><span class="n">S</span> <span class="o">=</span> <span class="nf">sum</span><span class="p">(</span><span class="n">count</span><span class="p">))</span> <span class="o">%&gt;%</span>
             <span class="nf">arrange</span><span class="p">(</span><span class="nf">desc</span><span class="p">(</span><span class="n">S</span><span class="p">))</span> <span class="o">%&gt;%</span>
             <span class="nf">extract2</span><span class="p">(</span><span class="s">&quot;X515F&quot;</span><span class="p">)</span> <span class="o">%&gt;%</span> <span class="n">as.character</span>
-        <span class="nf">mutate</span><span class="p">(</span><span class="n">.,</span> <span class="n">X515F</span> <span class="o">=</span> <span class="nf">factor</span><span class="p">(</span><span class="n">X515F</span><span class="p">,</span> <span class="n">levels</span> <span class="o">=</span> <span class="n">psort</span><span class="p">))</span>
+        <span class="nf">mutate</span><span class="p">(</span><span class="n">.</span><span class="p">,</span> <span class="n">X515F</span> <span class="o">=</span> <span class="nf">factor</span><span class="p">(</span><span class="n">X515F</span><span class="p">,</span> <span class="n">levels</span> <span class="o">=</span> <span class="n">psort</span><span class="p">))</span>
     <span class="p">}</span>
 
 <span class="n">p</span> <span class="o">=</span> <span class="nf">ggplot</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="nf">aes</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="n">X515F</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">count</span><span class="p">))</span>
@@ -439,7 +480,7 @@ The following objects are masked from ‘package:base’:
 
 
 <div class="output_png output_subarea ">
-<img src="https://chuckpr.github.io/notebooks/images/output_18_0.png"
+<img src="https://chuckpr.github.io/notebooks/images/primers1_18_0.png"
 >
 </div>
 
@@ -449,13 +490,17 @@ The following objects are masked from ‘package:base’:
 </div>
 
 </div>
-
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>The Bacteria appear to be dominated by a single target sequence (above). Let's get that sequence explicitly.</p>
 
-
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="n">R</span>
@@ -497,13 +542,17 @@ The following objects are masked from ‘package:base’:
 </div>
 
 </div>
-
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>There are some phyla, however, that are not as dominated by the most abundant bacterial 515F target. Here is a histogram of representation (percentages of total targets) within phylum for the most abundant bacterial 515F target. You can see that there are nine phyla for which the most abundant 515F bacterial target represents less than 80% of total targets.</p>
 
-
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="n">R</span> <span class="o">-</span><span class="n">h</span> <span class="m">350</span>
@@ -535,7 +584,7 @@ The following objects are masked from ‘package:base’:
 
 
 <div class="output_png output_subarea ">
-<img src="https://chuckpr.github.io/notebooks/images/output_22_0.png"
+<img src="https://chuckpr.github.io/notebooks/images/primers1_22_0.png"
 >
 </div>
 
@@ -545,13 +594,17 @@ The following objects are masked from ‘package:base’:
 </div>
 
 </div>
-
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>Let's see what the 515F targets look like for those nine phyla (above). The plot below shows the five most abundant 515F targets ranked by max representation within a phylum for the nine selected phyla. You can see that FCPU426, WS5, and GN01 515F targets are still dominated by the most abundant 515F target across all bacteria (GTGCCAGCAGCCGCGGTAA). The TM7 phylum 515F targets differ from the most abundant target at the 3' end of the 515F primer.</p>
 
-
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="n">R</span> <span class="o">-</span><span class="n">w</span> <span class="m">600</span> <span class="o">-</span><span class="n">h</span> <span class="m">500</span>
@@ -562,21 +615,21 @@ The following objects are masked from ‘package:base’:
     <span class="nf">group_by</span><span class="p">(</span><span class="n">phylum</span><span class="p">)</span> <span class="o">%&gt;%</span>
     <span class="nf">mutate</span><span class="p">(</span><span class="n">count.relative</span> <span class="o">=</span> <span class="n">count</span> <span class="o">/</span> <span class="nf">sum</span><span class="p">(</span><span class="n">count</span><span class="p">))</span> <span class="o">%&gt;%</span>
     <span class="p">{</span>
-        <span class="n">keep</span> <span class="o">=</span> <span class="nf">filter</span><span class="p">(</span><span class="n">.,</span> <span class="n">X515F</span> <span class="o">==</span> <span class="n">max.target</span><span class="p">,</span> <span class="n">count.relative</span> <span class="o">&lt;=</span> <span class="m">0.80</span><span class="p">)</span> <span class="o">%&gt;%</span>
+        <span class="n">keep</span> <span class="o">=</span> <span class="nf">filter</span><span class="p">(</span><span class="n">.</span><span class="p">,</span> <span class="n">X515F</span> <span class="o">==</span> <span class="n">max.target</span><span class="p">,</span> <span class="n">count.relative</span> <span class="o">&lt;=</span> <span class="m">0.80</span><span class="p">)</span> <span class="o">%&gt;%</span>
             <span class="nf">extract2</span><span class="p">(</span><span class="s">&quot;phylum&quot;</span><span class="p">)</span> <span class="o">%&gt;%</span> 
             <span class="n">unique</span> <span class="o">%&gt;%</span>
             <span class="n">as.character</span>
-        <span class="nf">filter</span><span class="p">(</span><span class="n">.,</span> <span class="n">phylum</span> <span class="o">%in%</span> <span class="n">keep</span><span class="p">)</span>
+        <span class="nf">filter</span><span class="p">(</span><span class="n">.</span><span class="p">,</span> <span class="n">phylum</span> <span class="o">%in%</span> <span class="n">keep</span><span class="p">)</span>
     <span class="p">}</span> <span class="o">%&gt;%</span>
     <span class="p">{</span>
-        <span class="n">top</span> <span class="o">=</span> <span class="nf">group_by</span><span class="p">(</span><span class="n">.,</span> <span class="n">X515F</span><span class="p">)</span> <span class="o">%&gt;%</span>
+        <span class="n">top</span> <span class="o">=</span> <span class="nf">group_by</span><span class="p">(</span><span class="n">.</span><span class="p">,</span> <span class="n">X515F</span><span class="p">)</span> <span class="o">%&gt;%</span>
             <span class="nf">summarize</span><span class="p">(</span><span class="n">m</span> <span class="o">=</span> <span class="nf">max</span><span class="p">(</span><span class="n">count.relative</span><span class="p">))</span> <span class="o">%&gt;%</span>
             <span class="nf">filter</span><span class="p">(</span><span class="nf">rank</span><span class="p">(</span><span class="nf">desc</span><span class="p">(</span><span class="n">m</span><span class="p">),</span> <span class="n">ties.method</span> <span class="o">=</span> <span class="s">&quot;random&quot;</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="m">5</span><span class="p">)</span> <span class="o">%&gt;%</span>
             <span class="nf">arrange</span><span class="p">(</span><span class="nf">desc</span><span class="p">(</span><span class="n">m</span><span class="p">))</span> <span class="o">%&gt;%</span>
             <span class="nf">extract2</span><span class="p">(</span><span class="s">&quot;X515F&quot;</span><span class="p">)</span> <span class="o">%&gt;%</span> 
             <span class="n">unique</span> <span class="o">%&gt;%</span>
             <span class="n">as.character</span>
-        <span class="nf">filter</span><span class="p">(</span><span class="n">.,</span> <span class="n">X515F</span> <span class="o">%in%</span> <span class="n">top</span><span class="p">)</span> <span class="o">%&gt;%</span> <span class="nf">mutate</span><span class="p">(</span><span class="n">X515F</span> <span class="o">=</span> <span class="nf">factor</span><span class="p">(</span><span class="n">X515F</span><span class="p">,</span> <span class="n">levels</span> <span class="o">=</span> <span class="n">top</span><span class="p">))</span>
+        <span class="nf">filter</span><span class="p">(</span><span class="n">.</span><span class="p">,</span> <span class="n">X515F</span> <span class="o">%in%</span> <span class="n">top</span><span class="p">)</span> <span class="o">%&gt;%</span> <span class="nf">mutate</span><span class="p">(</span><span class="n">X515F</span> <span class="o">=</span> <span class="nf">factor</span><span class="p">(</span><span class="n">X515F</span><span class="p">,</span> <span class="n">levels</span> <span class="o">=</span> <span class="n">top</span><span class="p">))</span>
     <span class="p">}</span>
 
 <span class="n">p</span> <span class="o">=</span> <span class="nf">ggplot</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="nf">aes</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="n">X515F</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">count.relative</span><span class="p">))</span>
@@ -615,7 +668,7 @@ The following objects are masked from ‘package:base’:
 
 
 <div class="output_png output_subarea ">
-<img src="https://chuckpr.github.io/notebooks/images/output_24_0.png"
+<img src="https://chuckpr.github.io/notebooks/images/primers1_24_0.png"
 >
 </div>
 
@@ -625,14 +678,22 @@ The following objects are masked from ‘package:base’:
 </div>
 
 </div>
-
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>I would guess that these nine phyla are the most likely to be missed by commonly used variants of 515F primers.</p>
 
-
-
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>In the next post we'll test that hypothesis by evaluating how well the 515F primer matches the targets we've identified...</strong></p>
 
-
+</div>
+</div>
+</div>
  
 
 

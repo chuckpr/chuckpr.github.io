@@ -14,10 +14,12 @@
 
 .celltag_aside {
   border-left: thick solid #219;
-  padding-left: 15px;
-  padding-right: 15px;
-  font-size: 16px;
   background: rgb(34, 17, 153, 0.05);
+}
+
+.celltag_aside p {
+  padding: 10px 10px 10px 10px;
+  font-size: 16px;
 }
 
 .output_stream pre {
@@ -45,7 +47,8 @@
   text-align: center;
 }
 
-.input_prompt, .output_prompt {
+.input_prompt,
+.output_prompt {
   display: none;
 }
 
