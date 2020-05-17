@@ -18,6 +18,6 @@ run-jupyter: build-image
 get-url: run-jupyter
 	docker exec $(NAME) jupyter notebook list | sed 's/0\.0\.0\.0/localhost/'
 
-stop-jupyter: run-jupyter
+stop-jupyter:
 	docker stop $(NAME) || echo "Already stopped."
 	@rm -f run-jupyter
