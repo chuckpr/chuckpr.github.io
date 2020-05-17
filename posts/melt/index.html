@@ -88,25 +88,16 @@
       </div>
     </section>
     <section id="article-content" class="ph3 garamond near-black" style="font-size: 17px">
-      <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>If you're a microbial ecologist and you haven't used <a href="http://joey711.github.io/phyloseq/">phyloseq</a>, put away your vintage scarf and thick-rimmed glasses because you are not hip. <a href="http://joey711.github.io/phyloseq/">phyloseq</a> is the nexus of all that is good in the universe. In this post we'll look at one of the greatest <a href="http://joey711.github.io/phyloseq/">phyloseq</a> functions, <code>psmelt</code>. <code>psmelt</code> combines your sample info, OTU counts, and taxonomic annotations into a single dataframe where every row represents an OTU-sample combination. Hhhhwhat!?! Amazing, I know. From this omnipotent dataframe you can do anything. So, how do we use <code>psmelt</code>? And can we re-create <code>psmelt</code> with <a href="https://github.com/hadley/dplyr">dplyr</a> and <a href="https://github.com/hadley/tidyr">tidyr</a>?</p>
+      <p>If you're a microbial ecologist and you haven't used <a href="http://joey711.github.io/phyloseq/">phyloseq</a>, put away your vintage scarf and thick-rimmed glasses because you are not hip. <a href="http://joey711.github.io/phyloseq/">phyloseq</a> is the nexus of all that is good in the universe. In this post we'll look at one of the greatest <a href="http://joey711.github.io/phyloseq/">phyloseq</a> functions, <code>psmelt</code>. <code>psmelt</code> combines your sample info, OTU counts, and taxonomic annotations into a single dataframe where every row represents an OTU-sample combination. Hhhhwhat!?! Amazing, I know. From this omnipotent dataframe you can do anything. So, how do we use <code>psmelt</code>? And can we re-create <code>psmelt</code> with <a href="https://github.com/hadley/dplyr">dplyr</a> and <a href="https://github.com/hadley/tidyr">tidyr</a>?</p>
 
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
+
+
 <p>Let's start by bringing in some R packages and loading the <code>rmagic</code> extension for IPython.</p>
 
-</div>
-</div>
-</div>
+
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[1]:</div>
+
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="n">load_ext</span> <span class="n">rpy2</span><span class="o">.</span><span class="n">ipython</span>
@@ -119,7 +110,7 @@
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[2]:</div>
+
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="n">R</span>
@@ -173,45 +164,29 @@ Use suppressPackageStartupMessages to eliminate package startup messages.
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
+
 <p>I'm going to use data from a paper we recently submitted. See the pre-print <a href="http://dx.doi.org/10.1101/013813">here</a> if you're interested. A typical microbiome data set consists of three tables:</p>
 
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
+
+
 <ol>
 <li>A table of sample information.</li>
 <li>A table of OTU counts in the samples.</li>
 <li>A table of taxonomic info for each OTU.</li>
 </ol>
 
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
+
+
 <p>In this example the OTU counts and taxonomic info are combined in a json <a href="http://biom-format.org/">biom</a> formatted table. We have the sample information in a <a href="http://qiime.org/">QIIME</a> formatted sample metadata table. Don't get bogged down in the file formats, however. They're just tables and you can get tables into R easily. Focus on the concepts and what information you need to do an analysis.</p>
 
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
+
+
 <p>We'll write a quick function to handle the <a href="http://qiime.org/">QIIME</a> formatted sample data table (<strong>note how we're just using the base R <code>read.table</code> function</strong>) and we'll use the <code>import_biom</code> function from <a href="http://joey711.github.io/phyloseq/">phyloseq</a> to import our OTU counts and OTU taxonomic annotations. We'll combine all the info into a <code>phyloseq object</code>.</p>
 
-</div>
-</div>
-</div>
+
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
+
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="n">R</span>
@@ -256,17 +231,13 @@ tax_table()   Taxonomy Table:    [ 4340 taxa by 8 taxonomic ranks ]
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
+
 <p>Great! Now let's <strong>melt</strong> all that information into an <strong>all-powerful, all-knowing, benevolent</strong> dataframe. (Evil laugh)</p>
 
-</div>
-</div>
-</div>
+
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
+
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="n">R</span>
@@ -306,25 +277,17 @@ tax_table()   Taxonomy Table:    [ 4340 taxa by 8 taxonomic ranks ]
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
+
 <p>To keep this post short, I won't demonstrate where you can go from a melted <code>phyloseq object</code>. Suffice to say that you can go anywhere with your melted <code>phyloseq object</code>/dataframe. Think of it like a <a href="https://www.youtube.com/watch?v=qJJog4BJrUw">magic carpet</a>.</p>
 
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
+
+
 <p>With really big OTU tables, melting can take a long time...</p>
 
-</div>
-</div>
-</div>
+
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
+
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="n">R</span>
@@ -358,33 +321,19 @@ tax_table()   Taxonomy Table:    [ 4340 taxa by 8 taxonomic ranks ]
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
+
 <p>It takes about 30-ish seconds with our example phyloseq object with the <code>psmelt</code> function. I wonder how fast <a href="https://github.com/hadley/dplyr">dplyr</a> + <a href="https://github.com/hadley/tidyr">tidyr</a> can melt our phyloseq object?</p>
 
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
+
+
 <p>Let's re-create the <code>psmelt</code> function with <a href="https://github.com/hadley/dplyr">dplyr</a> + <a href="https://github.com/hadley/tidyr">tidyr</a>.</p>
 
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
+
+
 <p>We need to,</p>
 
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
+
+
 <ol>
 <li>get our tables (sample data, OTU counts, taxonomy),</li>
 <li>combine our taxonomic info with our OTU counts,</li>
@@ -392,12 +341,10 @@ tax_table()   Taxonomy Table:    [ 4340 taxa by 8 taxonomic ranks ]
 <li>add in the sample data.</li>
 </ol>
 
-</div>
-</div>
-</div>
+
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
+
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="n">R</span>
@@ -419,7 +366,7 @@ tax_table()   Taxonomy Table:    [ 4340 taxa by 8 taxonomic ranks ]
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
+
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="n">R</span>
@@ -461,17 +408,13 @@ Joining by: &#34;SampleID&#34;
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
+
 <p>...and let's see how fast it is.</p>
 
-</div>
-</div>
-</div>
+
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
+
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="n">R</span>
@@ -507,41 +450,25 @@ Joining by: &#34;SampleID&#34;
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
+
 <p><strong>Wow. Roughly an order of magnitude faster. dplyr and tidyr are so great. And look at that syntax!</strong></p>
 
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
+
+
 <p>I shold note that I'm using phyloseq version <strong>1.9.15</strong> in this demo.</p>
 
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
+
+
 <p>The <code>psmelt</code> function is so useful (and much more rigorous/fool-proof than our quick dplyr/tidyr version) but if you have a huge phyloseq object that takes forever to melt, try dplyr + tidyr.</p>
 
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
+
+
 <p>Let's do one quick example from the melted <code>phyloseq object</code> to give you a taste of how useful it is. Let's say we want to make phylum level stacked bar charts for all the studies in the example data. Here's how you might do it from the melted <code>phyloseq object</code>.</p>
 
-</div>
-</div>
-</div>
+
 <div class="cell border-box-sizing code_cell rendered celltag_fullwidth">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
+
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="n">R</span> <span class="o">-</span><span class="n">w</span> <span class="m">1200</span>
@@ -584,17 +511,13 @@ Joining by: &#34;SampleID&#34;
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
+
 <p>Snap.</p>
 
-</div>
-</div>
-</div>
+
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[23]:</div>
+
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="n">R</span>
