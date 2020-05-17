@@ -4,10 +4,13 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
+jedi = "*"
+black = "*"
+prospector = "*"
 
 [packages]
 markdown = "*"
-pelican-jupyter-reader = "==0.2.0"
+pelican-jupyter-reader = "==0.3.1"
 invoke = "*"
 livereload = "*"
 pelican = "==4.2.0"
@@ -16,3 +19,6 @@ pelican-extended-sitemap = "*"
 
 [requires]
 python_version = "3.7"
+
+[pipenv]
+allow_prereleases = true
