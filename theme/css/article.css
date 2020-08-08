@@ -63,3 +63,16 @@ code {
 #article-content p {
   padding-top: 0.5rem;
 }
+
+@media screen and (min-width: 480px) {
+  #article-content p {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  #article p {
+    padding-left: 0.5rem;
+  }
+}
