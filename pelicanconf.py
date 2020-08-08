@@ -87,7 +87,12 @@ NAV_LINKS = [
     ("about", "pages/about/"),
 ]
 EXTRA_CSS = dict(article="extra/css/notebook.css")
-
+CLOUDINARY_URL = (
+    "https://res.cloudinary.com/chuckpr-github-io/"
+    "image/upload/co_rgb:f2f2f2,w_470,c_fit,g_east,"
+    "x_40,l_text:Helvetica_44_right:"
+)
+CLOUDINARY_IMAGE = "blog_card_jieod8.png"
 
 # Instantiate a config object and call it NBCONVERT_CONFIG
 from traitlets.config import Config
