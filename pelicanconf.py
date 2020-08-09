@@ -51,6 +51,7 @@ PAGE_URL = "pages/{slug}/"
 PAGE_SAVE_AS = "pages/{slug}/index.html"
 
 TWITTER_USERNAME = "chuckpr"
+TWITTER_IMAGE_URL = "https://res.cloudinary.com/chuckpr-github-io/image/upload/v1596935417/twitter_card_image_r4xodj.png"
 
 IGNORE_FILES = [".ipynb_checkpoints*"]
 SUMMARY_MAX_LENGTH = 15
@@ -89,10 +90,11 @@ NAV_LINKS = [
 EXTRA_CSS = dict(article="extra/css/notebook.css")
 CLOUDINARY_URL = (
     "https://res.cloudinary.com/chuckpr-github-io/"
-    "image/upload/co_rgb:f2f2f2,w_470,c_fit,g_east,"
-    "x_40,l_text:Helvetica_44_right:"
+    "image/upload/co_rgb:f2f2f2,w_1200,c_fit,g_east,"
+    "x_100,l_text:Helvetica_110_right:"
 )
-CLOUDINARY_IMAGE = "blog_card_jieod8.png"
+CLOUDINARY_IMAGE = "blog_card.png"
+CLOUDINARY_INDEX_IMAGE = "blog_index_card.png"
 
 # Instantiate a config object and call it NBCONVERT_CONFIG
 from traitlets.config import Config
