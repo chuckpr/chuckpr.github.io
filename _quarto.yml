@@ -1,0 +1,22 @@
+project:
+  type: website
+
+website:
+  title: "ChuckPR blog"
+  navbar:
+    right:
+      - text: "posts"
+        href: index.qmd
+      - text: "til"
+        href: til.qmd
+      - text: "about"
+        href: about.qmd
+      - text: "old posts"
+        href: old-posts.qmd
+      - icon: github
+        href: https://github.com/
+      - icon: linkedin
+        href: https://linkedin.com/
+format:
+  html:
+    theme: cosmo

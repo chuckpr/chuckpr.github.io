@@ -1,0 +1,24 @@
+---
+title: "Post With Code"
+author: "Harlow Malloc"
+date: "2024-09-20"
+categories: [news, code, analysis]
+image: "image.jpg"
+---
+
+This is a post with executable code.
+
+::: column-page
+::: grid
+::: {.g-col-12 .g-col-md-6}
+```{r}
+print("ONE")
+```
+:::
+::: {.g-col-12 .g-col-md-6}
+```{r}
+print("ONE")
+```
+:::
+:::
+:::

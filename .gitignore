@@ -6,3 +6,5 @@ __pycache__
 /.quarto/
 /_site/
 /_freeze/
+**.venv/
+**index_files
