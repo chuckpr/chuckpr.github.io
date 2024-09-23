@@ -1,6 +1,9 @@
 project:
   type: website
 
+execute:
+  freeze: auto
+
 website:
   title: "chuckpr blog"
   site-url: https://chuckpr.github.io

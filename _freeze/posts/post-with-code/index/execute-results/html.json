@@ -1,0 +1,15 @@
+{
+  "hash": "aa7b8a481322a1dd820d71cabb207f3f",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"Post With Code\"\nauthor: \"Harlow Malloc\"\ndate: \"2024-09-20\"\ncategories: [news, code, analysis]\nimage: \"image.jpg\"\n---\n\n\n\nThis is a post with executable code.\n\n::: column-page\n::: grid\n::: {.g-col-12 .g-col-md-6}\n\n\n::: {.cell}\n\n```{.r .cell-code}\nprint(\"ONE\")\n```\n\n::: {.cell-output .cell-output-stdout}\n\n```\n[1] \"ONE\"\n```\n\n\n:::\n:::\n\n\n:::\n::: {.g-col-12 .g-col-md-6}\n\n\n::: {.cell}\n\n```{.r .cell-code}\nprint(\"ONE\")\n```\n\n::: {.cell-output .cell-output-stdout}\n\n```\n[1] \"ONE\"\n```\n\n\n:::\n:::\n\n\n:::\n:::\n:::\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
