@@ -1,0 +1,6 @@
+name: blog
+channels:
+  - conda-forge
+dependencies:
+  - r-rmarkdown
+  - r-knitr
