@@ -3,6 +3,8 @@ project:
 
 website:
   title: "ChuckPR blog"
+  site-url: https://chuckpr.github.io
+  repo-url: https://github.com/chuckpr/chuckpr.github.io
   navbar:
     right:
       - text: "posts"
