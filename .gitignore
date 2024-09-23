@@ -1,8 +1,8 @@
-output
 **.ipynb_checkpoints
-content/notebooks/**/images/
 .DS_Store
 *.swp
 __pycache__
 .vim
-.mypy_cache
+/.quarto/
+/_site/
+/_freeze/
