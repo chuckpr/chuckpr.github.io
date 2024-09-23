@@ -2,7 +2,7 @@ project:
   type: website
 
 website:
-  title: "ChuckPR blog"
+  title: "chuckpr blog"
   site-url: https://chuckpr.github.io
   repo-url: https://github.com/chuckpr/chuckpr.github.io
   navbar:
