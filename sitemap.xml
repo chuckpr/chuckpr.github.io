@@ -1,109 +1,39 @@
-<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/xsl" href="https://chuckpr.github.io/sitemap-stylesheet.xsl"?>
-<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-<url>
-<loc>https://chuckpr.github.io/</loc>
-<lastmod>2020-05-04</lastmod>
-<changefreq>daily</changefreq>
-<priority>1.00</priority>
-</url><url>
-<loc>https://chuckpr.github.io/posts/fivethirtyeight-tables/</loc>
-<lastmod>2020-05-04</lastmod>
-<changefreq>weekly</changefreq>
-<priority>0.80</priority>
-</url><url>
-<loc>https://chuckpr.github.io/posts/trees2/</loc>
-<lastmod>2015-08-12</lastmod>
-<changefreq>weekly</changefreq>
-<priority>0.80</priority>
-</url><url>
-<loc>https://chuckpr.github.io/posts/trees1/</loc>
-<lastmod>2015-08-07</lastmod>
-<changefreq>weekly</changefreq>
-<priority>0.80</priority>
-</url><url>
-<loc>https://chuckpr.github.io/posts/rvest/</loc>
-<lastmod>2015-08-02</lastmod>
-<changefreq>weekly</changefreq>
-<priority>0.80</priority>
-</url><url>
-<loc>https://chuckpr.github.io/posts/melt/</loc>
-<lastmod>2015-04-20</lastmod>
-<changefreq>weekly</changefreq>
-<priority>0.80</priority>
-</url><url>
-<loc>https://chuckpr.github.io/posts/primers2/</loc>
-<lastmod>2015-04-17</lastmod>
-<changefreq>weekly</changefreq>
-<priority>0.80</priority>
-</url><url>
-<loc>https://chuckpr.github.io/posts/primers1/</loc>
-<lastmod>2015-04-14</lastmod>
-<changefreq>weekly</changefreq>
-<priority>0.80</priority>
-</url><url>
-<loc>https://chuckpr.github.io/pages/about/</loc>
-<lastmod>2019-12-28</lastmod>
-<changefreq>monthly</changefreq>
-<priority>0.50</priority>
-</url><url>
-<loc>https://chuckpr.github.io/category/five-thirty-eight-tables.html</loc>
-<lastmod>2020-05-04</lastmod>
-<changefreq>monthly</changefreq>
-<priority>0.40</priority>
-</url><url>
-<loc>https://chuckpr.github.io/category/notebooks.html</loc>
-<lastmod>2015-08-12</lastmod>
-<changefreq>monthly</changefreq>
-<priority>0.40</priority>
-</url><url>
-<loc>https://chuckpr.github.io/tag/jinja2/</loc>
-<lastmod>2020-05-04</lastmod>
-<changefreq>monthly</changefreq>
-<priority>0.40</priority>
-</url><url>
-<loc>https://chuckpr.github.io/tag/python/</loc>
-<lastmod>2020-05-04</lastmod>
-<changefreq>monthly</changefreq>
-<priority>0.40</priority>
-</url><url>
-<loc>https://chuckpr.github.io/tag/r/</loc>
-<lastmod>2015-08-07</lastmod>
-<changefreq>monthly</changefreq>
-<priority>0.40</priority>
-</url><url>
-<loc>https://chuckpr.github.io/tag/amplicon/</loc>
-<lastmod>2015-04-20</lastmod>
-<changefreq>monthly</changefreq>
-<priority>0.40</priority>
-</url><url>
-<loc>https://chuckpr.github.io/tag/genomics/</loc>
-<lastmod>2015-08-12</lastmod>
-<changefreq>monthly</changefreq>
-<priority>0.40</priority>
-</url><url>
-<loc>https://chuckpr.github.io/author/chuck-pepe-ranney.html</loc>
-<lastmod>2020-05-04</lastmod>
-<changefreq>monthly</changefreq>
-<priority>0.40</priority>
-</url><url>
-<loc>https://chuckpr.github.io/tags.html</loc>
-<lastmod>2020-05-04</lastmod>
-<changefreq>monthly</changefreq>
-<priority>0.40</priority>
-</url><url>
-<loc>https://chuckpr.github.io/categories.html</loc>
-<lastmod>2020-05-04</lastmod>
-<changefreq>monthly</changefreq>
-<priority>0.40</priority>
-</url><url>
-<loc>https://chuckpr.github.io/authors.html</loc>
-<lastmod>2020-05-04</lastmod>
-<changefreq>monthly</changefreq>
-<priority>0.40</priority>
-</url><url>
-<loc>https://chuckpr.github.io/archives.html</loc>
-<lastmod>2020-05-04</lastmod>
-<changefreq>monthly</changefreq>
-<priority>0.40</priority>
-</url>
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://chuckpr.github.io/old-posts/test-post/index.html</loc>
+    <lastmod>2024-09-23T15:45:32.754Z</lastmod>
+  </url>
+  <url>
+    <loc>https://chuckpr.github.io/old-posts/post-with-code/index.html</loc>
+    <lastmod>2024-09-23T15:45:32.753Z</lastmod>
+  </url>
+  <url>
+    <loc>https://chuckpr.github.io/about.html</loc>
+    <lastmod>2024-09-23T15:45:32.752Z</lastmod>
+  </url>
+  <url>
+    <loc>https://chuckpr.github.io/til.html</loc>
+    <lastmod>2024-09-23T15:45:32.757Z</lastmod>
+  </url>
+  <url>
+    <loc>https://chuckpr.github.io/posts/post-with-code/index.html</loc>
+    <lastmod>2024-09-23T15:45:32.756Z</lastmod>
+  </url>
+  <url>
+    <loc>https://chuckpr.github.io/posts/welcome/index.html</loc>
+    <lastmod>2024-09-23T15:45:32.756Z</lastmod>
+  </url>
+  <url>
+    <loc>https://chuckpr.github.io/index.html</loc>
+    <lastmod>2024-09-23T15:45:32.752Z</lastmod>
+  </url>
+  <url>
+    <loc>https://chuckpr.github.io/old-posts.html</loc>
+    <lastmod>2024-09-23T15:45:32.753Z</lastmod>
+  </url>
+  <url>
+    <loc>https://chuckpr.github.io/old-posts/primers1/index.html</loc>
+    <lastmod>2024-09-23T15:45:32.754Z</lastmod>
+  </url>
 </urlset>

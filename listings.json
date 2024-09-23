@@ -1,0 +1,21 @@
+[
+  {
+    "listing": "/til.html",
+    "items": []
+  },
+  {
+    "listing": "/index.html",
+    "items": [
+      "/posts/post-with-code/index.html",
+      "/posts/welcome/index.html"
+    ]
+  },
+  {
+    "listing": "/old-posts.html",
+    "items": [
+      "/old-posts/post-with-code/index.html",
+      "/old-posts/test-post/index.html",
+      "/old-posts/primers1/index.html"
+    ]
+  }
+]
