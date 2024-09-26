@@ -1,0 +1,41 @@
+---
+title: "Pivot longer-ing in Polars"
+author: ChuckPR
+date: 2024-09-26
+format: html
+---
+
+The `Polars` equivalent for `pivot_longer` from `dplyR` is `melt`.
+
+### dplyrR example (R)
+```{r error=TRUE}
+suppressPackageStartupMessages(
+  library('tidyverse')
+)
+
+otter_data = read_csv(
+  'https://raw.githubusercontent.com/jcoliver/learn-r/gh-pages/data/otter-mandible-data.csv',
+  col_types = cols()
+)
+
+otter_data |>
+  pivot_longer(cols = matches('m\\d')) |>
+  head() |>
+  gt::gt()
+```
+
+### Polars example (Python)
+```{python error=TRUE}
+import polars as pl
+from great_tables import GT
+
+(
+  pl.read_csv(
+    'https://raw.githubusercontent.com/jcoliver/learn-r/gh-pages/data/otter-mandible-data.csv',
+    null_values='NA'
+  )
+  .melt(id_vars=['species', 'museum', 'accession'])
+  .head()
+  .pipe(lambda df_: GT(df_))
+)
+```
