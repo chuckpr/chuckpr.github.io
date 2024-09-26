@@ -1,7 +1,12 @@
 [
   {
-    "listing": "/til.html",
-    "items": []
+    "listing": "/old-posts.html",
+    "items": [
+      "/old-posts/post-with-code/index.html",
+      "/old-posts/test-post/index.html",
+      "/old-posts/primers2/index.html",
+      "/old-posts/primers1/index.html"
+    ]
   },
   {
     "listing": "/index.html",
@@ -11,11 +16,7 @@
     ]
   },
   {
-    "listing": "/old-posts.html",
-    "items": [
-      "/old-posts/post-with-code/index.html",
-      "/old-posts/test-post/index.html",
-      "/old-posts/primers1/index.html"
-    ]
+    "listing": "/til.html",
+    "items": []
   }
 ]

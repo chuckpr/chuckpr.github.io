@@ -266,54 +266,39 @@ Wall time: 20min 31s</code></pre>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>library(dplyr)</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>library(ggplot2)</span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>library(ggthemes)</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>library(magrittr)</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co"># &lt;!-- collapse=True --&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<pre><code>
-Attaching package: ‘dplyr’
-
-The following object is masked from ‘package:stats’:
-
-    filter
-
-The following objects are masked from ‘package:base’:
-
-    intersect, setdiff, setequal, union
-</code></pre>
-</div>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>library(magrittr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Ok, now we can make some figures! Let’s first look at the ten most abundant archaeal and bacterial 515F targets. You can see below that the bacterial 515F targets are dominated by a single sequence, and, that although the nineteen targets are similar in sequence there is little overlap in target representation between Archaea and Bacteria.</p>
 <div id="cell-17" class="cell" data-jupyter="{&quot;outputs_hidden&quot;:false}" data-execution_count="8">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>R <span class="op">-</span>w <span class="dv">600</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>d <span class="op">=</span> df_targets <span class="op">%&gt;%</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    group_by(kingdom, X515F) <span class="op">%&gt;%</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    summarize(count <span class="op">=</span> n()) <span class="op">%&gt;%</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">filter</span>(rank(desc(count), ties.method <span class="op">=</span> <span class="st">"random"</span>) <span class="op">&lt;=</span> <span class="dv">10</span>) <span class="op">%&gt;%</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    arrange(desc(count), kingdom) <span class="op">%&gt;%</span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    mutate(X515F <span class="op">=</span> factor(X515F, levels <span class="op">=</span> unique(.$X515F)))</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> ggplot(d, aes(x <span class="op">=</span> X515F, y <span class="op">=</span> count))</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> p <span class="op">+</span> facet_wrap(<span class="op">~</span>kingdom, ncol <span class="op">=</span> <span class="dv">1</span>, scales <span class="op">=</span> <span class="st">"free_y"</span>)</span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> p <span class="op">+</span> geom_bar(stat <span class="op">=</span> <span class="st">"identity"</span>, fill <span class="op">=</span> <span class="st">"#14979B"</span>)</span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> p <span class="op">+</span> labs(x <span class="op">=</span> <span class="st">""</span>)</span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> p <span class="op">+</span> scale_y_log10()</span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> p <span class="op">+</span> theme_bw()</span>
-<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> p <span class="op">+</span> theme(axis.text.x <span class="op">=</span> element_text(angle <span class="op">=</span> <span class="dv">60</span>, hjust <span class="op">=</span> <span class="dv">1</span>, size <span class="op">=</span> <span class="dv">12</span>),</span>
-<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>              axis.text.y <span class="op">=</span> element_text(size <span class="op">=</span> <span class="dv">12</span>),</span>
-<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>              axis.title <span class="op">=</span> element_text(size <span class="op">=</span> <span class="dv">16</span>),</span>
-<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>              strip.background <span class="op">=</span> element_blank(),</span>
-<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>              strip.text <span class="op">=</span> element_text(size <span class="op">=</span> <span class="dv">16</span>))</span>
-<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>                                    </span>
-<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>p</span>
-<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a><span class="co"># &lt;!-- collapse=True --&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>R <span class="op">-</span>w <span class="dv">600</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>d <span class="op">=</span> df_targets <span class="op">%&gt;%</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    group_by(kingdom, X515F) <span class="op">%&gt;%</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    summarize(count <span class="op">=</span> n()) <span class="op">%&gt;%</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">filter</span>(rank(desc(count), ties.method <span class="op">=</span> <span class="st">"random"</span>) <span class="op">&lt;=</span> <span class="dv">10</span>) <span class="op">%&gt;%</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    arrange(desc(count), kingdom) <span class="op">%&gt;%</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    mutate(X515F <span class="op">=</span> factor(X515F, levels <span class="op">=</span> unique(.$X515F)))</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> ggplot(d, aes(x <span class="op">=</span> X515F, y <span class="op">=</span> count))</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> p <span class="op">+</span> facet_wrap(<span class="op">~</span>kingdom, ncol <span class="op">=</span> <span class="dv">1</span>, scales <span class="op">=</span> <span class="st">"free_y"</span>)</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> p <span class="op">+</span> geom_bar(stat <span class="op">=</span> <span class="st">"identity"</span>, fill <span class="op">=</span> <span class="st">"#14979B"</span>)</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> p <span class="op">+</span> labs(x <span class="op">=</span> <span class="st">""</span>)</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> p <span class="op">+</span> scale_y_log10()</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> p <span class="op">+</span> theme_bw()</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> p <span class="op">+</span> theme(axis.text.x <span class="op">=</span> element_text(angle <span class="op">=</span> <span class="dv">60</span>, hjust <span class="op">=</span> <span class="dv">1</span>, size <span class="op">=</span> <span class="dv">12</span>),</span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>              axis.text.y <span class="op">=</span> element_text(size <span class="op">=</span> <span class="dv">12</span>),</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>              axis.title <span class="op">=</span> element_text(size <span class="op">=</span> <span class="dv">16</span>),</span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>              strip.background <span class="op">=</span> element_blank(),</span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>              strip.text <span class="op">=</span> element_text(size <span class="op">=</span> <span class="dv">16</span>))</span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>                                    </span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>p</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -327,47 +312,47 @@ The following objects are masked from ‘package:base’:
 <div id="cell-19" class="cell" data-jupyter="{&quot;outputs_hidden&quot;:false}" data-execution_count="9">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>R <span class="op">-</span>h <span class="dv">550</span> <span class="op">-</span>w <span class="dv">400</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>d <span class="op">=</span> df_targets <span class="op">%&gt;%</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">filter</span>(kingdom <span class="op">==</span> <span class="st">"Archaea"</span>, phylum <span class="op">!=</span> <span class="st">""</span>) <span class="op">%&gt;%</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    {</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>        top10 <span class="op">=</span> group_by(., X515F) <span class="op">%&gt;%</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>            summarize(count <span class="op">=</span> n()) <span class="op">%&gt;%</span></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>            <span class="bu">filter</span>(rank(desc(count), ties.method <span class="op">=</span> <span class="st">"random"</span>) <span class="op">&lt;=</span> <span class="dv">10</span>) <span class="op">%&gt;%</span></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>            extract2(<span class="st">"X515F"</span>) <span class="op">%&gt;%</span> </span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>            unique <span class="op">%&gt;%</span></span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>            <span class="im">as</span>.character</span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>        <span class="bu">filter</span>(., X515F <span class="op">%</span><span class="kw">in</span><span class="op">%</span> top10) </span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    } <span class="op">%&gt;%</span></span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    group_by(phylum, X515F) <span class="op">%&gt;%</span></span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>    summarize(count <span class="op">=</span> n()) <span class="op">%&gt;%</span></span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>    {</span>
-<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>        psort <span class="op">=</span> group_by(., X515F) <span class="op">%&gt;%</span></span>
-<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>            summarize(S <span class="op">=</span> <span class="bu">sum</span>(count)) <span class="op">%&gt;%</span></span>
-<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>            arrange(desc(S)) <span class="op">%&gt;%</span></span>
-<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>            extract2(<span class="st">"X515F"</span>) <span class="op">%&gt;%</span> <span class="im">as</span>.character</span>
-<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>        mutate(., X515F <span class="op">=</span> factor(X515F, levels <span class="op">=</span> psort))</span>
-<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> ggplot(d, aes(x <span class="op">=</span> X515F, y <span class="op">=</span> count))</span>
-<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> p <span class="op">+</span> facet_wrap(<span class="op">~</span>phylum, ncol <span class="op">=</span> <span class="dv">1</span>, scales <span class="op">=</span> <span class="st">"free_y"</span>)</span>
-<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> p <span class="op">+</span> geom_bar(stat <span class="op">=</span> <span class="st">"identity"</span>, fill <span class="op">=</span> <span class="st">"#14979B"</span>)</span>
-<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> p <span class="op">+</span> labs(x <span class="op">=</span> <span class="st">""</span>)</span>
-<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> p <span class="op">+</span> scale_y_log10()</span>
-<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> p <span class="op">+</span> theme_bw()</span>
-<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> p <span class="op">+</span> theme(axis.text.x <span class="op">=</span> element_text(angle <span class="op">=</span> <span class="dv">60</span>, hjust <span class="op">=</span> <span class="dv">1</span>, size <span class="op">=</span> <span class="dv">12</span>),</span>
-<span id="cb11-36"><a href="#cb11-36" aria-hidden="true" tabindex="-1"></a>              axis.text.y <span class="op">=</span> element_text(size <span class="op">=</span> <span class="dv">12</span>),</span>
-<span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a>              axis.title <span class="op">=</span> element_text(size <span class="op">=</span> <span class="dv">16</span>),</span>
-<span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a>              strip.background <span class="op">=</span> element_blank(),</span>
-<span id="cb11-39"><a href="#cb11-39" aria-hidden="true" tabindex="-1"></a>              strip.text <span class="op">=</span> element_text(size <span class="op">=</span> <span class="dv">16</span>))</span>
-<span id="cb11-40"><a href="#cb11-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-41"><a href="#cb11-41" aria-hidden="true" tabindex="-1"></a>p</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>R <span class="op">-</span>h <span class="dv">550</span> <span class="op">-</span>w <span class="dv">400</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>d <span class="op">=</span> df_targets <span class="op">%&gt;%</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">filter</span>(kingdom <span class="op">==</span> <span class="st">"Archaea"</span>, phylum <span class="op">!=</span> <span class="st">""</span>) <span class="op">%&gt;%</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>        top10 <span class="op">=</span> group_by(., X515F) <span class="op">%&gt;%</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>            summarize(count <span class="op">=</span> n()) <span class="op">%&gt;%</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>            <span class="bu">filter</span>(rank(desc(count), ties.method <span class="op">=</span> <span class="st">"random"</span>) <span class="op">&lt;=</span> <span class="dv">10</span>) <span class="op">%&gt;%</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>            extract2(<span class="st">"X515F"</span>) <span class="op">%&gt;%</span> </span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>            unique <span class="op">%&gt;%</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>            <span class="im">as</span>.character</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>        <span class="bu">filter</span>(., X515F <span class="op">%</span><span class="kw">in</span><span class="op">%</span> top10) </span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>    } <span class="op">%&gt;%</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    group_by(phylum, X515F) <span class="op">%&gt;%</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>    summarize(count <span class="op">=</span> n()) <span class="op">%&gt;%</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>        psort <span class="op">=</span> group_by(., X515F) <span class="op">%&gt;%</span></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>            summarize(S <span class="op">=</span> <span class="bu">sum</span>(count)) <span class="op">%&gt;%</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>            arrange(desc(S)) <span class="op">%&gt;%</span></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>            extract2(<span class="st">"X515F"</span>) <span class="op">%&gt;%</span> <span class="im">as</span>.character</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>        mutate(., X515F <span class="op">=</span> factor(X515F, levels <span class="op">=</span> psort))</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> ggplot(d, aes(x <span class="op">=</span> X515F, y <span class="op">=</span> count))</span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> p <span class="op">+</span> facet_wrap(<span class="op">~</span>phylum, ncol <span class="op">=</span> <span class="dv">1</span>, scales <span class="op">=</span> <span class="st">"free_y"</span>)</span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> p <span class="op">+</span> geom_bar(stat <span class="op">=</span> <span class="st">"identity"</span>, fill <span class="op">=</span> <span class="st">"#14979B"</span>)</span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> p <span class="op">+</span> labs(x <span class="op">=</span> <span class="st">""</span>)</span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> p <span class="op">+</span> scale_y_log10()</span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> p <span class="op">+</span> theme_bw()</span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> p <span class="op">+</span> theme(axis.text.x <span class="op">=</span> element_text(angle <span class="op">=</span> <span class="dv">60</span>, hjust <span class="op">=</span> <span class="dv">1</span>, size <span class="op">=</span> <span class="dv">12</span>),</span>
+<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a>              axis.text.y <span class="op">=</span> element_text(size <span class="op">=</span> <span class="dv">12</span>),</span>
+<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a>              axis.title <span class="op">=</span> element_text(size <span class="op">=</span> <span class="dv">16</span>),</span>
+<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a>              strip.background <span class="op">=</span> element_blank(),</span>
+<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a>              strip.text <span class="op">=</span> element_text(size <span class="op">=</span> <span class="dv">16</span>))</span>
+<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a>p</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -379,34 +364,34 @@ The following objects are masked from ‘package:base’:
 </div>
 <p>The Bacteria appear to be dominated by a single target sequence (above). Let’s get that sequence explicitly.</p>
 <div id="cell-21" class="cell" data-jupyter="{&quot;outputs_hidden&quot;:false}" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>R</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="bu">max</span>.target <span class="op">=</span> df_targets <span class="op">%&gt;%</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">filter</span>(kingdom <span class="op">==</span> <span class="st">"Bacteria"</span>) <span class="op">%&gt;%</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    group_by(X515F) <span class="op">%&gt;%</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    summarize(count <span class="op">=</span> n()) <span class="op">%&gt;%</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    arrange(desc(count)) <span class="op">%&gt;%</span></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">filter</span>(rank(desc(count)) <span class="op">==</span> <span class="dv">1</span>) <span class="op">%&gt;%</span></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    extract2(<span class="st">"X515F"</span>) <span class="op">%&gt;%</span> <span class="im">as</span>.character</span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>paste(<span class="st">"The most abundant target sequence among bacteria is"</span>, <span class="bu">max</span>.target)</span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="co"># &lt;!-- collapse=True --&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>R</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="bu">max</span>.target <span class="op">=</span> df_targets <span class="op">%&gt;%</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">filter</span>(kingdom <span class="op">==</span> <span class="st">"Bacteria"</span>) <span class="op">%&gt;%</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    group_by(X515F) <span class="op">%&gt;%</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    summarize(count <span class="op">=</span> n()) <span class="op">%&gt;%</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    arrange(desc(count)) <span class="op">%&gt;%</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">filter</span>(rank(desc(count)) <span class="op">==</span> <span class="dv">1</span>) <span class="op">%&gt;%</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    extract2(<span class="st">"X515F"</span>) <span class="op">%&gt;%</span> <span class="im">as</span>.character</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>paste(<span class="st">"The most abundant target sequence among bacteria is"</span>, <span class="bu">max</span>.target)</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="co"># &lt;!-- collapse=True --&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <pre><code>[1] "The most abundant target sequence among bacteria is GTGCCAGCAGCCGCGGTAA"</code></pre>
 </div>
 </div>
 <p>There are some phyla, however, that are not as dominated by the most abundant bacterial 515F target. Here is a histogram of representation (percentages of total targets) within phylum for the most abundant bacterial 515F target. You can see that there are nine phyla for which the most abundant 515F bacterial target represents less than 80% of total targets.</p>
 <div id="cell-23" class="cell" data-jupyter="{&quot;outputs_hidden&quot;:false}" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>R <span class="op">-</span>h <span class="dv">350</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>df_targets <span class="op">%&gt;%</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">filter</span>(kingdom <span class="op">==</span> <span class="st">"Bacteria"</span>, phylum <span class="op">!=</span> <span class="st">""</span> ) <span class="op">%&gt;%</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    group_by(phylum, X515F) <span class="op">%&gt;%</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    summarize(count <span class="op">=</span> n()) <span class="op">%&gt;%</span></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    group_by(phylum) <span class="op">%&gt;%</span></span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    mutate(count.relative <span class="op">=</span> count <span class="op">/</span> <span class="bu">sum</span>(count)) <span class="op">%&gt;%</span></span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>    <span class="bu">filter</span>(X515F <span class="op">==</span> <span class="bu">max</span>.target) <span class="op">%&gt;%</span></span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>    extract2(<span class="st">"count.relative"</span>) <span class="op">%&gt;%</span> hist(breaks <span class="op">=</span> <span class="dv">50</span>,</span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>                                        main <span class="op">=</span> <span class="st">"Histogram of most abundant target representation in phlya"</span>)</span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="co"># &lt;!-- collapse=True --&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>R <span class="op">-</span>h <span class="dv">350</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>df_targets <span class="op">%&gt;%</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">filter</span>(kingdom <span class="op">==</span> <span class="st">"Bacteria"</span>, phylum <span class="op">!=</span> <span class="st">""</span> ) <span class="op">%&gt;%</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    group_by(phylum, X515F) <span class="op">%&gt;%</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    summarize(count <span class="op">=</span> n()) <span class="op">%&gt;%</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    group_by(phylum) <span class="op">%&gt;%</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    mutate(count.relative <span class="op">=</span> count <span class="op">/</span> <span class="bu">sum</span>(count)) <span class="op">%&gt;%</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    <span class="bu">filter</span>(X515F <span class="op">==</span> <span class="bu">max</span>.target) <span class="op">%&gt;%</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    extract2(<span class="st">"count.relative"</span>) <span class="op">%&gt;%</span> hist(breaks <span class="op">=</span> <span class="dv">50</span>,</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>                                        main <span class="op">=</span> <span class="st">"Histogram of most abundant target representation in phlya"</span>)</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="co"># &lt;!-- collapse=True --&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -419,49 +404,49 @@ The following objects are masked from ‘package:base’:
 <div id="cell-25" class="cell" data-jupyter="{&quot;outputs_hidden&quot;:false}" data-execution_count="12">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>R <span class="op">-</span>w <span class="dv">600</span> <span class="op">-</span>h <span class="dv">500</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>d <span class="op">=</span> df_targets <span class="op">%&gt;%</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">filter</span>(kingdom <span class="op">==</span> <span class="st">"Bacteria"</span>, phylum <span class="op">!=</span> <span class="st">""</span> ) <span class="op">%&gt;%</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    group_by(phylum, X515F) <span class="op">%&gt;%</span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    summarize(count <span class="op">=</span> n()) <span class="op">%&gt;%</span></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    group_by(phylum) <span class="op">%&gt;%</span></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    mutate(count.relative <span class="op">=</span> count <span class="op">/</span> <span class="bu">sum</span>(count)) <span class="op">%&gt;%</span></span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    {</span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>        keep <span class="op">=</span> <span class="bu">filter</span>(., X515F <span class="op">==</span> <span class="bu">max</span>.target, count.relative <span class="op">&lt;=</span> <span class="fl">0.80</span>) <span class="op">%&gt;%</span></span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>            extract2(<span class="st">"phylum"</span>) <span class="op">%&gt;%</span> </span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>            unique <span class="op">%&gt;%</span></span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>            <span class="im">as</span>.character</span>
-<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>        <span class="bu">filter</span>(., phylum <span class="op">%</span><span class="kw">in</span><span class="op">%</span> keep)</span>
-<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>    } <span class="op">%&gt;%</span></span>
-<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>    {</span>
-<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>        top <span class="op">=</span> group_by(., X515F) <span class="op">%&gt;%</span></span>
-<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>            summarize(m <span class="op">=</span> <span class="bu">max</span>(count.relative)) <span class="op">%&gt;%</span></span>
-<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>            <span class="bu">filter</span>(rank(desc(m), ties.method <span class="op">=</span> <span class="st">"random"</span>) <span class="op">&lt;=</span> <span class="dv">5</span>) <span class="op">%&gt;%</span></span>
-<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>            arrange(desc(m)) <span class="op">%&gt;%</span></span>
-<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>            extract2(<span class="st">"X515F"</span>) <span class="op">%&gt;%</span> </span>
-<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>            unique <span class="op">%&gt;%</span></span>
-<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>            <span class="im">as</span>.character</span>
-<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a>        <span class="bu">filter</span>(., X515F <span class="op">%</span><span class="kw">in</span><span class="op">%</span> top) <span class="op">%&gt;%</span> mutate(X515F <span class="op">=</span> factor(X515F, levels <span class="op">=</span> top))</span>
-<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> ggplot(d, aes(x <span class="op">=</span> X515F, y <span class="op">=</span> count.relative))</span>
-<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> p <span class="op">+</span> facet_wrap(<span class="op">~</span>phylum, ncol <span class="op">=</span> <span class="dv">3</span>, scales <span class="op">=</span> <span class="st">"free_y"</span>)</span>
-<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> p <span class="op">+</span> geom_bar(stat <span class="op">=</span> <span class="st">"identity"</span>, fill <span class="op">=</span> <span class="st">"#14979B"</span>)</span>
-<span id="cb15-31"><a href="#cb15-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-32"><a href="#cb15-32" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> p <span class="op">+</span> labs(x <span class="op">=</span> <span class="st">""</span>)</span>
-<span id="cb15-33"><a href="#cb15-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-34"><a href="#cb15-34" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> p <span class="op">+</span> theme_bw()</span>
-<span id="cb15-35"><a href="#cb15-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-36"><a href="#cb15-36" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> p <span class="op">+</span> theme(axis.text.x <span class="op">=</span> element_text(angle <span class="op">=</span> <span class="dv">65</span>, hjust <span class="op">=</span> <span class="dv">1</span>, size <span class="op">=</span> <span class="dv">12</span>),</span>
-<span id="cb15-37"><a href="#cb15-37" aria-hidden="true" tabindex="-1"></a>              axis.text.y <span class="op">=</span> element_text(size <span class="op">=</span> <span class="dv">12</span>),</span>
-<span id="cb15-38"><a href="#cb15-38" aria-hidden="true" tabindex="-1"></a>              axis.title <span class="op">=</span> element_text(size <span class="op">=</span> <span class="dv">16</span>),</span>
-<span id="cb15-39"><a href="#cb15-39" aria-hidden="true" tabindex="-1"></a>              strip.background <span class="op">=</span> element_blank(),</span>
-<span id="cb15-40"><a href="#cb15-40" aria-hidden="true" tabindex="-1"></a>              strip.text <span class="op">=</span> element_text(size <span class="op">=</span> <span class="dv">16</span>))</span>
-<span id="cb15-41"><a href="#cb15-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-42"><a href="#cb15-42" aria-hidden="true" tabindex="-1"></a>p</span>
-<span id="cb15-43"><a href="#cb15-43" aria-hidden="true" tabindex="-1"></a><span class="co"># &lt;!-- collapse=True --&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>R <span class="op">-</span>w <span class="dv">600</span> <span class="op">-</span>h <span class="dv">500</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>d <span class="op">=</span> df_targets <span class="op">%&gt;%</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">filter</span>(kingdom <span class="op">==</span> <span class="st">"Bacteria"</span>, phylum <span class="op">!=</span> <span class="st">""</span> ) <span class="op">%&gt;%</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    group_by(phylum, X515F) <span class="op">%&gt;%</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    summarize(count <span class="op">=</span> n()) <span class="op">%&gt;%</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    group_by(phylum) <span class="op">%&gt;%</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    mutate(count.relative <span class="op">=</span> count <span class="op">/</span> <span class="bu">sum</span>(count)) <span class="op">%&gt;%</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>        keep <span class="op">=</span> <span class="bu">filter</span>(., X515F <span class="op">==</span> <span class="bu">max</span>.target, count.relative <span class="op">&lt;=</span> <span class="fl">0.80</span>) <span class="op">%&gt;%</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>            extract2(<span class="st">"phylum"</span>) <span class="op">%&gt;%</span> </span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>            unique <span class="op">%&gt;%</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>            <span class="im">as</span>.character</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>        <span class="bu">filter</span>(., phylum <span class="op">%</span><span class="kw">in</span><span class="op">%</span> keep)</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>    } <span class="op">%&gt;%</span></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>        top <span class="op">=</span> group_by(., X515F) <span class="op">%&gt;%</span></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>            summarize(m <span class="op">=</span> <span class="bu">max</span>(count.relative)) <span class="op">%&gt;%</span></span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>            <span class="bu">filter</span>(rank(desc(m), ties.method <span class="op">=</span> <span class="st">"random"</span>) <span class="op">&lt;=</span> <span class="dv">5</span>) <span class="op">%&gt;%</span></span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>            arrange(desc(m)) <span class="op">%&gt;%</span></span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>            extract2(<span class="st">"X515F"</span>) <span class="op">%&gt;%</span> </span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>            unique <span class="op">%&gt;%</span></span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>            <span class="im">as</span>.character</span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>        <span class="bu">filter</span>(., X515F <span class="op">%</span><span class="kw">in</span><span class="op">%</span> top) <span class="op">%&gt;%</span> mutate(X515F <span class="op">=</span> factor(X515F, levels <span class="op">=</span> top))</span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> ggplot(d, aes(x <span class="op">=</span> X515F, y <span class="op">=</span> count.relative))</span>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> p <span class="op">+</span> facet_wrap(<span class="op">~</span>phylum, ncol <span class="op">=</span> <span class="dv">3</span>, scales <span class="op">=</span> <span class="st">"free_y"</span>)</span>
+<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> p <span class="op">+</span> geom_bar(stat <span class="op">=</span> <span class="st">"identity"</span>, fill <span class="op">=</span> <span class="st">"#14979B"</span>)</span>
+<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> p <span class="op">+</span> labs(x <span class="op">=</span> <span class="st">""</span>)</span>
+<span id="cb14-33"><a href="#cb14-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-34"><a href="#cb14-34" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> p <span class="op">+</span> theme_bw()</span>
+<span id="cb14-35"><a href="#cb14-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-36"><a href="#cb14-36" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> p <span class="op">+</span> theme(axis.text.x <span class="op">=</span> element_text(angle <span class="op">=</span> <span class="dv">65</span>, hjust <span class="op">=</span> <span class="dv">1</span>, size <span class="op">=</span> <span class="dv">12</span>),</span>
+<span id="cb14-37"><a href="#cb14-37" aria-hidden="true" tabindex="-1"></a>              axis.text.y <span class="op">=</span> element_text(size <span class="op">=</span> <span class="dv">12</span>),</span>
+<span id="cb14-38"><a href="#cb14-38" aria-hidden="true" tabindex="-1"></a>              axis.title <span class="op">=</span> element_text(size <span class="op">=</span> <span class="dv">16</span>),</span>
+<span id="cb14-39"><a href="#cb14-39" aria-hidden="true" tabindex="-1"></a>              strip.background <span class="op">=</span> element_blank(),</span>
+<span id="cb14-40"><a href="#cb14-40" aria-hidden="true" tabindex="-1"></a>              strip.text <span class="op">=</span> element_text(size <span class="op">=</span> <span class="dv">16</span>))</span>
+<span id="cb14-41"><a href="#cb14-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-42"><a href="#cb14-42" aria-hidden="true" tabindex="-1"></a>p</span>
+<span id="cb14-43"><a href="#cb14-43" aria-hidden="true" tabindex="-1"></a><span class="co"># &lt;!-- collapse=True --&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
