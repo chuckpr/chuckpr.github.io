@@ -1,3 +1,4 @@
 - [ ] add .envrc and activat blog environment 
-- [ ] add old primers2 post
+- [x] add old primers2 post
+- [ ] remove placeholder posts
 
