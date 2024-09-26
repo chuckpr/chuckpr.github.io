@@ -1,6 +1,15 @@
 name: blog
 channels:
+  - bioconda
   - conda-forge
 dependencies:
   - r-rmarkdown
   - r-knitr
+  - r-tidyverse
+  - polars
+  - ca-certificates
+  - openssl
+  - r-gt
+  - r-reticulate
+  - great_tables
+prefix: /Users/cpepe-ranney/mambaforge/envs/blog
