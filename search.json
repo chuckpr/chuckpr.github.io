@@ -21,32 +21,11 @@
     "text": "Note\n\n\n\n↓ These are posts from a previous iteration of this blog.\n\n\n\n\n\n\n\n\n\n Sep 20, 2024 — Post With Code \n\n\n Sep 20, 2024 — Test JupyterLab \n\n\n Apr 17, 2015 — Evaluating 515F primers \n\n\n Apr 14, 2015 — Exploring 515F primer targets in archaeal and bacterial SSU rRNA genes \n\n\n\nNo matching items"
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
+    "objectID": "about.html",
+    "href": "about.html",
     "title": "chuckpr blog",
     "section": "",
-    "text": "Sep 20, 2024 — Post With Code \n\n\n Sep 17, 2024 — Welcome To My Blog \n\n\n\nNo matching items"
-  },
-  {
-    "objectID": "til.html",
-    "href": "til.html",
-    "title": "chuckpr blog",
-    "section": "",
-    "text": "No matching items"
-  },
-  {
-    "objectID": "posts/post-with-code/index.html",
-    "href": "posts/post-with-code/index.html",
-    "title": "Post With Code",
-    "section": "",
-    "text": "This is a post with executable code.\n\n\n\n\nprint(\"ONE\")\n\n[1] \"ONE\"\n\n\n\n\n\nprint(\"ONE\")\n\n[1] \"ONE\""
-  },
-  {
-    "objectID": "posts/welcome/index.html",
-    "href": "posts/welcome/index.html",
-    "title": "Welcome To My Blog",
-    "section": "",
-    "text": "This is the first post in a Quarto blog. Welcome!\n\nSince this post doesn’t specify an explicit image, the first image in the post will be used in the listing page of posts."
+    "text": "About this blog"
   },
   {
     "objectID": "TODO.html",
@@ -56,11 +35,39 @@
     "text": "add .envrc and activat blog environment\nadd old primers2 post"
   },
   {
-    "objectID": "about.html",
-    "href": "about.html",
+    "objectID": "posts/welcome/index.html",
+    "href": "posts/welcome/index.html",
+    "title": "Welcome To My Blog",
+    "section": "",
+    "text": "This is the first post in a Quarto blog. Welcome!\n\nSince this post doesn’t specify an explicit image, the first image in the post will be used in the listing page of posts."
+  },
+  {
+    "objectID": "posts/post-with-code/index.html",
+    "href": "posts/post-with-code/index.html",
+    "title": "Post With Code",
+    "section": "",
+    "text": "This is a post with executable code.\n\n\n\n\nprint(\"ONE\")\n\n[1] \"ONE\"\n\n\n\n\n\nprint(\"ONE\")\n\n[1] \"ONE\""
+  },
+  {
+    "objectID": "til.html",
+    "href": "til.html",
     "title": "chuckpr blog",
     "section": "",
-    "text": "About this blog"
+    "text": "Sep 26, 2024 — Pivot longer-ing in Polars \n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "chuckpr blog",
+    "section": "",
+    "text": "Sep 20, 2024 — Post With Code \n\n\n Sep 17, 2024 — Welcome To My Blog \n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "til/pivot-longer-polars/index.html",
+    "href": "til/pivot-longer-polars/index.html",
+    "title": "Pivot longer-ing in Polars",
+    "section": "",
+    "text": "The Polars equivalent for pivot_longer from dplyR is melt.\n\ndplyrR example (R)\n\nsuppressPackageStartupMessages(\n  library('tidyverse')\n)\n\notter_data = read_csv(\n  'https://raw.githubusercontent.com/jcoliver/learn-r/gh-pages/data/otter-mandible-data.csv',\n  col_types = cols()\n)\n\notter_data |&gt;\n  pivot_longer(cols = matches('m\\\\d')) |&gt;\n  head() |&gt;\n  gt::gt()\n\n\n\n\n\n\n\nspecies\nmuseum\naccession\nname\nvalue\n\n\n\n\nA. cinerea\nAMNH\n101458\nm1\n15.100\n\n\nA. cinerea\nAMNH\n101458\nm2\n27.790\n\n\nA. cinerea\nAMNH\n101458\nm3\n21.885\n\n\nA. cinerea\nAMNH\n101458\nm4\n13.010\n\n\nA. cinerea\nAMNH\n101458\nm5\n10.500\n\n\nA. cinerea\nAMNH\n101458\nm6\n61.635\n\n\n\n\n\n\n\n\n\nPolars example (Python)\n\nimport polars as pl\nfrom great_tables import GT\n\n(\n  pl.read_csv(\n    'https://raw.githubusercontent.com/jcoliver/learn-r/gh-pages/data/otter-mandible-data.csv',\n    null_values='NA'\n  )\n  .melt(id_vars=['species', 'museum', 'accession'])\n  .head()\n  .pipe(lambda df_: GT(df_))\n)\n\n\n\n\n\n\n\nspecies\nmuseum\naccession\nvariable\nvalue\n\n\n\n\nA. cinerea\nAMNH\n101458\nm1\n15.1\n\n\nA. cinerea\nAMNH\n101461\nm1\n12.74\n\n\nA. cinerea\nAMNH\n101466\nm1\n12.425\n\n\nA. cinerea\nAMNH\n101635\nm1\n13.4\n\n\nA. cinerea\nAMNH\n101459\nm1\n14.4"
   },
   {
     "objectID": "old-posts/post-with-code/index.html",
