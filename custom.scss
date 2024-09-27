@@ -53,7 +53,7 @@ nav .nav-link {
 
 .category.active,
 .navbar-nav .nav-link.active {
-    color: $orange-web;
+    color: color.scale($orange-web, $lightness: -8%);
     font-weight: 700;
 }
 
