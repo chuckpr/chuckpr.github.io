@@ -1,3 +1,6 @@
+/*-- scss:uses --*/
+@use 'sass:color';
+
 /*-- scss:functions --*/
 @function colorToRGB ($color) {
   @return "rgb(" + red($color) + ", " + green($color) + ", " + blue($color)+ ")";
@@ -22,7 +25,7 @@ $delft-blue: #23314Cff;
 }
 
 .listing-link:hover {
-  color: darken($blue-green, 10%);
+  color: color.scale($blue-green, $lightness: -25%);
 }
 
 .listing-link::before {
