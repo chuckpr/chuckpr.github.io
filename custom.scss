@@ -4,8 +4,13 @@
 }
 
 /*-- scss:defaults --*/
-// $h2-font-size:          1.6rem !default;
-// $headings-font-weight:  800 !default;
+$indigo-dye: #004366ff;
+$dim-gray: #6C675Fff;
+$blue-green: #4A95B9ff;
+$yinmn-blue: #40587Cff;
+$orange-web: #F6A300ff;
+$dark-slate-gray: #2D463Dff;
+$delft-blue: #23314Cff;
 
 /*-- scss:rules --*/
 
@@ -13,7 +18,7 @@
 	position: relative;
 	text-decoration: none;
 	padding-bottom: 2px;
-  color: #18272F;
+  color: $blue-green;
 }
 
 .listing-link::before {
@@ -22,7 +27,7 @@
   width: 100%;
   height: 1px;
   border-radius: 0px;
-  background-color: #18272F;
+  background-color: $blue-green;
   bottom: 0;
   left: 0;
   transform-origin: right;
@@ -33,4 +38,24 @@
 .listing-link:hover::before {
   transform-origin: left;
   transform: scaleX(1);
+}
+
+nav .nav-link {
+  color: $indigo-dye;
+}
+
+.category.active,
+.navbar-nav .nav-link.active {
+    color: $orange-web;
+    font-weight: 700;
+}
+
+.category:hover,
+.navbar-title:hover,
+.navbar-nav .nav-item:hover .nav-link {
+    color: $orange-web;
+}
+
+pre, code, .sourceCode {
+  font-size: 0.95em;
 }
