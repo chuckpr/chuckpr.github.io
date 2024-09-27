@@ -21,6 +21,10 @@ $delft-blue: #23314Cff;
   color: $blue-green;
 }
 
+.listing-link:hover {
+  color: darken($blue-green, 10%);
+}
+
 .listing-link::before {
   content: '';
   position: absolute;
