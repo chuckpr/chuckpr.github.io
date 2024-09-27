@@ -7,6 +7,7 @@ execute:
 website:
   title: "chuckpr blog"
   site-url: https://chuckpr.github.io
+  favicon: favicon.ico
   repo-url: https://github.com/chuckpr/chuckpr.github.io
   navbar:
     right:
@@ -24,7 +25,7 @@ website:
         href: https://linkedin.com/
 format:
   html:
-    fontsize: 1.2em
+    fontsize: 1.15em
     theme: 
       - cosmo
       - custom.scss
