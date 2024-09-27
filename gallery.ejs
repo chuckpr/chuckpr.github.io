@@ -1,7 +1,7 @@
 <ul class="list list-group list-group-flush">
 <% for (const item of items) { %>
   <li <%= metadataAttrs(item) %> class="list-group-item">
-    <a class="text-reset text-decoration-none" href="<%- item.path %>">
+    <a class="listing-link" href="<%- item.path %>">
       <%- item.date %> &#8212; <%= item.title %>
     </a>
   </li>
