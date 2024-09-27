@@ -3,6 +3,7 @@ title: "Pivot longer-ing in Polars"
 author: ChuckPR
 date: 2024-09-26
 format: html
+categories: [Polars]
 ---
 
 The `Polars` equivalent for `pivot_longer` from `dplyR` is `melt`.
