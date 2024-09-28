@@ -11,7 +11,7 @@ website:
   repo-url: https://github.com/chuckpr/chuckpr.github.io
   page-footer:
     background: light
-    left: "{{< iconify fa6-regular:copyright >}} Copyright 2024, Chuck Pepe-Ranney"
+    left: "{{< iconify fa6-regular:copyright label=copyright title=copyright >}} Copyright 2024, Chuck Pepe-Ranney"
     right: This website is built with [{{< iconify mdi:github title=GitHub label=GitHub >}}](https://github.com/chuckpr/chuckpr.github.io){target=_blank} and [{{< iconify simple-icons:quarto title=Quarto label=Quarto >}}](https://quarto.org/){target=_blank}
   navbar:
     right:
