@@ -11,4 +11,8 @@ page-layout: full
 title-block-banner: true
 ---
 
+:::{.callout-warning}
+{{< iconify fluent-emoji:construction >}} This site is under construction. Some
+posts are just placeholders. {{< iconify fluent-emoji:construction >}}
+:::
 
