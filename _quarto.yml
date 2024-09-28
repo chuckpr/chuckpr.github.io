@@ -9,19 +9,24 @@ website:
   site-url: https://chuckpr.github.io
   favicon: favicon.ico
   repo-url: https://github.com/chuckpr/chuckpr.github.io
+  page-footer:
+    background: light
+    left: "{{< iconify fa6-regular:copyright >}} Copyright 2024, Chuck Pepe-Ranney"
+    right: This website is built with [{{< iconify mdi:github title=GitHub label=GitHub >}}](https://github.com/chuckpr/chuckpr.github.io){target=_blank} and [{{< iconify simple-icons:quarto title=Quarto label=Quarto >}}](https://quarto.org/){target=_blank}
   navbar:
     right:
-      - text: "posts"
-        href: index.qmd
-      - text: "til"
-        href: til.qmd
-      - text: "about"
+      - text: "{{< iconify oi:question-mark title=about label=about size=Large >}}"
         href: about.qmd
-      - text: "old posts"
+      - text: "{{< iconify oi:list title=blog label=label size=Large >}}"
+        href: index.qmd
+      - text: "{{< iconify oi:lightbulb title=TIL label=TIL size=Large >}}"
+        href: til.qmd
+      - text: "{{< iconify ph:archive-box-bold title=archive label=archive size=Large >}}"
         href: old-posts.qmd
-      - icon: github
-        href: https://github.com/
-      - icon: linkedin
+        aria-label: old posts
+      - text: "{{< iconify codicon:github label=GitHub title=GitHub size=Large >}}"
+        href: https://github.com/chuckpr
+      - text: "{{< iconify ph:linkedin-logo-fill title=LinkedIn label=Linkedin size=Large >}}"
         href: https://linkedin.com/
 format:
   html:
