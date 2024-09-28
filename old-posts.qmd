@@ -11,6 +11,8 @@ page-layout: full
 title-block-banner: true
 ---
 
+# Archived posts
+
 ::: {.callout-note}
 ↓ These are posts from a previous iteration of this blog.
 :::

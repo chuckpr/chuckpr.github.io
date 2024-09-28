@@ -11,4 +11,6 @@ page-layout: full
 title-block-banner: true
 ---
 
+# Today I learned...
 
+Below are small posts to record the small things I learn {{< iconify fluent-emoji-high-contrast:brain title=brain label=brain >}}.
