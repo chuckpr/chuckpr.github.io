@@ -1,0 +1,24 @@
+---
+title: Adding custom hover text to iconify icons
+author: ChuckPR
+date: 2024-09-30
+---
+
+I like having icons instead of text in my blog's navbar. I use the [iconify
+extenion](https://github.com/mcanouil/quarto-iconify) for icons but when I was
+first adding icons to my blog I noticed the **hover text** from my browser was
+not helpful.
+
+![The default hover text is just the full name/description of the image.](./img/before.png){width=450}
+
+Upon reading the `iconify` README, I learned I can control hover text with a
+title key. E.g.:
+
+``` markdown
+# note the title key in the line below
+{{{< iconify ph:lightbulb-bold title=TIL label=TIL size=Large >}}}
+```
+
+The snippet above would create hover text like this {{< iconify ph:arrow-fat-down-fill >}}.
+
+![After setting the `title` key, the hover text is much more useful.](./img/after.png){width=450}
