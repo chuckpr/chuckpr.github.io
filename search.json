@@ -14,25 +14,25 @@
     "text": "Archived posts\n\n\n\n\n\n\nNote\n\n\n\n↓ These are posts from a previous iteration of this blog.\n\n\n\n\n\n\n\n\n\n\n                                                                                                                            Apr 17, 2015 — Evaluating 515F primers \n\n\n                                                                                                                            Apr 14, 2015 — Exploring 515F primer targets in archaeal and bacterial SSU rRNA genes \n\n\n\nNo matching items"
   },
   {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "chuckpr blog",
+    "objectID": "til/iconify-titles/index.html",
+    "href": "til/iconify-titles/index.html",
+    "title": "Adding custom hover text to iconify icons",
     "section": "",
-    "text": "About this blog"
+    "text": "I like having icons instead of text in my blog’s navbar. I use the iconify extenion for icons but when I was first adding icons to my blog I noticed the hover text from my browser was not helpful.\n\n\n\nThe default hover text is just the full name/description of the image.\n\n\nUpon reading the iconify README, I learned I can control hover text with a title key. E.g.:\n# note the title key in the line below\n{{&lt; iconify ph:lightbulb-bold title=TIL label=TIL size=Large &gt;}}\nThe snippet above would create hover text like this .\n\n\n\nAfter setting the title key, the hover text is much more useful."
   },
   {
-    "objectID": "TODO.html",
-    "href": "TODO.html",
+    "objectID": "index.html",
+    "href": "index.html",
     "title": "chuckpr blog",
     "section": "",
-    "text": "add .envrc and activat blog environment\nadd old primers2 post\nremove placeholder posts\niconify\nfooter\nsocial links"
+    "text": "Warning\n\n\n\n This site is under construction. Some posts are just placeholders. \n\n\n\n\n\n\n\n\n\n                                                                                                                            Sep 20, 2024 — Post With Code \n\n\n                                                                                                                            Sep 17, 2024 — Welcome To My Blog \n\n\n\nNo matching items"
   },
   {
-    "objectID": "posts/welcome/index.html",
-    "href": "posts/welcome/index.html",
-    "title": "Welcome To My Blog",
+    "objectID": "til.html",
+    "href": "til.html",
+    "title": "Today I learned…",
     "section": "",
-    "text": "This is the first post in a Quarto blog. Welcome!\n\nSince this post doesn’t specify an explicit image, the first image in the post will be used in the listing page of posts."
+    "text": "Today I learned…\nBelow are small posts to record the small things I learn .\n\n\n\n\n\n\n\n\n                                                                                                                            Sep 30, 2024 — Adding custom hover text to iconify icons \n\n\n                                                                                                                            Sep 26, 2024 — Pivot longer-ing in Polars \n\n\n\nNo matching items"
   },
   {
     "objectID": "posts/post-with-code/index.html",
@@ -42,18 +42,25 @@
     "text": "This is a post with executable code.\n\n\n\n\nprint(\"ONE\")\n\n[1] \"ONE\"\n\n\n\n\n\nprint(\"ONE\")\n\n[1] \"ONE\""
   },
   {
-    "objectID": "til.html",
-    "href": "til.html",
-    "title": "Today I learned…",
+    "objectID": "posts/welcome/index.html",
+    "href": "posts/welcome/index.html",
+    "title": "Welcome To My Blog",
     "section": "",
-    "text": "Today I learned…\nBelow are small posts to record the small things I learn .\n\n\n\n\n\n\n\n\n                                                                                                                            Sep 26, 2024 — Pivot longer-ing in Polars \n\n\n\nNo matching items"
+    "text": "This is the first post in a Quarto blog. Welcome!\n\nSince this post doesn’t specify an explicit image, the first image in the post will be used in the listing page of posts."
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
+    "objectID": "TODO.html",
+    "href": "TODO.html",
     "title": "chuckpr blog",
     "section": "",
-    "text": "Warning\n\n\n\n This site is under construction. Some posts are just placeholders. \n\n\n\n\n\n\n\n\n\n                                                                                                                            Sep 20, 2024 — Post With Code \n\n\n                                                                                                                            Sep 17, 2024 — Welcome To My Blog \n\n\n\nNo matching items"
+    "text": "add .envrc and activat blog environment\nadd old primers2 post\nremove placeholder posts\niconify\nfooter\nsocial links\nTIL on adding title/label to iconify icons"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "chuckpr blog",
+    "section": "",
+    "text": "About this blog"
   },
   {
     "objectID": "til/pivot-longer-polars/index.html",
