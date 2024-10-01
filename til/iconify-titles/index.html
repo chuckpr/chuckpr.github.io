@@ -108,7 +108,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -160,9 +160,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
+    </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content page-columns page-full" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -196,20 +198,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p>I like having icons instead of text in my blog’s navbar. I use the <a href="https://github.com/mcanouil/quarto-iconify">iconify extenion</a> for icons but when I was first adding icons to my blog I noticed the <strong>hover text</strong> from my browser was not helpful.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
 <p><img src="./img/before.png" class="img-fluid figure-img" width="450"></p>
-<figcaption>The default hover text is just the full name/description of the image.</figcaption>
+<figcaption class="margin-caption">The default hover text is just the full name/description of the image.</figcaption>
 </figure>
 </div>
 <p>Upon reading the <code>iconify</code> README, I learned I can control hover text with a title key. E.g.:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># note the title key in the line below</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>{{&lt; iconify ph:lightbulb-bold title=TIL label=TIL size=Large &gt;}}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The snippet above would create hover text like this <iconify-icon role="img" inline="" icon="ph:arrow-fat-down-fill" aria-label="Icon arrow-fat-down-fill from ph Iconify.design set." title="Icon arrow-fat-down-fill from ph Iconify.design set."></iconify-icon>.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
 <p><img src="./img/after.png" class="img-fluid figure-img" width="450"></p>
-<figcaption>After setting the <code>title</code> key, the hover text is much more useful.</figcaption>
+<figcaption class="margin-caption">After setting the <code>title</code> key, the hover text is much more useful.</figcaption>
 </figure>
 </div>
 
