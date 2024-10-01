@@ -1,9 +1,9 @@
 [
   {
-    "listing": "/old-posts.html",
+    "listing": "/til.html",
     "items": [
-      "/old-posts/primers2/index.html",
-      "/old-posts/primers1/index.html"
+      "/til/iconify-titles/index.html",
+      "/til/pivot-longer-polars/index.html"
     ]
   },
   {
@@ -14,10 +14,11 @@
     ]
   },
   {
-    "listing": "/til.html",
+    "listing": "/old-posts.html",
     "items": [
-      "/til/iconify-titles/index.html",
-      "/til/pivot-longer-polars/index.html"
+      "/old-posts/melt/index.html",
+      "/old-posts/primers2/index.html",
+      "/old-posts/primers1/index.html"
     ]
   }
 ]
