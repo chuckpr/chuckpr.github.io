@@ -27,10 +27,10 @@ website:
       - text: "{{< iconify ph:github-logo-bold label=GitHub title=GitHub size=Large >}}"
         href: https://github.com/chuckpr
       - text: "{{< iconify ph:linkedin-logo-bold title=LinkedIn label=Linkedin size=Large >}}"
-        href: https://linkedin.com/
+        href: https://www.linkedin.com/in/chuckpr/
 format:
   html:
     fontsize: 1.15em
-    theme: 
+    theme:
       - cosmo
       - custom.scss

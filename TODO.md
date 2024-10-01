@@ -5,6 +5,6 @@
 - [x] footer
 - [ ] social links
   - [x] github
-  - [ ] linkedin
-- [ ] TIL on adding title/label to iconify icons
+  - [x] linkedin
+- [x] TIL on adding title/label to iconify icons
 
