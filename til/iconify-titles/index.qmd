@@ -2,6 +2,7 @@
 title: Adding custom hover text to iconify icons
 author: ChuckPR
 date: 2024-09-30
+fig-cap-location: margin
 ---
 
 I like having icons instead of text in my blog's navbar. I use the [iconify
