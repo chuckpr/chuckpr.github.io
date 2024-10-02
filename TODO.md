@@ -7,4 +7,9 @@
   - [x] github
   - [x] linkedin
 - [x] TIL on adding title/label to iconify icons
+- [x] add melt old post
+- [ ] finish about page
+- [ ] add CV
+- [ ] add courses page
+- [ ] fish function to select from running terminal sessions
 
