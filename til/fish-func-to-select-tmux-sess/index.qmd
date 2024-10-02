@@ -1,0 +1,21 @@
+---
+author: ChuckPR
+title: A Fish Shell function to select and enter tmux sessions
+categories: [tmux, fish]
+date: 2024-10-02
+---
+
+```fish
+function tma
+    set sessions (tmux ls -F '#{session_name}')
+    set session (printf %s\n $sessions | fzf --prompt=" Tmux session " --height=50% --layout=reverse --border --exit-0)
+    if set -q "$TMUX"
+        set tmux_cmd attach
+    else
+        set tmux_cmd switchc
+    end
+    tmux $tmux_cmd -t $session
+end
+```
+
+<script async id="asciicast-569727" src="https://asciinema.org/a/569727.js"></script>
