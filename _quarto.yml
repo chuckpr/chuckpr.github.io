@@ -30,6 +30,8 @@ website:
         href: https://www.linkedin.com/in/chuckpr/
 format:
   html:
+    syntax-definitions:
+      - fish.xml
     fontsize: 1.15em
     theme:
       - cosmo
