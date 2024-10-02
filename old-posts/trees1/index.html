@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="ChuckPR">
+<meta name="dcterms.date" content="2015-08-07">
+
+<title>Making trees in the Jupyter notebook (part&nbsp;1&nbsp;-&nbsp;IToL) – chuckpr blog</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../favicon.ico" rel="icon">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-contrib/iconify-2.1.0/iconify-icon.min.js"></script>
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">chuckpr blog</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text"><iconify-icon role="img" inline="" icon="ph:question-bold" style="font-size: 1.5em;" aria-label="about" title="about"></iconify-icon></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text"><iconify-icon role="img" inline="" icon="ph:list-bullets-bold" style="font-size: 1.5em;" aria-label="label" title="blog"></iconify-icon></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../til.html"> 
+<span class="menu-text"><iconify-icon role="img" inline="" icon="ph:lightbulb-bold" style="font-size: 1.5em;" aria-label="TIL" title="TIL"></iconify-icon></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../old-posts.html"> 
+<span class="menu-text"><iconify-icon role="img" inline="" icon="ph:archive-box-bold" style="font-size: 1.5em;" aria-label="archive" title="archive"></iconify-icon></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://github.com/chuckpr"> 
+<span class="menu-text"><iconify-icon role="img" inline="" icon="ph:github-logo-bold" style="font-size: 1.5em;" aria-label="GitHub" title="GitHub"></iconify-icon></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://www.linkedin.com/in/chuckpr/"> 
+<span class="menu-text"><iconify-icon role="img" inline="" icon="ph:linkedin-logo-bold" style="font-size: 1.5em;" aria-label="Linkedin" title="LinkedIn"></iconify-icon></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content page-columns page-full" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Making trees in the Jupyter notebook (part&nbsp;1&nbsp;-&nbsp;IToL)</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">phylogeny</div>
+    <div class="quarto-category">iTol</div>
+  </div>
+  </div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>ChuckPR </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">August 7, 2015</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Let’s extend the previous post by scraping the CAZy website for accession numbers from genes in the glycoside hydrolase 5 (GH5) family. Then we can build a phylogenetic tree from these sequences and visualize how well the EC activities correspond to the phylogeny.</p>
+<p>Unfortunately the CAZy website spreads the information we need across multiple pages in tables that are not easily parsed. Luckily we have <code>rvest</code>. Let’s start by loading the libraries we’ll use.</p>
+<div id="cell-3" class="cell" data-jupyter="{&quot;outputs_hidden&quot;:false}" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>load_ext rpy2.ipython</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-4" class="cell" data-jupyter="{&quot;outputs_hidden&quot;:false}" data-execution_count="22">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>R</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>library(rvest)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>library(magrittr)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>library(plyr)<span class="op">;</span> library(dplyr)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>library(rentrez)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>library(ggplot2)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>library(rwantshue)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>CAZy distinguishes between genes that have been biochemically characterized and those that haven’t. For this analysis we’ll stick the characterized genes. This is the website that we’ll be scraping:<br>
+<a href="http://www.cazy.org/GH5_characterized.html">www.cazy.org/GH5_characterized.html</a></p>
+<p>All we really need is a table of accessions and corresponding EC numbers but we might as well grab some other information provided by CAZy such as the subfamily membership of each gene and the organism.</p>
+<p>We’ll start by creating a session from the webpage above.</p>
+<div id="cell-8" class="cell" data-jupyter="{&quot;outputs_hidden&quot;:false}" data-execution_count="23">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>R</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>cazy <span class="op">=</span> html_session(<span class="st">"http://www.cazy.org/GH5_characterized.html"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We need to grab the links to the pages that contain continued sections for our table. I use Chrome’s inspector tools or the <a href="http://selectorgadget.com/">SelectorGadget</a> to find the attributes and element data associated with the information I want to scrape. In this case, the webpage links we want are in span elements of the “pages” class. Each span element has a hyperlink tag (“a” below in <code>html_nodes</code>) and from that tag we want the value of the “href” attribute.</p>
+<div id="cell-10" class="cell" data-jupyter="{&quot;outputs_hidden&quot;:false}" data-execution_count="24">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>R</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>links <span class="op">=</span> cazy <span class="op">%&gt;%</span> html_nodes(<span class="st">"span.pages a"</span>) <span class="op">%&gt;%</span> html_attr(<span class="st">"href"</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>links</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>[1] "GH5_characterized.html?debut_PRINC=100#pagination_PRINC"
+[2] "GH5_characterized.html?debut_PRINC=200#pagination_PRINC"
+[3] "GH5_characterized.html?debut_PRINC=300#pagination_PRINC"
+[4] "GH5_characterized.html?debut_PRINC=400#pagination_PRINC"
+[5] "GH5_characterized.html?debut_PRINC=500#pagination_PRINC"</code></pre>
+</div>
+</div>
+<p>Let’s start by scraping the first page (the page we’re currently on).</p>
+<p>The table has some rows that we don’t want (like the row that just points out the Domain of the organisms) which makes parsing this info a bit tricky. We need to scrub rows with the “royaume” class and rows with id “line_titre” (I think those are French words). So, to briefly summarize the command below, we’re grabbing rows (“tr”) from the table of class “listing” excluding rows of class “royaume” and id “line_titre”.</p>
+<div id="cell-13" class="cell" data-jupyter="{&quot;outputs_hidden&quot;:false}" data-execution_count="25">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>R</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>rows <span class="op">=</span> cazy <span class="op">%&gt;%</span> html_nodes(<span class="st">"table.listing tr:not(.royaume)[id!=line_titre]"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We’ll parse each row to get the accession, EC number, organism, and subfamily. I’m only grabbing the linked accession number. Some of the genes have multiple associated accession numbers but I think we’ll only need one. Also, I’m creating one row for each EC number so some of the genes will have two entries. I think I’ll eventually remove the genes with multiple EC activities from the tree but it might also be nice to point them out. Note how we use the <code>extract2</code> function from <code>magrittr</code> to get the correct column.</p>
+<div id="cell-15" class="cell" data-jupyter="{&quot;outputs_hidden&quot;:false}" data-execution_count="26">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>R</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>get_data <span class="op">=</span> function(row) {</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    cols <span class="op">=</span> row <span class="op">%&gt;%</span> html_nodes(<span class="st">"td"</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    ec <span class="op">=</span> cols <span class="op">%&gt;%</span> extract2(<span class="dv">2</span>) <span class="op">%&gt;%</span> html_nodes(<span class="st">"font.E"</span>) <span class="op">%&gt;%</span> html_text() <span class="op">%&gt;%</span> unlist</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    organism <span class="op">=</span> cols <span class="op">%&gt;%</span> extract2(<span class="dv">3</span>) <span class="op">%&gt;%</span> html_text(trim <span class="op">=</span> TRUE)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    acc <span class="op">=</span> cols <span class="op">%&gt;%</span> extract2(<span class="dv">4</span>) <span class="op">%&gt;%</span> html_nodes(<span class="st">"a b"</span>) <span class="op">%&gt;%</span> html_text()</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> ( length(acc) <span class="op">==</span> <span class="dv">0</span> )  {</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>        acc <span class="op">=</span> cols <span class="op">%&gt;%</span> extract2(<span class="dv">4</span>) <span class="op">%&gt;%</span> html_text() <span class="op">%&gt;%</span> substr(<span class="dv">1</span>,<span class="dv">10</span>)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    subf <span class="op">=</span> cols <span class="op">%&gt;%</span> extract2(<span class="dv">7</span>) <span class="op">%&gt;%</span> html_text(trim <span class="op">=</span> TRUE)</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    data.frame(ec<span class="op">=</span>ec, organism<span class="op">=</span>organism, acc<span class="op">=</span>acc, subf<span class="op">=</span>subf)</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>And now we’ll <code>ldply</code> it into a handy dataframe.</p>
+<div id="cell-17" class="cell" data-jupyter="{&quot;outputs_hidden&quot;:false}" data-execution_count="27">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>R</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>df.pg1 <span class="op">=</span> ldply(rows, get_data)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>df.pg1 <span class="op">%&gt;%</span> head</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>        ec                                   organism        acc subf
+1  3.2.1.4        Desulfurococcaceae archaeon EBI-244 AEB53062.1     
+2  3.2.1.-            Halorhabdus utahensis DSM 12940 ACV12553.1     
+3  3.2.1.4                      Pyrococcus abyssi GE5 CAB49854.1    1
+4  3.2.1.4                  Pyrococcus horikoshii OT3 AAQ31833.1    1
+5 3.2.1.78                Acidothermus cellulolyticus ABJ41262.1    7
+6  3.2.1.4 Acidothermus cellulolyticus 11B ATCC 43068 AAA75477.1    1</code></pre>
+</div>
+</div>
+<p>Now we need to do that for all the other pages of the table. This function uses <code>jump_to</code> to go to a link and extract the information we need with the same code as we had above. We can append our page 1 information with <code>rbind</code> and we’re ready to go.</p>
+<div id="cell-19" class="cell" data-jupyter="{&quot;outputs_hidden&quot;:false}" data-execution_count="31">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>R</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>get_df <span class="op">=</span> function(link) {</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    session <span class="op">=</span> jump_to(cazy, link)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    rows <span class="op">=</span> session <span class="op">%&gt;%</span> html_nodes(<span class="st">"table.listing tr:not(.royaume)[id!=line_titre]"</span>)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    rows <span class="op">%&gt;%</span> head</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    ldply(rows, get_data)</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>df.<span class="bu">all</span> <span class="op">=</span> ldply(links, get_df) <span class="op">%&gt;%</span> rbind(df.pg1)</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>df.<span class="bu">all</span> <span class="op">%&gt;%</span> head</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>        ec                             organism        acc subf
+1 3.2.1.78       Clostridium cellulovorans 743B ADL52789.1    7
+2 3.2.1.78       Clostridium cellulovorans 743B AAF06110.2   17
+3  3.2.1.4 Clostridium cellulovorans ATCC 35269 AAA23233.1    4
+4 3.2.1.73 Clostridium cellulovorans ATCC 35269 AAA23233.1    4
+5  3.2.1.8 Clostridium cellulovorans ATCC 35269 AAA23233.1    4
+6  3.2.1.4 Clostridium cellulovorans ATCC 35269 AAD39739.1    4</code></pre>
+</div>
+</div>
+<p>We now have all the information we need to make our tree in IToL that will give us a sense of how phylogenetically conserved the EC annotations are with phylogeny. But first let’s plot some counts of the different EC activities. There is clearly one predominant activity for this set of sequences.</p>
+<div id="cell-21" class="cell" data-jupyter="{&quot;outputs_hidden&quot;:false}" data-tags="[&quot;fullwidth&quot;]" data-execution_count="32">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>R <span class="op">-</span>h <span class="dv">300</span> <span class="op">-</span>w <span class="dv">600</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>df.<span class="bu">all</span> <span class="op">%&gt;%</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    group_by(ec) <span class="op">%&gt;%</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    summarize(count <span class="op">=</span> n()) <span class="op">%&gt;%</span> {</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>        xsort <span class="op">=</span> arrange(., desc(count)) <span class="op">%&gt;%</span> extract2(<span class="st">"ec"</span>)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>        mutate(., ec <span class="op">=</span> factor(ec, levels <span class="op">=</span> xsort)) <span class="op">%&gt;%</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>        ggplot(aes(x <span class="op">=</span> ec, y <span class="op">=</span> count)) <span class="op">+</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>            geom_bar(stat <span class="op">=</span> <span class="st">"identity"</span>) <span class="op">+</span> </span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>            theme_bw() <span class="op">+</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>            theme(axis.text.x <span class="op">=</span> element_text(angle <span class="op">=</span> <span class="dv">45</span>, hjust <span class="op">=</span> <span class="dv">1</span>),</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>                  axis.title <span class="op">=</span> element_text(size <span class="op">=</span> <span class="dv">16</span>))</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>    }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-10-output-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="cell-22" class="cell" data-jupyter="{&quot;outputs_hidden&quot;:false}" data-execution_count="33">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>R</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>df.<span class="bu">all</span> <span class="op">%&gt;%</span> write.csv(<span class="st">"data/GH5_data.csv"</span>, row.names <span class="op">=</span> FALSE, quote <span class="op">=</span> FALSE)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We should add one more bit of information to the dataframe, the colors for each EC number. We need to send this information to IToL. Below I’m using <a href="https://github.com/hoesler/rwantshue">rwantshue</a> to get a list of colors the same length as the number of observed EC numbers. We collect the colors for each EC number in a dataframe and then we can join that colors dataframe to our CAZy dataframe. We’ll also save the IToL information to a file. I am making what IToL refers to as a “colors definition” file. This file should include (in order) a column for the tip names on the tree (in our case this will be accessions), a column specifying what you want to color (“range” here see IToL website for details), the actual color, and the label (EC numbers in our case).</p>
+<div id="cell-24" class="cell" data-jupyter="{&quot;outputs_hidden&quot;:false}" data-execution_count="38">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>R</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>N <span class="op">=</span> df.all$ec <span class="op">%&gt;%</span> unique <span class="op">%&gt;%</span> length</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>scheme <span class="op">&lt;-</span> iwanthue()</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>colors <span class="op">=</span> scheme$hex(N, color_space <span class="op">=</span> hcl_presets$intense)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>col.df <span class="op">=</span> data.frame(</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    colors <span class="op">=</span> colors,</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    ec <span class="op">=</span> df.all$ec <span class="op">%&gt;%</span> unique</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>df.<span class="bu">all</span> <span class="op">%&gt;%</span> </span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>    left_join(col.df) <span class="op">%&gt;%</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>    mutate(ctype <span class="op">=</span> <span class="st">"range"</span>, label <span class="op">=</span> ec) <span class="op">%&gt;%</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>    select(acc, ctype, colors, label) <span class="op">%&gt;%</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>    group_by(acc) <span class="op">%&gt;%</span> <span class="bu">filter</span>(row_number() <span class="op">==</span> <span class="dv">1</span>) <span class="op">%&gt;%</span> <span class="co"># just grab the first row for each seq. </span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>                                                    <span class="co"># Some seqs have two EC numbers.</span></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>    write.table(<span class="st">"data/color_defs.tsv"</span>, row.names <span class="op">=</span> FALSE, col.names <span class="op">=</span> FALSE, sep <span class="op">=</span> <span class="st">"</span><span class="ch">\t</span><span class="st">"</span>, quote <span class="op">=</span> FALSE)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Here’s what that file looks like,</p>
+<div id="cell-26" class="cell" data-jupyter="{&quot;outputs_hidden&quot;:false}" data-execution_count="36">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>head <span class="op">-</span>n5 data<span class="op">/</span>color_defs.tsv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>ADL52789.1  range   #4FB197 3.2.1.78
+AAF06110.2  range   #4FB197 3.2.1.78
+AAA23233.1  range   #CA55E1 3.2.1.4
+AAD39739.1  range   #CA55E1 3.2.1.4
+BAA12826.1  range   #CA55E1 3.2.1.4</code></pre>
+</div>
+</div>
+<p>Great! Now on to building the tree…</p>
+<p>We need to get the sequences first. Let’s use <a href="https://github.com/ropensci/rentrez">rentrez</a> to query Genbank for our accessions.</p>
+<div id="cell-29" class="cell" data-jupyter="{&quot;outputs_hidden&quot;:false}" data-execution_count="134">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>R</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>accs <span class="op">=</span> df.all$acc <span class="op">%&gt;%</span> <span class="im">as</span>.character <span class="op">%&gt;%</span> unique</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>seqs <span class="op">=</span> entrez_fetch(db<span class="op">=</span><span class="st">"nucleotide"</span>, <span class="bu">id</span><span class="op">=</span>accs, rettype<span class="op">=</span><span class="st">"fasta"</span>)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>write(seqs, <span class="st">"data/GH5_characterized.fasta"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-30" class="cell" data-jupyter="{&quot;outputs_hidden&quot;:false}" data-execution_count="135">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>head <span class="op">-</span>n3 data<span class="op">/</span>GH5_characterized.fasta</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&gt;gi|328834886|gb|AEB53062.1| putative glycoside hydrolase family 5 [Desulfurococcaceae archaeon EBI-244]
+MKKVHIIAIVVIIAIAFALILARYYTMQRGYETVTPTTPPQQTTTTETTPVPTEAGTTTPITEATVTQPP
+QTPTTPSPQTPTTPTALPTPSPTPTAPSATVTETTSPQTPTTTITTETTTTPAPQPQVVFLKLPEGEEPK</code></pre>
+</div>
+</div>
+<p>I’m going to align these sequences with <a href="http://www.drive5.com/muscle/">Muscle</a>.</p>
+<div id="cell-32" class="cell" data-jupyter="{&quot;outputs_hidden&quot;:false}" data-execution_count="136">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>muscle <span class="op">-</span><span class="kw">in</span> data<span class="op">/</span>GH5_characterized.fasta <span class="op">-</span>out data<span class="op">/</span>GH5_characterized.aln.fasta</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-33" class="cell" data-jupyter="{&quot;outputs_hidden&quot;:false}" data-execution_count="137">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>head <span class="op">-</span>n5 data<span class="op">/</span>GH5_characterized.aln.fasta</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&gt;gi|190684977|gb|ACE82655.1| endo-1, 4-beta mannanase, man5C [Cellvibrio japonicus Ueda107]
+------------------------------------------------------------
+------------------------------------------------------------
+------------------------------------------------------------
+-------------------------------------------MKHLISPRILTGLFVIG</code></pre>
+</div>
+</div>
+<p>Ok, we’re going to switch into Python mode now as we have a look at this alignment. Also, we’ll use Python to talk to IToL. Let’s just plot gap frequency by position.</p>
+<div id="cell-35" class="cell" data-jupyter="{&quot;outputs_hidden&quot;:false}" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> skbio.alignment <span class="im">import</span> Alignment</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> skbio.sequence <span class="im">import</span> DNA</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> itolapi <span class="im">import</span> Itol, ItolExport</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> Image</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>matplotlib inline</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-36" class="cell" data-jupyter="{&quot;outputs_hidden&quot;:false}" data-execution_count="144">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>aln <span class="op">=</span> Alignment.read(<span class="bu">file</span> <span class="op">=</span> <span class="st">"data/GH5_characterized.aln.fasta"</span>, <span class="bu">format</span><span class="op">=</span><span class="st">"fasta"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Our alignment is a bit gappy as you can see below. There are quite a few positions with few characters.</p>
+<div id="cell-38" class="cell page-columns page-full" data-jupyter="{&quot;outputs_hidden&quot;:false}" data-tags="[&quot;fullwidth&quot;]" data-execution_count="145">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>gap_freq <span class="op">=</span> [d[<span class="st">"-"</span>] <span class="cf">for</span> d <span class="kw">in</span> aln.position_frequencies()]</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>fig.set_size_inches([<span class="dv">16</span>, <span class="dv">3</span>])</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>ax.plot(np.arange(<span class="bu">len</span>(gap_freq)), gap_freq)</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"Position"</span>)</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"Gap frequency"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display page-columns page-full">
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="index_files/figure-html/cell-20-output-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img column-screen-inset"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Let’s make a gap frequency filter to remove columns with greater than 60% gaps.</p>
+<div id="cell-40" class="cell" data-jupyter="{&quot;outputs_hidden&quot;:false}" data-execution_count="146">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>keepers, <span class="op">=</span> np.where(np.array(gap_freq)<span class="op">&lt;=</span><span class="fl">0.60</span>)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>aln_masked <span class="op">=</span> aln.subalignment(positions_to_keep<span class="op">=</span>keepers)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Ok, that looks better. We’ll use this filtered alignment to build the tree.</p>
+<div id="cell-42" class="cell page-columns page-full" data-jupyter="{&quot;outputs_hidden&quot;:false}" data-tags="[&quot;fullwidth&quot;]" data-execution_count="147">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>gap_freq2 <span class="op">=</span> [d[<span class="st">"-"</span>] <span class="cf">for</span> d <span class="kw">in</span> aln_masked.position_frequencies()]</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>fig.set_size_inches([<span class="dv">16</span>, <span class="dv">3</span>])</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>ax.plot(np.arange(<span class="bu">len</span>(gap_freq2)), gap_freq2)</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"Position"</span>)</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"Gap frequency"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display page-columns page-full">
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="index_files/figure-html/cell-22-output-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img column-screen-inset"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="cell-43" class="cell" data-jupyter="{&quot;outputs_hidden&quot;:false}" data-execution_count="148">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>aln_masked.write(<span class="st">"data/GH5_characterized.aln.masked.fasta"</span>, <span class="bu">format</span><span class="op">=</span><span class="st">"fasta"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="148">
+<pre><code>'data/GH5_characterized.aln.masked.fasta'</code></pre>
+</div>
+</div>
+<div id="cell-44" class="cell" data-jupyter="{&quot;outputs_hidden&quot;:false}" data-execution_count="149">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>head <span class="op">-</span>n2 data<span class="op">/</span>GH5_characterized.aln.masked.fasta <span class="op">|</span> cut <span class="op">-</span>c1<span class="op">-</span><span class="dv">100</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&gt;gi|190684977|gb|ACE82655.1| endo-1, 4-beta mannanase, man5C [Cellvibrio japonicus Ueda107]
+HLISPRILTGLFVIGLAPAWSSSVSSSGIIVGAQCNWYGPVCQSGASLPAPGNSVL-SGSSPEGNSWLSPYS-SKVMDGTASYAFAEATVPVTYQGQGDG</code></pre>
+</div>
+</div>
+<p>I’m going to make the tree with <a href="http://www.microbesonline.org/fasttree/">FastTree</a>. I’m doing a quick hack to make sure that the tips of our tree are just accession numbers and not the long identifiers returned from <code>rentrez</code>. The sed command just grabs the accession from each FASTA identifier line and scrubs the rest. I am using <a href="http://tldp.org/LDP/abs/html/process-sub.html">process substitution</a> but you could just as easily write the scrubbed FASTA to a file and send it to FastTree.</p>
+<div id="cell-46" class="cell" data-jupyter="{&quot;outputs_hidden&quot;:false}" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>head <span class="op">-</span>n6 data<span class="op">/</span>GH5_characterized.aln.masked.fasta <span class="op">|</span> sed <span class="st">'/^&gt;/ s/.*|.*|.*|\(.*\)|.*/&gt;</span><span class="ch">\1</span><span class="st">/'</span> <span class="op">|</span> cut <span class="op">-</span>c <span class="dv">1</span><span class="op">-</span><span class="dv">80</span> <span class="co">#for example...</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&gt;ACE82655.1
+HLISPRILTGLFVIGLAPAWSSSVSSSGIIVGAQCNWYGPVCQSGASLPAPGNSVL-SGSSPEGNSWLSPYS-SKVMDGT
+&gt;AFR99035.1
+----MPPPPEVSPVTG-------------NPVSPHYIHS------STL-HFGRSLVLRGVN--EGFWFPLNLDDGSLARL
+&gt;BAG70961.1
+MKAMTSVILPPVAAPALCLAAV---------WTTFNAVG------ANL-G-GW---LIDTTGAVDEWCGPVLEWITIDTL</code></pre>
+</div>
+</div>
+<div id="cell-47" class="cell" data-jupyter="{&quot;outputs_hidden&quot;:false}" data-execution_count="140">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>FastTree <span class="op">&lt;</span>(sed <span class="st">'/^&gt;/ s/.*|.*|.*|\(.*\)|.*/&gt;</span><span class="ch">\1</span><span class="st">/'</span> data<span class="op">/</span>GH5_characterized.aln.masked.fasta) <span class="op">&gt;</span> data<span class="op">/</span>GH5.tree <span class="dv">2</span><span class="op">&gt;/</span>dev<span class="op">/</span>null</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Cool, now we just need to upload the tree and the color definition file from above to IToL. There is a nice Python library to talk to IToL programatically called <a href="https://github.com/albertyw/itolapi">itolapi</a>. We’re using that to upload our info. The <code>itolapi</code> page has all the documentation required to use it effectively.</p>
+<div id="cell-49" class="cell" data-jupyter="{&quot;outputs_hidden&quot;:false}" data-execution_count="37">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>itol_uploader <span class="op">=</span> Itol.Itol()</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>itol_uploader.add_variable(<span class="st">'treeFile'</span>, <span class="st">'data/GH5.tree'</span>)</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>itol_uploader.add_variable(<span class="st">'treeFormat'</span>, <span class="st">'newick'</span>)</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>itol_uploader.add_variable(<span class="st">'treeName'</span>, <span class="st">'GH5'</span>)</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>itol_uploader.add_variable(<span class="st">"colorDefinitionFile"</span>, <span class="st">"data/color_defs.tsv"</span>)</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>status <span class="op">=</span> itol_uploader.upload()</span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>itol_uploader.comm.upload_output</span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> itol_uploader.get_webpage()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>http://itol.embl.de/external.cgi?tree=128841252312946714389719820&amp;restore_saved=1</code></pre>
+</div>
+</div>
+<p>You can also use <code>itolapi</code> to download the tree but I don’t think the IToL API supports exporting trees with full clade coloring. I could be wrong but I really wanted the full clade coloring as opposed to just a ring of colors around the tree. Anyway, I had to manually visit IToL to export this visualization (frown).</p>
+<div id="cell-51" class="cell" data-jupyter="{&quot;outputs_hidden&quot;:false}" data-tags="[&quot;fullwidth&quot;]" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>Image(<span class="st">"data/GH5.tree.png"</span>, width<span class="op">=</span><span class="dv">600</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="16">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-28-output-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>So it looks like there’s some coherence to the EC numbers. The two main EC annotations do not appear to overlap much but the minor annotations are dispersed throughout in small groups.</p>
+<p>You can explore this tree in IToL by visiting <a href="http://itol.embl.de/shared/chuckpr">this page</a>.</p>
+<p>Disclaimer: I don’t want to go down the rabbit hole of finding all the inconsistencies in this CAZy table for this small example. There are most definitely some wonky rows in the information we scraped. I think the accessions are the least consistent field in CAZy and it’s tiresome to account for all the seemingly arbitrary little ways that rows can differ from the consensus. The moral of the story? <strong>Don’t make people scrape your webpage to get information!!!</strong> I don’t see why that table can’t be provided by the CAZy team as a nice CSV…</p>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/chuckpr\.github\.io");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p><iconify-icon role="img" inline="" icon="fa6-regular:copyright" aria-label="copyright" title="copyright"></iconify-icon> Copyright 2024, Chuck Pepe-Ranney</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>This website is built with <a href="https://github.com/chuckpr/chuckpr.github.io" target="_blank"><iconify-icon role="img" inline="" icon="ph:github-logo-fill" aria-label="GitHub" title="GitHub"></iconify-icon></a> and <a href="https://quarto.org/" target="_blank"><iconify-icon role="img" inline="" icon="simple-icons:quarto" aria-label="Quarto" title="Quarto"></iconify-icon></a></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
