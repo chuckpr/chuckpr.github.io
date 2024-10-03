@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="ChuckPR">
-<meta name="dcterms.date" content="2015-04-20">
+<meta name="dcterms.date" content="2024-10-03">
 
-<title>Melting your phyloseq object with dplyr/tidyr – chuckpr blog</title>
+<title>A Fish Shell function to select and enter tmux sessions – chuckpr blog</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -162,12 +162,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- margin-sidebar -->
     
 <!-- main -->
-<main class="content page-columns page-full" id="quarto-document-content">
+<main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Melting your phyloseq object with dplyr/tidyr</h1>
-</div>
+<h1 class="title">A Fish Shell function to select and enter tmux sessions</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">tmux</div>
+    <div class="quarto-category">fish</div>
+  </div>
+  </div>
 
 
 
@@ -183,7 +187,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">April 20, 2015</p>
+      <p class="date">October 3, 2024</p>
     </div>
   </div>
   
@@ -195,154 +199,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>If you’re a microbial ecologist and you haven’t used <a href="http://joey711.github.io/phyloseq/">phyloseq</a>, put away your vintage scarf and thick-rimmed glasses because you are not hip. <a href="http://joey711.github.io/phyloseq/">phyloseq</a> is the nexus of all that is good in the universe. In this post we’ll look at one of the greatest <a href="http://joey711.github.io/phyloseq/">phyloseq</a> functions, <code>psmelt</code>. <code>psmelt</code> combines your sample info, OTU counts, and taxonomic annotations into a single dataframe where every row represents an OTU-sample combination. Hhhhwhat!?! Amazing, I know. From this omnipotent dataframe you can do anything. So, how do we use <code>psmelt</code>? And can we re-create <code>psmelt</code> with <a href="https://github.com/hadley/dplyr">dplyr</a> and <a href="https://github.com/hadley/tidyr">tidyr</a>?</p>
-<p>Let’s start by bringing in some R packages and loading the <code>rmagic</code> extension for IPython.</p>
-<div id="cell-3" class="cell" data-jupyter="{&quot;outputs_hidden&quot;:false}" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>load_ext rpy2.ipython</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div id="cell-4" class="cell" data-jupyter="{&quot;outputs_hidden&quot;:false}" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>R</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>library(phyloseq)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>library(dplyr)<span class="op">;</span> library(tidyr)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>library(magrittr)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>library(ggplot2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>I’m going to use data from a paper we recently submitted. See the pre-print <a href="http://dx.doi.org/10.1101/013813">here</a> if you’re interested. A typical microbiome data set consists of three tables:</p>
-<ol type="1">
-<li>A table of sample information.</li>
-<li>A table of OTU counts in the samples.</li>
-<li>A table of taxonomic info for each OTU.</li>
-</ol>
-<p>In this example the OTU counts and taxonomic info are combined in a json <a href="http://biom-format.org/">biom</a> formatted table. We have the sample information in a <a href="http://qiime.org/">QIIME</a> formatted sample metadata table. Don’t get bogged down in the file formats, however. They’re just tables and you can get tables into R easily. Focus on the concepts and what information you need to do an analysis.</p>
-<p>We’ll write a quick function to handle the <a href="http://qiime.org/">QIIME</a> formatted sample data table (<strong>note how we’re just using the base R <code>read.table</code> function</strong>) and we’ll use the <code>import_biom</code> function from <a href="http://joey711.github.io/phyloseq/">phyloseq</a> to import our OTU counts and OTU taxonomic annotations. We’ll combine all the info into a <code>phyloseq object</code>.</p>
-<div id="cell-9" class="cell" data-jupyter="{&quot;outputs_hidden&quot;:false}" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>R</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>read.qiime <span class="op">=</span> function(fn) {</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    read.table(fn, sep <span class="op">=</span> <span class="st">"</span><span class="ch">\t</span><span class="st">"</span>, comment <span class="op">=</span> <span class="st">""</span>, header <span class="op">=</span> TRUE, stringsAsFactors <span class="op">=</span> FALSE) <span class="op">%&gt;%</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    rename(SampleID <span class="op">=</span> X.SampleID) <span class="op">%&gt;%</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    {rownames(.) <span class="op">=</span> .$SampleID<span class="op">;</span> .} <span class="op">%&gt;%</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    data.frame <span class="op">%&gt;%</span> sample_data</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>physeq <span class="op">=</span> import_biom(<span class="st">"data/otu_table_wtax.biom"</span>)</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>sample_data(physeq) <span class="op">=</span> read.qiime(<span class="st">"data/sample_data_combined_qiime_format.tsv"</span>)</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>physeq</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<pre><code>phyloseq-class experiment-level object
-otu_table()   OTU Table:         [ 4340 taxa and 158 samples ]
-sample_data() Sample Data:       [ 158 samples by 46 sample variables ]
-tax_table()   Taxonomy Table:    [ 4340 taxa by 8 taxonomic ranks ]</code></pre>
-</div>
-</div>
-<p>Great! Now let’s <strong>melt</strong> all that information into an <strong>all-powerful, all-knowing, benevolent</strong> dataframe. (Evil laugh)</p>
-<div id="cell-11" class="cell" data-jupyter="{&quot;outputs_hidden&quot;:false}" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>R</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>mdf <span class="op">=</span> psmelt(physeq)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>mdf <span class="op">%&gt;%</span> select(OTU, SampleID, Abundance) <span class="op">%&gt;%</span> head</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<pre><code>              OTU  SampleID Abundance
-20025    OTU.1106 4502024.3      2233
-288    DQ531697.1    site16      2147
-19962    OTU.1106    site19      1505
-272    DQ531697.1    site15      1426
-310    DQ531697.1    site17      1278
-456836     OTU.36    site19      1268</code></pre>
-</div>
-</div>
-<p>To keep this post short, I won’t demonstrate where you can go from a melted <code>phyloseq object</code>. Suffice to say that you can go anywhere with your melted <code>phyloseq object</code>/dataframe. Think of it like a <a href="https://www.youtube.com/watch?v=qJJog4BJrUw">magic carpet</a>.</p>
-<p>With really big OTU tables, melting can take a long time…</p>
-<div id="cell-14" class="cell" data-jupyter="{&quot;outputs_hidden&quot;:false}" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>R</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>system.time(psmelt(physeq))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<pre><code>   user  system elapsed 
- 22.660   0.056  22.728 </code></pre>
-</div>
-</div>
-<p>It takes about 30-ish seconds with our example phyloseq object with the <code>psmelt</code> function. I wonder how fast <a href="https://github.com/hadley/dplyr">dplyr</a> + <a href="https://github.com/hadley/tidyr">tidyr</a> can melt our phyloseq object?</p>
-<p>Let’s re-create the <code>psmelt</code> function with <a href="https://github.com/hadley/dplyr">dplyr</a> + <a href="https://github.com/hadley/tidyr">tidyr</a>.</p>
-<p>We need to,</p>
-<ol type="1">
-<li>get our tables (sample data, OTU counts, taxonomy),</li>
-<li>combine our taxonomic info with our OTU counts,</li>
-<li>gather this combined table into a long form version, and</li>
-<li>add in the sample data.</li>
-</ol>
-<div id="cell-19" class="cell" data-jupyter="{&quot;outputs_hidden&quot;:false}" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>R</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>psmelt.dplyr <span class="op">=</span> function(physeq) {</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    sd <span class="op">=</span> data.frame(sample_data(physeq))</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    TT <span class="op">=</span> data.frame(tax_table(physeq)) <span class="op">%&gt;%</span> add_rownames(<span class="st">"OTU"</span>)</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    otu.table <span class="op">=</span> data.frame(otu_table(physeq), check.names <span class="op">=</span> FALSE) <span class="op">%&gt;%</span> add_rownames(<span class="st">"OTU"</span>)</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    otu.table <span class="op">%&gt;%</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>        left_join(TT) <span class="op">%&gt;%</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>        gather_(<span class="st">"SampleID"</span>, <span class="st">"Abundance"</span>, setdiff(colnames(otu.table), <span class="st">"OTU"</span>)) <span class="op">%&gt;%</span></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>        left_join(sd)</span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div id="cell-20" class="cell" data-jupyter="{&quot;outputs_hidden&quot;:false}" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>R</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>mdf.dplyr <span class="op">=</span> psmelt.dplyr(physeq)</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>mdf.dplyr <span class="op">%&gt;%</span> select(OTU, SampleID, Abundance) <span class="op">%&gt;%</span> head</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<pre><code>Joining by: "OTU"
-Joining by: "SampleID"
-       OTU SampleID Abundance
-1  OTU.758    G4F20         2
-2 OTU.2942    G4F20         0
-3  OTU.753    G4F20         0
-4  OTU.752    G4F20         0
-5  OTU.751    G4F20         0
-6  OTU.750    G4F20         0</code></pre>
-</div>
-</div>
-<p>…and let’s see how fast it is.</p>
-<div id="cell-22" class="cell" data-jupyter="{&quot;outputs_hidden&quot;:false}" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>R</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>system.time(psmelt.dplyr(physeq))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<pre><code>Joining by: "OTU"
-Joining by: "SampleID"
-   user  system elapsed 
-   1.04    0.00    1.04 </code></pre>
-</div>
-</div>
-<p><strong>Wow. Roughly an order of magnitude faster. dplyr and tidyr are so great. And look at that syntax!</strong></p>
-<p>I shold note that I’m using phyloseq version <strong>1.9.15</strong> in this demo.</p>
-<p>The <code>psmelt</code> function is so useful (and much more rigorous/fool-proof than our quick dplyr/tidyr version) but if you have a huge phyloseq object that takes forever to melt, try dplyr + tidyr.</p>
-<p>Let’s do one quick example from the melted <code>phyloseq object</code> to give you a taste of how useful it is. Let’s say we want to make phylum level stacked bar charts for all the studies in the example data. Here’s how you might do it from the melted <code>phyloseq object</code>.</p>
-<div id="cell-27" class="cell page-columns page-full" data-jupyter="{&quot;outputs_hidden&quot;:false}" data-tags="[&quot;fullwidth&quot;]" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>R <span class="op">-</span>w <span class="dv">1200</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>d <span class="op">=</span> mdf.dplyr <span class="op">%&gt;%</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    group_by(SampleID, Rank2) <span class="op">%&gt;%</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">filter</span>(Abundance <span class="op">&gt;</span> <span class="dv">0</span>) <span class="op">%&gt;%</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    summarize(rank2.abund <span class="op">=</span> <span class="bu">sum</span>(Abundance), study <span class="op">=</span> first(study)) <span class="op">%&gt;%</span></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    mutate(relative.abundance <span class="op">=</span> rank2.abund <span class="op">/</span> <span class="bu">sum</span>(rank2.abund))</span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> ggplot(d, aes(x <span class="op">=</span> SampleID, y <span class="op">=</span> relative.abundance, fill <span class="op">=</span> Rank2)) <span class="op">+</span></span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>    facet_grid(.<span class="op">~</span>study, drop <span class="op">=</span> TRUE, space <span class="op">=</span> <span class="st">"free"</span>, scales <span class="op">=</span> <span class="st">"free"</span>) <span class="op">+</span></span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>    geom_bar(stat <span class="op">=</span> <span class="st">"identity"</span>, width <span class="op">=</span> <span class="fl">0.85</span>) <span class="op">+</span> </span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>    theme_bw() <span class="op">+</span> theme(axis.text.x <span class="op">=</span> element_blank(), legend.position <span class="op">=</span> <span class="st">"none"</span>, strip.background <span class="op">=</span> element_blank())</span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>p</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display page-columns page-full">
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="index_files/figure-html/cell-10-output-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img column-screen-inset"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>Snap.</p>
-<div id="cell-29" class="cell" data-jupyter="{&quot;outputs_hidden&quot;:false}" data-execution_count="23">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>R</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>pckgs  <span class="op">=</span> lapply(names(sessionInfo()$otherPkgs), packageVersion)</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>names(pckgs) <span class="op">=</span> names(sessionInfo()$otherPkgs)</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>data.frame(pckgs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<pre><code>  ggplot2 magrittr tidyr dplyr phyloseq
-1   1.0.0      1.5 0.2.0 0.4.1   1.9.15</code></pre>
-</div>
-</div>
+<p>This <a href="https://fishshell.com/docs/current/cmds/function.html">fish shell</a> function gets the name of current <a href="https://github.com/tmux/tmux/wiki">tmux</a> sessions and pipes the session names into the <a href="https://github.com/junegunn/fzf">fzf</a> prompt. The user is attached to the the <code>tmux</code> session selected in <code>fzf</code>.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode fish code-with-copy"><code class="sourceCode fish"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="cf">function</span> <span class="fu">tma</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">set</span> <span class="va">sessions</span> <span class="sc">(</span><span class="fu">tmux</span> ls -F '<span class="st">#{session_name}'</span><span class="sc">)</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">set</span> <span class="va">session</span> <span class="sc">(</span><span class="bu">printf</span> <span class="sc">%</span><span class="im">s</span><span class="kw">\n</span><span class="im"> </span><span class="va">$sessions</span> <span class="kw">|</span> <span class="fu">fzf</span> --prompt<span class="op">=</span>"<span class="st"> Tmux session "</span> --height<span class="op">=</span>50% --layout<span class="op">=</span>reverse --border --exit-0<span class="sc">)</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">set</span> -q <span class="va">TMUX</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>        <span class="bu">set</span> <span class="va">tmux_cmd</span> switchc</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>        <span class="bu">echo</span> "<span class="st">In a tmux session: </span><span class="va">$TMUX</span><span class="st">"</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>        <span class="bu">set</span> <span class="va">tmux_cmd</span> attach</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>        <span class="bu">echo</span> "<span class="st">Not in a TMUX session"</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tmux</span> <span class="va">$tmux_cmd</span> -t <span class="va">$session</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<script src="https://asciinema.org/a/RK4tbBT0GJkYCKWbyiKI6cImw.js" id="asciicast-RK4tbBT0GJkYCKWbyiKI6cImw" async="true"></script>
 
 
 

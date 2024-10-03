@@ -21,53 +21,11 @@
     "text": "Microbial ecologists have long considered the 515F SSU rRNA gene PCR primer to be “universal.” That is, the 515F primer is thought to amplify Eukarya, Archaea, and Bacteria. Indeed the target of the 515F primer is well conserved across each domain, however, the there are some differences in the primer target between domains that should be considered when evaluating 515F for use in a microbial diversity studies.\nTo make matters more complicated the 515F primer has changed from its inception to account for new sequence information and it’s not clear from the literature which 515F version is most effective. In this post, we’ll take a look at tbe 515F primer target across a broad diversity of SSU rRNA genes. In subsequent posts we’ll evaluate different 515F versions and we’ll also evaluate reverse primers that can be paired with 515F. While there are excellent tools avaliable for SSU rRNA gene PCR primer analysis (see PrimerProspector, TestPrime), most tools focus on nucleotide frequecies in aligments. In this post, we’ll evaluate 515F by looking at the distribution of 515F target oligos.\nWe’ll use the 99% OTU seed sequences for the GreenGenes database as reference. You can download the GreenGenes files from here. This analysis will focus on Archaea and Bacteria.\nFirst we need to import some python functions and modules as well as load some extensions for the IPython notebook.\n\n%matplotlib inline\n%load_ext rpy2.ipython\nimport matplotlib.pyplot as plt\nimport re\nfrom align import aligner\nfrom skbio import DNA, parse_fasta, SequenceCollection\nimport pandas as pd\n\nEventually we’ll want to explore target sites by their taxonomic affiliation so we need to get the taxonomic information from the GreenGenes files we downloaded (above). The following code is a quick and dirty way to populate a pandas DataFrame with the taxonomic annotations for the gene sequences we’ll be working with.\n\ndef parse_tax(line):\n    id, tax_str = line.split(\"\\t\")\n    k, p, c, o, f, g, s = tax_str.rstrip().split(\";\")\n    tax_dict = {\"kingdom\" : k.split(\"__\")[1],\n                \"phylum\"  : p.split(\"__\")[1],\n                \"class\"   : c.split(\"__\")[1],\n                \"family\"  : f.split(\"__\")[1],\n                \"order\"   : o.split(\"__\")[1],\n                \"genus\"   : g.split(\"__\")[1],\n                \"species\" : s.split(\"__\")[1],\n                \"id\"      : id}\n    return tax_dict\n    \n\ndf = pd.DataFrame.from_records([parse_tax(line) for line in \n                                open(\"data/gg_13_5_otus/taxonomy/99_otu_taxonomy.txt\")])\n\ndf.set_index(\"id\", inplace=True)\n\nNow that we have the taxonomy for each sequence, let’s get the 515F target site. To do this we just align one combination of the degenerate 515F primer to each SSU rRNA gene sequence. We then pull out the aligned region from the SSU rRNA gene sequence – this is the 515F target! I’m using the glocal method for the Python aligner package for the alignment and I’m using scikit-bio to parse and manage the SSU rRNA gene sequenes.\n\nfn = \"data/gg_13_5_otus/rep_set/99_otus.fasta\"\ndegens = DNA.iupac_degenerate_characters()\nseqs = SequenceCollection.from_fasta_records([(n, s) for n, s in parse_fasta(fn) \n                                              if not any(i in s for i in degens)], \n                                             DNA)\n\nids = [seq[0] for seq in seqs.iteritems()]\n\n\n%%time\nF515 = DNA(\"GTGCCAGCCGCCGCGGTAA\") #GTGCCAGCMGCCGCGGTAA  M = [CA]\n\nprimer_targets_515 = [aligner(F515.sequence, \n                              seq[1].sequence,\n                              method = \"glocal\")[1] \n                      for seq in seqs.iteritems()]\n\nCPU times: user 20min 29s, sys: 112 ms, total: 20min 30s\nWall time: 20min 31s\n\n\nNow we can join our target and taxonomy information into a single DataFrame. Each row represents one target from one gene. Specifically, each row has the target sequence and corresponding taxonomic information.\n\ndf_targets = df.join(pd.Series(primer_targets_515, index=ids, name = \"515F\"), how = \"left\")\ndf_targets.dropna(axis=0, subset=[\"515F\"], inplace=True)\n\nI love pandas but I think for this application it will be best to use the (mind-blowingly amazing) R package dplyR. So, we need to push our pandas DataFrame into an R session. I’m using the rmagic functions from IPython/rpy2 to move from Python to R.\n\n%R -i df_targets\n\n\n%%R\nlibrary(dplyr)\nlibrary(ggplot2)\nlibrary(ggthemes)\nlibrary(magrittr)\n\nOk, now we can make some figures! Let’s first look at the ten most abundant archaeal and bacterial 515F targets. You can see below that the bacterial 515F targets are dominated by a single sequence, and, that although the nineteen targets are similar in sequence there is little overlap in target representation between Archaea and Bacteria.\n\n\nCode\n%%R -w 600\nd = df_targets %&gt;%\n    group_by(kingdom, X515F) %&gt;%\n    summarize(count = n()) %&gt;%\n    filter(rank(desc(count), ties.method = \"random\") &lt;= 10) %&gt;%\n    arrange(desc(count), kingdom) %&gt;%\n    mutate(X515F = factor(X515F, levels = unique(.$X515F)))\n\np = ggplot(d, aes(x = X515F, y = count))\n\np = p + facet_wrap(~kingdom, ncol = 1, scales = \"free_y\")\n\np = p + geom_bar(stat = \"identity\", fill = \"#14979B\")\n\np = p + labs(x = \"\")\n\np = p + scale_y_log10()\n\np = p + theme_bw()\n\np = p + theme(axis.text.x = element_text(angle = 60, hjust = 1, size = 12),\n              axis.text.y = element_text(size = 12),\n              axis.title = element_text(size = 16),\n              strip.background = element_blank(),\n              strip.text = element_text(size = 16))\n                                    \np\n\n\n\n\n\n\n\n\n\nIf we dig a little deeper into to archaeal 515F targets, we see some interesting trends among phyla. There are very few Nanoarchaea sequences in the reference database but they all have the same 515F target sequence which appears to be unique to Nanoarchaea. Also, there are a couple relatively abundant 515F target sequences with insertions. Eight of the ten most abundant archaeal 515F targets are identical over the last six nucleotides at the 3’ end of the 515F primer.\n\n\nCode\n%%R -h 550 -w 400\nd = df_targets %&gt;%\n    filter(kingdom == \"Archaea\", phylum != \"\") %&gt;%\n    {\n        top10 = group_by(., X515F) %&gt;%\n            summarize(count = n()) %&gt;%\n            filter(rank(desc(count), ties.method = \"random\") &lt;= 10) %&gt;%\n            extract2(\"X515F\") %&gt;% \n            unique %&gt;%\n            as.character\n        filter(., X515F %in% top10) \n    } %&gt;%\n    group_by(phylum, X515F) %&gt;%\n    summarize(count = n()) %&gt;%\n    {\n        psort = group_by(., X515F) %&gt;%\n            summarize(S = sum(count)) %&gt;%\n            arrange(desc(S)) %&gt;%\n            extract2(\"X515F\") %&gt;% as.character\n        mutate(., X515F = factor(X515F, levels = psort))\n    }\n\np = ggplot(d, aes(x = X515F, y = count))\n\np = p + facet_wrap(~phylum, ncol = 1, scales = \"free_y\")\n\np = p + geom_bar(stat = \"identity\", fill = \"#14979B\")\n\np = p + labs(x = \"\")\n\np = p + scale_y_log10()\n\np = p + theme_bw()\n\np = p + theme(axis.text.x = element_text(angle = 60, hjust = 1, size = 12),\n              axis.text.y = element_text(size = 12),\n              axis.title = element_text(size = 16),\n              strip.background = element_blank(),\n              strip.text = element_text(size = 16))\n\np\n\n\n\n\n\n\n\n\n\nThe Bacteria appear to be dominated by a single target sequence (above). Let’s get that sequence explicitly.\n\n%%R\nmax.target = df_targets %&gt;%\n    filter(kingdom == \"Bacteria\") %&gt;%\n    group_by(X515F) %&gt;%\n    summarize(count = n()) %&gt;%\n    arrange(desc(count)) %&gt;%\n    filter(rank(desc(count)) == 1) %&gt;%\n    extract2(\"X515F\") %&gt;% as.character\n\npaste(\"The most abundant target sequence among bacteria is\", max.target)\n# &lt;!-- collapse=True --&gt;\n\n[1] \"The most abundant target sequence among bacteria is GTGCCAGCAGCCGCGGTAA\"\n\n\nThere are some phyla, however, that are not as dominated by the most abundant bacterial 515F target. Here is a histogram of representation (percentages of total targets) within phylum for the most abundant bacterial 515F target. You can see that there are nine phyla for which the most abundant 515F bacterial target represents less than 80% of total targets.\n\n%%R -h 350\ndf_targets %&gt;%\n    filter(kingdom == \"Bacteria\", phylum != \"\" ) %&gt;%\n    group_by(phylum, X515F) %&gt;%\n    summarize(count = n()) %&gt;%\n    group_by(phylum) %&gt;%\n    mutate(count.relative = count / sum(count)) %&gt;%\n    filter(X515F == max.target) %&gt;%\n    extract2(\"count.relative\") %&gt;% hist(breaks = 50,\n                                        main = \"Histogram of most abundant target representation in phlya\")\n# &lt;!-- collapse=True --&gt;\n\n\n\n\n\n\n\n\nLet’s see what the 515F targets look like for those nine phyla (above). The plot below shows the five most abundant 515F targets ranked by max representation within a phylum for the nine selected phyla. You can see that FCPU426, WS5, and GN01 515F targets are still dominated by the most abundant 515F target across all bacteria (GTGCCAGCAGCCGCGGTAA). The TM7 phylum 515F targets differ from the most abundant target at the 3’ end of the 515F primer.\n\n\nCode\n%%R -w 600 -h 500\nd = df_targets %&gt;%\n    filter(kingdom == \"Bacteria\", phylum != \"\" ) %&gt;%\n    group_by(phylum, X515F) %&gt;%\n    summarize(count = n()) %&gt;%\n    group_by(phylum) %&gt;%\n    mutate(count.relative = count / sum(count)) %&gt;%\n    {\n        keep = filter(., X515F == max.target, count.relative &lt;= 0.80) %&gt;%\n            extract2(\"phylum\") %&gt;% \n            unique %&gt;%\n            as.character\n        filter(., phylum %in% keep)\n    } %&gt;%\n    {\n        top = group_by(., X515F) %&gt;%\n            summarize(m = max(count.relative)) %&gt;%\n            filter(rank(desc(m), ties.method = \"random\") &lt;= 5) %&gt;%\n            arrange(desc(m)) %&gt;%\n            extract2(\"X515F\") %&gt;% \n            unique %&gt;%\n            as.character\n        filter(., X515F %in% top) %&gt;% mutate(X515F = factor(X515F, levels = top))\n    }\n\np = ggplot(d, aes(x = X515F, y = count.relative))\n\np = p + facet_wrap(~phylum, ncol = 3, scales = \"free_y\")\n\np = p + geom_bar(stat = \"identity\", fill = \"#14979B\")\n\np = p + labs(x = \"\")\n\np = p + theme_bw()\n\np = p + theme(axis.text.x = element_text(angle = 65, hjust = 1, size = 12),\n              axis.text.y = element_text(size = 12),\n              axis.title = element_text(size = 16),\n              strip.background = element_blank(),\n              strip.text = element_text(size = 16))\n\np\n# &lt;!-- collapse=True --&gt;\n\n\n\n\n\n\n\n\n\nI would guess that these nine phyla are the most likely to be missed by commonly used variants of 515F primers.\nIn the next post we’ll test that hypothesis by evaluating how well the 515F primer matches the targets we’ve identified…"
   },
   {
-    "objectID": "til/pivot-longer-polars/index.html",
-    "href": "til/pivot-longer-polars/index.html",
-    "title": "Pivot longer-ing in Polars",
+    "objectID": "til/fish-func-to-select-tmux-sess/index.html",
+    "href": "til/fish-func-to-select-tmux-sess/index.html",
+    "title": "A Fish Shell function to select and enter tmux sessions",
     "section": "",
-    "text": "The Polars equivalent for pivot_longer from dplyR is melt.\n\ndplyrR example (R)\n\nsuppressPackageStartupMessages(\n  library('tidyverse')\n)\n\notter_data = read_csv(\n  'https://raw.githubusercontent.com/jcoliver/learn-r/gh-pages/data/otter-mandible-data.csv',\n  col_types = cols()\n)\n\notter_data |&gt;\n  pivot_longer(cols = matches('m\\\\d')) |&gt;\n  head() |&gt;\n  gt::gt()\n\n\n\n\n\n\n\nspecies\nmuseum\naccession\nname\nvalue\n\n\n\n\nA. cinerea\nAMNH\n101458\nm1\n15.100\n\n\nA. cinerea\nAMNH\n101458\nm2\n27.790\n\n\nA. cinerea\nAMNH\n101458\nm3\n21.885\n\n\nA. cinerea\nAMNH\n101458\nm4\n13.010\n\n\nA. cinerea\nAMNH\n101458\nm5\n10.500\n\n\nA. cinerea\nAMNH\n101458\nm6\n61.635\n\n\n\n\n\n\n\n\n\nPolars example (Python)\n\nimport polars as pl\nfrom great_tables import GT\n\n(\n  pl.read_csv(\n    'https://raw.githubusercontent.com/jcoliver/learn-r/gh-pages/data/otter-mandible-data.csv',\n    null_values='NA'\n  )\n  .melt(id_vars=['species', 'museum', 'accession'])\n  .head()\n  .pipe(lambda df_: GT(df_))\n)\n\n\n\n\n\n\n\nspecies\nmuseum\naccession\nvariable\nvalue\n\n\n\n\nA. cinerea\nAMNH\n101458\nm1\n15.1\n\n\nA. cinerea\nAMNH\n101461\nm1\n12.74\n\n\nA. cinerea\nAMNH\n101466\nm1\n12.425\n\n\nA. cinerea\nAMNH\n101635\nm1\n13.4\n\n\nA. cinerea\nAMNH\n101459\nm1\n14.4"
-  },
-  {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "chuckpr blog",
-    "section": "",
-    "text": "About this blog"
-  },
-  {
-    "objectID": "TODO.html",
-    "href": "TODO.html",
-    "title": "chuckpr blog",
-    "section": "",
-    "text": "add .envrc and activate blog environment\nadd old primers2 post\nremove placeholder posts\niconify\nfooter\nsocial links\n\ngithub\nlinkedin\n\nTIL on adding title/label to iconify icons\nadd melt old post\nfinish about page\nadd CV\nadd courses page"
-  },
-  {
-    "objectID": "posts/welcome/index.html",
-    "href": "posts/welcome/index.html",
-    "title": "Welcome To My Blog",
-    "section": "",
-    "text": "This is the first post in a Quarto blog. Welcome!\n\nSince this post doesn’t specify an explicit image, the first image in the post will be used in the listing page of posts."
-  },
-  {
-    "objectID": "posts/post-with-code/index.html",
-    "href": "posts/post-with-code/index.html",
-    "title": "Post With Code",
-    "section": "",
-    "text": "This is a post with executable code.\n\n\n\n\nprint(\"ONE\")\n\n[1] \"ONE\"\n\n\n\n\n\nprint(\"ONE\")\n\n[1] \"ONE\""
-  },
-  {
-    "objectID": "til.html",
-    "href": "til.html",
-    "title": "Today I learned…",
-    "section": "",
-    "text": "Today I learned…\nBelow are small posts to record the small things I learn .\n\n\n\n\n\n\n\n\n                                                                                                                            Sep 30, 2024 — Adding custom hover text to iconify icons \n\n\n                                                                                                                            Sep 26, 2024 — Pivot longer-ing in Polars \n\n\n\nNo matching items"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "chuckpr blog",
-    "section": "",
-    "text": "Warning\n\n\n\n This site is under construction. Some posts are just placeholders. \n\n\n\n\n\n\n\n\n\n                                                                                                                            Sep 20, 2024 — Post With Code \n\n\n                                                                                                                            Sep 17, 2024 — Welcome To My Blog \n\n\n\nNo matching items"
+    "text": "This fish shell function gets the name of current tmux sessions and pipes the session names into the fzf prompt. The user is attached to the the tmux session selected in fzf.\nfunction tma\n    set sessions (tmux ls -F '#{session_name}')\n    set session (printf %s\\n $sessions | fzf --prompt=\" Tmux session \" --height=50% --layout=reverse --border --exit-0)\n    if set -q TMUX\n        set tmux_cmd switchc\n        echo \"In a tmux session: $TMUX\"\n    else\n        set tmux_cmd attach\n        echo \"Not in a TMUX session\"\n    end\n    tmux $tmux_cmd -t $session\nend"
   },
   {
     "objectID": "til/iconify-titles/index.html",
@@ -77,11 +35,74 @@
     "text": "I like having icons instead of text in my blog’s navbar. I use the iconify extenion for icons but when I was first adding icons to my blog I noticed the hover text from my browser was not helpful.\n\n\n\nThe default hover text is just the full name/description of the image.\n\n\nUpon reading the iconify README, I learned I can control hover text with a title key. E.g.:\n# note the title key in the line below\n{{&lt; iconify ph:lightbulb-bold title=TIL label=TIL size=Large &gt;}}\nThe snippet above would create hover text like this .\n\n\n\nAfter setting the title key, the hover text is much more useful."
   },
   {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "chuckpr blog",
+    "section": "",
+    "text": "Warning\n\n\n\n This site is under construction. Some possts are just placeholders."
+  },
+  {
+    "objectID": "index.html#latest-in-today-i-learned..",
+    "href": "index.html#latest-in-today-i-learned..",
+    "title": "chuckpr blog",
+    "section": " Latest in Today I Learned..",
+    "text": "Latest in Today I Learned..\n\n\n\n  Oct 3, 2024 — A Fish Shell function to select and enter tmux sessions \n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "index.html#posts",
+    "href": "index.html#posts",
+    "title": "chuckpr blog",
+    "section": " Posts",
+    "text": "Posts\n\n\n\n  Sep 20, 2024 — Post With Code \n\n\n  Sep 17, 2024 — Welcome To My Blog \n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "til.html",
+    "href": "til.html",
+    "title": "Today I learned…",
+    "section": "",
+    "text": "Today I learned…\nBelow are small posts to record the small things I learn .\n\n\n\n\n\n\n\n\n  Oct 3, 2024 — A Fish Shell function to select and enter tmux sessions \n\n\n  Sep 30, 2024 — Adding custom hover text to iconify icons \n\n\n  Sep 26, 2024 — Pivot longer-ing in Polars \n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "posts/post-with-code/index.html",
+    "href": "posts/post-with-code/index.html",
+    "title": "Post With Code",
+    "section": "",
+    "text": "This is a post with executable code.\n\n\n\n\nprint(\"ONE\")\n\n[1] \"ONE\"\n\n\n\n\n\nprint(\"ONE\")\n\n[1] \"ONE\""
+  },
+  {
+    "objectID": "posts/welcome/index.html",
+    "href": "posts/welcome/index.html",
+    "title": "Welcome To My Blog",
+    "section": "",
+    "text": "This is the first post in a Quarto blog. Welcome!\n\nSince this post doesn’t specify an explicit image, the first image in the post will be used in the listing page of posts."
+  },
+  {
+    "objectID": "TODO.html",
+    "href": "TODO.html",
+    "title": "chuckpr blog",
+    "section": "",
+    "text": "add .envrc and activate blog environment\nadd old primers2 post\nremove placeholder posts\niconify\nfooter\nsocial links\n\ngithub\nlinkedin\n\nTIL on adding title/label to iconify icons\nadd melt old post\nfinish about page\nadd CV\nadd courses page\nfish function to select from running terminal sessions"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "chuckpr blog",
+    "section": "",
+    "text": "About this blog"
+  },
+  {
+    "objectID": "til/pivot-longer-polars/index.html",
+    "href": "til/pivot-longer-polars/index.html",
+    "title": "Pivot longer-ing in Polars",
+    "section": "",
+    "text": "The Polars equivalent for pivot_longer from dplyR is melt.\n\ndplyrR example (R)\n\nsuppressPackageStartupMessages(\n  library('tidyverse')\n)\n\notter_data = read_csv(\n  'https://raw.githubusercontent.com/jcoliver/learn-r/gh-pages/data/otter-mandible-data.csv',\n  col_types = cols()\n)\n\notter_data |&gt;\n  pivot_longer(cols = matches('m\\\\d')) |&gt;\n  head() |&gt;\n  gt::gt()\n\n\n\n\n\n\n\nspecies\nmuseum\naccession\nname\nvalue\n\n\n\n\nA. cinerea\nAMNH\n101458\nm1\n15.100\n\n\nA. cinerea\nAMNH\n101458\nm2\n27.790\n\n\nA. cinerea\nAMNH\n101458\nm3\n21.885\n\n\nA. cinerea\nAMNH\n101458\nm4\n13.010\n\n\nA. cinerea\nAMNH\n101458\nm5\n10.500\n\n\nA. cinerea\nAMNH\n101458\nm6\n61.635\n\n\n\n\n\n\n\n\n\nPolars example (Python)\n\nimport polars as pl\nfrom great_tables import GT\n\n(\n  pl.read_csv(\n    'https://raw.githubusercontent.com/jcoliver/learn-r/gh-pages/data/otter-mandible-data.csv',\n    null_values='NA'\n  )\n  .melt(id_vars=['species', 'museum', 'accession'])\n  .head()\n  .pipe(lambda df_: GT(df_))\n)\n\n\n\n\n\n\n\nspecies\nmuseum\naccession\nvariable\nvalue\n\n\n\n\nA. cinerea\nAMNH\n101458\nm1\n15.1\n\n\nA. cinerea\nAMNH\n101461\nm1\n12.74\n\n\nA. cinerea\nAMNH\n101466\nm1\n12.425\n\n\nA. cinerea\nAMNH\n101635\nm1\n13.4\n\n\nA. cinerea\nAMNH\n101459\nm1\n14.4"
+  },
+  {
     "objectID": "old-posts.html",
     "href": "old-posts.html",
     "title": "Archived posts",
     "section": "",
-    "text": "Archived posts\n\n\n\n\n\n\nNote\n\n\n\n↓ These are posts from a previous iteration of this blog.\n\n\n\n\n\n\n\n\n\n\n                                                                                                                            Aug 12, 2015 — Making trees in the Jupyter notebook (part 2 - Bokeh) \n\n\n                                                                                                                            Aug 7, 2015 — Making trees in the Jupyter notebook (part 1 - IToL) \n\n\n                                                                                                                            Apr 20, 2015 — Melting your phyloseq object with dplyr/tidyr \n\n\n                                                                                                                            Apr 17, 2015 — Evaluating 515F primers \n\n\n                                                                                                                            Apr 14, 2015 — Exploring 515F primer targets in archaeal and bacterial SSU rRNA genes \n\n\n\nNo matching items"
+    "text": "Archived posts\n\n\n\n\n\n\nNote\n\n\n\n↓ These are posts from a previous iteration of this blog.\n\n\n\n\n\n\n\n\n\n\n  Aug 12, 2015 — Making trees in the Jupyter notebook (part 2 - Bokeh) \n\n\n  Aug 7, 2015 — Making trees in the Jupyter notebook (part 1 - IToL) \n\n\n  Apr 20, 2015 — Melting your phyloseq object with dplyr/tidyr \n\n\n  Apr 17, 2015 — Evaluating 515F primers \n\n\n  Apr 14, 2015 — Exploring 515F primer targets in archaeal and bacterial SSU rRNA genes \n\n\n\nNo matching items"
   },
   {
     "objectID": "old-posts/trees2/index.html",
