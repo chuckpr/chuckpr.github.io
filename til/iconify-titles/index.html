@@ -77,6 +77,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script src="../../site_libs/quarto-contrib/iconify-2.1.0/iconify-icon.min.js"></script>
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -204,7 +207,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>I like having icons instead of text in my blog’s navbar. I use the <a href="https://github.com/mcanouil/quarto-iconify">iconify extenion</a> for icons but when I was first adding icons to my blog I noticed the <strong>hover text</strong> from my browser was not helpful.</p>
 <div class="quarto-figure quarto-figure-center page-columns page-full">
 <figure class="figure page-columns page-full">
-<p><img src="./img/before.png" class="img-fluid figure-img" width="450"></p>
+<p><a href="./img/before.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="The default hover text is just the full name/description of the image."><img src="./img/before.png" class="img-fluid figure-img" width="450" alt="The default hover text is just the full name/description of the image."></a></p>
 <figcaption class="margin-caption">The default hover text is just the full name/description of the image.</figcaption>
 </figure>
 </div>
@@ -214,7 +217,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>The snippet above would create hover text like this <iconify-icon role="img" inline="" icon="ph:arrow-fat-down-fill" aria-label="Icon arrow-fat-down-fill from ph Iconify.design set." title="Icon arrow-fat-down-fill from ph Iconify.design set."></iconify-icon>.</p>
 <div class="quarto-figure quarto-figure-center page-columns page-full">
 <figure class="figure page-columns page-full">
-<p><img src="./img/after.png" class="img-fluid figure-img" width="450"></p>
+<p><a href="./img/after.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="After setting the title key, the hover text is much more useful."><img src="./img/after.png" class="img-fluid figure-img" width="450" alt="After setting the title key, the hover text is much more useful."></a></p>
 <figcaption class="margin-caption">After setting the <code>title</code> key, the hover text is much more useful.</figcaption>
 </figure>
 </div>
@@ -656,6 +659,38 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>
   </div>
 </footer>
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","loop":false,"selector":".lightbox","descPosition":"bottom","openEffect":"zoom"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
 
 
 
