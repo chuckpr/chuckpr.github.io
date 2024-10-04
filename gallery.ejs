@@ -1,10 +1,17 @@
+```{=html}
 <ul class="list list-group list-group-flush">
 <% for (const item of items) { %>
-  <li <%= metadataAttrs(item) %> class="list-group-item">
-    <a class="listing-link" href="<%- item.path %>">
-      <iconify-icon icon="fluent-emoji:link"></iconify-icon>
-      <%- item.date %> &#8212; <%= item.title %>
-    </a>
+  <li <%= metadataAttrs(item) %> class="list-group-item d-md-flex justify-content-between">
+    <div>
+      <a class="listing-link" href="<%- item.path %>">
+        <iconify-icon icon="fluent-emoji:link"></iconify-icon>
+        <%= item.title %><span> </span>
+      </a>
+    </div>
+    <div>
+      <p class="listing-date text-nowrap text-end"><%- item.date %></p>
+    </div>
   </li>
 <% } %>
 </ul>
+```

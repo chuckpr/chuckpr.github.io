@@ -76,6 +76,12 @@ $h6-font-size:                $font-size-base;
   transform: scaleX(1);
 }
 
+.listing-date {
+  font-family: "Fira Sans", monospace;
+  color: $dim-gray;
+  font-size: $font-size-base * 0.85;
+}
+
 nav .nav-link {
   color: $indigo-dye;
 }
