@@ -28,6 +28,8 @@ possts are just placeholders. {{< iconify fluent-emoji:construction >}}
 :::
 
 ## {{< iconify fluent-emoji:new-button title=new label=new >}} Latest TIL...
+For all TIL posts go [here](./til.qmd).
+
 :::{#til}
 :::
 
