@@ -30,6 +30,9 @@ website:
         href: https://www.linkedin.com/in/chuckpr/
 format:
   html:
+    link-external-icon: true
+    link-external-newwindow: true
+    mainfont: "Fira Sans"
     lightbox:
       match: auto
       effect: zoom
