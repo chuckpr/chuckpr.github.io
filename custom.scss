@@ -25,6 +25,16 @@ $h6-font-size:                $font-size-base;
 
 /*-- scss:rules --*/
 
+#latest-til > p > a:hover,
+#quarto-document-content > p > a:hover,
+#quarto-document-content > ol > li > a:hover,
+.listing-link:hover {
+  color: color.scale($blue-green, $lightness: -25%);
+}
+
+#latest-til > p > a,
+#quarto-document-content > p > a,
+#quarto-document-content > ol > li > a,
 .listing-link {
 	position: relative;
 	text-decoration: none;
@@ -32,10 +42,9 @@ $h6-font-size:                $font-size-base;
   color: $blue-green;
 }
 
-.listing-link:hover {
-  color: color.scale($blue-green, $lightness: -25%);
-}
-
+#latest-til > p > a::before,
+#quarto-document-content > p > a::before,
+#quarto-document-content > ol > li > a::before,
 .listing-link::before {
   content: '';
   position: absolute;
@@ -50,6 +59,9 @@ $h6-font-size:                $font-size-base;
   transition: transform .3s ease-in-out;
 }
 
+#latest-til > p > a:hover::before,
+#quarto-document-content > p > a:hover::before,
+#quarto-document-content > ol > li > a:hover::before,
 .listing-link:hover::before {
   transform-origin: left;
   transform: scaleX(1);
