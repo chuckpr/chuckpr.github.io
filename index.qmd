@@ -24,7 +24,7 @@ title-block-banner: true
 
 :::{.callout-warning}
 {{< iconify fluent-emoji:construction >}} This site is under construction. Some
-possts are just placeholders. {{< iconify fluent-emoji:construction >}}
+posts are just placeholders. {{< iconify fluent-emoji:construction >}}
 :::
 
 ## {{< iconify fluent-emoji:new-button title=new label=new >}} Latest TIL...
