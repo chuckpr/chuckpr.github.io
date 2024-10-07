@@ -15,7 +15,7 @@ website:
     right: This website is built with [{{< iconify ph:github-logo-fill title=GitHub label=GitHub >}}](https://github.com/chuckpr/chuckpr.github.io){target=_blank} and [{{< iconify simple-icons:quarto title=Quarto label=Quarto >}}](https://quarto.org/){target=_blank}
   navbar:
     right:
-      - text: "{{< iconify ph:list-bullets-bold title=blog label=label size=Large >}}"
+      - text: "{{< iconify ph:house-bold title=home label=home size=Large >}}"
         href: index.qmd
       - text: "{{< iconify ph:lightbulb-bold title=TIL label=TIL size=Large >}}"
         href: til.qmd
