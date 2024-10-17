@@ -28,11 +28,46 @@
     "text": "This fish shell function gets the name of current tmux sessions and pipes the session names into the fzf prompt. The user is attached to the the tmux session selected in fzf.\nfunction tma\n    set sessions (tmux ls -F '#{session_name}')\n    set session (printf %s\\n $sessions | fzf --prompt=\" Tmux session \" --height=50% --layout=reverse --border --exit-0)\n    if set -q TMUX\n        set tmux_cmd switchc\n        echo \"In a tmux session: $TMUX\"\n    else\n        set tmux_cmd attach\n        echo \"Not in a TMUX session\"\n    end\n    tmux $tmux_cmd -t $session\nend"
   },
   {
-    "objectID": "til/iconify-titles/index.html",
-    "href": "til/iconify-titles/index.html",
-    "title": "Adding custom hover text to iconify icons",
+    "objectID": "til/cume-dist-function-dplyr/index.html",
+    "href": "til/cume-dist-function-dplyr/index.html",
+    "title": "dplyR has as cume_dist function",
     "section": "",
-    "text": "I like having icons instead of text in my blog’s navbar. I use the iconify extenion for icons but when I was first adding icons to my blog I noticed the hover text from my browser was not helpful.\n\n\n\nThe default hover text is just the full name/description of the image.\n\n\nUpon reading the iconify README, I learned I can control hover text with a title key. E.g.:\n# note the title key in the line below\n{{&lt; iconify ph:lightbulb-bold title=TIL label=TIL size=Large &gt;}}\nThe snippet above would create hover text like this .\n\n\n\nAfter setting the title key, the hover text is much more useful."
+    "text": "Useful for making ECDF charts in combination with geom_step.\n\nsuppressPackageStartupMessages(\n  library('tidyverse')\n)\nlibrary('palmerpenguins')\n\npenguins |&gt;\n  group_by(species) |&gt;\n  mutate(cumedist = cume_dist(body_mass_g)) |&gt;\nggplot(aes(x = body_mass_g, y = cumedist, color = species)) +\n  geom_step(direction = 'vh') +\n  scale_color_brewer(palette = 'Set2') +\n  theme_minimal(base_size = 16)"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "chuckpr blog",
+    "section": "",
+    "text": "About this blog"
+  },
+  {
+    "objectID": "TODO.html",
+    "href": "TODO.html",
+    "title": "chuckpr blog",
+    "section": "",
+    "text": "add .envrc and activate blog environment\nadd old primers2 post\nremove placeholder posts\niconify\nfooter\nsocial links\n\ngithub\nlinkedin\n\nTIL on adding title/label to iconify icons\nadd melt old post\nfinish about page\nadd CV\nadd courses page\nfish function to select from running terminal sessions\ncume_dist function"
+  },
+  {
+    "objectID": "posts/welcome/index.html",
+    "href": "posts/welcome/index.html",
+    "title": "Welcome To My Blog",
+    "section": "",
+    "text": "This is the first post in a Quarto blog. Welcome!\n\nSince this post doesn’t specify an explicit image, the first image in the post will be used in the listing page of posts."
+  },
+  {
+    "objectID": "posts/post-with-code/index.html",
+    "href": "posts/post-with-code/index.html",
+    "title": "Post With Code",
+    "section": "",
+    "text": "This is a post with executable code.\n\n\n\n\nprint(\"ONE\")\n\n[1] \"ONE\"\n\n\n\n\n\nprint(\"ONE\")\n\n[1] \"ONE\""
+  },
+  {
+    "objectID": "til.html",
+    "href": "til.html",
+    "title": "Today I learned…",
+    "section": "",
+    "text": "Today I learned…\nBelow are small posts to record the small things I learn .\n\n\n\n\n\n\n\n\n  \n    \n      Oct 17, 2024\n    \n    \n      \n        \n        dplyR has as cume_dist function \n      \n    \n  \n\n  \n    \n      Oct 3, 2024\n    \n    \n      \n        \n        A Fish Shell function to select and enter tmux sessions \n      \n    \n  \n\n  \n    \n      Sep 30, 2024\n    \n    \n      \n        \n        Adding custom hover text to iconify icons \n      \n    \n  \n\n  \n    \n      Sep 26, 2024\n    \n    \n      \n        \n        Pivot longer-ing in Polars \n      \n    \n  \n\n\n\nNo matching items"
   },
   {
     "objectID": "index.html",
@@ -46,7 +81,7 @@
     "href": "index.html#latest-til",
     "title": "chuckpr blog",
     "section": " Latest TIL…",
-    "text": "Latest TIL…\nFor all TIL posts go here.\n\n\n\n  \n    \n      Oct 3, 2024\n    \n    \n      \n        \n        A Fish Shell function to select and enter tmux sessions \n      \n    \n  \n\n\n\nNo matching items"
+    "text": "Latest TIL…\nFor all TIL posts go here.\n\n\n\n  \n    \n      Oct 17, 2024\n    \n    \n      \n        \n        dplyR has as cume_dist function \n      \n    \n  \n\n\n\nNo matching items"
   },
   {
     "objectID": "index.html#posts",
@@ -56,39 +91,11 @@
     "text": "Posts\n\n\n\n  \n    \n      Sep 20, 2024\n    \n    \n      \n        \n        Post With Code \n      \n    \n  \n\n  \n    \n      Sep 17, 2024\n    \n    \n      \n        \n        Welcome To My Blog \n      \n    \n  \n\n\n\nNo matching items"
   },
   {
-    "objectID": "til.html",
-    "href": "til.html",
-    "title": "Today I learned…",
+    "objectID": "til/iconify-titles/index.html",
+    "href": "til/iconify-titles/index.html",
+    "title": "Adding custom hover text to iconify icons",
     "section": "",
-    "text": "Today I learned…\nBelow are small posts to record the small things I learn .\n\n\n\n\n\n\n\n\n  \n    \n      Oct 3, 2024\n    \n    \n      \n        \n        A Fish Shell function to select and enter tmux sessions \n      \n    \n  \n\n  \n    \n      Sep 30, 2024\n    \n    \n      \n        \n        Adding custom hover text to iconify icons \n      \n    \n  \n\n  \n    \n      Sep 26, 2024\n    \n    \n      \n        \n        Pivot longer-ing in Polars \n      \n    \n  \n\n\n\nNo matching items"
-  },
-  {
-    "objectID": "posts/post-with-code/index.html",
-    "href": "posts/post-with-code/index.html",
-    "title": "Post With Code",
-    "section": "",
-    "text": "This is a post with executable code.\n\n\n\n\nprint(\"ONE\")\n\n[1] \"ONE\"\n\n\n\n\n\nprint(\"ONE\")\n\n[1] \"ONE\""
-  },
-  {
-    "objectID": "posts/welcome/index.html",
-    "href": "posts/welcome/index.html",
-    "title": "Welcome To My Blog",
-    "section": "",
-    "text": "This is the first post in a Quarto blog. Welcome!\n\nSince this post doesn’t specify an explicit image, the first image in the post will be used in the listing page of posts."
-  },
-  {
-    "objectID": "TODO.html",
-    "href": "TODO.html",
-    "title": "chuckpr blog",
-    "section": "",
-    "text": "add .envrc and activate blog environment\nadd old primers2 post\nremove placeholder posts\niconify\nfooter\nsocial links\n\ngithub\nlinkedin\n\nTIL on adding title/label to iconify icons\nadd melt old post\nfinish about page\nadd CV\nadd courses page\nfish function to select from running terminal sessions"
-  },
-  {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "chuckpr blog",
-    "section": "",
-    "text": "About this blog"
+    "text": "I like having icons instead of text in my blog’s navbar. I use the iconify extenion for icons but when I was first adding icons to my blog I noticed the hover text from my browser was not helpful.\n\n\n\nThe default hover text is just the full name/description of the image.\n\n\nUpon reading the iconify README, I learned I can control hover text with a title key. E.g.:\n# note the title key in the line below\n{{&lt; iconify ph:lightbulb-bold title=TIL label=TIL size=Large &gt;}}\nThe snippet above would create hover text like this .\n\n\n\nAfter setting the title key, the hover text is much more useful."
   },
   {
     "objectID": "til/pivot-longer-polars/index.html",
