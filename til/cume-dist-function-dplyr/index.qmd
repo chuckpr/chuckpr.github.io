@@ -1,0 +1,23 @@
+---
+author: ChuckPR
+title: dplyR has as <code>cume_dist</code> function
+date: 2024-10-17
+---
+
+Useful for making [ECDF charts](https://ericmjl.github.io/blog/2018/7/14/ecdfs/) in combination with `geom_step`.
+
+```{r}
+#| fig-align: "center"
+suppressPackageStartupMessages(
+  library('tidyverse')
+)
+library('palmerpenguins')
+
+penguins |>
+  group_by(species) |>
+  mutate(cumedist = cume_dist(body_mass_g)) |>
+ggplot(aes(x = body_mass_g, y = cumedist, color = species)) +
+  geom_step(direction = 'vh') +
+  scale_color_brewer(palette = 'Set2') +
+  theme_minimal(base_size = 16)
+```
