@@ -2,7 +2,7 @@
 author: ChuckPR
 title: dplyR has as <code>cume_dist</code> function
 date: 2024-10-17
-categories [tidyverse, dplyr]
+categories: ["tidyverse", "dplyr"]
 ---
 
 Useful for making [ECDF charts](https://ericmjl.github.io/blog/2018/7/14/ecdfs/) in combination with `geom_step`.
