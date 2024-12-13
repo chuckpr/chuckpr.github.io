@@ -1,0 +1,15 @@
+[project]
+authors = ["Chuck Pepe-Ranney <chuck.peperanney@gmail.com>"]
+channels = ["conda-forge"]
+description = "Add a short description here"
+name = "{{ cookiecutter.title }}"
+platforms = ["osx-64"]
+version = "0.1.0"
+
+[tasks]
+
+[dependencies]
+jupyterlab = ">=4.3.3,<5"
+
+[pypi-dependencies]
+jupyterlab-quarto = "*"
