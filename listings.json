@@ -2,6 +2,7 @@
   {
     "listing": "/til.html",
     "items": [
+      "/til/zorder-encoding-altair/index.html",
       "/til/cume-dist-function-dplyr/index.html",
       "/til/fish-func-to-select-tmux-sess/index.html",
       "/til/iconify-titles/index.html",
@@ -13,6 +14,7 @@
     "items": [
       "/posts/post-with-code/index.html",
       "/posts/welcome/index.html",
+      "/til/zorder-encoding-altair/index.html",
       "/til/cume-dist-function-dplyr/index.html",
       "/til/fish-func-to-select-tmux-sess/index.html",
       "/til/iconify-titles/index.html",
