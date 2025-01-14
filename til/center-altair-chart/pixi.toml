@@ -1,0 +1,21 @@
+[project]
+authors = ["Chuck Pepe-Ranney <chuck.peperanney@gmail.com>"]
+channels = ["conda-forge"]
+description = "Add a short description here"
+name = "center-altair-chart"
+platforms = ["osx-64"]
+version = "0.1.0"
+
+[tasks]
+
+[dependencies]
+jupyterlab = ">=4.3.3,<5"
+altair = ">=5.5.0,<6"
+pandas = ">=2.2.3,<3"
+vega_datasets = ">=0.9.0,<0.10"
+black = ">=24.10.0,<25"
+isort = ">=5.13.2,<6"
+
+[pypi-dependencies]
+jupyterlab-quarto = "*"
+jupyterlab-code-formatter = "*"
