@@ -11,5 +11,4 @@ about:
       href: https://github.com/chuckpr/
 
 ---
-
 About this blog
