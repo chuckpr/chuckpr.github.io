@@ -1,0 +1,17 @@
+{
+  "hash": "e7615e48b0fb0ffb58c1e244f99ca8e9",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\nauthor: ChuckPR\ntitle: dplyR has as <code>cume_dist</code> function\ndate: 2024-10-17\ncategories: [\"tidyverse\", \"dplyr\"]\n---\n\n\n\nUseful for making [ECDF charts](https://ericmjl.github.io/blog/2018/7/14/ecdfs/) in combination with `geom_step`.\n\n\n\n::: {.cell layout-align=\"center\"}\n\n```{.r .cell-code}\nsuppressPackageStartupMessages(\n  library('tidyverse')\n)\nlibrary('palmerpenguins')\n\npenguins |>\n  group_by(species) |>\n  mutate(cumedist = cume_dist(body_mass_g)) |>\nggplot(aes(x = body_mass_g, y = cumedist, color = species)) +\n  geom_step(direction = 'vh') +\n  scale_color_brewer(palette = 'Set2') +\n  theme_minimal(base_size = 16)\n```\n\n::: {.cell-output-display}\n![](index_files/figure-html/unnamed-chunk-1-1.png){fig-align='center' width=672}\n:::\n:::\n",
+    "supporting": [
+      "index_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
