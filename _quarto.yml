@@ -1,5 +1,9 @@
 project:
   type: website
+  render:
+    - "*.qmd"
+    - "*.ipynb"
+    - "!til-template/"
 
 execute:
   freeze: auto
@@ -42,5 +46,3 @@ format:
     theme:
       - cosmo
       - custom.scss
-exclude:
-  - "til-template/"
