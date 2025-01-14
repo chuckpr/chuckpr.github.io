@@ -1,27 +1,5 @@
 [
   {
-    "listing": "/til.html",
-    "items": [
-      "/til/zorder-encoding-altair/index.html",
-      "/til/cume-dist-function-dplyr/index.html",
-      "/til/fish-func-to-select-tmux-sess/index.html",
-      "/til/iconify-titles/index.html",
-      "/til/pivot-longer-polars/index.html"
-    ]
-  },
-  {
-    "listing": "/index.html",
-    "items": [
-      "/posts/post-with-code/index.html",
-      "/posts/welcome/index.html",
-      "/til/zorder-encoding-altair/index.html",
-      "/til/cume-dist-function-dplyr/index.html",
-      "/til/fish-func-to-select-tmux-sess/index.html",
-      "/til/iconify-titles/index.html",
-      "/til/pivot-longer-polars/index.html"
-    ]
-  },
-  {
     "listing": "/old-posts.html",
     "items": [
       "/old-posts/trees2/index.html",
@@ -29,6 +7,30 @@
       "/old-posts/melt/index.html",
       "/old-posts/primers2/index.html",
       "/old-posts/primers1/index.html"
+    ]
+  },
+  {
+    "listing": "/index.html",
+    "items": [
+      "/posts/post-with-code/index.html",
+      "/posts/welcome/index.html",
+      "/til/center-altair-chart/index.html",
+      "/til/zorder-encoding-altair/index.html",
+      "/til/cume-dist-function-dplyr/index.html",
+      "/til/fish-func-to-select-tmux-sess/index.html",
+      "/til/iconify-titles/index.html",
+      "/til/pivot-longer-polars/index.html"
+    ]
+  },
+  {
+    "listing": "/til.html",
+    "items": [
+      "/til/center-altair-chart/index.html",
+      "/til/zorder-encoding-altair/index.html",
+      "/til/cume-dist-function-dplyr/index.html",
+      "/til/fish-func-to-select-tmux-sess/index.html",
+      "/til/iconify-titles/index.html",
+      "/til/pivot-longer-polars/index.html"
     ]
   }
 ]
