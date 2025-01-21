@@ -10,6 +10,9 @@ version = "0.1.0"
 
 [dependencies]
 jupyterlab = ">=4.3.3,<5"
+pre_commit = "*"
+ruff = "*"
+isort = "*"
 
 [pypi-dependencies]
 jupyterlab-quarto = "*"
