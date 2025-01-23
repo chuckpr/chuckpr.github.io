@@ -1,0 +1,22 @@
+[project]
+authors = ["Chuck Pepe-Ranney <chuck.peperanney@gmail.com>"]
+channels = ["conda-forge"]
+description = "Add a short description here"
+name = "dynamic-md"
+platforms = ["osx-64"]
+version = "0.1.0"
+
+[tasks]
+jl = "jupyter lab --no-browser --ip '*'"
+
+[dependencies]
+jupyterlab = "==4.0.2"
+pre_commit = "*"
+ruff = "*"
+isort = "*"
+jupyterlab-myst = "2.0.1"
+numpy = ">=2.2.2,<3"
+pip = ">=24.3.1,<25"
+
+[pypi-dependencies]
+jupyterlab-quarto = "*"
