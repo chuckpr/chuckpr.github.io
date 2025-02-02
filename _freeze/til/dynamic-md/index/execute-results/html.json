@@ -1,0 +1,12 @@
+{
+  "hash": "5f938ba0671caa144d593f5c6935cd59",
+  "result": {
+    "engine": "jupyter",
+    "markdown": "---\nauthor: ChuckPR\ntitle: Dynamic markdown content in Jupyter Lab\ndate: 2025-01-23\ncategories: [\"markdown\", \"jupyter\"]\nexecute:\n  enabled: true\n---\n\n::: {#8e2bebcd-b9d0-425b-8102-612d73c545fc .cell execution_count=1}\n``` {.python .cell-code}\nfrom random import randint\n\nfrom IPython.display import Markdown\n```\n:::\n\n\nSometimes I want to put the value of a variable into a markdown cell. I know of three ways to inject variable values in Jupyter Lab markdown:\n\n1. Using the [IPython `Markdown` display object](https://ipython.readthedocs.io/en/8.26.0/api/generated/IPython.display.html#IPython.display.Markdown) and [f-strings](https://docs.python.org/3/tutorial/inputoutput.html#formatted-string-literals). [⬇️](#sec-ipythondisplay)\n2. If rendering a notebook with Quarto, you can use the Quarto [inline code](https://quarto.org/docs/computations/inline-code.html) syntax. [⬇️](#sec-quartoinline)\n3. Using the `jupyterlab-myst` plugin/syntax. (Not included below, see [docs](https://mystmd.org/guide/quickstart-jupyter-lab-myst))\n\n## IPython display Markdown object {#sec-ipythondisplay}\n\n::: {#503187b4-8751-4207-bb9e-b6923d57eeaa .cell execution_count=2}\n``` {.python .cell-code}\ndynamic_content = randint(0, 100)\n\nMarkdown(f\"\"\"This is the dynamic content in bold: **{dynamic_content=}**\n\"\"\")\n```\n\n::: {.cell-output .cell-output-display .cell-output-markdown execution_count=2}\nThis is the dynamic content in bold: **dynamic_content=93**\n\n:::\n:::\n\n\nYou could hide the code from a document rendered by Quarto with by adding an `#| echo: false` comment to the code cell.\n\n## Quarto inline code syntax {#sec-quartoinline}\n\n::: {.callout-important}\nYou must turn on notebook execution when rendering with quarto for the following to work. \n\nE.g. you can add, \n``` markdown\nexecute: \n    enabled: true \n```\nto your notebook front matter.\n:::\n\nThe Quarto syntax for injecting the value of a variable into markdown content looks like this:\n\n\n``` markdown\nThis is the dynamic content in bold `{python} f'{dynamic_content=}'\n```\n\nAnd here ⬇️ is what the output looks like when I actually use that syntax in a markdown cell.\n\n> This is the dynamic content in bold **dynamic\\_content=93**\n\n",
+    "supporting": [
+      "index_files"
+    ],
+    "filters": [],
+    "includes": {}
+  }
+}
