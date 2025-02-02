@@ -16,7 +16,7 @@ listing:
     categories: false
     sort-ui: false
     filter-ui: false
-    max-items: 1
+    max-items: 3
 toc: true
 page-layout: full
 title-block-banner: true
@@ -27,7 +27,7 @@ title-block-banner: true
 posts are just placeholders. {{< iconify fluent-emoji:construction >}}
 :::
 
-## {{< iconify fluent-emoji:new-button title=new label=new >}} Latest TIL...
+## {{< iconify fluent-emoji:new-button title=new label=new >}} Latest TIL posts...
 For all TIL posts go [here](./til.qmd).
 
 :::{#til}
