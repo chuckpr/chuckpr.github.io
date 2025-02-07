@@ -105,20 +105,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
-<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-931SNQ4H6D"></script>
-
-<script type="text/javascript">
-
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
- 
-  gtag('consent', 'default', {
-    'ad_storage': 'denied',
-    'analytics_storage': 'denied'
-  });
-gtag('config', 'G-931SNQ4H6D', { 'anonymize_ip': true});
-</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
 
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
@@ -217,7 +203,7 @@ gtag('config', 'G-931SNQ4H6D', { 'anonymize_ip': true});
 </header>
 
 
-<p>This post will work with the tree and information we produced in the <a href="../../old-posts/trees1/index.html">last post</a>. This time we’ll use a Python plotting library called <a href="http://bokeh.pydata.org/en/latest/">Bokeh</a> to visualize the tree.</p>
+<script async="" src="https://scripts.simpleanalyticscdn.com/latest.js"></script><p>This post will work with the tree and information we produced in the <a href="../../old-posts/trees1/index.html">last post</a>. This time we’ll use a Python plotting library called <a href="http://bokeh.pydata.org/en/latest/">Bokeh</a> to visualize the tree.</p>
 <p>IToL is a great and flexible tool but on the flexibility front it can’t compete with charting libraries like <a href="http://www.matplotlib.org">Matplotlib</a>, <a href="http://ggvis.rstudio.com/">ggvis</a>, <a href="http://ggplot2.org/">ggplot2</a>, or <a href="http://bokeh.pydata.org/en/latest/">Bokeh</a>. To demonstrate the power of such flexibility let’s make a tree with the new-ish <code>Bokeh</code>. There are several features I want to include in this visualization:</p>
 <ol type="1">
 <li>I want the tree to be unrooted. I didn’t include an explicit outgroup in the tree from the previous post so I think it’s probably just best to display the tree in radial (as opposed to circular) format.</li>

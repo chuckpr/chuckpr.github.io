@@ -105,20 +105,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
-<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-931SNQ4H6D"></script>
-
-<script type="text/javascript">
-
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
- 
-  gtag('consent', 'default', {
-    'ad_storage': 'denied',
-    'analytics_storage': 'denied'
-  });
-gtag('config', 'G-931SNQ4H6D', { 'anonymize_ip': true});
-</script>
 
 
 </head>
@@ -214,7 +200,7 @@ gtag('config', 'G-931SNQ4H6D', { 'anonymize_ip': true});
 </header>
 
 
-<p>This <a href="https://fishshell.com/docs/current/cmds/function.html">fish shell</a> function gets the name of current <a href="https://github.com/tmux/tmux/wiki">tmux</a> sessions and pipes the session names into the <a href="https://github.com/junegunn/fzf">fzf</a> prompt. The user is attached to the the <code>tmux</code> session selected in <code>fzf</code>.</p>
+<script async="" src="https://scripts.simpleanalyticscdn.com/latest.js"></script><p>This <a href="https://fishshell.com/docs/current/cmds/function.html">fish shell</a> function gets the name of current <a href="https://github.com/tmux/tmux/wiki">tmux</a> sessions and pipes the session names into the <a href="https://github.com/junegunn/fzf">fzf</a> prompt. The user is attached to the the <code>tmux</code> session selected in <code>fzf</code>.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode fish code-with-copy"><code class="sourceCode fish"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="cf">function</span> <span class="fu">tma</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">set</span> <span class="va">sessions</span> <span class="sc">(</span><span class="fu">tmux</span> ls -F '<span class="st">#{session_name}'</span><span class="sc">)</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">set</span> <span class="va">session</span> <span class="sc">(</span><span class="bu">printf</span> <span class="sc">%</span><span class="im">s</span><span class="kw">\n</span><span class="im"> </span><span class="va">$sessions</span> <span class="kw">|</span> <span class="fu">fzf</span> --prompt<span class="op">=</span>"<span class="st"> Tmux session "</span> --height<span class="op">=</span>50% --layout<span class="op">=</span>reverse --border --exit-0<span class="sc">)</span></span>

@@ -108,20 +108,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
-<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-931SNQ4H6D"></script>
-
-<script type="text/javascript">
-
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
- 
-  gtag('consent', 'default', {
-    'ad_storage': 'denied',
-    'analytics_storage': 'denied'
-  });
-gtag('config', 'G-931SNQ4H6D', { 'anonymize_ip': true});
-</script>
 
 
 </head>
@@ -213,7 +199,7 @@ gtag('config', 'G-931SNQ4H6D', { 'anonymize_ip': true});
 </header>
 
 
-<p>Microbial ecologists have long considered the 515F SSU rRNA gene PCR primer to be “universal.” That is, the 515F primer is thought to amplify Eukarya, Archaea, and Bacteria. Indeed the target of the 515F primer is well conserved across each domain, however, the there are some differences in the primer target between domains that should be considered when evaluating 515F for use in a microbial diversity studies.</p>
+<script async="" src="https://scripts.simpleanalyticscdn.com/latest.js"></script><p>Microbial ecologists have long considered the 515F SSU rRNA gene PCR primer to be “universal.” That is, the 515F primer is thought to amplify Eukarya, Archaea, and Bacteria. Indeed the target of the 515F primer is well conserved across each domain, however, the there are some differences in the primer target between domains that should be considered when evaluating 515F for use in a microbial diversity studies.</p>
 <p>To make matters more complicated the 515F primer has changed from its inception to account for new sequence information and it’s not clear from the literature which 515F version is most effective. <em>In this post, we’ll take a look at tbe 515F primer target across a broad diversity of SSU rRNA genes</em>. In subsequent posts we’ll evaluate different 515F versions and we’ll also evaluate reverse primers that can be paired with 515F. While there are excellent tools avaliable for SSU rRNA gene PCR primer analysis (see <a href="http://pprospector.sourceforge.net/">PrimerProspector</a>, <a href="http://www.arb-silva.de/search/testprime/">TestPrime</a>), most tools focus on nucleotide frequecies in aligments. In this post, we’ll evaluate 515F by looking at the distribution of 515F target oligos.</p>
 <p>We’ll use the 99% OTU seed sequences for the GreenGenes database as reference. You can download the GreenGenes files from <a href="https://rnacentral.org/expert-database/greengenes">here</a>. This analysis will focus on Archaea and Bacteria.</p>
 <p>First we need to import some python functions and modules as well as load some extensions for the IPython notebook.</p>

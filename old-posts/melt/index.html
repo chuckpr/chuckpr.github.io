@@ -108,20 +108,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
-<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-931SNQ4H6D"></script>
-
-<script type="text/javascript">
-
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
- 
-  gtag('consent', 'default', {
-    'ad_storage': 'denied',
-    'analytics_storage': 'denied'
-  });
-gtag('config', 'G-931SNQ4H6D', { 'anonymize_ip': true});
-</script>
 
 
 </head>
@@ -213,7 +199,7 @@ gtag('config', 'G-931SNQ4H6D', { 'anonymize_ip': true});
 </header>
 
 
-<p>If you’re a microbial ecologist and you haven’t used <a href="http://joey711.github.io/phyloseq/">phyloseq</a>, put away your vintage scarf and thick-rimmed glasses because you are not hip. <a href="http://joey711.github.io/phyloseq/">phyloseq</a> is the nexus of all that is good in the universe. In this post we’ll look at one of the greatest <a href="http://joey711.github.io/phyloseq/">phyloseq</a> functions, <code>psmelt</code>. <code>psmelt</code> combines your sample info, OTU counts, and taxonomic annotations into a single dataframe where every row represents an OTU-sample combination. Hhhhwhat!?! Amazing, I know. From this omnipotent dataframe you can do anything. So, how do we use <code>psmelt</code>? And can we re-create <code>psmelt</code> with <a href="https://github.com/hadley/dplyr">dplyr</a> and <a href="https://github.com/hadley/tidyr">tidyr</a>?</p>
+<script async="" src="https://scripts.simpleanalyticscdn.com/latest.js"></script><p>If you’re a microbial ecologist and you haven’t used <a href="http://joey711.github.io/phyloseq/">phyloseq</a>, put away your vintage scarf and thick-rimmed glasses because you are not hip. <a href="http://joey711.github.io/phyloseq/">phyloseq</a> is the nexus of all that is good in the universe. In this post we’ll look at one of the greatest <a href="http://joey711.github.io/phyloseq/">phyloseq</a> functions, <code>psmelt</code>. <code>psmelt</code> combines your sample info, OTU counts, and taxonomic annotations into a single dataframe where every row represents an OTU-sample combination. Hhhhwhat!?! Amazing, I know. From this omnipotent dataframe you can do anything. So, how do we use <code>psmelt</code>? And can we re-create <code>psmelt</code> with <a href="https://github.com/hadley/dplyr">dplyr</a> and <a href="https://github.com/hadley/tidyr">tidyr</a>?</p>
 <p>Let’s start by bringing in some R packages and loading the <code>rmagic</code> extension for IPython.</p>
 <div id="cell-3" class="cell" data-jupyter="{&quot;outputs_hidden&quot;:false}" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>load_ext rpy2.ipython</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
