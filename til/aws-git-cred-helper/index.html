@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="ChuckPR">
+<meta name="dcterms.date" content="2025-02-07">
 
-<title>chuckpr blog</title>
+<title>Setting up the git CLI to authenticate with AWS CodeCommit – chuckpr blog</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,30 +22,62 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<link href="./favicon.ico" rel="icon">
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-66ab7fd5e73b7f0a764e0d49b3e29ab1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-db247911421cea3094f2de20355572f8.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
-<script src="site_libs/quarto-contrib/iconify-2.1.0/iconify-icon.min.js"></script>
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../favicon.ico" rel="icon">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-66ab7fd5e73b7f0a764e0d49b3e29ab1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-db247911421cea3094f2de20355572f8.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-contrib/iconify-2.1.0/iconify-icon.min.js"></script>
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -71,104 +105,18 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
 
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-blog .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-project','listing-execute','listing-website','listing-format','listing-language','listing-freeze','listing-title-block-banner','listing-title','listing-author','listing-date','listing-categories','listing-image','listing-path','listing-outputHref','listing-date-modified','listing-description','listing-filename','listing-file-modified','listing-reading-time','listing-word-count',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-date-modified-sort'] },{ data: ['listing-file-modified-sort'] },{ data: ['listing-reading-time-sort'] },{ data: ['listing-word-count-sort'] }],
-      
-      searchColumns: ["listing-project","listing-execute","listing-website","listing-format","listing-language","listing-freeze","listing-title-block-banner","listing-title","listing-author","listing-date","listing-categories","listing-image","listing-path","listing-outputHref","listing-date-modified","listing-description","listing-filename","listing-file-modified","listing-reading-time","listing-word-count"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-blog'] = new List('listing-blog', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  
-
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-til .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-project','listing-execute','listing-website','listing-format','listing-language','listing-author','listing-title','listing-date','listing-categories','listing-path','listing-outputHref','listing-date-modified','listing-description','listing-filename','listing-file-modified','listing-reading-time','listing-word-count','listing-fig-cap-location',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-date-modified-sort'] },{ data: ['listing-file-modified-sort'] },{ data: ['listing-reading-time-sort'] },{ data: ['listing-word-count-sort'] }],
-      
-      searchColumns: ["listing-project","listing-execute","listing-website","listing-format","listing-language","listing-author","listing-title","listing-date","listing-categories","listing-path","listing-outputHref","listing-date-modified","listing-description","listing-filename","listing-file-modified","listing-reading-time","listing-word-count","listing-fig-cap-location"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-til'] = new List('listing-til', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
-
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 </head>
 
-<body class="nav-fixed">
+<body class="nav-fixed fullcontent">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+  <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">chuckpr blog</span>
     </a>
   </div>
@@ -179,19 +127,19 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" aria-current="page"> 
+    <a class="nav-link" href="../../index.html"> 
 <span class="menu-text"><iconify-icon role="img" inline="" icon="ph:house-duotone" style="font-size: 1.75em;" aria-label="home" title="home"></iconify-icon></span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./til.html"> 
+    <a class="nav-link" href="../../til.html"> 
 <span class="menu-text"><iconify-icon role="img" inline="" icon="ph:lightbulb-duotone" style="font-size: 1.75em;" aria-label="TIL" title="TIL"></iconify-icon></span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./old-posts.html"> 
+    <a class="nav-link" href="../../old-posts.html"> 
 <span class="menu-text"><iconify-icon role="img" inline="" icon="ph:archive-box-duotone" style="font-size: 1.75em;" aria-label="archive" title="archive"></iconify-icon></span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./about.html"> 
+    <a class="nav-link" href="../../about.html"> 
 <span class="menu-text"><iconify-icon role="img" inline="" icon="ph:question-duotone" style="font-size: 1.75em;" aria-label="about" title="about"></iconify-icon></span></a>
   </li>  
   <li class="nav-item">
@@ -210,120 +158,110 @@ window.Quarto = {
     </nav>
 </header>
 <!-- content -->
-<header id="title-block-header" class="quarto-title-block"></header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#latest-til-posts" id="toc-latest-til-posts" class="nav-link active" data-scroll-target="#latest-til-posts"><iconify-icon role="img" inline="" icon="fluent-emoji:new-button" aria-label="new" title="new"></iconify-icon> Latest TIL posts…</a></li>
-  <li><a href="#posts" id="toc-posts" class="nav-link" data-scroll-target="#posts"><iconify-icon role="img" inline="" icon="fluent-emoji:notebook" aria-label="posts" title="posts"></iconify-icon> Posts</a></li>
-  </ul>
-</nav>
-    </div>
+    
 <!-- main -->
-<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Setting up the git CLI to authenticate with AWS CodeCommit</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">git</div>
+    <div class="quarto-category">aws</div>
+  </div>
+  </div>
 
 
 
+<div class="quarto-title-meta">
 
-<div class="callout callout-style-default callout-warning callout-titled">
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>ChuckPR </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">February 7, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>This post captures my notes for setting up the git CLI to use my AWS identity to clone <a href="https://aws.amazon.com/codecommit/">CodeCommit</a> repositories.</p>
+<p>You can set up how git provides <a href="https://git-scm.com/docs/gitcredentials">authorization credentials</a> in the git config. For example, if you want to define a handle for authenticating with a specific URL, you can add something like the following to your git config:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode toml code-with-copy"><code class="sourceCode toml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">[credential</span> <span class="kw">"</span><span class="dt">https://some.hosting.service"</span><span class="kw">]</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">username</span> <span class="op">=</span> <span class="dt">janedoe</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Git also lets you use “helpers.” Helpers are external credential providers. To use the AWS CLI as a credential helper, you would define the helper as a shell snippet where the AWS CLI is called such that it returns credentials to authenticate with CodeCommit. The AWS CLI command to retrieve credentials looks like this:</p>
+<div class="sourceCode" id="annotated-cell-2"><pre class="sourceCode bash code-annotation-code code-with-copy code-annotated"><code class="sourceCode bash"><a class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-2-1" class="code-annotation-target"><a href="#annotated-cell-2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">printf</span> <span class="st">"protocol=https\n host=git-codecommit.us-east-1.amazonaws.com\n path=/v1/repos/some-repo-id"</span> <span class="dt">\</span></span>
+<span id="annotated-cell-2-2"><a href="#annotated-cell-2-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">|</span> <span class="ex">aws</span> codecommit credential-helper get</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-2" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-2" data-code-lines="1" data-code-annotation="1">line delimited repo protocol/host/path info.</span>
+</dd>
+</dl>
+<p>The command above ⬆️ returns a username/password.</p>
+<p>To configure git to use the AWS codecommit credential helper. You modify the git config to direct git to run a shell snippet to retrieve authorization credentials:</p>
+<div class="sourceCode" id="annotated-cell-3"><pre class="sourceCode toml code-annotation-code code-with-copy code-annotated"><code class="sourceCode toml"><a class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-3-1" class="code-annotation-target"><a href="#annotated-cell-3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">[credential]</span></span>
+<span id="annotated-cell-3-2"><a href="#annotated-cell-3-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">helper</span> <span class="op">=</span> <span class="er">!</span><span class="dt">aws</span> <span class="dt">codecommit</span> <span class="dt">credential-helper</span> <span class="er">$@</span></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-3-3" class="code-annotation-target"><a href="#annotated-cell-3-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">useHttpPath</span> <span class="op">=</span> <span class="cn">true</span></span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-3" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-3" data-code-lines="1" data-code-annotation="1">You can optionally provide a full URL to a specific repo here (see above).</span>
+</dd>
+<dt data-target-cell="annotated-cell-3" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-3" data-code-lines="3" data-code-annotation="2">You need to set this to true because the <code>aws codecommit credential helper</code> command expects the host <em>and</em> path repo info.</span>
+</dd>
+</dl>
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Warning
+Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><iconify-icon role="img" inline="" icon="fluent-emoji:construction" aria-label="Icon construction from fluent-emoji Iconify.design set." title="Icon construction from fluent-emoji Iconify.design set."></iconify-icon> This site is under construction. Some posts are just placeholders. <iconify-icon role="img" inline="" icon="fluent-emoji:construction" aria-label="Icon construction from fluent-emoji Iconify.design set." title="Icon construction from fluent-emoji Iconify.design set."></iconify-icon></p>
+<p>You can also use git to modify the config:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> credential.helper <span class="st">'!aws codecommit credential-helper $@'</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> credential.UseHttpPath true</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
-<section id="latest-til-posts" class="level2">
-<h2 class="anchored" data-anchor-id="latest-til-posts"><iconify-icon role="img" inline="" icon="fluent-emoji:new-button" aria-label="new" title="new"></iconify-icon> Latest TIL posts…</h2>
-<p>For all TIL posts go <a href="./til.html">here</a>.</p>
-<div id="listing-til" class="quarto-listing quarto-listing-container-custom">
-<ul class="list list-group list-group-flush">
-
-  <li data-index="0" data-categories="Z2l0JTJDYXdz" data-listing-date-sort="1738904400000" data-listing-file-modified-sort="1738950445162" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="275" class="list-group-item d-sm-flex flex-sm-row-reverse justify-content-sm-between">
-    <div>
-      <p class="listing-date text-nowrap text-end mb-0 mb-md-3">Feb 7, 2025</p>
-    </div>
-    <div>
-      <a class="listing-link" href="./til/aws-git-cred-helper/index.html">
-        <iconify-icon icon="fluent-emoji:link"></iconify-icon>
-        Setting up the git CLI to authenticate with AWS CodeCommit<span> </span>
-      </a>
-    </div>
-  </li>
-
-  <li data-index="1" data-categories="bWFya2Rvd24lMkNqdXB5dGVy" data-listing-date-sort="1737608400000" data-listing-file-modified-sort="1737668329301" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="170" class="list-group-item d-sm-flex flex-sm-row-reverse justify-content-sm-between">
-    <div>
-      <p class="listing-date text-nowrap text-end mb-0 mb-md-3">Jan 23, 2025</p>
-    </div>
-    <div>
-      <a class="listing-link" href="./til/dynamic-md/index.html">
-        <iconify-icon icon="fluent-emoji:link"></iconify-icon>
-        Dynamic markdown content in Jupyter Lab<span> </span>
-      </a>
-    </div>
-  </li>
-
-  <li data-index="2" data-categories="YWx0YWly" data-listing-date-sort="1736744400000" data-listing-file-modified-sort="1736875088048" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="74" class="list-group-item d-sm-flex flex-sm-row-reverse justify-content-sm-between">
-    <div>
-      <p class="listing-date text-nowrap text-end mb-0 mb-md-3">Jan 13, 2025</p>
-    </div>
-    <div>
-      <a class="listing-link" href="./til/center-altair-chart/index.html">
-        <iconify-icon icon="fluent-emoji:link"></iconify-icon>
-        Centering Altair charts in Jupyter Lab<span> </span>
-      </a>
-    </div>
-  </li>
-
-</ul>
-<div class="listing-no-matching d-none">No matching items</div>
+<p>And now you can interact with CodeCommit repos with git!</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
 </div>
-</section>
-<section id="posts" class="level2">
-<h2 class="anchored" data-anchor-id="posts"><iconify-icon role="img" inline="" icon="fluent-emoji:notebook" aria-label="posts" title="posts"></iconify-icon> Posts</h2>
-<div id="listing-blog" class="quarto-listing quarto-listing-container-custom">
-<ul class="list list-group list-group-flush">
-
-  <li data-index="0" data-categories="bmV3cyUyQ2NvZGUlMkNhbmFseXNpcw==" data-listing-date-sort="1726804800000" data-listing-file-modified-sort="1727383247377" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="13" class="list-group-item d-sm-flex flex-sm-row-reverse justify-content-sm-between">
-    <div>
-      <p class="listing-date text-nowrap text-end mb-0 mb-md-3">Sep 20, 2024</p>
-    </div>
-    <div>
-      <a class="listing-link" href="./posts/post-with-code/index.html">
-        <iconify-icon icon="fluent-emoji:link"></iconify-icon>
-        Post With Code<span> </span>
-      </a>
-    </div>
-  </li>
-
-  <li data-index="1" data-categories="bmV3cw==" data-listing-date-sort="1726545600000" data-listing-file-modified-sort="1727383247377" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="32" class="list-group-item d-sm-flex flex-sm-row-reverse justify-content-sm-between">
-    <div>
-      <p class="listing-date text-nowrap text-end mb-0 mb-md-3">Sep 17, 2024</p>
-    </div>
-    <div>
-      <a class="listing-link" href="./posts/welcome/index.html">
-        <iconify-icon icon="fluent-emoji:link"></iconify-icon>
-        Welcome To My Blog<span> </span>
-      </a>
-    </div>
-  </li>
-
-</ul>
-<div class="listing-no-matching d-none">No matching items</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This is a helpful command to find the clone URL for a CodeCommit repo:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">aws</span> codecommit get-repository <span class="at">--repository-name</span> some-repo-name <span class="dt">\</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">|</span> <span class="ex">jq</span> <span class="at">-r</span> <span class="st">'.repositoryMetadata.cloneUrlHttp'</span> <span class="dt">\</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">|</span> <span class="ex">pbcopy</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </div>
 
 
-
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
