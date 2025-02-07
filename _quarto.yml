@@ -16,17 +16,6 @@ website:
   comments:
     giscus:
       repo: chuckpr/chuckpr.github.io
-      repo-id: MDEwOlJlcG9zaXRvcnkyMzA4MTE1NzA=
-      category: General
-      category-id: DIC_kwDODcHnss4Cmwbi
-      mapping: title
-      strict: false
-      reactions-enabled: true
-      emit-metadata: false
-      input-position: top
-      theme: noborder-light
-      lang: en
-      loading: lazy
   body-header: |
     <!-- 100% privacy-first analytics -->
     <script async src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
