@@ -13,6 +13,9 @@ website:
   site-url: https://chuckpr.github.io
   favicon: favicon.ico
   repo-url: https://github.com/chuckpr/chuckpr.github.io
+  google-analytics:
+    tracking-id: G-931SNQ4H6D
+    storage: none
   page-footer:
     background: light
     left: "{{< iconify fa6-regular:copyright label=copyright title=copyright >}} Copyright 2024, Chuck Pepe-Ranney"
