@@ -38,6 +38,10 @@ $h4-font-size:                $font-size-base;
 $h5-font-size:                $font-size-base;
 $h6-font-size:                $font-size-base;
 
+// code cell styling
+$code-block-border-left: $blue-green;
+$code-block-border-left-size: 2px;
+
 /*-- scss:rules --*/
 
 #latest-til > p > a:hover,
@@ -106,4 +110,8 @@ nav .nav-link {
 
 pre, code, .sourceCode {
   font-size: 0.95em;
+}
+
+.code-annotation-container-grid > dd > span {
+  background: #4A95B911;
 }
