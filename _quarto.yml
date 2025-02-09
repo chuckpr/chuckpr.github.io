@@ -13,9 +13,6 @@ website:
   site-url: https://chuckpr.github.io
   favicon: favicon.ico
   repo-url: https://github.com/chuckpr/chuckpr.github.io
-  comments:
-    giscus:
-      repo: chuckpr/chuckpr.github.io
   body-header: |
     <!-- 100% privacy-first analytics -->
     <script async src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
