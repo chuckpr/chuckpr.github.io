@@ -1,6 +1,6 @@
 ---
 author: ChuckPR
-title: dplyR has as <code>cume_dist</code> function
+title: dplyR has a <code>cume_dist</code> function
 date: 2024-10-17
 categories: ["tidyverse", "dplyr"]
 ---
