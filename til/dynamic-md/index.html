@@ -201,7 +201,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <script async="" src="https://scripts.simpleanalyticscdn.com/latest.js"></script><div id="8e2bebcd-b9d0-425b-8102-612d73c545fc" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> random <span class="im">import</span> randint</span>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> random</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> Markdown</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -213,13 +213,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ol>
 <section id="sec-ipythondisplay" class="level2">
 <h2 class="anchored" data-anchor-id="sec-ipythondisplay">IPython display Markdown object</h2>
-<div id="503187b4-8751-4207-bb9e-b6923d57eeaa" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>dynamic_content <span class="op">=</span> randint(<span class="dv">0</span>, <span class="dv">100</span>)</span>
+<div id="503187b4-8751-4207-bb9e-b6923d57eeaa" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>dynamic_content <span class="op">=</span> random.randint(<span class="dv">0</span>, <span class="dv">100</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>Markdown(<span class="ss">f"""This is the dynamic content in bold: **</span><span class="sc">{</span>dynamic_content<span class="op">=</span><span class="sc">}</span><span class="ss">**</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="ss">"""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="2">
-<p>This is the dynamic content in bold: <strong>dynamic_content=93</strong></p>
+<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="3">
+<p>This is the dynamic content in bold: <strong>dynamic_content=81</strong></p>
 </div>
 </div>
 <p>You could hide the code from a document rendered by Quarto with by adding an <code>#| echo: false</code> comment to the code cell.</p>
@@ -244,10 +244,10 @@ Important
 </div>
 </div>
 <p>The Quarto syntax for injecting the value of a variable into markdown content looks like this:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>This is the dynamic content in bold `{python} f'{dynamic_content=}'</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>This is the dynamic content in bold **`{python} f'{dynamic_content=}'`**</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>And here ⬇️ is what the output looks like when I actually use that syntax in a markdown cell.</p>
 <blockquote class="blockquote">
-<p>This is the dynamic content in bold <strong>dynamic_content=93</strong></p>
+<p>This is the dynamic content in bold <strong>dynamic_content=81</strong></p>
 </blockquote>
 
 

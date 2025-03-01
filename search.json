@@ -11,21 +11,21 @@
     "href": "til/dynamic-md/index.html",
     "title": "Dynamic markdown content in Jupyter Lab",
     "section": "",
-    "text": "from random import randint\n\nfrom IPython.display import Markdown\nSometimes I want to put the value of a variable into a markdown cell. I know of three ways to inject variable values in Jupyter Lab markdown:"
+    "text": "import random\n\nfrom IPython.display import Markdown\nSometimes I want to put the value of a variable into a markdown cell. I know of three ways to inject variable values in Jupyter Lab markdown:"
   },
   {
     "objectID": "til/dynamic-md/index.html#sec-ipythondisplay",
     "href": "til/dynamic-md/index.html#sec-ipythondisplay",
     "title": "Dynamic markdown content in Jupyter Lab",
     "section": "IPython display Markdown object",
-    "text": "IPython display Markdown object\n\ndynamic_content = randint(0, 100)\n\nMarkdown(f\"\"\"This is the dynamic content in bold: **{dynamic_content=}**\n\"\"\")\n\nThis is the dynamic content in bold: dynamic_content=93\n\n\nYou could hide the code from a document rendered by Quarto with by adding an #| echo: false comment to the code cell."
+    "text": "IPython display Markdown object\n\ndynamic_content = random.randint(0, 100)\n\nMarkdown(f\"\"\"This is the dynamic content in bold: **{dynamic_content=}**\n\"\"\")\n\nThis is the dynamic content in bold: dynamic_content=81\n\n\nYou could hide the code from a document rendered by Quarto with by adding an #| echo: false comment to the code cell."
   },
   {
     "objectID": "til/dynamic-md/index.html#sec-quartoinline",
     "href": "til/dynamic-md/index.html#sec-quartoinline",
     "title": "Dynamic markdown content in Jupyter Lab",
     "section": "Quarto inline code syntax",
-    "text": "Quarto inline code syntax\n\n\n\n\n\n\nImportant\n\n\n\nYou must turn on notebook execution when rendering with quarto for the following to work.\nE.g. you can add,\nexecute: \n    enabled: true \nto your notebook front matter.\n\n\nThe Quarto syntax for injecting the value of a variable into markdown content looks like this:\nThis is the dynamic content in bold `{python} f'{dynamic_content=}'\nAnd here ⬇️ is what the output looks like when I actually use that syntax in a markdown cell.\n\nThis is the dynamic content in bold dynamic_content=93"
+    "text": "Quarto inline code syntax\n\n\n\n\n\n\nImportant\n\n\n\nYou must turn on notebook execution when rendering with quarto for the following to work.\nE.g. you can add,\nexecute: \n    enabled: true \nto your notebook front matter.\n\n\nThe Quarto syntax for injecting the value of a variable into markdown content looks like this:\nThis is the dynamic content in bold **`{python} f'{dynamic_content=}'`**\nAnd here ⬇️ is what the output looks like when I actually use that syntax in a markdown cell.\n\nThis is the dynamic content in bold dynamic_content=81"
   },
   {
     "objectID": "til/aws-git-cred-helper/index.html",
