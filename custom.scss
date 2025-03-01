@@ -43,7 +43,7 @@ $code-block-border-left: $blue-green;
 $code-block-border-left-size: 2px;
 
 /*-- scss:rules --*/
-
+#latest-til-posts > p > a:hover,
 #latest-til > p > a:hover,
 #quarto-document-content > p > a:hover,
 #quarto-document-content > ol > li > a:hover,
@@ -51,6 +51,7 @@ $code-block-border-left-size: 2px;
   color: color.scale($blue-green, $lightness: -25%);
 }
 
+#latest-til-posts > p > a,
 #latest-til > p > a,
 #quarto-document-content > p > a,
 #quarto-document-content > ol > li > a,
@@ -61,6 +62,7 @@ $code-block-border-left-size: 2px;
   color: $blue-green;
 }
 
+#latest-til-posts > p > a::before,
 #latest-til > p > a::before,
 #quarto-document-content > p > a::before,
 #quarto-document-content > ol > li > a::before,
@@ -78,6 +80,7 @@ $code-block-border-left-size: 2px;
   transition: transform .3s ease-in-out;
 }
 
+#latest-til-posts > p > a:hover::before,
 #latest-til > p > a:hover::before,
 #quarto-document-content > p > a:hover::before,
 #quarto-document-content > ol > li > a:hover::before,
