@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.13">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="ChuckPR">
+<meta name="dcterms.date" content="2025-03-16">
+
+<title>Using Scipy optimize to estimate linear regression parameters – chuckpr blog</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../favicon.ico" rel="icon">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-66ab7fd5e73b7f0a764e0d49b3e29ab1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-2dfd8a02261be1c9076cccff365f0b66.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-contrib/iconify-2.1.0/iconify-icon.min.js"></script>
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">chuckpr blog</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text"><iconify-icon role="img" inline="" icon="ph:house-duotone" style="font-size: 1.75em;" aria-label="home" title="home"></iconify-icon></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../til.html"> 
+<span class="menu-text"><iconify-icon role="img" inline="" icon="ph:lightbulb-duotone" style="font-size: 1.75em;" aria-label="TIL" title="TIL"></iconify-icon></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../old-posts.html"> 
+<span class="menu-text"><iconify-icon role="img" inline="" icon="ph:archive-box-duotone" style="font-size: 1.75em;" aria-label="archive" title="archive"></iconify-icon></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text"><iconify-icon role="img" inline="" icon="ph:question-duotone" style="font-size: 1.75em;" aria-label="about" title="about"></iconify-icon></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://github.com/chuckpr"> 
+<span class="menu-text"><iconify-icon role="img" inline="" icon="ph:github-logo-duotone" style="font-size: 1.75em;" aria-label="GitHub" title="GitHub"></iconify-icon></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://www.linkedin.com/in/chuckpr/"> 
+<span class="menu-text"><iconify-icon role="img" inline="" icon="ph:linkedin-logo-duotone" style="font-size: 1.5em;" aria-label="Linkedin" title="LinkedIn"></iconify-icon></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Using Scipy optimize to estimate linear regression parameters</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">scipy</div>
+    <div class="quarto-category">linear regression</div>
+    <div class="quarto-category">teaching</div>
+  </div>
+  </div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>ChuckPR </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">March 16, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<script async="" src="https://scripts.simpleanalyticscdn.com/latest.js"></script><p>When I teach estimating parameters for linear regression, I like start by framing the problem as one of simple optimization. That is, we need to find the parameter values that minimize error squared. I don’t like to jump immediately to the closed form solution for the best parameter estimates. Instead, I typically set up a simple model in excel, calculate error for each row in our training data, and I optimize parameter estimages with Excel’s solver function. Using Excel for teaching resonated with me when I took the <a href="https://github.com/fastai/course22/tree/master/xl">Fast.AI deep learning course</a>.</p>
+<p>The <a href="https://r4ds.had.co.nz/model-basics.html#a-simple-model">R for Data Science book</a> takes a similar approach when introducing models but using <code>R</code>’s <code>optim</code> function instead of Excel.</p>
+<p>he following is the example I came up with to reproduce the Excel and R examples in Python using an <a href="https://docs.scipy.org/doc/scipy/reference/optimize.html">optimizaton algorithm availabe from Scipy</a>.</p>
+<div id="0f409e55-49cd-4f33-9f71-78887593edd3" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> altair <span class="im">as</span> alt</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> palmerpenguins <span class="im">import</span> load_penguins</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> optimize</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We’ll just use the <code>Adelie</code> data from <a href="https://github.com/mcnakhaee/palmerpenguins">Palmer Penguins</a> for demonstration purposes.</p>
+<div id="d6b1b34e-1a34-4dd1-8c83-1055b653e1eb" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="op">=</span> load_penguins().dropna().query(<span class="st">'species == "Adelie"'</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>penguins.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="2">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">species</th>
+<th data-quarto-table-cell-role="th">island</th>
+<th data-quarto-table-cell-role="th">bill_length_mm</th>
+<th data-quarto-table-cell-role="th">bill_depth_mm</th>
+<th data-quarto-table-cell-role="th">flipper_length_mm</th>
+<th data-quarto-table-cell-role="th">body_mass_g</th>
+<th data-quarto-table-cell-role="th">sex</th>
+<th data-quarto-table-cell-role="th">year</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Adelie</td>
+<td>Torgersen</td>
+<td>39.1</td>
+<td>18.7</td>
+<td>181.0</td>
+<td>3750.0</td>
+<td>male</td>
+<td>2007</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Adelie</td>
+<td>Torgersen</td>
+<td>39.5</td>
+<td>17.4</td>
+<td>186.0</td>
+<td>3800.0</td>
+<td>female</td>
+<td>2007</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>Adelie</td>
+<td>Torgersen</td>
+<td>40.3</td>
+<td>18.0</td>
+<td>195.0</td>
+<td>3250.0</td>
+<td>female</td>
+<td>2007</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">4</td>
+<td>Adelie</td>
+<td>Torgersen</td>
+<td>36.7</td>
+<td>19.3</td>
+<td>193.0</td>
+<td>3450.0</td>
+<td>female</td>
+<td>2007</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">5</td>
+<td>Adelie</td>
+<td>Torgersen</td>
+<td>39.3</td>
+<td>20.6</td>
+<td>190.0</td>
+<td>3650.0</td>
+<td>male</td>
+<td>2007</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>We need to define a function that calculates error squared for a given combination of parameters.</p>
+<div id="f83c3314-b75d-493c-b270-199bbca9e432" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> objective(params, X, y):</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    m, b <span class="op">=</span> params</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    y_pred <span class="op">=</span> m <span class="op">*</span> X <span class="op">+</span> b</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.<span class="bu">sum</span>((y <span class="op">-</span> y_pred) <span class="op">**</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This call back function⬇️ will get called after each iteration of the optimizer. It records the parameters, the iteration count, and the corresponding error squared for each optimizer iteration.</p>
+<div id="8ea12c2a-f95c-41d5-80d7-21f8b3b3749c" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>iter_data <span class="op">=</span> []</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> []</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> callback(params, <span class="op">*</span>args, <span class="op">**</span>kwargs):</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    n.append(<span class="bu">len</span>(n))</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    iter_data.append(</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>        {</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>            <span class="st">"m"</span>: params[<span class="dv">0</span>],</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>            <span class="st">"b"</span>: params[<span class="dv">1</span>],</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>            <span class="st">"n"</span>: <span class="bu">len</span>(n),</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>            <span class="st">"SSE"</span>: objective(</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>                params, penguins[<span class="st">"bill_depth_mm"</span>].values, penguins[<span class="st">"body_mass_g"</span>].values</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>            ),</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now we are ready to ready to esimate parameters! The result object holds the optimized parameter values in the <code>x</code> attribute.</p>
+<div id="031d1a29-e519-4b8d-b338-2e0e629f4fb2" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>initial_guess <span class="op">=</span> [<span class="dv">0</span>, <span class="dv">0</span>]</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> optimize.minimize(</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    objective,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    initial_guess,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    args<span class="op">=</span>(penguins[<span class="st">"bill_length_mm"</span>].values, penguins[<span class="st">"body_mass_g"</span>].values),</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    method<span class="op">=</span><span class="st">"Nelder-Mead"</span>,</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    callback<span class="op">=</span>callback,</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>m, b <span class="op">=</span> result.x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The fun part about doing this in <code>Python</code> (or <code>R</code>) is we can readily plot the output. Here is the model visualized using the optimal parameter estimates:</p>
+<div id="65abef99-d237-4bce-b6a1-d2b83fed0616" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>source <span class="op">=</span> penguins.assign(pred<span class="op">=</span><span class="kw">lambda</span> df_: m <span class="op">*</span> df_[<span class="st">"bill_length_mm"</span>].values <span class="op">+</span> b)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>axis_kws <span class="op">=</span> {</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"titleFontSize"</span>: <span class="dv">16</span>,</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"titleFontWeight"</span>: <span class="st">"normal"</span>,</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"titlePadding"</span>: <span class="dv">15</span>,</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"labelFontSize"</span>: <span class="dv">12</span>,</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>base <span class="op">=</span> alt.Chart(source, width<span class="op">=</span><span class="dv">400</span>).encode(</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span>alt.X(<span class="st">"bill_length_mm"</span>)</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    .scale(zero<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    .axis(title<span class="op">=</span><span class="st">"Bill length, mm"</span>, <span class="op">**</span>axis_kws),</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>points <span class="op">=</span> base.mark_point(size<span class="op">=</span><span class="dv">50</span>, fill<span class="op">=</span><span class="st">"steelblue"</span>, fillOpacity<span class="op">=</span><span class="fl">0.25</span>).encode(</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    y<span class="op">=</span>alt.Y(<span class="st">"body_mass_g"</span>).scale(zero<span class="op">=</span><span class="va">False</span>).axis(title<span class="op">=</span><span class="st">"Body mass, g"</span>, <span class="op">**</span>axis_kws),</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>line <span class="op">=</span> base.mark_line(stroke<span class="op">=</span><span class="st">"coral"</span>, strokeWidth<span class="op">=</span><span class="dv">3</span>).encode(</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>    y<span class="op">=</span>alt.Y(<span class="st">"pred"</span>).axis(title<span class="op">=</span><span class="st">""</span>)</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>points <span class="op">+</span> line</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+
+<style>
+  #altair-viz-28fb1785a2d144d792d8eea7c683eb2d.vega-embed {
+    width: 100%;
+    display: flex;
+  }
+
+  #altair-viz-28fb1785a2d144d792d8eea7c683eb2d.vega-embed details,
+  #altair-viz-28fb1785a2d144d792d8eea7c683eb2d.vega-embed details summary {
+    position: relative;
+  }
+</style>
+<div id="altair-viz-28fb1785a2d144d792d8eea7c683eb2d"></div>
+<script type="text/javascript">
+  var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
+  (function(spec, embedOpt){
+    let outputDiv = document.currentScript.previousElementSibling;
+    if (outputDiv.id !== "altair-viz-28fb1785a2d144d792d8eea7c683eb2d") {
+      outputDiv = document.getElementById("altair-viz-28fb1785a2d144d792d8eea7c683eb2d");
+    }
+
+    const paths = {
+      "vega": "https://cdn.jsdelivr.net/npm/vega@5?noext",
+      "vega-lib": "https://cdn.jsdelivr.net/npm/vega-lib?noext",
+      "vega-lite": "https://cdn.jsdelivr.net/npm/vega-lite@5.20.1?noext",
+      "vega-embed": "https://cdn.jsdelivr.net/npm/vega-embed@6?noext",
+    };
+
+    function maybeLoadScript(lib, version) {
+      var key = `${lib.replace("-", "")}_version`;
+      return (VEGA_DEBUG[key] == version) ?
+        Promise.resolve(paths[lib]) :
+        new Promise(function(resolve, reject) {
+          var s = document.createElement('script');
+          document.getElementsByTagName("head")[0].appendChild(s);
+          s.async = true;
+          s.onload = () => {
+            VEGA_DEBUG[key] = version;
+            return resolve(paths[lib]);
+          };
+          s.onerror = () => reject(`Error loading script: ${paths[lib]}`);
+          s.src = paths[lib];
+        });
+    }
+
+    function showError(err) {
+      outputDiv.innerHTML = `<div class="error" style="color:red;">${err}</div>`;
+      throw err;
+    }
+
+    function displayChart(vegaEmbed) {
+      vegaEmbed(outputDiv, spec, embedOpt)
+        .catch(err => showError(`Javascript Error: ${err.message}<br>This usually means there's a typo in your chart specification. See the javascript console for the full traceback.`));
+    }
+
+    if(typeof define === "function" && define.amd) {
+      requirejs.config({paths});
+      let deps = ["vega-embed"];
+      require(deps, displayChart, err => showError(`Error loading script: ${err.message}`));
+    } else {
+      maybeLoadScript("vega", "5")
+        .then(() => maybeLoadScript("vega-lite", "5.20.1"))
+        .then(() => maybeLoadScript("vega-embed", "6"))
+        .catch(showError)
+        .then(() => displayChart(vegaEmbed));
+    }
+  })({"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "layer": [{"mark": {"type": "point", "fill": "steelblue", "fillOpacity": 0.25, "size": 50}, "encoding": {"x": {"axis": {"title": "Bill length, mm", "titleFontSize": 16, "titleFontWeight": "normal", "titlePadding": 15, "labelFontSize": 12}, "field": "bill_length_mm", "scale": {"zero": false}, "type": "quantitative"}, "y": {"axis": {"title": "Body mass, g", "titleFontSize": 16, "titleFontWeight": "normal", "titlePadding": 15, "labelFontSize": 12}, "field": "body_mass_g", "scale": {"zero": false}, "type": "quantitative"}}}, {"mark": {"type": "line", "stroke": "coral", "strokeWidth": 3}, "encoding": {"x": {"axis": {"title": "Bill length, mm", "titleFontSize": 16, "titleFontWeight": "normal", "titlePadding": 15, "labelFontSize": 12}, "field": "bill_length_mm", "scale": {"zero": false}, "type": "quantitative"}, "y": {"axis": {"title": ""}, "field": "pred", "type": "quantitative"}}}], "data": {"name": "data-6c4ac2715cf98e5597c7559607322ec0"}, "width": 400, "$schema": "https://vega.github.io/schema/vega-lite/v5.20.1.json", "datasets": {"data-6c4ac2715cf98e5597c7559607322ec0": [{"species": "Adelie", "island": "Torgersen", "bill_length_mm": 39.1, "bill_depth_mm": 18.7, "flipper_length_mm": 181.0, "body_mass_g": 3750.0, "sex": "male", "year": 2007, "pred": 3732.0417107441876}, {"species": "Adelie", "island": "Torgersen", "bill_length_mm": 39.5, "bill_depth_mm": 17.4, "flipper_length_mm": 186.0, "body_mass_g": 3800.0, "sex": "female", "year": 2007, "pred": 3769.5413616893243}, {"species": "Adelie", "island": "Torgersen", "bill_length_mm": 40.3, "bill_depth_mm": 18.0, "flipper_length_mm": 195.0, "body_mass_g": 3250.0, "sex": "female", "year": 2007, "pred": 3844.5406635795985}, {"species": "Adelie", "island": "Torgersen", "bill_length_mm": 36.7, "bill_depth_mm": 19.3, "flipper_length_mm": 193.0, "body_mass_g": 3450.0, "sex": "female", "year": 2007, "pred": 3507.043805073365}, {"species": "Adelie", "island": "Torgersen", "bill_length_mm": 39.3, "bill_depth_mm": 20.6, "flipper_length_mm": 190.0, "body_mass_g": 3650.0, "sex": "male", "year": 2007, "pred": 3750.7915362167555}, {"species": "Adelie", "island": "Torgersen", "bill_length_mm": 38.9, "bill_depth_mm": 17.8, "flipper_length_mm": 181.0, "body_mass_g": 3625.0, "sex": "female", "year": 2007, "pred": 3713.291885271619}, {"species": "Adelie", "island": "Torgersen", "bill_length_mm": 39.2, "bill_depth_mm": 19.6, "flipper_length_mm": 195.0, "body_mass_g": 4675.0, "sex": "male", "year": 2007, "pred": 3741.416623480472}, {"species": "Adelie", "island": "Torgersen", "bill_length_mm": 41.1, "bill_depth_mm": 17.6, "flipper_length_mm": 182.0, "body_mass_g": 3200.0, "sex": "female", "year": 2007, "pred": 3919.539965469873}, {"species": "Adelie", "island": "Torgersen", "bill_length_mm": 38.6, "bill_depth_mm": 21.2, "flipper_length_mm": 191.0, "body_mass_g": 3800.0, "sex": "male", "year": 2007, "pred": 3685.167147062766}, {"species": "Adelie", "island": "Torgersen", "bill_length_mm": 34.6, "bill_depth_mm": 21.1, "flipper_length_mm": 198.0, "body_mass_g": 4400.0, "sex": "male", "year": 2007, "pred": 3310.1706376113953}, {"species": "Adelie", "island": "Torgersen", "bill_length_mm": 36.6, "bill_depth_mm": 17.8, "flipper_length_mm": 185.0, "body_mass_g": 3700.0, "sex": "female", "year": 2007, "pred": 3497.6688923370807}, {"species": "Adelie", "island": "Torgersen", "bill_length_mm": 38.7, "bill_depth_mm": 19.0, "flipper_length_mm": 195.0, "body_mass_g": 3450.0, "sex": "female", "year": 2007, "pred": 3694.5420597990505}, {"species": "Adelie", "island": "Torgersen", "bill_length_mm": 42.5, "bill_depth_mm": 20.7, "flipper_length_mm": 197.0, "body_mass_g": 4500.0, "sex": "male", "year": 2007, "pred": 4050.7887437778527}, {"species": "Adelie", "island": "Torgersen", "bill_length_mm": 34.4, "bill_depth_mm": 18.4, "flipper_length_mm": 184.0, "body_mass_g": 3325.0, "sex": "female", "year": 2007, "pred": 3291.4208121388265}, {"species": "Adelie", "island": "Torgersen", "bill_length_mm": 46.0, "bill_depth_mm": 21.5, "flipper_length_mm": 194.0, "body_mass_g": 4200.0, "sex": "male", "year": 2007, "pred": 4378.910689547802}, {"species": "Adelie", "island": "Biscoe", "bill_length_mm": 37.8, "bill_depth_mm": 18.3, "flipper_length_mm": 174.0, "body_mass_g": 3400.0, "sex": "female", "year": 2007, "pred": 3610.1678451724915}, {"species": "Adelie", "island": "Biscoe", "bill_length_mm": 37.7, "bill_depth_mm": 18.7, "flipper_length_mm": 180.0, "body_mass_g": 3600.0, "sex": "male", "year": 2007, "pred": 3600.792932436208}, {"species": "Adelie", "island": "Biscoe", "bill_length_mm": 35.9, "bill_depth_mm": 19.2, "flipper_length_mm": 189.0, "body_mass_g": 3800.0, "sex": "female", "year": 2007, "pred": 3432.0445031830905}, {"species": "Adelie", "island": "Biscoe", "bill_length_mm": 38.2, "bill_depth_mm": 18.1, "flipper_length_mm": 185.0, "body_mass_g": 3950.0, "sex": "male", "year": 2007, "pred": 3647.667496117629}, {"species": "Adelie", "island": "Biscoe", "bill_length_mm": 38.8, "bill_depth_mm": 17.2, "flipper_length_mm": 180.0, "body_mass_g": 3800.0, "sex": "male", "year": 2007, "pred": 3703.9169725353345}, {"species": "Adelie", "island": "Biscoe", "bill_length_mm": 35.3, "bill_depth_mm": 18.9, "flipper_length_mm": 187.0, "body_mass_g": 3800.0, "sex": "female", "year": 2007, "pred": 3375.7950267653846}, {"species": "Adelie", "island": "Biscoe", "bill_length_mm": 40.6, "bill_depth_mm": 18.6, "flipper_length_mm": 183.0, "body_mass_g": 3550.0, "sex": "male", "year": 2007, "pred": 3872.6654017884516}, {"species": "Adelie", "island": "Biscoe", "bill_length_mm": 40.5, "bill_depth_mm": 17.9, "flipper_length_mm": 187.0, "body_mass_g": 3200.0, "sex": "female", "year": 2007, "pred": 3863.2904890521672}, {"species": "Adelie", "island": "Biscoe", "bill_length_mm": 37.9, "bill_depth_mm": 18.6, "flipper_length_mm": 172.0, "body_mass_g": 3150.0, "sex": "female", "year": 2007, "pred": 3619.542757908776}, {"species": "Adelie", "island": "Biscoe", "bill_length_mm": 40.5, "bill_depth_mm": 18.9, "flipper_length_mm": 180.0, "body_mass_g": 3950.0, "sex": "male", "year": 2007, "pred": 3863.2904890521672}, {"species": "Adelie", "island": "Dream", "bill_length_mm": 39.5, "bill_depth_mm": 16.7, "flipper_length_mm": 178.0, "body_mass_g": 3250.0, "sex": "female", "year": 2007, "pred": 3769.5413616893243}, {"species": "Adelie", "island": "Dream", "bill_length_mm": 37.2, "bill_depth_mm": 18.1, "flipper_length_mm": 178.0, "body_mass_g": 3900.0, "sex": "male", "year": 2007, "pred": 3553.9183687547866}, {"species": "Adelie", "island": "Dream", "bill_length_mm": 39.5, "bill_depth_mm": 17.8, "flipper_length_mm": 188.0, "body_mass_g": 3300.0, "sex": "female", "year": 2007, "pred": 3769.5413616893243}, {"species": "Adelie", "island": "Dream", "bill_length_mm": 40.9, "bill_depth_mm": 18.9, "flipper_length_mm": 184.0, "body_mass_g": 3900.0, "sex": "male", "year": 2007, "pred": 3900.7901399973043}, {"species": "Adelie", "island": "Dream", "bill_length_mm": 36.4, "bill_depth_mm": 17.0, "flipper_length_mm": 195.0, "body_mass_g": 3325.0, "sex": "female", "year": 2007, "pred": 3478.919066864512}, {"species": "Adelie", "island": "Dream", "bill_length_mm": 39.2, "bill_depth_mm": 21.1, "flipper_length_mm": 196.0, "body_mass_g": 4150.0, "sex": "male", "year": 2007, "pred": 3741.416623480472}, {"species": "Adelie", "island": "Dream", "bill_length_mm": 38.8, "bill_depth_mm": 20.0, "flipper_length_mm": 190.0, "body_mass_g": 3950.0, "sex": "male", "year": 2007, "pred": 3703.9169725353345}, {"species": "Adelie", "island": "Dream", "bill_length_mm": 42.2, "bill_depth_mm": 18.5, "flipper_length_mm": 180.0, "body_mass_g": 3550.0, "sex": "female", "year": 2007, "pred": 4022.664005569}, {"species": "Adelie", "island": "Dream", "bill_length_mm": 37.6, "bill_depth_mm": 19.3, "flipper_length_mm": 181.0, "body_mass_g": 3300.0, "sex": "female", "year": 2007, "pred": 3591.418019699923}, {"species": "Adelie", "island": "Dream", "bill_length_mm": 39.8, "bill_depth_mm": 19.1, "flipper_length_mm": 184.0, "body_mass_g": 4650.0, "sex": "male", "year": 2007, "pred": 3797.666099898177}, {"species": "Adelie", "island": "Dream", "bill_length_mm": 36.5, "bill_depth_mm": 18.0, "flipper_length_mm": 182.0, "body_mass_g": 3150.0, "sex": "female", "year": 2007, "pred": 3488.2939796007963}, {"species": "Adelie", "island": "Dream", "bill_length_mm": 40.8, "bill_depth_mm": 18.4, "flipper_length_mm": 195.0, "body_mass_g": 3900.0, "sex": "male", "year": 2007, "pred": 3891.41522726102}, {"species": "Adelie", "island": "Dream", "bill_length_mm": 36.0, "bill_depth_mm": 18.5, "flipper_length_mm": 186.0, "body_mass_g": 3100.0, "sex": "female", "year": 2007, "pred": 3441.419415919375}, {"species": "Adelie", "island": "Dream", "bill_length_mm": 44.1, "bill_depth_mm": 19.7, "flipper_length_mm": 196.0, "body_mass_g": 4400.0, "sex": "male", "year": 2007, "pred": 4200.787347558401}, {"species": "Adelie", "island": "Dream", "bill_length_mm": 37.0, "bill_depth_mm": 16.9, "flipper_length_mm": 185.0, "body_mass_g": 3000.0, "sex": "female", "year": 2007, "pred": 3535.168543282218}, {"species": "Adelie", "island": "Dream", "bill_length_mm": 39.6, "bill_depth_mm": 18.8, "flipper_length_mm": 190.0, "body_mass_g": 4600.0, "sex": "male", "year": 2007, "pred": 3778.916274425609}, {"species": "Adelie", "island": "Dream", "bill_length_mm": 41.1, "bill_depth_mm": 19.0, "flipper_length_mm": 182.0, "body_mass_g": 3425.0, "sex": "male", "year": 2007, "pred": 3919.539965469873}, {"species": "Adelie", "island": "Dream", "bill_length_mm": 36.0, "bill_depth_mm": 17.9, "flipper_length_mm": 190.0, "body_mass_g": 3450.0, "sex": "female", "year": 2007, "pred": 3441.419415919375}, {"species": "Adelie", "island": "Dream", "bill_length_mm": 42.3, "bill_depth_mm": 21.2, "flipper_length_mm": 191.0, "body_mass_g": 4150.0, "sex": "male", "year": 2007, "pred": 4032.038918305284}, {"species": "Adelie", "island": "Biscoe", "bill_length_mm": 39.6, "bill_depth_mm": 17.7, "flipper_length_mm": 186.0, "body_mass_g": 3500.0, "sex": "female", "year": 2008, "pred": 3778.916274425609}, {"species": "Adelie", "island": "Biscoe", "bill_length_mm": 40.1, "bill_depth_mm": 18.9, "flipper_length_mm": 188.0, "body_mass_g": 4300.0, "sex": "male", "year": 2008, "pred": 3825.79083810703}, {"species": "Adelie", "island": "Biscoe", "bill_length_mm": 35.0, "bill_depth_mm": 17.9, "flipper_length_mm": 190.0, "body_mass_g": 3450.0, "sex": "female", "year": 2008, "pred": 3347.6702885565323}, {"species": "Adelie", "island": "Biscoe", "bill_length_mm": 42.0, "bill_depth_mm": 19.5, "flipper_length_mm": 200.0, "body_mass_g": 4050.0, "sex": "male", "year": 2008, "pred": 4003.914180096431}, {"species": "Adelie", "island": "Biscoe", "bill_length_mm": 34.5, "bill_depth_mm": 18.1, "flipper_length_mm": 187.0, "body_mass_g": 2900.0, "sex": "female", "year": 2008, "pred": 3300.795724875111}, {"species": "Adelie", "island": "Biscoe", "bill_length_mm": 41.4, "bill_depth_mm": 18.6, "flipper_length_mm": 191.0, "body_mass_g": 3700.0, "sex": "male", "year": 2008, "pred": 3947.664703678726}, {"species": "Adelie", "island": "Biscoe", "bill_length_mm": 39.0, "bill_depth_mm": 17.5, "flipper_length_mm": 186.0, "body_mass_g": 3550.0, "sex": "female", "year": 2008, "pred": 3722.6667980079033}, {"species": "Adelie", "island": "Biscoe", "bill_length_mm": 40.6, "bill_depth_mm": 18.8, "flipper_length_mm": 193.0, "body_mass_g": 3800.0, "sex": "male", "year": 2008, "pred": 3872.6654017884516}, {"species": "Adelie", "island": "Biscoe", "bill_length_mm": 36.5, "bill_depth_mm": 16.6, "flipper_length_mm": 181.0, "body_mass_g": 2850.0, "sex": "female", "year": 2008, "pred": 3488.2939796007963}, {"species": "Adelie", "island": "Biscoe", "bill_length_mm": 37.6, "bill_depth_mm": 19.1, "flipper_length_mm": 194.0, "body_mass_g": 3750.0, "sex": "male", "year": 2008, "pred": 3591.418019699923}, {"species": "Adelie", "island": "Biscoe", "bill_length_mm": 35.7, "bill_depth_mm": 16.9, "flipper_length_mm": 185.0, "body_mass_g": 3150.0, "sex": "female", "year": 2008, "pred": 3413.294677710522}, {"species": "Adelie", "island": "Biscoe", "bill_length_mm": 41.3, "bill_depth_mm": 21.1, "flipper_length_mm": 195.0, "body_mass_g": 4400.0, "sex": "male", "year": 2008, "pred": 3938.289790942441}, {"species": "Adelie", "island": "Biscoe", "bill_length_mm": 37.6, "bill_depth_mm": 17.0, "flipper_length_mm": 185.0, "body_mass_g": 3600.0, "sex": "female", "year": 2008, "pred": 3591.418019699923}, {"species": "Adelie", "island": "Biscoe", "bill_length_mm": 41.1, "bill_depth_mm": 18.2, "flipper_length_mm": 192.0, "body_mass_g": 4050.0, "sex": "male", "year": 2008, "pred": 3919.539965469873}, {"species": "Adelie", "island": "Biscoe", "bill_length_mm": 36.4, "bill_depth_mm": 17.1, "flipper_length_mm": 184.0, "body_mass_g": 2850.0, "sex": "female", "year": 2008, "pred": 3478.919066864512}, {"species": "Adelie", "island": "Biscoe", "bill_length_mm": 41.6, "bill_depth_mm": 18.0, "flipper_length_mm": 192.0, "body_mass_g": 3950.0, "sex": "male", "year": 2008, "pred": 3966.4145291512946}, {"species": "Adelie", "island": "Biscoe", "bill_length_mm": 35.5, "bill_depth_mm": 16.2, "flipper_length_mm": 195.0, "body_mass_g": 3350.0, "sex": "female", "year": 2008, "pred": 3394.5448522379534}, {"species": "Adelie", "island": "Biscoe", "bill_length_mm": 41.1, "bill_depth_mm": 19.1, "flipper_length_mm": 188.0, "body_mass_g": 4100.0, "sex": "male", "year": 2008, "pred": 3919.539965469873}, {"species": "Adelie", "island": "Torgersen", "bill_length_mm": 35.9, "bill_depth_mm": 16.6, "flipper_length_mm": 190.0, "body_mass_g": 3050.0, "sex": "female", "year": 2008, "pred": 3432.0445031830905}, {"species": "Adelie", "island": "Torgersen", "bill_length_mm": 41.8, "bill_depth_mm": 19.4, "flipper_length_mm": 198.0, "body_mass_g": 4450.0, "sex": "male", "year": 2008, "pred": 3985.1643546238624}, {"species": "Adelie", "island": "Torgersen", "bill_length_mm": 33.5, "bill_depth_mm": 19.0, "flipper_length_mm": 190.0, "body_mass_g": 3600.0, "sex": "female", "year": 2008, "pred": 3207.046597512268}, {"species": "Adelie", "island": "Torgersen", "bill_length_mm": 39.7, "bill_depth_mm": 18.4, "flipper_length_mm": 190.0, "body_mass_g": 3900.0, "sex": "male", "year": 2008, "pred": 3788.2911871618935}, {"species": "Adelie", "island": "Torgersen", "bill_length_mm": 39.6, "bill_depth_mm": 17.2, "flipper_length_mm": 196.0, "body_mass_g": 3550.0, "sex": "female", "year": 2008, "pred": 3778.916274425609}, {"species": "Adelie", "island": "Torgersen", "bill_length_mm": 45.8, "bill_depth_mm": 18.9, "flipper_length_mm": 197.0, "body_mass_g": 4150.0, "sex": "male", "year": 2008, "pred": 4360.160864075233}, {"species": "Adelie", "island": "Torgersen", "bill_length_mm": 35.5, "bill_depth_mm": 17.5, "flipper_length_mm": 190.0, "body_mass_g": 3700.0, "sex": "female", "year": 2008, "pred": 3394.5448522379534}, {"species": "Adelie", "island": "Torgersen", "bill_length_mm": 42.8, "bill_depth_mm": 18.5, "flipper_length_mm": 195.0, "body_mass_g": 4250.0, "sex": "male", "year": 2008, "pred": 4078.9134819867054}, {"species": "Adelie", "island": "Torgersen", "bill_length_mm": 40.9, "bill_depth_mm": 16.8, "flipper_length_mm": 191.0, "body_mass_g": 3700.0, "sex": "female", "year": 2008, "pred": 3900.7901399973043}, {"species": "Adelie", "island": "Torgersen", "bill_length_mm": 37.2, "bill_depth_mm": 19.4, "flipper_length_mm": 184.0, "body_mass_g": 3900.0, "sex": "male", "year": 2008, "pred": 3553.9183687547866}, {"species": "Adelie", "island": "Torgersen", "bill_length_mm": 36.2, "bill_depth_mm": 16.1, "flipper_length_mm": 187.0, "body_mass_g": 3550.0, "sex": "female", "year": 2008, "pred": 3460.1692413919436}, {"species": "Adelie", "island": "Torgersen", "bill_length_mm": 42.1, "bill_depth_mm": 19.1, "flipper_length_mm": 195.0, "body_mass_g": 4000.0, "sex": "male", "year": 2008, "pred": 4013.2890928327156}, {"species": "Adelie", "island": "Torgersen", "bill_length_mm": 34.6, "bill_depth_mm": 17.2, "flipper_length_mm": 189.0, "body_mass_g": 3200.0, "sex": "female", "year": 2008, "pred": 3310.1706376113953}, {"species": "Adelie", "island": "Torgersen", "bill_length_mm": 42.9, "bill_depth_mm": 17.6, "flipper_length_mm": 196.0, "body_mass_g": 4700.0, "sex": "male", "year": 2008, "pred": 4088.28839472299}, {"species": "Adelie", "island": "Torgersen", "bill_length_mm": 36.7, "bill_depth_mm": 18.8, "flipper_length_mm": 187.0, "body_mass_g": 3800.0, "sex": "female", "year": 2008, "pred": 3507.043805073365}, {"species": "Adelie", "island": "Torgersen", "bill_length_mm": 35.1, "bill_depth_mm": 19.4, "flipper_length_mm": 193.0, "body_mass_g": 4200.0, "sex": "male", "year": 2008, "pred": 3357.0452012928167}, {"species": "Adelie", "island": "Dream", "bill_length_mm": 37.3, "bill_depth_mm": 17.8, "flipper_length_mm": 191.0, "body_mass_g": 3350.0, "sex": "female", "year": 2008, "pred": 3563.29328149107}, {"species": "Adelie", "island": "Dream", "bill_length_mm": 41.3, "bill_depth_mm": 20.3, "flipper_length_mm": 194.0, "body_mass_g": 3550.0, "sex": "male", "year": 2008, "pred": 3938.289790942441}, {"species": "Adelie", "island": "Dream", "bill_length_mm": 36.3, "bill_depth_mm": 19.5, "flipper_length_mm": 190.0, "body_mass_g": 3800.0, "sex": "male", "year": 2008, "pred": 3469.5441541282275}, {"species": "Adelie", "island": "Dream", "bill_length_mm": 36.9, "bill_depth_mm": 18.6, "flipper_length_mm": 189.0, "body_mass_g": 3500.0, "sex": "female", "year": 2008, "pred": 3525.7936305459334}, {"species": "Adelie", "island": "Dream", "bill_length_mm": 38.3, "bill_depth_mm": 19.2, "flipper_length_mm": 189.0, "body_mass_g": 3950.0, "sex": "male", "year": 2008, "pred": 3657.042408853913}, {"species": "Adelie", "island": "Dream", "bill_length_mm": 38.9, "bill_depth_mm": 18.8, "flipper_length_mm": 190.0, "body_mass_g": 3600.0, "sex": "female", "year": 2008, "pred": 3713.291885271619}, {"species": "Adelie", "island": "Dream", "bill_length_mm": 35.7, "bill_depth_mm": 18.0, "flipper_length_mm": 202.0, "body_mass_g": 3550.0, "sex": "female", "year": 2008, "pred": 3413.294677710522}, {"species": "Adelie", "island": "Dream", "bill_length_mm": 41.1, "bill_depth_mm": 18.1, "flipper_length_mm": 205.0, "body_mass_g": 4300.0, "sex": "male", "year": 2008, "pred": 3919.539965469873}, {"species": "Adelie", "island": "Dream", "bill_length_mm": 34.0, "bill_depth_mm": 17.1, "flipper_length_mm": 185.0, "body_mass_g": 3400.0, "sex": "female", "year": 2008, "pred": 3253.9211611936894}, {"species": "Adelie", "island": "Dream", "bill_length_mm": 39.6, "bill_depth_mm": 18.1, "flipper_length_mm": 186.0, "body_mass_g": 4450.0, "sex": "male", "year": 2008, "pred": 3778.916274425609}, {"species": "Adelie", "island": "Dream", "bill_length_mm": 36.2, "bill_depth_mm": 17.3, "flipper_length_mm": 187.0, "body_mass_g": 3300.0, "sex": "female", "year": 2008, "pred": 3460.1692413919436}, {"species": "Adelie", "island": "Dream", "bill_length_mm": 40.8, "bill_depth_mm": 18.9, "flipper_length_mm": 208.0, "body_mass_g": 4300.0, "sex": "male", "year": 2008, "pred": 3891.41522726102}, {"species": "Adelie", "island": "Dream", "bill_length_mm": 38.1, "bill_depth_mm": 18.6, "flipper_length_mm": 190.0, "body_mass_g": 3700.0, "sex": "female", "year": 2008, "pred": 3638.2925833813447}, {"species": "Adelie", "island": "Dream", "bill_length_mm": 40.3, "bill_depth_mm": 18.5, "flipper_length_mm": 196.0, "body_mass_g": 4350.0, "sex": "male", "year": 2008, "pred": 3844.5406635795985}, {"species": "Adelie", "island": "Dream", "bill_length_mm": 33.1, "bill_depth_mm": 16.1, "flipper_length_mm": 178.0, "body_mass_g": 2900.0, "sex": "female", "year": 2008, "pred": 3169.5469465671313}, {"species": "Adelie", "island": "Dream", "bill_length_mm": 43.2, "bill_depth_mm": 18.5, "flipper_length_mm": 192.0, "body_mass_g": 4100.0, "sex": "male", "year": 2008, "pred": 4116.4131329318425}, {"species": "Adelie", "island": "Biscoe", "bill_length_mm": 35.0, "bill_depth_mm": 17.9, "flipper_length_mm": 192.0, "body_mass_g": 3725.0, "sex": "female", "year": 2009, "pred": 3347.6702885565323}, {"species": "Adelie", "island": "Biscoe", "bill_length_mm": 41.0, "bill_depth_mm": 20.0, "flipper_length_mm": 203.0, "body_mass_g": 4725.0, "sex": "male", "year": 2009, "pred": 3910.1650527335887}, {"species": "Adelie", "island": "Biscoe", "bill_length_mm": 37.7, "bill_depth_mm": 16.0, "flipper_length_mm": 183.0, "body_mass_g": 3075.0, "sex": "female", "year": 2009, "pred": 3600.792932436208}, {"species": "Adelie", "island": "Biscoe", "bill_length_mm": 37.8, "bill_depth_mm": 20.0, "flipper_length_mm": 190.0, "body_mass_g": 4250.0, "sex": "male", "year": 2009, "pred": 3610.1678451724915}, {"species": "Adelie", "island": "Biscoe", "bill_length_mm": 37.9, "bill_depth_mm": 18.6, "flipper_length_mm": 193.0, "body_mass_g": 2925.0, "sex": "female", "year": 2009, "pred": 3619.542757908776}, {"species": "Adelie", "island": "Biscoe", "bill_length_mm": 39.7, "bill_depth_mm": 18.9, "flipper_length_mm": 184.0, "body_mass_g": 3550.0, "sex": "male", "year": 2009, "pred": 3788.2911871618935}, {"species": "Adelie", "island": "Biscoe", "bill_length_mm": 38.6, "bill_depth_mm": 17.2, "flipper_length_mm": 199.0, "body_mass_g": 3750.0, "sex": "female", "year": 2009, "pred": 3685.167147062766}, {"species": "Adelie", "island": "Biscoe", "bill_length_mm": 38.2, "bill_depth_mm": 20.0, "flipper_length_mm": 190.0, "body_mass_g": 3900.0, "sex": "male", "year": 2009, "pred": 3647.667496117629}, {"species": "Adelie", "island": "Biscoe", "bill_length_mm": 38.1, "bill_depth_mm": 17.0, "flipper_length_mm": 181.0, "body_mass_g": 3175.0, "sex": "female", "year": 2009, "pred": 3638.2925833813447}, {"species": "Adelie", "island": "Biscoe", "bill_length_mm": 43.2, "bill_depth_mm": 19.0, "flipper_length_mm": 197.0, "body_mass_g": 4775.0, "sex": "male", "year": 2009, "pred": 4116.4131329318425}, {"species": "Adelie", "island": "Biscoe", "bill_length_mm": 38.1, "bill_depth_mm": 16.5, "flipper_length_mm": 198.0, "body_mass_g": 3825.0, "sex": "female", "year": 2009, "pred": 3638.2925833813447}, {"species": "Adelie", "island": "Biscoe", "bill_length_mm": 45.6, "bill_depth_mm": 20.3, "flipper_length_mm": 191.0, "body_mass_g": 4600.0, "sex": "male", "year": 2009, "pred": 4341.411038602665}, {"species": "Adelie", "island": "Biscoe", "bill_length_mm": 39.7, "bill_depth_mm": 17.7, "flipper_length_mm": 193.0, "body_mass_g": 3200.0, "sex": "female", "year": 2009, "pred": 3788.2911871618935}, {"species": "Adelie", "island": "Biscoe", "bill_length_mm": 42.2, "bill_depth_mm": 19.5, "flipper_length_mm": 197.0, "body_mass_g": 4275.0, "sex": "male", "year": 2009, "pred": 4022.664005569}, {"species": "Adelie", "island": "Biscoe", "bill_length_mm": 39.6, "bill_depth_mm": 20.7, "flipper_length_mm": 191.0, "body_mass_g": 3900.0, "sex": "female", "year": 2009, "pred": 3778.916274425609}, {"species": "Adelie", "island": "Biscoe", "bill_length_mm": 42.7, "bill_depth_mm": 18.3, "flipper_length_mm": 196.0, "body_mass_g": 4075.0, "sex": "male", "year": 2009, "pred": 4069.5385692504215}, {"species": "Adelie", "island": "Torgersen", "bill_length_mm": 38.6, "bill_depth_mm": 17.0, "flipper_length_mm": 188.0, "body_mass_g": 2900.0, "sex": "female", "year": 2009, "pred": 3685.167147062766}, {"species": "Adelie", "island": "Torgersen", "bill_length_mm": 37.3, "bill_depth_mm": 20.5, "flipper_length_mm": 199.0, "body_mass_g": 3775.0, "sex": "male", "year": 2009, "pred": 3563.29328149107}, {"species": "Adelie", "island": "Torgersen", "bill_length_mm": 35.7, "bill_depth_mm": 17.0, "flipper_length_mm": 189.0, "body_mass_g": 3350.0, "sex": "female", "year": 2009, "pred": 3413.294677710522}, {"species": "Adelie", "island": "Torgersen", "bill_length_mm": 41.1, "bill_depth_mm": 18.6, "flipper_length_mm": 189.0, "body_mass_g": 3325.0, "sex": "male", "year": 2009, "pred": 3919.539965469873}, {"species": "Adelie", "island": "Torgersen", "bill_length_mm": 36.2, "bill_depth_mm": 17.2, "flipper_length_mm": 187.0, "body_mass_g": 3150.0, "sex": "female", "year": 2009, "pred": 3460.1692413919436}, {"species": "Adelie", "island": "Torgersen", "bill_length_mm": 37.7, "bill_depth_mm": 19.8, "flipper_length_mm": 198.0, "body_mass_g": 3500.0, "sex": "male", "year": 2009, "pred": 3600.792932436208}, {"species": "Adelie", "island": "Torgersen", "bill_length_mm": 40.2, "bill_depth_mm": 17.0, "flipper_length_mm": 176.0, "body_mass_g": 3450.0, "sex": "female", "year": 2009, "pred": 3835.1657508433145}, {"species": "Adelie", "island": "Torgersen", "bill_length_mm": 41.4, "bill_depth_mm": 18.5, "flipper_length_mm": 202.0, "body_mass_g": 3875.0, "sex": "male", "year": 2009, "pred": 3947.664703678726}, {"species": "Adelie", "island": "Torgersen", "bill_length_mm": 35.2, "bill_depth_mm": 15.9, "flipper_length_mm": 186.0, "body_mass_g": 3050.0, "sex": "female", "year": 2009, "pred": 3366.420114029101}, {"species": "Adelie", "island": "Torgersen", "bill_length_mm": 40.6, "bill_depth_mm": 19.0, "flipper_length_mm": 199.0, "body_mass_g": 4000.0, "sex": "male", "year": 2009, "pred": 3872.6654017884516}, {"species": "Adelie", "island": "Torgersen", "bill_length_mm": 38.8, "bill_depth_mm": 17.6, "flipper_length_mm": 191.0, "body_mass_g": 3275.0, "sex": "female", "year": 2009, "pred": 3703.9169725353345}, {"species": "Adelie", "island": "Torgersen", "bill_length_mm": 41.5, "bill_depth_mm": 18.3, "flipper_length_mm": 195.0, "body_mass_g": 4300.0, "sex": "male", "year": 2009, "pred": 3957.03961641501}, {"species": "Adelie", "island": "Torgersen", "bill_length_mm": 39.0, "bill_depth_mm": 17.1, "flipper_length_mm": 191.0, "body_mass_g": 3050.0, "sex": "female", "year": 2009, "pred": 3722.6667980079033}, {"species": "Adelie", "island": "Torgersen", "bill_length_mm": 44.1, "bill_depth_mm": 18.0, "flipper_length_mm": 210.0, "body_mass_g": 4000.0, "sex": "male", "year": 2009, "pred": 4200.787347558401}, {"species": "Adelie", "island": "Torgersen", "bill_length_mm": 38.5, "bill_depth_mm": 17.9, "flipper_length_mm": 190.0, "body_mass_g": 3325.0, "sex": "female", "year": 2009, "pred": 3675.792234326482}, {"species": "Adelie", "island": "Torgersen", "bill_length_mm": 43.1, "bill_depth_mm": 19.2, "flipper_length_mm": 197.0, "body_mass_g": 3500.0, "sex": "male", "year": 2009, "pred": 4107.038220195558}, {"species": "Adelie", "island": "Dream", "bill_length_mm": 36.8, "bill_depth_mm": 18.5, "flipper_length_mm": 193.0, "body_mass_g": 3500.0, "sex": "female", "year": 2009, "pred": 3516.418717809649}, {"species": "Adelie", "island": "Dream", "bill_length_mm": 37.5, "bill_depth_mm": 18.5, "flipper_length_mm": 199.0, "body_mass_g": 4475.0, "sex": "male", "year": 2009, "pred": 3582.043106963639}, {"species": "Adelie", "island": "Dream", "bill_length_mm": 38.1, "bill_depth_mm": 17.6, "flipper_length_mm": 187.0, "body_mass_g": 3425.0, "sex": "female", "year": 2009, "pred": 3638.2925833813447}, {"species": "Adelie", "island": "Dream", "bill_length_mm": 41.1, "bill_depth_mm": 17.5, "flipper_length_mm": 190.0, "body_mass_g": 3900.0, "sex": "male", "year": 2009, "pred": 3919.539965469873}, {"species": "Adelie", "island": "Dream", "bill_length_mm": 35.6, "bill_depth_mm": 17.5, "flipper_length_mm": 191.0, "body_mass_g": 3175.0, "sex": "female", "year": 2009, "pred": 3403.9197649742378}, {"species": "Adelie", "island": "Dream", "bill_length_mm": 40.2, "bill_depth_mm": 20.1, "flipper_length_mm": 200.0, "body_mass_g": 3975.0, "sex": "male", "year": 2009, "pred": 3835.1657508433145}, {"species": "Adelie", "island": "Dream", "bill_length_mm": 37.0, "bill_depth_mm": 16.5, "flipper_length_mm": 185.0, "body_mass_g": 3400.0, "sex": "female", "year": 2009, "pred": 3535.168543282218}, {"species": "Adelie", "island": "Dream", "bill_length_mm": 39.7, "bill_depth_mm": 17.9, "flipper_length_mm": 193.0, "body_mass_g": 4250.0, "sex": "male", "year": 2009, "pred": 3788.2911871618935}, {"species": "Adelie", "island": "Dream", "bill_length_mm": 40.2, "bill_depth_mm": 17.1, "flipper_length_mm": 193.0, "body_mass_g": 3400.0, "sex": "female", "year": 2009, "pred": 3835.1657508433145}, {"species": "Adelie", "island": "Dream", "bill_length_mm": 40.6, "bill_depth_mm": 17.2, "flipper_length_mm": 187.0, "body_mass_g": 3475.0, "sex": "male", "year": 2009, "pred": 3872.6654017884516}, {"species": "Adelie", "island": "Dream", "bill_length_mm": 32.1, "bill_depth_mm": 15.5, "flipper_length_mm": 188.0, "body_mass_g": 3050.0, "sex": "female", "year": 2009, "pred": 3075.7978192042883}, {"species": "Adelie", "island": "Dream", "bill_length_mm": 40.7, "bill_depth_mm": 17.0, "flipper_length_mm": 190.0, "body_mass_g": 3725.0, "sex": "male", "year": 2009, "pred": 3882.040314524736}, {"species": "Adelie", "island": "Dream", "bill_length_mm": 37.3, "bill_depth_mm": 16.8, "flipper_length_mm": 192.0, "body_mass_g": 3000.0, "sex": "female", "year": 2009, "pred": 3563.29328149107}, {"species": "Adelie", "island": "Dream", "bill_length_mm": 39.0, "bill_depth_mm": 18.7, "flipper_length_mm": 185.0, "body_mass_g": 3650.0, "sex": "male", "year": 2009, "pred": 3722.6667980079033}, {"species": "Adelie", "island": "Dream", "bill_length_mm": 39.2, "bill_depth_mm": 18.6, "flipper_length_mm": 190.0, "body_mass_g": 4250.0, "sex": "male", "year": 2009, "pred": 3741.416623480472}, {"species": "Adelie", "island": "Dream", "bill_length_mm": 36.6, "bill_depth_mm": 18.4, "flipper_length_mm": 184.0, "body_mass_g": 3475.0, "sex": "female", "year": 2009, "pred": 3497.6688923370807}, {"species": "Adelie", "island": "Dream", "bill_length_mm": 36.0, "bill_depth_mm": 17.8, "flipper_length_mm": 195.0, "body_mass_g": 3450.0, "sex": "female", "year": 2009, "pred": 3441.419415919375}, {"species": "Adelie", "island": "Dream", "bill_length_mm": 37.8, "bill_depth_mm": 18.1, "flipper_length_mm": 193.0, "body_mass_g": 3750.0, "sex": "male", "year": 2009, "pred": 3610.1678451724915}, {"species": "Adelie", "island": "Dream", "bill_length_mm": 36.0, "bill_depth_mm": 17.1, "flipper_length_mm": 187.0, "body_mass_g": 3700.0, "sex": "female", "year": 2009, "pred": 3441.419415919375}, {"species": "Adelie", "island": "Dream", "bill_length_mm": 41.5, "bill_depth_mm": 18.5, "flipper_length_mm": 201.0, "body_mass_g": 4000.0, "sex": "male", "year": 2009, "pred": 3957.03961641501}]}}, {"mode": "vega-lite"});
+</script>
+</div>
+</div>
+<p>…and here is how the parameter estimates and error squared evolved through iterations of the optimizer:</p>
+<div id="d8a333fb-6558-434a-bce0-bc924d365cdc" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>source <span class="op">=</span> pd.DataFrame(iter_data)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>base <span class="op">=</span> alt.Chart(source, height<span class="op">=</span><span class="dv">200</span>, width<span class="op">=</span><span class="dv">250</span>).encode(</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span>alt.X(<span class="st">"n"</span>).axis(title<span class="op">=</span><span class="st">"Iteration"</span>, <span class="op">**</span>axis_kws),</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    y<span class="op">=</span>alt.Y(alt.repeat(<span class="st">"repeat"</span>), <span class="bu">type</span><span class="op">=</span><span class="st">"quantitative"</span>).axis(<span class="bu">format</span><span class="op">=</span><span class="st">".2s"</span>, <span class="op">**</span>axis_kws),</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>points <span class="op">=</span> base.mark_point(size<span class="op">=</span><span class="dv">25</span>)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>lines <span class="op">=</span> base.mark_line()</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>(points <span class="op">+</span> lines).repeat(repeat<span class="op">=</span>[<span class="st">"m"</span>, <span class="st">"b"</span>, <span class="st">"SSE"</span>], columns<span class="op">=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="7">
+
+<style>
+  #altair-viz-a3be53dd94214694a89766a9343af376.vega-embed {
+    width: 100%;
+    display: flex;
+  }
+
+  #altair-viz-a3be53dd94214694a89766a9343af376.vega-embed details,
+  #altair-viz-a3be53dd94214694a89766a9343af376.vega-embed details summary {
+    position: relative;
+  }
+</style>
+<div id="altair-viz-a3be53dd94214694a89766a9343af376"></div>
+<script type="text/javascript">
+  var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
+  (function(spec, embedOpt){
+    let outputDiv = document.currentScript.previousElementSibling;
+    if (outputDiv.id !== "altair-viz-a3be53dd94214694a89766a9343af376") {
+      outputDiv = document.getElementById("altair-viz-a3be53dd94214694a89766a9343af376");
+    }
+
+    const paths = {
+      "vega": "https://cdn.jsdelivr.net/npm/vega@5?noext",
+      "vega-lib": "https://cdn.jsdelivr.net/npm/vega-lib?noext",
+      "vega-lite": "https://cdn.jsdelivr.net/npm/vega-lite@5.20.1?noext",
+      "vega-embed": "https://cdn.jsdelivr.net/npm/vega-embed@6?noext",
+    };
+
+    function maybeLoadScript(lib, version) {
+      var key = `${lib.replace("-", "")}_version`;
+      return (VEGA_DEBUG[key] == version) ?
+        Promise.resolve(paths[lib]) :
+        new Promise(function(resolve, reject) {
+          var s = document.createElement('script');
+          document.getElementsByTagName("head")[0].appendChild(s);
+          s.async = true;
+          s.onload = () => {
+            VEGA_DEBUG[key] = version;
+            return resolve(paths[lib]);
+          };
+          s.onerror = () => reject(`Error loading script: ${paths[lib]}`);
+          s.src = paths[lib];
+        });
+    }
+
+    function showError(err) {
+      outputDiv.innerHTML = `<div class="error" style="color:red;">${err}</div>`;
+      throw err;
+    }
+
+    function displayChart(vegaEmbed) {
+      vegaEmbed(outputDiv, spec, embedOpt)
+        .catch(err => showError(`Javascript Error: ${err.message}<br>This usually means there's a typo in your chart specification. See the javascript console for the full traceback.`));
+    }
+
+    if(typeof define === "function" && define.amd) {
+      requirejs.config({paths});
+      let deps = ["vega-embed"];
+      require(deps, displayChart, err => showError(`Error loading script: ${err.message}`));
+    } else {
+      maybeLoadScript("vega", "5")
+        .then(() => maybeLoadScript("vega-lite", "5.20.1"))
+        .then(() => maybeLoadScript("vega-embed", "6"))
+        .catch(showError)
+        .then(() => displayChart(vegaEmbed));
+    }
+  })({"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "repeat": ["m", "b", "SSE"], "spec": {"layer": [{"mark": {"type": "point", "size": 25}, "encoding": {"x": {"axis": {"title": "Iteration", "titleFontSize": 16, "titleFontWeight": "normal", "titlePadding": 15, "labelFontSize": 12}, "field": "n", "type": "quantitative"}, "y": {"axis": {"format": ".2s", "titleFontSize": 16, "titleFontWeight": "normal", "titlePadding": 15, "labelFontSize": 12}, "field": {"repeat": "repeat"}, "type": "quantitative"}}}, {"mark": {"type": "line"}, "encoding": {"x": {"axis": {"title": "Iteration", "titleFontSize": 16, "titleFontWeight": "normal", "titlePadding": 15, "labelFontSize": 12}, "field": "n", "type": "quantitative"}, "y": {"axis": {"format": ".2s", "titleFontSize": 16, "titleFontWeight": "normal", "titlePadding": 15, "labelFontSize": 12}, "field": {"repeat": "repeat"}, "type": "quantitative"}}}], "data": {"name": "data-97658ee82aee45c3041b4db4fcee9691"}, "height": 200, "width": 250}, "columns": 2, "$schema": "https://vega.github.io/schema/vega-lite/v5.20.1.json", "datasets": {"data-97658ee82aee45c3041b4db4fcee9691": [{"m": 0.000375, "b": 0.000375, "n": 1, "SSE": 2035895863.1239653}, {"m": 0.0009375, "b": 6.250000000000006e-05, "n": 2, "SSE": 2035884979.7593246}, {"m": 0.00146875, "b": 0.0006562500000000001, "n": 3, "SSE": 2035873739.1045249}, {"m": 0.002859375, "b": 0.0003281250000000003, "n": 4, "SSE": 2035846352.2387865}, {"m": 0.004617187500000001, "b": 0.0013515625000000005, "n": 5, "SSE": 2035810177.8892303}, {"m": 0.008277343750000003, "b": 0.001207031250000001, "n": 6, "SSE": 2035737318.400188}, {"m": 0.013623046875000005, "b": 0.003181640625000002, "n": 7, "SSE": 2035628543.3858385}, {"m": 0.023616210937500007, "b": 0.0038798828125000038, "n": 8, "SSE": 2035428447.8506308}, {"m": 0.03930419921875001, "b": 0.008178222656250008, "n": 9, "SSE": 2035110878.7860196}, {"m": 0.06713452148437503, "b": 0.011723876953125014, "n": 10, "SSE": 2034551989.6705694}, {"m": 0.11242565917968755, "b": 0.022093383789062525, "n": 11, "SSE": 2033637643.272181}, {"m": 0.19073187255859392, "b": 0.03436944580078129, "n": 12, "SSE": 2032063382.8305259}, {"m": 0.3204672546386721, "b": 0.06124649047851569, "n": 13, "SSE": 2029449485.9372563}, {"m": 0.5419473724365239, "b": 0.09923713684082043, "n": 14, "SSE": 2024999569.5265713}, {"m": 0.9121581954956062, "b": 0.17198654937744162, "n": 15, "SSE": 2017562451.2550216}, {"m": 1.5402238426208508, "b": 0.2843425483703617, "n": 16, "SSE": 2004988814.3106089}, {"m": 2.594678312301637, "b": 0.48601937294006414, "n": 17, "SSE": 1983954386.4613676}, {"m": 4.378036841392519, "b": 0.8115697832107556, "n": 18, "SSE": 1948651137.5662065}, {"m": 7.378625045299533, "b": 1.3776986374855063, "n": 19, "SSE": 1889955227.1317148}, {"m": 12.445636205434802, "b": 2.3118638851642648, "n": 20, "SSE": 1792918613.7789478}, {"m": 20.980318193316464, "b": 3.9112042175531454, "n": 21, "SSE": 1635294277.8126755}, {"m": 35.38168150752784, "b": 6.579204879105103, "n": 22, "SSE": 1385985634.93101}, {"m": 59.651727140396844, "b": 11.111885874658846, "n": 23, "SSE": 1013073677.9909021}, {"m": 100.58947658525409, "b": 18.714227695539634, "n": 24, "SSE": 518539296.2311374}, {"m": 100.58947658525409, "b": 18.714227695539634, "n": 25, "SSE": 518539296.2311374}, {"m": 100.58947658525409, "b": 18.714227695539634, "n": 26, "SSE": 518539296.2311374}, {"m": 100.58947658525409, "b": 18.714227695539634, "n": 27, "SSE": 518539296.2311374}, {"m": 100.58947658525409, "b": 18.714227695539634, "n": 28, "SSE": 518539296.2311374}, {"m": 93.5555449694954, "b": 17.41339486496527, "n": 29, "SSE": 591496910.8399205}, {"m": 93.5555449694954, "b": 17.41339486496527, "n": 30, "SSE": 591496910.8399205}, {"m": 93.5555449694954, "b": 17.41339486496527, "n": 31, "SSE": 591496910.8399205}, {"m": 94.0595988284345, "b": 17.501372093333437, "n": 32, "SSE": 586105998.6884352}, {"m": 95.35666631749635, "b": 17.744013629600097, "n": 33, "SSE": 572342030.258398}, {"m": 95.35666631749635, "b": 17.744013629600097, "n": 34, "SSE": 572342030.258398}, {"m": 94.83414603770021, "b": 17.64468716855881, "n": 35, "SSE": 577867322.241823}, {"m": 94.83414603770021, "b": 17.64468716855881, "n": 36, "SSE": 577867322.241823}, {"m": 95.06505696271815, "b": 17.689561149348513, "n": 37, "SSE": 575421649.2016423}, {"m": 95.06505696271815, "b": 17.689561149348513, "n": 38, "SSE": 575421649.2016423}, {"m": 94.95034417483564, "b": 17.666714160019776, "n": 39, "SSE": 576636262.8787745}, {"m": 94.95034417483564, "b": 17.666714160019776, "n": 40, "SSE": 576636262.8787745}, {"m": 95.00695789415045, "b": 17.67854765361803, "n": 41, "SSE": 576036336.8896093}, {"m": 95.00695789415045, "b": 17.67854765361803, "n": 42, "SSE": 576036336.8896093}, {"m": 95.00695789415045, "b": 17.67854765361803, "n": 43, "SSE": 576036336.8896093}, {"m": 94.99391847626143, "b": 17.67497428181764, "n": 44, "SSE": 576174966.3841275}, {"m": 94.99569298148077, "b": 17.676687622635505, "n": 45, "SSE": 576155402.4929836}, {"m": 95.00088181151077, "b": 17.6771893029223, "n": 46, "SSE": 576100758.7756779}, {"m": 95.00088181151077, "b": 17.6771893029223, "n": 47, "SSE": 576100758.7756779}, {"m": 94.9987310228006, "b": 17.677366797983368, "n": 48, "SSE": 576123189.4997976}, {"m": 94.9987310228006, "b": 17.677366797983368, "n": 49, "SSE": 576123189.4997976}, {"m": 94.99971902829765, "b": 17.677052789409284, "n": 50, "SSE": 576113017.5307317}, {"m": 95.00006858372979, "b": 17.677953833583487, "n": 51, "SSE": 576108843.738329}, {"m": 94.99931241440716, "b": 17.677435054739878, "n": 52, "SSE": 576117060.0492857}, {"m": 94.99963344061007, "b": 17.678977753666473, "n": 53, "SSE": 576112820.597198}, {"m": 94.99963344061007, "b": 17.678977753666473, "n": 54, "SSE": 576112820.597198}, {"m": 94.99958798119783, "b": 17.681095555289474, "n": 55, "SSE": 576112093.7334256}, {"m": 94.99958798119783, "b": 17.681095555289474, "n": 56, "SSE": 576112093.7334256}, {"m": 95.0001845741914, "b": 17.686298754765666, "n": 57, "SSE": 576102888.0256069}, {"m": 94.99956618826411, "b": 17.687610226196846, "n": 58, "SSE": 576108621.1451395}, {"m": 95.00045018128759, "b": 17.69867236086482, "n": 59, "SSE": 576093076.3868423}, {"m": 94.99965540594474, "b": 17.70682637106117, "n": 60, "SSE": 576096770.1765697}, {"m": 94.99965540594474, "b": 17.70682637106117, "n": 61, "SSE": 576096770.1765697}, {"m": 94.99939184479422, "b": 17.739727593455825, "n": 62, "SSE": 576080840.8319142}, {"m": 94.99939184479422, "b": 17.739727593455825, "n": 63, "SSE": 576080840.8319142}, {"m": 94.99753873295799, "b": 17.78893683624318, "n": 64, "SSE": 576072299.1234069}, {"m": 94.99753873295799, "b": 17.78893683624318, "n": 65, "SSE": 576072299.1234069}, {"m": 94.99515849882073, "b": 17.90394852381985, "n": 66, "SSE": 576031899.984141}, {"m": 94.99515849882073, "b": 17.90394852381985, "n": 67, "SSE": 576031899.984141}, {"m": 94.98907204101101, "b": 18.11737869697123, "n": 68, "SSE": 575974420.3985116}, {"m": 94.98779679815311, "b": 18.246218052882867, "n": 69, "SSE": 575914597.0265151}, {"m": 94.97498626110473, "b": 18.737498077141446, "n": 70, "SSE": 575769745.9153626}, {"m": 94.96603050686474, "b": 19.240816801094013, "n": 71, "SSE": 575577714.263088}, {"m": 94.93593155564798, "b": 20.47503621158745, "n": 72, "SSE": 575192142.7862883}, {"m": 94.90297057155965, "b": 22.098783364739305, "n": 73, "SSE": 574615648.4735264}, {"m": 94.826292177082, "b": 25.379095762302107, "n": 74, "SSE": 573557390.9004993}, {"m": 94.826292177082, "b": 25.379095762302107, "n": 75, "SSE": 573557390.9004993}, {"m": 94.71665279851601, "b": 30.283155313016763, "n": 76, "SSE": 571925087.1938301}, {"m": 94.72775507740971, "b": 29.487690782070388, "n": 77, "SSE": 572259441.9893849}, {"m": 94.72775507740971, "b": 29.487690782070388, "n": 78, "SSE": 572259441.9893849}, {"m": 94.58550056734816, "b": 35.25285104624962, "n": 79, "SSE": 570482341.7778878}, {"m": 94.58550056734816, "b": 35.25285104624962, "n": 80, "SSE": 570482341.7778878}, {"m": 94.46545061507402, "b": 39.42708224853608, "n": 81, "SSE": 569374990.1773827}, {"m": 94.46545061507402, "b": 39.42708224853608, "n": 82, "SSE": 569374990.1773827}, {"m": 94.06089164267678, "b": 55.131633979181004, "n": 83, "SSE": 564730621.829853}, {"m": 94.07789091361013, "b": 53.17579074307416, "n": 84, "SSE": 565654303.6957881}, {"m": 93.6733319412129, "b": 68.88034247371908, "n": 85, "SSE": 561026056.0449944}, {"m": 93.6733319412129, "b": 68.88034247371908, "n": 86, "SSE": 561026056.0449944}, {"m": 93.5636925626469, "b": 73.78440202443373, "n": 87, "SSE": 559412681.6882033}, {"m": 93.79338189348702, "b": 64.7061112714326, "n": 88, "SSE": 562124776.8728826}, {"m": 93.79338189348702, "b": 64.7061112714326, "n": 89, "SSE": 562124776.8728826}, {"m": 93.79338189348702, "b": 64.7061112714326, "n": 90, "SSE": 562124776.8728826}, {"m": 93.79338189348702, "b": 64.7061112714326, "n": 91, "SSE": 562124776.8728826}, {"m": 93.71458885122493, "b": 67.83817728572093, "n": 92, "SSE": 561183641.6131872}, {"m": 93.74766670368282, "b": 66.41934620242114, "n": 93, "SSE": 561636914.3332458}, {"m": 93.76225483547046, "b": 65.91743650775182, "n": 94, "SSE": 561767455.3089411}, {"m": 93.73477481040078, "b": 67.00328432040371, "n": 95, "SSE": 561442880.6161954}, {"m": 93.74893888256203, "b": 66.48086751990608, "n": 96, "SSE": 561589276.5430017}, {"m": 93.75205584097593, "b": 66.32975621395335, "n": 97, "SSE": 561641758.2543302}, {"m": 93.75205584097593, "b": 66.32975621395335, "n": 98, "SSE": 561641758.2543302}, {"m": 93.7481424230462, "b": 66.49894733685807, "n": 99, "SSE": 561587375.9223149}, {"m": 93.74636760904797, "b": 66.5593249345362, "n": 100, "SSE": 561571880.1811738}, {"m": 93.74965542851152, "b": 66.42944617482524, "n": 101, "SSE": 561610692.6854569}, {"m": 93.74965542851152, "b": 66.42944617482524, "n": 102, "SSE": 561610692.6854569}, {"m": 93.74965542851152, "b": 66.42944617482524, "n": 103, "SSE": 561610692.6854569}, {"m": 93.74965542851152, "b": 66.42944617482524, "n": 104, "SSE": 561610692.6854569}, {"m": 93.74852933132925, "b": 66.47423455416893, "n": 105, "SSE": 561597228.5284028}, {"m": 93.74919296004944, "b": 66.44961602630136, "n": 106, "SSE": 561604167.6168835}, {"m": 93.74925828710043, "b": 66.4456857325302, "n": 107, "SSE": 561605695.3644757}, {"m": 93.74925828710043, "b": 66.4456857325302, "n": 108, "SSE": 561605695.3644757}, {"m": 93.74925828710043, "b": 66.4456857325302, "n": 109, "SSE": 561605695.3644757}, {"m": 93.74900464634857, "b": 66.45568362248903, "n": 110, "SSE": 561602713.2689443}, {"m": 93.74906840505707, "b": 66.45292400067542, "n": 111, "SSE": 561603601.0142556}, {"m": 93.74914740640162, "b": 66.44999477205621, "n": 112, "SSE": 561604426.2522335}, {"m": 93.74914740640162, "b": 66.44999477205621, "n": 113, "SSE": 561604426.2522335}, {"m": 93.74914740640162, "b": 66.44999477205621, "n": 114, "SSE": 561604426.2522335}, {"m": 93.74909880896575, "b": 66.45194501417983, "n": 115, "SSE": 561603835.4605404}, {"m": 93.7491291925336, "b": 66.45080608446312, "n": 116, "SSE": 561604159.7724972}, {"m": 93.74913070357564, "b": 66.45068516068885, "n": 117, "SSE": 561604211.9343485}, {"m": 93.74913070357564, "b": 66.45068516068885, "n": 118, "SSE": 561604211.9343485}, {"m": 93.74913070357564, "b": 66.45068516068885, "n": 119, "SSE": 561604211.9343485}, {"m": 93.74912133184607, "b": 66.45107161486074, "n": 120, "SSE": 561604092.195586}, {"m": 93.74912594224956, "b": 66.45089452488652, "n": 121, "SSE": 561604143.79952}, {"m": 93.74912594224956, "b": 66.45089452488652, "n": 122, "SSE": 561604143.79952}, {"m": 93.74912916849794, "b": 66.45076067269545, "n": 123, "SSE": 561604185.4763105}, {"m": 93.74912736284274, "b": 66.45083085703612, "n": 124, "SSE": 561604164.8019322}, {"m": 93.74912736284274, "b": 66.45083085703612, "n": 125, "SSE": 561604164.8019322}]}}, {"mode": "vega-lite"});
+</script>
+</div>
+</div>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/chuckpr\.github\.io");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+          // target, if specified
+          link.setAttribute("target", "_blank");
+          if (link.getAttribute("rel") === null) {
+            link.setAttribute("rel", "noopener");
+          }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<input type="hidden" id="giscus-base-theme" value="light">
+<input type="hidden" id="giscus-alt-theme" value="dark">
+<script>
+function loadGiscusWhenReady() {
+  // Function to get the theme based on body class
+  const getTheme = () => {
+    const baseTheme = document.getElementById('giscus-base-theme').value;
+    const altTheme = document.getElementById('giscus-alt-theme').value;
+    return document.body.classList.contains('quarto-dark') ? altTheme : baseTheme;
+  };
+  // Create the Giscus script and add it to the desired location
+  const loadGiscus = () => {
+    const script = document.createElement("script");
+    script.src = "https://giscus.app/client.js";
+    script.async = true;
+    script.dataset.repo = "chuckpr/chuckpr.github.io";
+    script.dataset.repoId = "MDEwOlJlcG9zaXRvcnkyMzA4MTE1NzA=";
+    script.dataset.category = "General";
+    script.dataset.categoryId = "DIC_kwDODcHnss4Cmwbi";
+    script.dataset.mapping = "title";
+    script.dataset.reactionsEnabled = "1";
+    script.dataset.emitMetadata = "0";
+    script.dataset.inputPosition = "top";
+    script.dataset.theme = getTheme();
+    script.dataset.lang = "en";
+    script.crossOrigin = "anonymous";
+    // Append the script to the desired div instead of at the end of the body
+    document.getElementById("quarto-content").appendChild(script);
+  };
+  // MutationObserver to detect when the 'quarto-light' or 'quarto-dark' class is added to the body
+  const observer = new MutationObserver((mutations) => {
+    for (const mutation of mutations) {
+      if (mutation.type === "attributes" && mutation.attributeName === "class") {
+        if (document.body.classList.contains('quarto-light') || document.body.classList.contains('quarto-dark')) {
+          loadGiscus();
+          observer.disconnect(); // Stop observing once Giscus is loaded
+          break;
+        }
+      }
+    }
+  });
+  // Start observing the body for class attribute changes
+  observer.observe(document.body, {
+    attributes: true,
+    attributeFilter: ["class"],
+  });
+}
+loadGiscusWhenReady();
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p><iconify-icon role="img" inline="" icon="fa6-regular:copyright" aria-label="copyright" title="copyright"></iconify-icon> Copyright 2025, Chuck Pepe-Ranney</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>This website is built with <a href="https://github.com/chuckpr/chuckpr.github.io" target="_blank"><iconify-icon role="img" inline="" icon="ph:github-logo-fill" aria-label="GitHub" title="GitHub"></iconify-icon></a> and <a href="https://quarto.org/" target="_blank"><iconify-icon role="img" inline="" icon="simple-icons:quarto" aria-label="Quarto" title="Quarto"></iconify-icon></a></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
