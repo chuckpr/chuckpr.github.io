@@ -214,7 +214,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> palmerpenguins <span class="im">import</span> load_penguins</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> optimize</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>We’ll just use the <code>Adelie</code> data from <a href="https://github.com/mcnakhaee/palmerpenguins">Palmer Penguins</a> for demonstration purposes.</p>
+<p>We’ll just use the <code>Adelie</code> data from <a href="https://github.com/mcnakhaee/palmerpenguins">Palmer Penguins</a> for demonstration purposes. We are going to make a model of body mass, using the bill length variable.</p>
 <div id="d6b1b34e-1a34-4dd1-8c83-1055b653e1eb" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="op">=</span> load_penguins().dropna().query(<span class="st">'species == "Adelie"'</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -327,63 +327,71 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Now we are ready to ready to esimate parameters! The result object holds the optimized parameter values in the <code>x</code> attribute.</p>
 <div id="031d1a29-e519-4b8d-b338-2e0e629f4fb2" class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>initial_guess <span class="op">=</span> [<span class="dv">0</span>, <span class="dv">0</span>]</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> optimize.minimize(</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    objective,</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    initial_guess,</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    args<span class="op">=</span>(penguins[<span class="st">"bill_length_mm"</span>].values, penguins[<span class="st">"body_mass_g"</span>].values),</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    method<span class="op">=</span><span class="st">"Nelder-Mead"</span>,</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    callback<span class="op">=</span>callback,</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>m, b <span class="op">=</span> result.x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-5"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-5-1"><a href="#annotated-cell-5-1" aria-hidden="true" tabindex="-1"></a>initial_guess <span class="op">=</span> [<span class="dv">0</span>, <span class="dv">0</span>]</span>
+<span id="annotated-cell-5-2"><a href="#annotated-cell-5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-5-3"><a href="#annotated-cell-5-3" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> optimize.minimize(</span>
+<span id="annotated-cell-5-4"><a href="#annotated-cell-5-4" aria-hidden="true" tabindex="-1"></a>    objective,</span>
+<span id="annotated-cell-5-5"><a href="#annotated-cell-5-5" aria-hidden="true" tabindex="-1"></a>    initial_guess,</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-5" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-5-6" class="code-annotation-target"><a href="#annotated-cell-5-6" aria-hidden="true" tabindex="-1"></a>    args<span class="op">=</span>(penguins[<span class="st">"bill_length_mm"</span>].values, penguins[<span class="st">"body_mass_g"</span>].values),</span>
+<span id="annotated-cell-5-7"><a href="#annotated-cell-5-7" aria-hidden="true" tabindex="-1"></a>    method<span class="op">=</span><span class="st">"Nelder-Mead"</span>,</span>
+<span id="annotated-cell-5-8"><a href="#annotated-cell-5-8" aria-hidden="true" tabindex="-1"></a>    callback<span class="op">=</span>callback,</span>
+<span id="annotated-cell-5-9"><a href="#annotated-cell-5-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="annotated-cell-5-10"><a href="#annotated-cell-5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-5-11"><a href="#annotated-cell-5-11" aria-hidden="true" tabindex="-1"></a>m, b <span class="op">=</span> result.x</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-5" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-5" data-code-lines="6" data-code-annotation="1">These two arrays get passed to the <code>objective</code> function defined above.</span>
+</dd>
+</dl>
+</div>
 </div>
 <p>The fun part about doing this in <code>Python</code> (or <code>R</code>) is we can readily plot the output. Here is the model visualized using the optimal parameter estimates:</p>
 <div id="65abef99-d237-4bce-b6a1-d2b83fed0616" class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>source <span class="op">=</span> penguins.assign(pred<span class="op">=</span><span class="kw">lambda</span> df_: m <span class="op">*</span> df_[<span class="st">"bill_length_mm"</span>].values <span class="op">+</span> b)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>axis_kws <span class="op">=</span> {</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"titleFontSize"</span>: <span class="dv">16</span>,</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"titleFontWeight"</span>: <span class="st">"normal"</span>,</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"titlePadding"</span>: <span class="dv">15</span>,</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"labelFontSize"</span>: <span class="dv">12</span>,</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>base <span class="op">=</span> alt.Chart(source, width<span class="op">=</span><span class="dv">400</span>).encode(</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span>alt.X(<span class="st">"bill_length_mm"</span>)</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    .scale(zero<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    .axis(title<span class="op">=</span><span class="st">"Bill length, mm"</span>, <span class="op">**</span>axis_kws),</span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>points <span class="op">=</span> base.mark_point(size<span class="op">=</span><span class="dv">50</span>, fill<span class="op">=</span><span class="st">"steelblue"</span>, fillOpacity<span class="op">=</span><span class="fl">0.25</span>).encode(</span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    y<span class="op">=</span>alt.Y(<span class="st">"body_mass_g"</span>).scale(zero<span class="op">=</span><span class="va">False</span>).axis(title<span class="op">=</span><span class="st">"Body mass, g"</span>, <span class="op">**</span>axis_kws),</span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>line <span class="op">=</span> base.mark_line(stroke<span class="op">=</span><span class="st">"coral"</span>, strokeWidth<span class="op">=</span><span class="dv">3</span>).encode(</span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>    y<span class="op">=</span>alt.Y(<span class="st">"pred"</span>).axis(title<span class="op">=</span><span class="st">""</span>)</span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>points <span class="op">+</span> line</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>source <span class="op">=</span> penguins.assign(pred<span class="op">=</span><span class="kw">lambda</span> df_: m <span class="op">*</span> df_[<span class="st">"bill_length_mm"</span>].values <span class="op">+</span> b)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>axis_kws <span class="op">=</span> {</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"titleFontSize"</span>: <span class="dv">16</span>,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"titleFontWeight"</span>: <span class="st">"normal"</span>,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"titlePadding"</span>: <span class="dv">15</span>,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"labelFontSize"</span>: <span class="dv">12</span>,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>base <span class="op">=</span> alt.Chart(source, width<span class="op">=</span><span class="dv">400</span>).encode(</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span>alt.X(<span class="st">"bill_length_mm"</span>)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    .scale(zero<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    .axis(title<span class="op">=</span><span class="st">"Bill length, mm"</span>, <span class="op">**</span>axis_kws),</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>points <span class="op">=</span> base.mark_point(size<span class="op">=</span><span class="dv">50</span>, fill<span class="op">=</span><span class="st">"steelblue"</span>, fillOpacity<span class="op">=</span><span class="fl">0.25</span>).encode(</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    y<span class="op">=</span>alt.Y(<span class="st">"body_mass_g"</span>).scale(zero<span class="op">=</span><span class="va">False</span>).axis(title<span class="op">=</span><span class="st">"Body mass, g"</span>, <span class="op">**</span>axis_kws),</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>line <span class="op">=</span> base.mark_line(stroke<span class="op">=</span><span class="st">"coral"</span>, strokeWidth<span class="op">=</span><span class="dv">3</span>).encode(</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    y<span class="op">=</span>alt.Y(<span class="st">"pred"</span>).axis(title<span class="op">=</span><span class="st">""</span>)</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>points <span class="op">+</span> line</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="6">
 
 <style>
-  #altair-viz-28fb1785a2d144d792d8eea7c683eb2d.vega-embed {
+  #altair-viz-5553e0c19a6a4ceab339e4274ce3ed97.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-28fb1785a2d144d792d8eea7c683eb2d.vega-embed details,
-  #altair-viz-28fb1785a2d144d792d8eea7c683eb2d.vega-embed details summary {
+  #altair-viz-5553e0c19a6a4ceab339e4274ce3ed97.vega-embed details,
+  #altair-viz-5553e0c19a6a4ceab339e4274ce3ed97.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-28fb1785a2d144d792d8eea7c683eb2d"></div>
+<div id="altair-viz-5553e0c19a6a4ceab339e4274ce3ed97"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-28fb1785a2d144d792d8eea7c683eb2d") {
-      outputDiv = document.getElementById("altair-viz-28fb1785a2d144d792d8eea7c683eb2d");
+    if (outputDiv.id !== "altair-viz-5553e0c19a6a4ceab339e4274ce3ed97") {
+      outputDiv = document.getElementById("altair-viz-5553e0c19a6a4ceab339e4274ce3ed97");
     }
 
     const paths = {
@@ -437,37 +445,37 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>…and here is how the parameter estimates and error squared evolved through iterations of the optimizer:</p>
 <div id="d8a333fb-6558-434a-bce0-bc924d365cdc" class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>source <span class="op">=</span> pd.DataFrame(iter_data)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>base <span class="op">=</span> alt.Chart(source, height<span class="op">=</span><span class="dv">200</span>, width<span class="op">=</span><span class="dv">250</span>).encode(</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span>alt.X(<span class="st">"n"</span>).axis(title<span class="op">=</span><span class="st">"Iteration"</span>, <span class="op">**</span>axis_kws),</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    y<span class="op">=</span>alt.Y(alt.repeat(<span class="st">"repeat"</span>), <span class="bu">type</span><span class="op">=</span><span class="st">"quantitative"</span>).axis(<span class="bu">format</span><span class="op">=</span><span class="st">".2s"</span>, <span class="op">**</span>axis_kws),</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>points <span class="op">=</span> base.mark_point(size<span class="op">=</span><span class="dv">25</span>)</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>lines <span class="op">=</span> base.mark_line()</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>(points <span class="op">+</span> lines).repeat(repeat<span class="op">=</span>[<span class="st">"m"</span>, <span class="st">"b"</span>, <span class="st">"SSE"</span>], columns<span class="op">=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>source <span class="op">=</span> pd.DataFrame(iter_data)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>base <span class="op">=</span> alt.Chart(source, height<span class="op">=</span><span class="dv">200</span>, width<span class="op">=</span><span class="dv">250</span>).encode(</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span>alt.X(<span class="st">"n"</span>).axis(title<span class="op">=</span><span class="st">"Iteration"</span>, <span class="op">**</span>axis_kws),</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    y<span class="op">=</span>alt.Y(alt.repeat(<span class="st">"repeat"</span>), <span class="bu">type</span><span class="op">=</span><span class="st">"quantitative"</span>).axis(<span class="bu">format</span><span class="op">=</span><span class="st">".2s"</span>, <span class="op">**</span>axis_kws),</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>points <span class="op">=</span> base.mark_point(size<span class="op">=</span><span class="dv">25</span>)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>lines <span class="op">=</span> base.mark_line()</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>(points <span class="op">+</span> lines).repeat(repeat<span class="op">=</span>[<span class="st">"m"</span>, <span class="st">"b"</span>, <span class="st">"SSE"</span>], columns<span class="op">=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="7">
 
 <style>
-  #altair-viz-a3be53dd94214694a89766a9343af376.vega-embed {
+  #altair-viz-cc8dd334f86a4425b267e39c35a1bbdb.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-a3be53dd94214694a89766a9343af376.vega-embed details,
-  #altair-viz-a3be53dd94214694a89766a9343af376.vega-embed details summary {
+  #altair-viz-cc8dd334f86a4425b267e39c35a1bbdb.vega-embed details,
+  #altair-viz-cc8dd334f86a4425b267e39c35a1bbdb.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-a3be53dd94214694a89766a9343af376"></div>
+<div id="altair-viz-cc8dd334f86a4425b267e39c35a1bbdb"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-a3be53dd94214694a89766a9343af376") {
-      outputDiv = document.getElementById("altair-viz-a3be53dd94214694a89766a9343af376");
+    if (outputDiv.id !== "altair-viz-cc8dd334f86a4425b267e39c35a1bbdb") {
+      outputDiv = document.getElementById("altair-viz-cc8dd334f86a4425b267e39c35a1bbdb");
     }
 
     const paths = {
