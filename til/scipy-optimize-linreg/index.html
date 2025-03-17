@@ -204,7 +204,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<script async="" src="https://scripts.simpleanalyticscdn.com/latest.js"></script><p>When I teach estimating parameters for linear regression, I like start by framing the problem as one of simple optimization. That is, we need to find the parameter values that minimize squared error. I don’t like to jump immediately to the closed form solution for the best parameter estimates. Instead, I typically set up a simple model in Excel, calculate error for each row in the training data, and I optimize parameter estimages with Excel’s solver function. Using Excel for teaching resonated with me when I took the <a href="https://github.com/fastai/course22/tree/master/xl">Fast.AI deep learning course</a>.</p>
+<script async="" src="https://scripts.simpleanalyticscdn.com/latest.js"></script><p>When I teach estimating parameters for linear regression, I like start by framing the problem as one of simple optimization. That is, we need to find the parameter values that minimize squared error. I don’t like to jump immediately to the closed form solution for the best parameter estimates. Instead, I typically set up a simple model in Excel, calculate error for each row in the training data, and I optimize parameter estimates with Excel’s solver function. Using Excel for teaching resonated with me when I took the <a href="https://github.com/fastai/course22/tree/master/xl">Fast.AI deep learning course</a>.</p>
 <p>The <a href="https://r4ds.had.co.nz/model-basics.html#a-simple-model">R for Data Science book</a> takes a similar approach when introducing models but using <code>R</code>’s <code>optim</code> function instead of Excel.</p>
 <p>The following is the example I came up with to reproduce the Excel and R examples in Python using an <a href="https://docs.scipy.org/doc/scipy/reference/optimize.html">optimizaton algorithm availabe from Scipy</a>.</p>
 <div id="0f409e55-49cd-4f33-9f71-78887593edd3" class="cell" data-execution_count="1">
@@ -306,7 +306,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    y_pred <span class="op">=</span> m <span class="op">*</span> X <span class="op">+</span> b</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.<span class="bu">sum</span>((y <span class="op">-</span> y_pred) <span class="op">**</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>This call back function (below ⬇️) will get called after each iteration of the optimizer. It records the parameters, the iteration count, and the corresponding squared error for each optimizer iteration.</p>
+<p>This callback function (below ⬇️) will get called after each iteration of the optimizer. It records the parameters, the iteration count, and the corresponding squared error for each optimizer iteration.</p>
 <div id="8ea12c2a-f95c-41d5-80d7-21f8b3b3749c" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>iter_data <span class="op">=</span> []</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> []</span>
@@ -337,12 +337,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="annotated-cell-5-8"><a href="#annotated-cell-5-8" aria-hidden="true" tabindex="-1"></a>    callback<span class="op">=</span>callback,</span>
 <span id="annotated-cell-5-9"><a href="#annotated-cell-5-9" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="annotated-cell-5-10"><a href="#annotated-cell-5-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="annotated-cell-5-11"><a href="#annotated-cell-5-11" aria-hidden="true" tabindex="-1"></a>m, b <span class="op">=</span> result.x  <span class="co"># &lt;2)</span></span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-5" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-5-11" class="code-annotation-target"><a href="#annotated-cell-5-11" aria-hidden="true" tabindex="-1"></a>m, b <span class="op">=</span> result.x</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-5" data-target-annotation="1">1</dt>
 <dd>
 <span data-code-cell="annotated-cell-5" data-code-lines="6" data-code-annotation="1">These two arrays get passed to the <code>objective</code> function defined above.</span>
+</dd>
+<dt data-target-cell="annotated-cell-5" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-5" data-code-lines="11" data-code-annotation="2">The <code>result</code> object holds the optimized parameter values in the <code>x</code> attribute.</span>
 </dd>
 </dl>
 </div>
