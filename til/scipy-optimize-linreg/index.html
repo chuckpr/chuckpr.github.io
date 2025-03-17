@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="ChuckPR">
-<meta name="dcterms.date" content="2025-03-16">
+<meta name="dcterms.date" content="2025-03-17">
 
 <title>Using Scipy optimize to estimate linear regression parameters – chuckpr blog</title>
 <style>
@@ -192,7 +192,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">March 16, 2025</p>
+      <p class="date">March 17, 2025</p>
     </div>
   </div>
   
@@ -204,7 +204,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<script async="" src="https://scripts.simpleanalyticscdn.com/latest.js"></script><p>When I teach estimating parameters for linear regression, I like start by framing the problem as one of simple optimization. That is, we need to find the parameter values that minimize error squared. I don’t like to jump immediately to the closed form solution for the best parameter estimates. Instead, I typically set up a simple model in Excel, calculate error for each row in the training data, and I optimize parameter estimages with Excel’s solver function. Using Excel for teaching resonated with me when I took the <a href="https://github.com/fastai/course22/tree/master/xl">Fast.AI deep learning course</a>.</p>
+<script async="" src="https://scripts.simpleanalyticscdn.com/latest.js"></script><p>When I teach estimating parameters for linear regression, I like start by framing the problem as one of simple optimization. That is, we need to find the parameter values that minimize squared error. I don’t like to jump immediately to the closed form solution for the best parameter estimates. Instead, I typically set up a simple model in Excel, calculate error for each row in the training data, and I optimize parameter estimages with Excel’s solver function. Using Excel for teaching resonated with me when I took the <a href="https://github.com/fastai/course22/tree/master/xl">Fast.AI deep learning course</a>.</p>
 <p>The <a href="https://r4ds.had.co.nz/model-basics.html#a-simple-model">R for Data Science book</a> takes a similar approach when introducing models but using <code>R</code>’s <code>optim</code> function instead of Excel.</p>
 <p>The following is the example I came up with to reproduce the Excel and R examples in Python using an <a href="https://docs.scipy.org/doc/scipy/reference/optimize.html">optimizaton algorithm availabe from Scipy</a>.</p>
 <div id="0f409e55-49cd-4f33-9f71-78887593edd3" class="cell" data-execution_count="1">
@@ -299,14 +299,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>We need to define a function that calculates error squared for a given combination of parameters.</p>
+<p>We need to define a function that calculates squared error for a given combination of parameters.</p>
 <div id="f83c3314-b75d-493c-b270-199bbca9e432" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> objective(params, X, y):</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    m, b <span class="op">=</span> params</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    y_pred <span class="op">=</span> m <span class="op">*</span> X <span class="op">+</span> b</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.<span class="bu">sum</span>((y <span class="op">-</span> y_pred) <span class="op">**</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>This call back function⬇️ will get called after each iteration of the optimizer. It records the parameters, the iteration count, and the corresponding error squared for each optimizer iteration.</p>
+<p>This call back function (below ⬇️) will get called after each iteration of the optimizer. It records the parameters, the iteration count, and the corresponding squared error for each optimizer iteration.</p>
 <div id="8ea12c2a-f95c-41d5-80d7-21f8b3b3749c" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>iter_data <span class="op">=</span> []</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> []</span>
@@ -325,7 +325,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>        }</span>
 <span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Now we are ready to ready to esimate parameters! The result object holds the optimized parameter values in the <code>x</code> attribute.</p>
+<p>Now we are ready to ready to esimate parameters!</p>
 <div id="031d1a29-e519-4b8d-b338-2e0e629f4fb2" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="annotated-cell-5"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-5-1"><a href="#annotated-cell-5-1" aria-hidden="true" tabindex="-1"></a>initial_guess <span class="op">=</span> [<span class="dv">0</span>, <span class="dv">0</span>]</span>
 <span id="annotated-cell-5-2"><a href="#annotated-cell-5-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -337,7 +337,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="annotated-cell-5-8"><a href="#annotated-cell-5-8" aria-hidden="true" tabindex="-1"></a>    callback<span class="op">=</span>callback,</span>
 <span id="annotated-cell-5-9"><a href="#annotated-cell-5-9" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="annotated-cell-5-10"><a href="#annotated-cell-5-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="annotated-cell-5-11"><a href="#annotated-cell-5-11" aria-hidden="true" tabindex="-1"></a>m, b <span class="op">=</span> result.x</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="annotated-cell-5-11"><a href="#annotated-cell-5-11" aria-hidden="true" tabindex="-1"></a>m, b <span class="op">=</span> result.x  <span class="co"># &lt;2)</span></span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-5" data-target-annotation="1">1</dt>
@@ -375,23 +375,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output cell-output-display" data-execution_count="6">
 
 <style>
-  #altair-viz-42ad13bbb1c141178f0345ba77ef8e7f.vega-embed {
+  #altair-viz-37eff687478e4faebe4f33931a39bcd3.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-42ad13bbb1c141178f0345ba77ef8e7f.vega-embed details,
-  #altair-viz-42ad13bbb1c141178f0345ba77ef8e7f.vega-embed details summary {
+  #altair-viz-37eff687478e4faebe4f33931a39bcd3.vega-embed details,
+  #altair-viz-37eff687478e4faebe4f33931a39bcd3.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-42ad13bbb1c141178f0345ba77ef8e7f"></div>
+<div id="altair-viz-37eff687478e4faebe4f33931a39bcd3"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-42ad13bbb1c141178f0345ba77ef8e7f") {
-      outputDiv = document.getElementById("altair-viz-42ad13bbb1c141178f0345ba77ef8e7f");
+    if (outputDiv.id !== "altair-viz-37eff687478e4faebe4f33931a39bcd3") {
+      outputDiv = document.getElementById("altair-viz-37eff687478e4faebe4f33931a39bcd3");
     }
 
     const paths = {
@@ -443,7 +443,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </script>
 </div>
 </div>
-<p>…and here is how the parameter estimates and error squared evolved through iterations of the optimizer:</p>
+<p>…and here is how the squared error evolved through iterations of the optimizer with different values for the model parameters:</p>
 <div id="d8a333fb-6558-434a-bce0-bc924d365cdc" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>source <span class="op">=</span> pd.DataFrame(iter_data)</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -459,23 +459,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output cell-output-display" data-execution_count="7">
 
 <style>
-  #altair-viz-ee6b5079515c4a7681c27d9df7119e11.vega-embed {
+  #altair-viz-258bca555ddf43e18a88f8d0ecaf6b88.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-ee6b5079515c4a7681c27d9df7119e11.vega-embed details,
-  #altair-viz-ee6b5079515c4a7681c27d9df7119e11.vega-embed details summary {
+  #altair-viz-258bca555ddf43e18a88f8d0ecaf6b88.vega-embed details,
+  #altair-viz-258bca555ddf43e18a88f8d0ecaf6b88.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-ee6b5079515c4a7681c27d9df7119e11"></div>
+<div id="altair-viz-258bca555ddf43e18a88f8d0ecaf6b88"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-ee6b5079515c4a7681c27d9df7119e11") {
-      outputDiv = document.getElementById("altair-viz-ee6b5079515c4a7681c27d9df7119e11");
+    if (outputDiv.id !== "altair-viz-258bca555ddf43e18a88f8d0ecaf6b88") {
+      outputDiv = document.getElementById("altair-viz-258bca555ddf43e18a88f8d0ecaf6b88");
     }
 
     const paths = {
@@ -567,23 +567,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output cell-output-display" data-execution_count="8">
 
 <style>
-  #altair-viz-fa5a90983ff145ac9afa03437a7f077b.vega-embed {
+  #altair-viz-e9e84fee25ac47a6af4d71ba25ae5fa1.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-fa5a90983ff145ac9afa03437a7f077b.vega-embed details,
-  #altair-viz-fa5a90983ff145ac9afa03437a7f077b.vega-embed details summary {
+  #altair-viz-e9e84fee25ac47a6af4d71ba25ae5fa1.vega-embed details,
+  #altair-viz-e9e84fee25ac47a6af4d71ba25ae5fa1.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-fa5a90983ff145ac9afa03437a7f077b"></div>
+<div id="altair-viz-e9e84fee25ac47a6af4d71ba25ae5fa1"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-fa5a90983ff145ac9afa03437a7f077b") {
-      outputDiv = document.getElementById("altair-viz-fa5a90983ff145ac9afa03437a7f077b");
+    if (outputDiv.id !== "altair-viz-e9e84fee25ac47a6af4d71ba25ae5fa1") {
+      outputDiv = document.getElementById("altair-viz-e9e84fee25ac47a6af4d71ba25ae5fa1");
     }
 
     const paths = {
