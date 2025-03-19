@@ -206,7 +206,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <script async="" src="https://scripts.simpleanalyticscdn.com/latest.js"></script><p>When I teach estimating parameters for linear regression, I like start by framing the problem as one of simple optimization. That is, we need to find the parameter values that minimize squared error. I don’t like to jump immediately to the closed form solution for the best parameter estimates. Instead, I typically set up a simple model in Excel, calculate error for each row in the training data, and I optimize parameter estimates with Excel’s solver function. Using Excel for teaching resonated with me when I took the <a href="https://github.com/fastai/course22/tree/master/xl">Fast.AI deep learning course</a>.</p>
 <p>The <a href="https://r4ds.had.co.nz/model-basics.html#a-simple-model">R for Data Science book</a> takes a similar approach when introducing models but using <code>R</code>’s <code>optim</code> function instead of Excel.</p>
-<p>The following is the example I came up with to reproduce the Excel and R examples in Python using an <a href="https://docs.scipy.org/doc/scipy/reference/optimize.html">optimizaton algorithm availabe from Scipy</a>.</p>
+<p>The following is the example I came up with to reproduce the Excel and R examples in Python using an <a href="https://docs.scipy.org/doc/scipy/reference/optimize.html">optimizaton algorithm available from Scipy</a>.</p>
 <div id="0f409e55-49cd-4f33-9f71-78887593edd3" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> altair <span class="im">as</span> alt</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -325,7 +325,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>        }</span>
 <span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Now we are ready to ready to esimate parameters!</p>
+<p>Now we are ready to ready to estimate parameters!</p>
 <div id="031d1a29-e519-4b8d-b338-2e0e629f4fb2" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="annotated-cell-5"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-5-1"><a href="#annotated-cell-5-1" aria-hidden="true" tabindex="-1"></a>initial_guess <span class="op">=</span> [<span class="dv">0</span>, <span class="dv">0</span>]</span>
 <span id="annotated-cell-5-2"><a href="#annotated-cell-5-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -447,7 +447,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </script>
 </div>
 </div>
-<p>…and here is how the squared error evolved through iterations of the optimizer with different values for the model parameters:</p>
+<p>…and here is how the squared error evolved through iterations of the optimizer with different values for the model parameters.</p>
 <div id="d8a333fb-6558-434a-bce0-bc924d365cdc" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>source <span class="op">=</span> pd.DataFrame(iter_data)</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -531,7 +531,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </script>
 </div>
 </div>
-<p>…and we can look at each parameter combination the optimizer considered:</p>
+<p>…and we can look at each parameter combination the optimizer considered.</p>
 <div id="64b627fe-4e70-4bbc-aa50-4565b149ede5" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>dfs <span class="op">=</span> []</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> data <span class="kw">in</span> iter_data:</span>
