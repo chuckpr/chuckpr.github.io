@@ -1,5 +1,6 @@
 project:
   type: website
+  pre-render: pre-render/make-metadata-listing.py
   render:
     - "*.qmd"
     - "*.ipynb"

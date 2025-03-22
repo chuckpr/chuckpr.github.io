@@ -7,3 +7,4 @@ __pycache__
 /_site/
 **.venv/
 **index_files
+listing.yaml
