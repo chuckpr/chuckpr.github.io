@@ -58,9 +58,23 @@
   {
     "objectID": "til.html",
     "href": "til.html",
-    "title": "Today I learned…",
+    "title": "chuckpr blog",
     "section": "",
-    "text": "Today I learned…\nBelow are small posts to record the small things I learn .\n\n\n\n\n\n\n\n\n  \n    \n      Mar 17, 2025\n    \n    \n      \n        \n        Using Scipy optimize to estimate linear regression parameters \n      \n    \n  \n\n  \n    \n      Feb 21, 2025\n    \n    \n      \n        \n        Adjusting jitter width in Altair charts \n      \n    \n  \n\n  \n    \n      Feb 18, 2025\n    \n    \n      \n        \n        Adding a median line to a strip chart in Altair \n      \n    \n  \n\n  \n    \n      Feb 7, 2025\n    \n    \n      \n        \n        Setting up the git CLI to authenticate with AWS CodeCommit \n      \n    \n  \n\n  \n    \n      Jan 23, 2025\n    \n    \n      \n        \n        Dynamic markdown content in Jupyter Lab \n      \n    \n  \n\n  \n    \n      Jan 13, 2025\n    \n    \n      \n        \n        Centering Altair charts in Jupyter Lab \n      \n    \n  \n\n  \n    \n      Dec 13, 2024\n    \n    \n      \n        \n        Encoding point Z-order in Altair charts \n      \n    \n  \n\n  \n    \n      Oct 17, 2024\n    \n    \n      \n        \n        dplyR has a cume_dist function \n      \n    \n  \n\n  \n    \n      Oct 3, 2024\n    \n    \n      \n        \n        A Fish Shell function to select and enter tmux sessions \n      \n    \n  \n\n  \n    \n      Sep 30, 2024\n    \n    \n      \n        \n        Adding custom hover text to iconify icons \n      \n    \n  \n\n  \n    \n      Sep 26, 2024\n    \n    \n      \n        \n        Pivot longer-ing in Polars \n      \n    \n  \n\n\nNo matching items"
+    "text": "Below are small posts to record the small things I learn .\n\n\n\n  \n    \n      Mar 17, 2025\n    \n    \n      \n        \n        Using Scipy optimize to estimate linear regression parameters \n      \n    \n  \n\n  \n    \n      Feb 21, 2025\n    \n    \n      \n        \n        Adjusting jitter width in Altair charts \n      \n    \n  \n\n  \n    \n      Feb 18, 2025\n    \n    \n      \n        \n        Adding a median line to a strip chart in Altair \n      \n    \n  \n\n  \n    \n      Feb 7, 2025\n    \n    \n      \n        \n        Setting up the git CLI to authenticate with AWS CodeCommit \n      \n    \n  \n\n  \n    \n      Jan 23, 2025\n    \n    \n      \n        \n        Dynamic markdown content in Jupyter Lab \n      \n    \n  \n\n  \n    \n      Jan 13, 2025\n    \n    \n      \n        \n        Centering Altair charts in Jupyter Lab \n      \n    \n  \n\n  \n    \n      Dec 13, 2024\n    \n    \n      \n        \n        Encoding point Z-order in Altair charts \n      \n    \n  \n\n  \n    \n      Oct 17, 2024\n    \n    \n      \n        \n        dplyR has a cume_dist function \n      \n    \n  \n\n  \n    \n      Oct 3, 2024\n    \n    \n      \n        \n        A Fish Shell function to select and enter tmux sessions \n      \n    \n  \n\n  \n    \n      Sep 30, 2024\n    \n    \n      \n        \n        Adding custom hover text to iconify icons \n      \n    \n  \n\n  \n    \n      Sep 26, 2024\n    \n    \n      \n        \n        Pivot longer-ing in Polars \n      \n    \n  \n\n\nNo matching items"
+  },
+  {
+    "objectID": "til.html#today-i-learned",
+    "href": "til.html#today-i-learned",
+    "title": "chuckpr blog",
+    "section": "",
+    "text": "Below are small posts to record the small things I learn .\n\n\n\n  \n    \n      Mar 17, 2025\n    \n    \n      \n        \n        Using Scipy optimize to estimate linear regression parameters \n      \n    \n  \n\n  \n    \n      Feb 21, 2025\n    \n    \n      \n        \n        Adjusting jitter width in Altair charts \n      \n    \n  \n\n  \n    \n      Feb 18, 2025\n    \n    \n      \n        \n        Adding a median line to a strip chart in Altair \n      \n    \n  \n\n  \n    \n      Feb 7, 2025\n    \n    \n      \n        \n        Setting up the git CLI to authenticate with AWS CodeCommit \n      \n    \n  \n\n  \n    \n      Jan 23, 2025\n    \n    \n      \n        \n        Dynamic markdown content in Jupyter Lab \n      \n    \n  \n\n  \n    \n      Jan 13, 2025\n    \n    \n      \n        \n        Centering Altair charts in Jupyter Lab \n      \n    \n  \n\n  \n    \n      Dec 13, 2024\n    \n    \n      \n        \n        Encoding point Z-order in Altair charts \n      \n    \n  \n\n  \n    \n      Oct 17, 2024\n    \n    \n      \n        \n        dplyR has a cume_dist function \n      \n    \n  \n\n  \n    \n      Oct 3, 2024\n    \n    \n      \n        \n        A Fish Shell function to select and enter tmux sessions \n      \n    \n  \n\n  \n    \n      Sep 30, 2024\n    \n    \n      \n        \n        Adding custom hover text to iconify icons \n      \n    \n  \n\n  \n    \n      Sep 26, 2024\n    \n    \n      \n        \n        Pivot longer-ing in Polars \n      \n    \n  \n\n\nNo matching items"
+  },
+  {
+    "objectID": "til.html#articles",
+    "href": "til.html#articles",
+    "title": "chuckpr blog",
+    "section": " Articles",
+    "text": "Articles\nThe follow are longer articles on topics relevant to my professional and personal interests.\n\n\n\n\n\n\nWarning\n\n\n\n This site is under construction and these posts are just placeholders. \n\n\n\n\n\n  \n    \n      Sep 20, 2024\n    \n    \n      \n        \n        Post With Code \n      \n    \n  \n\n  \n    \n      Sep 17, 2024\n    \n    \n      \n        \n        Welcome To My Blog \n      \n    \n  \n\n\nNo matching items"
   },
   {
     "objectID": "posts/post-with-code/index.html",
@@ -74,21 +88,21 @@
     "href": "index.html",
     "title": "chuckpr blog",
     "section": "",
-    "text": "Warning\n\n\n\n This site is under construction. Some posts are just placeholders."
+    "text": "I’m Chuck Pepe-Ranney and this is my technical blog. I work as a data scientist/engineer in the computational biology domain and teach data skills at UNC-Chapel Hill. This site serves to capture small things I am learning and longer analyses that I’d like to share."
   },
   {
-    "objectID": "index.html#latest-til-posts",
-    "href": "index.html#latest-til-posts",
+    "objectID": "index.html#hello-and-welcome",
+    "href": "index.html#hello-and-welcome",
     "title": "chuckpr blog",
-    "section": " Latest TIL posts…",
-    "text": "Latest TIL posts…\nFor all TIL posts go here.\n\n\n\n  \n    \n      Mar 17, 2025\n    \n    \n      \n        \n        Using Scipy optimize to estimate linear regression parameters \n      \n    \n  \n\n  \n    \n      Feb 21, 2025\n    \n    \n      \n        \n        Adjusting jitter width in Altair charts \n      \n    \n  \n\n  \n    \n      Feb 18, 2025\n    \n    \n      \n        \n        Adding a median line to a strip chart in Altair \n      \n    \n  \n\n\nNo matching items"
+    "section": "",
+    "text": "I’m Chuck Pepe-Ranney and this is my technical blog. I work as a data scientist/engineer in the computational biology domain and teach data skills at UNC-Chapel Hill. This site serves to capture small things I am learning and longer analyses that I’d like to share."
   },
   {
-    "objectID": "index.html#posts",
-    "href": "index.html#posts",
+    "objectID": "index.html#last-five-posts",
+    "href": "index.html#last-five-posts",
     "title": "chuckpr blog",
-    "section": " Posts",
-    "text": "Posts\n\n\n\n  \n    \n      Sep 20, 2024\n    \n    \n      \n        \n        Post With Code \n      \n    \n  \n\n  \n    \n      Sep 17, 2024\n    \n    \n      \n        \n        Welcome To My Blog \n      \n    \n  \n\n\nNo matching items"
+    "section": " Last five posts…",
+    "text": "Last five posts…\nFor all posts go here.\n\n\n\n  \n    \n      Mar 17, 2025\n    \n    \n      \n        \n        \n        \n        Using Scipy optimize to estimate linear regression parameters \n      \n    \n  \n\n  \n    \n      Feb 21, 2025\n    \n    \n      \n        \n        \n        \n        Adjusting jitter width in Altair charts \n      \n    \n  \n\n  \n    \n      Feb 18, 2025\n    \n    \n      \n        \n        \n        \n        Adding a median line to a strip chart in Altair \n      \n    \n  \n\n  \n    \n      Feb 7, 2025\n    \n    \n      \n        \n        \n        \n        Setting up the git CLI to authenticate with AWS CodeCommit \n      \n    \n  \n\n  \n    \n      Jan 23, 2025\n    \n    \n      \n        \n        \n        \n        Dynamic markdown content in Jupyter Lab \n      \n    \n  \n\n\nNo matching items"
   },
   {
     "objectID": "about.html",

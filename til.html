@@ -74,7 +74,7 @@ ul.task-list li input[type="checkbox"] {
 <script>
 
   window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
+    const listingTargetEl = window.document.querySelector('#listing-til .list');
     if (!listingTargetEl) {
       // No listing discovered, do not attach.
       return; 
@@ -87,7 +87,35 @@ ul.task-list li input[type="checkbox"] {
     };
 
     window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
+    window['quarto-listings']['listing-til'] = new List('listing-til', options);
+
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  });
+
+  window.addEventListener('hashchange',() => {
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  })
+  
+
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    const listingTargetEl = window.document.querySelector('#listing-posts .list');
+    if (!listingTargetEl) {
+      // No listing discovered, do not attach.
+      return; 
+    }
+
+    const options = {
+      valueNames: ['listing-project','listing-execute','listing-website','listing-format','listing-language','listing-freeze','listing-title-block-banner','listing-comments','listing-title','listing-author','listing-date','listing-categories','listing-image','listing-path','listing-outputHref','listing-date-modified','listing-description','listing-filename','listing-file-modified','listing-reading-time','listing-word-count',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-date-modified-sort'] },{ data: ['listing-file-modified-sort'] },{ data: ['listing-reading-time-sort'] },{ data: ['listing-word-count-sort'] }],
+      
+      searchColumns: ["listing-project","listing-execute","listing-website","listing-format","listing-language","listing-freeze","listing-title-block-banner","listing-comments","listing-title","listing-author","listing-date","listing-categories","listing-image","listing-path","listing-outputHref","listing-date-modified","listing-description","listing-filename","listing-file-modified","listing-reading-time","listing-word-count"],
+    };
+
+    window['quarto-listings'] = window['quarto-listings'] || {};
+    window['quarto-listings']['listing-posts'] = new List('listing-posts', options);
 
     if (window['quarto-listing-loaded']) {
       window['quarto-listing-loaded']();
@@ -186,23 +214,25 @@ window.Quarto = {
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-unnumbered"><div class="category" data-category="UG9sYXJz">Polars</div><div class="category" data-category="YWx0YWly">altair</div><div class="category" data-category="YXdz">aws</div><div class="category" data-category="YmxvZ2dpbmc=">blogging</div><div class="category" data-category="ZHBseXI=">dplyr</div><div class="category" data-category="ZmlzaA==">fish</div><div class="category" data-category="Z2l0">git</div><div class="category" data-category="anVweXRlcg==">jupyter</div><div class="category" data-category="bGluZWFyJTIwcmVncmVzc2lvbg==">linear regression</div><div class="category" data-category="bWFya2Rvd24=">markdown</div><div class="category" data-category="cXVhcnRv">quarto</div><div class="category" data-category="c2NpcHk=">scipy</div><div class="category" data-category="dGVhY2hpbmc=">teaching</div><div class="category" data-category="dGlkeXZlcnNl">tidyverse</div><div class="category" data-category="dG11eA==">tmux</div></div></div>
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#today-i-learned" id="toc-today-i-learned" class="nav-link active" data-scroll-target="#today-i-learned"><iconify-icon role="img" inline="" icon="ph:note-blank-duotone" aria-label="til" title="til"></iconify-icon> Today I learned…</a></li>
+  <li><a href="#articles" id="toc-articles" class="nav-link" data-scroll-target="#articles"><iconify-icon role="img" inline="" icon="ph:books-duotone" aria-label="article" title="article"></iconify-icon> Articles</a></li>
+  </ul>
+</nav>
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-unnumbered"><div class="category" data-category="UG9sYXJz">Polars</div><div class="category" data-category="YWx0YWly">altair</div><div class="category" data-category="YW5hbHlzaXM=">analysis</div><div class="category" data-category="YXdz">aws</div><div class="category" data-category="YmxvZ2dpbmc=">blogging</div><div class="category" data-category="Y29kZQ==">code</div><div class="category" data-category="ZHBseXI=">dplyr</div><div class="category" data-category="ZmlzaA==">fish</div><div class="category" data-category="Z2l0">git</div><div class="category" data-category="anVweXRlcg==">jupyter</div><div class="category" data-category="bGluZWFyJTIwcmVncmVzc2lvbg==">linear regression</div><div class="category" data-category="bWFya2Rvd24=">markdown</div><div class="category" data-category="bmV3cw==">news</div><div class="category" data-category="cXVhcnRv">quarto</div><div class="category" data-category="c2NpcHk=">scipy</div><div class="category" data-category="dGVhY2hpbmc=">teaching</div><div class="category" data-category="dGlkeXZlcnNl">tidyverse</div><div class="category" data-category="dG11eA==">tmux</div></div></div>
 <!-- main -->
 <main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
 
 
 
-
-<script async="" src="https://scripts.simpleanalyticscdn.com/latest.js"></script><section id="today-i-learned" class="level1">
-<h1>Today I learned…</h1>
+<script async="" src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
+<section id="today-i-learned" class="level2">
+<h2 class="anchored" data-anchor-id="today-i-learned"><iconify-icon role="img" inline="" icon="ph:note-blank-duotone" aria-label="til" title="til"></iconify-icon> Today I learned…</h2>
 <p>Below are small posts to record the small things I learn <iconify-icon role="img" inline="" icon="fluent-emoji-high-contrast:brain" aria-label="brain" title="brain"></iconify-icon>.</p>
-
-
-
-</section>
-
-<div class="quarto-listing quarto-listing-container-custom" id="listing-listing">
+<div id="listing-til" class="quarto-listing quarto-listing-container-custom">
 <ul class="list list-group list-group-flush">
 
   <li data-index="0" data-categories="c2NpcHklMkNsaW5lYXIlMjByZWdyZXNzaW9uJTJDdGVhY2hpbmc=" data-listing-date-sort="1742184000000" data-listing-file-modified-sort="1742409038713" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="293" class="list-group-item d-sm-flex flex-sm-row-reverse justify-content-sm-between">
@@ -211,7 +241,7 @@ window.Quarto = {
     </div>
     <div>
       <a class="listing-link" href="./til/scipy-optimize-linreg/index.html">
-        <iconify-icon icon="fluent-emoji:link"></iconify-icon>
+        
         Using Scipy optimize to estimate linear regression parameters<span> </span>
       </a>
     </div>
@@ -223,7 +253,7 @@ window.Quarto = {
     </div>
     <div>
       <a class="listing-link" href="./til/adjust-jitter-width/index.html">
-        <iconify-icon icon="fluent-emoji:link"></iconify-icon>
+        
         Adjusting jitter width in Altair charts<span> </span>
       </a>
     </div>
@@ -235,7 +265,7 @@ window.Quarto = {
     </div>
     <div>
       <a class="listing-link" href="./til/median-line-altair-stripplot/index.html">
-        <iconify-icon icon="fluent-emoji:link"></iconify-icon>
+        
         Adding a median line to a strip chart in Altair<span> </span>
       </a>
     </div>
@@ -247,19 +277,19 @@ window.Quarto = {
     </div>
     <div>
       <a class="listing-link" href="./til/aws-git-cred-helper/index.html">
-        <iconify-icon icon="fluent-emoji:link"></iconify-icon>
+        
         Setting up the git CLI to authenticate with AWS CodeCommit<span> </span>
       </a>
     </div>
   </li>
 
-  <li data-index="4" data-categories="bWFya2Rvd24lMkNqdXB5dGVy" data-listing-date-sort="1737608400000" data-listing-file-modified-sort="1742152259410" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="169" class="list-group-item d-sm-flex flex-sm-row-reverse justify-content-sm-between">
+  <li data-index="4" data-categories="bWFya2Rvd24lMkNqdXB5dGVy" data-listing-date-sort="1737608400000" data-listing-file-modified-sort="1742669901362" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="169" class="list-group-item d-sm-flex flex-sm-row-reverse justify-content-sm-between">
     <div>
       <p class="listing-date text-nowrap text-end mb-0 mb-md-3">Jan 23, 2025</p>
     </div>
     <div>
       <a class="listing-link" href="./til/dynamic-md/index.html">
-        <iconify-icon icon="fluent-emoji:link"></iconify-icon>
+        
         Dynamic markdown content in Jupyter Lab<span> </span>
       </a>
     </div>
@@ -271,7 +301,7 @@ window.Quarto = {
     </div>
     <div>
       <a class="listing-link" href="./til/center-altair-chart/index.html">
-        <iconify-icon icon="fluent-emoji:link"></iconify-icon>
+        
         Centering Altair charts in Jupyter Lab<span> </span>
       </a>
     </div>
@@ -283,7 +313,7 @@ window.Quarto = {
     </div>
     <div>
       <a class="listing-link" href="./til/zorder-encoding-altair/index.html">
-        <iconify-icon icon="fluent-emoji:link"></iconify-icon>
+        
         Encoding point Z-order in Altair charts<span> </span>
       </a>
     </div>
@@ -295,7 +325,7 @@ window.Quarto = {
     </div>
     <div>
       <a class="listing-link" href="./til/cume-dist-function-dplyr/index.html">
-        <iconify-icon icon="fluent-emoji:link"></iconify-icon>
+        
         dplyR has a <code>cume_dist</code> function<span> </span>
       </a>
     </div>
@@ -307,7 +337,7 @@ window.Quarto = {
     </div>
     <div>
       <a class="listing-link" href="./til/fish-func-to-select-tmux-sess/index.html">
-        <iconify-icon icon="fluent-emoji:link"></iconify-icon>
+        
         A Fish Shell function to select and enter tmux sessions<span> </span>
       </a>
     </div>
@@ -319,7 +349,7 @@ window.Quarto = {
     </div>
     <div>
       <a class="listing-link" href="./til/iconify-titles/index.html">
-        <iconify-icon icon="fluent-emoji:link"></iconify-icon>
+        
         Adding custom hover text to iconify icons<span> </span>
       </a>
     </div>
@@ -331,7 +361,7 @@ window.Quarto = {
     </div>
     <div>
       <a class="listing-link" href="./til/pivot-longer-polars/index.html">
-        <iconify-icon icon="fluent-emoji:link"></iconify-icon>
+        
         Pivot longer-ing in Polars<span> </span>
       </a>
     </div>
@@ -339,7 +369,60 @@ window.Quarto = {
 
 </ul>
 <div class="listing-no-matching d-none">No matching items</div>
-</div></main> <!-- /main -->
+</div>
+</section>
+<section id="articles" class="level2">
+<h2 class="anchored" data-anchor-id="articles"><iconify-icon role="img" inline="" icon="ph:books-duotone" aria-label="article" title="article"></iconify-icon> Articles</h2>
+<p>The follow are longer articles on topics relevant to my professional and personal interests.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><iconify-icon role="img" inline="" icon="fluent-emoji:construction" aria-label="Icon construction from fluent-emoji Iconify.design set." title="Icon construction from fluent-emoji Iconify.design set."></iconify-icon> This site is under construction and these posts are just placeholders. <iconify-icon role="img" inline="" icon="fluent-emoji:construction" aria-label="Icon construction from fluent-emoji Iconify.design set." title="Icon construction from fluent-emoji Iconify.design set."></iconify-icon></p>
+</div>
+</div>
+<div id="listing-posts" class="quarto-listing quarto-listing-container-custom">
+<ul class="list list-group list-group-flush">
+
+  <li data-index="0" data-categories="bmV3cyUyQ2NvZGUlMkNhbmFseXNpcw==" data-listing-date-sort="1726804800000" data-listing-file-modified-sort="1727383247377" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="13" class="list-group-item d-sm-flex flex-sm-row-reverse justify-content-sm-between">
+    <div>
+      <p class="listing-date text-nowrap text-end mb-0 mb-md-3">Sep 20, 2024</p>
+    </div>
+    <div>
+      <a class="listing-link" href="./posts/post-with-code/index.html">
+        
+        Post With Code<span> </span>
+      </a>
+    </div>
+  </li>
+
+  <li data-index="1" data-categories="bmV3cw==" data-listing-date-sort="1726545600000" data-listing-file-modified-sort="1727383247377" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="32" class="list-group-item d-sm-flex flex-sm-row-reverse justify-content-sm-between">
+    <div>
+      <p class="listing-date text-nowrap text-end mb-0 mb-md-3">Sep 17, 2024</p>
+    </div>
+    <div>
+      <a class="listing-link" href="./posts/welcome/index.html">
+        
+        Welcome To My Blog<span> </span>
+      </a>
+    </div>
+  </li>
+
+</ul>
+<div class="listing-no-matching d-none">No matching items</div>
+</div>
+
+
+
+</section>
+
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

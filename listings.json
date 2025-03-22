@@ -12,25 +12,23 @@
       "/til/cume-dist-function-dplyr/index.html",
       "/til/fish-func-to-select-tmux-sess/index.html",
       "/til/iconify-titles/index.html",
-      "/til/pivot-longer-polars/index.html"
+      "/til/pivot-longer-polars/index.html",
+      "/posts/post-with-code/index.html",
+      "/posts/welcome/index.html"
     ]
   },
   {
     "listing": "/index.html",
     "items": [
+      "til/scipy-optimize-linreg/index.html",
+      "til/adjust-jitter-width/index.html",
+      "til/median-line-altair-stripplot/index.html",
+      "til/aws-git-cred-helper/index.html",
+      "til/dynamic-md/index.html",
+      "til/center-altair-chart/index.html",
+      "til/zorder-encoding-altair/index.html",
       "/posts/post-with-code/index.html",
-      "/posts/welcome/index.html",
-      "/til/scipy-optimize-linreg/index.html",
-      "/til/adjust-jitter-width/index.html",
-      "/til/median-line-altair-stripplot/index.html",
-      "/til/aws-git-cred-helper/index.html",
-      "/til/dynamic-md/index.html",
-      "/til/center-altair-chart/index.html",
-      "/til/zorder-encoding-altair/index.html",
-      "/til/cume-dist-function-dplyr/index.html",
-      "/til/fish-func-to-select-tmux-sess/index.html",
-      "/til/iconify-titles/index.html",
-      "/til/pivot-longer-polars/index.html"
+      "/posts/welcome/index.html"
     ]
   },
   {
