@@ -1,38 +1,28 @@
 ---
 listing:
-  - id: blog
+  - id: posts
     template: gallery.ejs
-    contents: posts
+    contents: 
+    - listing.yaml
     sort: "date desc"
     type: default
     categories: false
     sort-ui: false
     filter-ui: false
-  - id: til
-    template: gallery.ejs
-    contents: til
-    sort: "date desc"
-    type: default
-    categories: false
-    sort-ui: false
-    filter-ui: false
-    max-items: 3
-toc: true
+    max-items: 5
+toc: false
 page-layout: full
 title-block-banner: true
 ---
 
-:::{.callout-warning}
-{{< iconify fluent-emoji:construction >}} This site is under construction. Some
-posts are just placeholders. {{< iconify fluent-emoji:construction >}}
-:::
+## {{< iconify ph:book-open-text-duotone title=hello label=hello >}} Hello and welcome...
 
-## {{< iconify fluent-emoji:new-button title=new label=new >}} Latest TIL posts...
-For all TIL posts go [here](./til.qmd).
+I'm Chuck Pepe-Ranney and this is my technical blog. I work as a data scientist/engineer in the computational
+biology domain and teach data skills at UNC-Chapel Hill. This site serves to capture small things I am learning and longer
+analyses that I'd like to share.
 
-:::{#til}
-:::
+## {{< iconify  ph:coffee-duotone title=new label=new >}} Last five posts...
+For all posts go [here](./til.qmd).
 
-## {{< iconify fluent-emoji:notebook title=posts label=posts >}} Posts
-:::{#blog}
+:::{#posts}
 :::

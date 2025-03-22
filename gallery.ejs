@@ -7,7 +7,11 @@
     </div>
     <div>
       <a class="listing-link" href="<%- item.path %>">
-        <iconify-icon icon="fluent-emoji:link"></iconify-icon>
+        <% if (item.type == 'til' ){ %>
+        <iconify-icon icon="ph:note-blank-duotone"></iconify-icon>
+        <% } else if (item.type == 'posts'){ %>  
+        <iconify-icon icon="ph:books-duotone"></iconify-icon>
+        <% } %>
         <%= item.title %><span> </span>
       </a>
     </div>
