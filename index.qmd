@@ -11,7 +11,7 @@ listing:
     filter-ui: false
     max-items: 5
 toc: false
-page-layout: full
+page-layout: article
 title-block-banner: true
 ---
 
