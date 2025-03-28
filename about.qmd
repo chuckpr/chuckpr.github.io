@@ -7,7 +7,7 @@ about:
       href: https://linkedin.com/in/chuckpr/
     - text: "{{< iconify ph:github-logo-duotone title=github label=github >}} Github"
       href: https://github.com/chuckpr/
-    - text: "{{< iconify proicons:bluesky title=github label=github >}} Bluesky"
+    - text: "{{< iconify proicons:bluesky title=bluesky label=bluesky >}} Bluesky"
       href: https://bsky.app/profile/chuckpr.bsky.social
 ---
 
