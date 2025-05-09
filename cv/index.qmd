@@ -1,0 +1,33 @@
+---
+pagetitle: "Curriculum Vitae"
+format:
+  html:
+    title-block-style: none
+    css: styles.css
+    toc: false
+    navbar: false
+listing:
+  - id: experience-listing
+    template: cv-item.ejs
+    contents: experience.yaml
+    sort:
+      - "begin desc"
+    fields: [icon]
+    template-params:
+      section-title: "Experience"
+      section-icon: "ph:building-office-duotone"
+  - id: education-listing
+    template: cv-item.ejs
+    contents: education.yaml
+    sort:
+      - "begin desc"
+    template-params:
+      section-title: "Education"
+      section-icon: "ph:graduation-cap-duotone"
+---
+
+::: {#experience-listing}
+:::
+
+::: {#education-listing}
+:::

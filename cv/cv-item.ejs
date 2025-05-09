@@ -1,0 +1,34 @@
+```{=html}
+<h2>
+  <%= templateParams["section-title"] %>
+  <span class="icon-container">
+    <iconify-icon icon="<%= templateParams['section-icon'] %>"></iconify-icon>
+  </span>
+</h2>
+<div class="cv-list timeline">
+  <% for (const item of items) { %>
+    <div class="cv-item timeline-item" <%= metadataAttrs(item) %>>
+      <div class="timeline-dot"></div>
+      <div class="cv-header">
+        <div class="cv-org-period">
+          <span class="cv-organization"><%= item.organization || item.institution %></span>
+          <span class="cv-period"><%= item.period || (item.begin + "–" + item.end) %></span>
+        </div>
+        <h3 class="cv-title"><%= item.title || (item.degree + " " + item.field) %></h3>
+        <% if (item.location && item.location.trim() !== '') { %>
+          <div class="cv-location"><%= item.location %></div>
+        <% } %>
+      </div>
+      <% if (item.notes && item.notes.length > 0) { %>
+        <div class="cv-notes">
+          <ul>
+            <% for (const note of item.notes) { %>
+              <li><%= note %></li>
+            <% } %>
+          </ul>
+        </div>
+      <% } %>
+    </div>
+  <% } %>
+</div>
+```

@@ -1,0 +1,121 @@
+.timeline {
+  position: relative;
+  padding-left: 30px;
+  margin-left: 10px;
+  margin-bottom: 1em;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 5px;
+  height: calc(100% - 10px);
+  width: 2px;
+  background: #ccc;
+}
+
+.timeline-item {
+  position: relative;
+  padding-bottom: 15px;
+}
+
+.timeline-dot {
+  position: absolute;
+  left: -35px;
+  top: 5px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #4a86e8;
+  border: 2px solid white;
+  box-shadow: 0 0 0 2px #ccc;
+}
+
+.cv-item {
+  margin-bottom: 0.8em;
+}
+
+.cv-header {
+  margin-bottom: 0.3em;
+}
+
+.cv-title {
+  margin-bottom: 0.1em;
+  margin-top: 0.5em;
+  color: #333;
+}
+
+.cv-organization {
+  font-weight: bold;
+  color: #555;
+}
+
+.cv-period {
+  font-style: italic;
+  color: #666;
+}
+
+.cv-location {
+  font-style: italic;
+  color: #777;
+}
+
+.cv-notes {
+  margin-top: 0.3em;
+}
+
+h2 {
+  margin-top: 1em;
+  margin-bottom: 0.5em;
+}
+
+footer, .footer, .nav-footer {
+  display: none !important;
+}
+
+h2 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.icon-container {
+  order: 2; /* Places the icon after the text */
+  margin-left: auto; /* Pushes the icon to the far right */
+}
+
+.icon-container iconify-icon {
+  font-size: 1.2em;
+  color: #4a86e8; /* Match your timeline dot color */
+}
+
+.cv-location-period {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.3em;
+}
+
+.cv-org-period {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.2em;
+}
+
+.cv-period {
+  margin-left: auto;
+  text-align: right;
+  font-style: italic;
+  color: #666;
+}
+
+.cv-notes ul {
+  margin-top: 0.5em;
+  padding-left: 1.5em;
+}
+
+.cv-notes li {
+  margin-bottom: 0.3em;
+}
