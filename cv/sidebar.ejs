@@ -1,0 +1,18 @@
+```{=html}
+<% for (const item of items) { %>
+<div>
+  <h2 class="text-uppercase font-monospace fw-light ps-1 pb-2 mb-0 border-0" style="font-size: 20px;"><%= item.heading %></h2>
+  <div class="d-flex flex-column ps-2">
+    <% for (const i of item.items) { %>
+      <% if (i.url) { %>
+      <a href="<%= i.url %>" class="text-muted text-decoration-none f2-bold" style="font-size: 18px;">
+      <iconify-icon icon="ph:link-simple-horizontal"></iconify-icon> <%= i.name %>
+      </a>
+      <% } else { %>
+      <span class="text-muted f2-bold" style="font-size: 18px;"><%= i.name %></span>
+      <% } %>
+    <% } %>
+  </div>
+</div>
+<% } %>
+```

@@ -25,6 +25,9 @@ listing:
     template-params:
       section-title: "Education"
       section-icon: "ph:graduation-cap-duotone"
+  - id: sidebar-listing
+    template: sidebar.ejs
+    contents: sidebar.yaml
 ---
 
 <div class="sheet-outer letter">
@@ -44,8 +47,8 @@ and domain expertise.</p>
 <div id="experience-listing" class="pb-0" ></div>
 <div id="education-listing"  class="pb-0"></div>
 </div>
-<div class="p-0 m-0" style="height: 11in; width: 2in; background: #4A95B9ff; opacity: 35%;">
-THIS IS A TEST
+<div class="d-flex flex-row align-items-stretch p-0 m-0" style="height: 11in; width: 2in; background: #ADD8E6;">
+<div id="sidebar-listing" class="d-flex flex-column justify-content-between mb-5 mt-5 pt-3 pb-3" ></div>
 </div>
 </div>
 </div>
