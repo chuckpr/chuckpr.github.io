@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>chuckpr blog</title>
+<title>Curriculum Vitae – chuckpr blog</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,26 +23,26 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<link href="./favicon.ico" rel="icon">
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
-<script src="site_libs/quarto-contrib/iconify-2.1.0/iconify-icon.min.js"></script>
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../favicon.ico" rel="icon">
+<script src="../site_libs/quarto-listing/list.min.js"></script>
+<script src="../site_libs/quarto-listing/quarto-listing.js"></script>
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-contrib/iconify-2.1.0/iconify-icon.min.js"></script>
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -73,20 +73,76 @@ ul.task-list li input[type="checkbox"] {
 <script>
 
   window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-posts .list');
+    const listingTargetEl = window.document.querySelector('#listing-experience-listing .list');
     if (!listingTargetEl) {
       // No listing discovered, do not attach.
       return; 
     }
 
     const options = {
-      valueNames: ['listing-author','listing-categories','listing-date','listing-path','listing-title','listing-type','listing-execute','listing-project','listing-website','listing-format','listing-language','listing-freeze','listing-title-block-banner','listing-comments','listing-image','listing-outputHref','listing-date-modified','listing-description','listing-filename','listing-file-modified','listing-reading-time','listing-word-count',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-date-modified-sort'] },{ data: ['listing-file-modified-sort'] },{ data: ['listing-reading-time-sort'] },{ data: ['listing-word-count-sort'] }],
+      valueNames: ['listing-icon',{ data: ['index'] },{ data: ['categories'] }],
       
-      searchColumns: ["listing-author","listing-categories","listing-date","listing-path","listing-title","listing-type","listing-execute","listing-project","listing-website","listing-format","listing-language","listing-freeze","listing-title-block-banner","listing-comments","listing-image","listing-outputHref","listing-date-modified","listing-description","listing-filename","listing-file-modified","listing-reading-time","listing-word-count"],
+      searchColumns: ["listing-title","listing-organization","listing-location","listing-begin","listing-end","listing-notes"],
     };
 
     window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-posts'] = new List('listing-posts', options);
+    window['quarto-listings']['listing-experience-listing'] = new List('listing-experience-listing', options);
+
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  });
+
+  window.addEventListener('hashchange',() => {
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  })
+  
+
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    const listingTargetEl = window.document.querySelector('#listing-education-listing .list');
+    if (!listingTargetEl) {
+      // No listing discovered, do not attach.
+      return; 
+    }
+
+    const options = {
+      valueNames: ['listing-degree','listing-field','listing-institution','listing-location','listing-begin','listing-end','listing-notes',{ data: ['index'] },{ data: ['categories'] }],
+      
+      searchColumns: ["listing-degree","listing-field","listing-institution","listing-location","listing-begin","listing-end","listing-notes"],
+    };
+
+    window['quarto-listings'] = window['quarto-listings'] || {};
+    window['quarto-listings']['listing-education-listing'] = new List('listing-education-listing', options);
+
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  });
+
+  window.addEventListener('hashchange',() => {
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  })
+  
+
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    const listingTargetEl = window.document.querySelector('#listing-sidebar-listing .list');
+    if (!listingTargetEl) {
+      // No listing discovered, do not attach.
+      return; 
+    }
+
+    const options = {
+      valueNames: ['listing-heading','listing-items',{ data: ['index'] },{ data: ['categories'] }],
+      
+      searchColumns: ["listing-heading","listing-items"],
+    };
+
+    window['quarto-listings'] = window['quarto-listings'] || {};
+    window['quarto-listings']['listing-sidebar-listing'] = new List('listing-sidebar-listing', options);
 
     if (window['quarto-listing-loaded']) {
       window['quarto-listing-loaded']();
@@ -130,158 +186,391 @@ window.Quarto = {
 };
 </script>
 
+<link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="fullcontent">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top quarto-banner">
-    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
-      <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">chuckpr blog</span>
-    </a>
-  </div>
-            <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-  <span class="navbar-toggler-icon"></span>
-</button>
-          <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav navbar-nav-scroll ms-auto">
-  <li class="nav-item">
-    <a class="nav-link active" href="./index.html" aria-current="page"> 
-<span class="menu-text"><iconify-icon role="img" inline="" icon="ph:house-duotone" style="font-size: 1.75em;" aria-label="home" title="home"></iconify-icon></span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./til.html"> 
-<span class="menu-text"><iconify-icon role="img" inline="" icon="ph:lightbulb-duotone" style="font-size: 1.75em;" aria-label="TIL" title="TIL"></iconify-icon></span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./old-posts.html"> 
-<span class="menu-text"><iconify-icon role="img" inline="" icon="ph:archive-box-duotone" style="font-size: 1.75em;" aria-label="archive" title="archive"></iconify-icon></span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./about.html"> 
-<span class="menu-text"><iconify-icon role="img" inline="" icon="ph:question-duotone" style="font-size: 1.75em;" aria-label="about" title="about"></iconify-icon></span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="https://github.com/chuckpr"> 
-<span class="menu-text"><iconify-icon role="img" inline="" icon="ph:github-logo-duotone" style="font-size: 1.75em;" aria-label="GitHub" title="GitHub"></iconify-icon></span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="https://www.linkedin.com/in/chuckpr/"> 
-<span class="menu-text"><iconify-icon role="img" inline="" icon="ph:linkedin-logo-duotone" style="font-size: 1.5em;" aria-label="Linkedin" title="LinkedIn"></iconify-icon></span></a>
-  </li>  
-</ul>
-          </div> <!-- /navcollapse -->
-            <div class="quarto-navbar-tools">
-</div>
-      </div> <!-- /container-fluid -->
-    </nav>
-</header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<div id="quarto-content" class="quarto-container page-layout-custom">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content"><script async="" src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
 
 
 
 
-<section id="hello-and-welcome" class="level2">
-<h2 class="anchored" data-anchor-id="hello-and-welcome"><iconify-icon role="img" inline="" icon="ph:book-open-text-duotone" aria-label="hello" title="hello"></iconify-icon> Hello and welcome…</h2>
-<p>I’m Chuck Pepe-Ranney and this is my technical blog. I work as a data scientist/engineer in the computational biology domain and teach data skills at UNC-Chapel Hill. This site serves to capture small things I am learning and longer analyses that I’d like to share.</p>
-</section>
-<section id="last-five-posts" class="level2">
-<h2 class="anchored" data-anchor-id="last-five-posts"><iconify-icon role="img" inline="" icon="ph:coffee-duotone" aria-label="new" title="new"></iconify-icon> Last five posts…</h2>
-<p>For all posts go <a href="./til.html">here</a>.</p>
-<div id="listing-posts" class="quarto-listing quarto-listing-container-custom">
-<ul class="list list-group list-group-flush">
-
-  <li data-index="0" data-categories="scipy,linear regression,teaching" data-listing-date-sort="1742184000000" class="list-group-item d-sm-flex flex-sm-row-reverse justify-content-sm-between">
-    <div>
-      <p class="listing-date text-nowrap text-end mb-0 mb-md-3">Mar 17, 2025</p>
+<div class="sheet-outer letter">
+<div class="sheet">
+<div class="d-flex flex-row">
+<div class="d-flex flex-column justify-content-between ps-3 pe-2 pt-3 pb-3" style="height: 11in; width: 6.5in;">
+<div id="intro" class="mb-3 ps-3 border-start border-4 border-primary">
+<div class="d-flex flex-row justify-content-between">
+<h1 class="mt-0 mb-3">
+Chuck Pepe-Ranney
+</h1>
+<p><span class="text-muted fw-light font-monospace" style="font-size: 14px;">Data Scientist/Engineer</span></p>
+</div>
+<p class="mb-0" style="font-size: 16px;">
+Data Scientist with extensive DevOps, genomics, and data visualization experience. I have programmed in Python for over ten years and R for over six. I make sense of complex data using modern data science tools, cloud technology, and domain expertise.
+</p>
+</div>
+<div id="listing-experience-listing" class="pb-0 quarto-listing quarto-listing-container-custom">
+<h2 class="section-title d-flex justify-content-between align-items-center pt-0 pb-0 mt-0 mb-1" style="font-size: 20px;">
+  Experience
+  <iconify-icon icon="ph:building-office-duotone"></iconify-icon>
+</h2>
+<div class="timeline">
+  
+    <div class="timeline-item mb-1" data-index="0">
+      <div class="timeline-dot"></div>
+      <div class="mb-0">
+        <div class="d-flex justify-content-between align-items-center mb-0">
+          <h3 class="mt-0 mb-0" style="font-size: 16px;">LifeEdit</h3>
+          <span class="text-end text-muted" style="font-family: monospace; letter-spacing: -0.02em; font-size: 13px;">2021–present</span>
+        </div>
+        <div class="d-flex justify-content-between align-items-baseline">
+          <h4 class="mt-0 mb-0" style="font-size: 16px;">Assoc. Director Genomics Data Science/Discovery</h4>
+          
+            <span class="float-end text-muted fst-italic" style="white-space: nowrap; font-size: 13px;">Durham, North Carolina</span>
+          
+        </div>
+      </div>
+      
+        <div class="class=" mt-0"="" style="font-size: 12px; font-weight: 400;">
+          <ul class="mb-0" style="padding-left: 16px;">
+            
+              <li>I develop genomics workflows to process NGS data in support laboratory scientists.</li>
+            
+              <li>I visualize and statistically model experimental output.</li>
+            
+              <li>I am leading the development of LifeEdit's massive protein catalog for protein discovery.</li>
+            
+          </ul>
+        </div>
+      
     </div>
-    <div>
-      <a class="listing-link" href="./til/scipy-optimize-linreg/index.html">
-        
-        <iconify-icon icon="ph:note-blank-duotone"></iconify-icon>
-        
-        Using Scipy optimize to estimate linear regression parameters<span> </span>
-      </a>
+  
+    <div class="timeline-item mb-1" data-index="1">
+      <div class="timeline-dot"></div>
+      <div class="mb-0">
+        <div class="d-flex justify-content-between align-items-center mb-0">
+          <h3 class="mt-0 mb-0" style="font-size: 16px;">UNC, Chapel Hill—Gillings SPH and Sch. of Data Science and Society</h3>
+          <span class="text-end text-muted" style="font-family: monospace; letter-spacing: -0.02em; font-size: 13px;">2019–present</span>
+        </div>
+        <div class="d-flex justify-content-between align-items-baseline">
+          <h4 class="mt-0 mb-0" style="font-size: 16px;">Adjunct Faculty Instructor</h4>
+          
+        </div>
+      </div>
+      
+        <div class="class=" mt-0"="" style="font-size: 12px; font-weight: 400;">
+          <ul class="mb-0" style="padding-left: 16px;">
+            
+              <li>Teaching Data Science Basics course (BIOS512) in the Gillings School of Global Public Health</li>
+            
+              <li>Covering professional data transformation, preparation, and visualization using the R programming language and Tidy Data principles</li>
+            
+          </ul>
+        </div>
+      
     </div>
-  </li>
-
-  <li data-index="1" data-categories="altair" data-listing-date-sort="1740114000000" class="list-group-item d-sm-flex flex-sm-row-reverse justify-content-sm-between">
-    <div>
-      <p class="listing-date text-nowrap text-end mb-0 mb-md-3">Feb 21, 2025</p>
+  
+    <div class="timeline-item mb-1" data-index="2">
+      <div class="timeline-dot"></div>
+      <div class="mb-0">
+        <div class="d-flex justify-content-between align-items-center mb-0">
+          <h3 class="mt-0 mb-0" style="font-size: 16px;">AgBiome</h3>
+          <span class="text-end text-muted" style="font-family: monospace; letter-spacing: -0.02em; font-size: 13px;">2016–2021</span>
+        </div>
+        <div class="d-flex justify-content-between align-items-baseline">
+          <h4 class="mt-0 mb-0" style="font-size: 16px;">Data Scientist and Data Science Group Leader</h4>
+          
+            <span class="float-end text-muted fst-italic" style="white-space: nowrap; font-size: 13px;">Durham, North Carolina</span>
+          
+        </div>
+      </div>
+      
+        <div class="class=" mt-0"="" style="font-size: 12px; font-weight: 400;">
+          <ul class="mb-0" style="padding-left: 16px;">
+            
+              <li>Designed and led the development of AgBiome's AWS Genomics Data Platform</li>
+            
+              <li>Developed cloud-based infrastructure and data scientist developer tooling to write and deploy data-driven monitoring and real-time analytics dashboards</li>
+            
+              <li>Wrote (first author) AgBiome's first peer-reviewed scientific publication, awarded with the 'Editor's Pick' distinction by The Phytobiomes Journal</li>
+            
+          </ul>
+        </div>
+      
     </div>
-    <div>
-      <a class="listing-link" href="./til/adjust-jitter-width/index.html">
-        
-        <iconify-icon icon="ph:note-blank-duotone"></iconify-icon>
-        
-        Adjusting jitter width in Altair charts<span> </span>
-      </a>
+  
+    <div class="timeline-item mb-1" data-index="3">
+      <div class="timeline-dot"></div>
+      <div class="mb-0">
+        <div class="d-flex justify-content-between align-items-center mb-0">
+          <h3 class="mt-0 mb-0" style="font-size: 16px;">Cornell University</h3>
+          <span class="text-end text-muted" style="font-family: monospace; letter-spacing: -0.02em; font-size: 13px;">2013–2016</span>
+        </div>
+        <div class="d-flex justify-content-between align-items-baseline">
+          <h4 class="mt-0 mb-0" style="font-size: 16px;">Postdoctoral Researcher and Research Associate</h4>
+          
+            <span class="float-end text-muted fst-italic" style="white-space: nowrap; font-size: 13px;">Ithaca, NY</span>
+          
+        </div>
+      </div>
+      
+        <div class="class=" mt-0"="" style="font-size: 12px; font-weight: 400;">
+          <ul class="mb-0" style="padding-left: 16px;">
+            
+              <li>Designed and applied a microbiome analysis pipeline for DNA-SIP-based microbial ecology studies of agricultural soils and biological soil crusts</li>
+            
+              <li>Published several manuscripts as first author in refereed journals and contributed as a co-author to many additional scientific publications</li>
+            
+          </ul>
+        </div>
+      
     </div>
-  </li>
-
-  <li data-index="2" data-categories="altair" data-listing-date-sort="1739854800000" class="list-group-item d-sm-flex flex-sm-row-reverse justify-content-sm-between">
-    <div>
-      <p class="listing-date text-nowrap text-end mb-0 mb-md-3">Feb 18, 2025</p>
+  
+    <div class="timeline-item mb-1" data-index="4">
+      <div class="timeline-dot"></div>
+      <div class="mb-0">
+        <div class="d-flex justify-content-between align-items-center mb-0">
+          <h3 class="mt-0 mb-0" style="font-size: 16px;">Marine Biology Laboratory, Woods Hole</h3>
+          <span class="text-end text-muted" style="font-family: monospace; letter-spacing: -0.02em; font-size: 13px;">2010–2014</span>
+        </div>
+        <div class="d-flex justify-content-between align-items-baseline">
+          <h4 class="mt-0 mb-0" style="font-size: 16px;">Teaching Fellow Microbial Diversity Course, Four Summers</h4>
+          
+        </div>
+      </div>
+      
+        <div class="class=" mt-0"="" style="font-size: 12px; font-weight: 400;">
+          <ul class="mb-0" style="padding-left: 16px;">
+            
+              <li>Taught data analysis best practices in microbiome science focusing on the QIIME and Mothur toolkits and molecular biology laboratory techniques</li>
+            
+              <li>Administered the course Linux servers</li>
+            
+          </ul>
+        </div>
+      
     </div>
-    <div>
-      <a class="listing-link" href="./til/median-line-altair-stripplot/index.html">
-        
-        <iconify-icon icon="ph:note-blank-duotone"></iconify-icon>
-        
-        Adding a median line to a strip chart in Altair<span> </span>
-      </a>
+  
+    <div class="timeline-item mb-1" data-index="5">
+      <div class="timeline-dot"></div>
+      <div class="mb-0">
+        <div class="d-flex justify-content-between align-items-center mb-0">
+          <h3 class="mt-0 mb-0" style="font-size: 16px;">Idaho National Laboratory</h3>
+          <span class="text-end text-muted" style="font-family: monospace; letter-spacing: -0.02em; font-size: 13px;">2005–2006</span>
+        </div>
+        <div class="d-flex justify-content-between align-items-baseline">
+          <h4 class="mt-0 mb-0" style="font-size: 16px;">SULI Undergraduate Researcher, Two Summers</h4>
+          
+        </div>
+      </div>
+      
+        <div class="class=" mt-0"="" style="font-size: 12px; font-weight: 400;">
+          <ul class="mb-0" style="padding-left: 16px;">
+            
+              <li>Two summers studying thermophilic microoragnisms at INL</li>
+            
+              <li>Awarded SULI undergraduate scholarship</li>
+            
+          </ul>
+        </div>
+      
     </div>
-  </li>
-
-  <li data-index="3" data-categories="git,aws" data-listing-date-sort="1738904400000" class="list-group-item d-sm-flex flex-sm-row-reverse justify-content-sm-between">
-    <div>
-      <p class="listing-date text-nowrap text-end mb-0 mb-md-3">Feb 7, 2025</p>
-    </div>
-    <div>
-      <a class="listing-link" href="./til/aws-git-cred-helper/index.html">
-        
-        <iconify-icon icon="ph:note-blank-duotone"></iconify-icon>
-        
-        Setting up the git CLI to authenticate with AWS CodeCommit<span> </span>
-      </a>
-    </div>
-  </li>
-
-  <li data-index="4" data-categories="markdown,jupyter" data-listing-date-sort="1737608400000" class="list-group-item d-sm-flex flex-sm-row-reverse justify-content-sm-between">
-    <div>
-      <p class="listing-date text-nowrap text-end mb-0 mb-md-3">Jan 23, 2025</p>
-    </div>
-    <div>
-      <a class="listing-link" href="./til/dynamic-md/index.html">
-        
-        <iconify-icon icon="ph:note-blank-duotone"></iconify-icon>
-        
-        Dynamic markdown content in Jupyter Lab<span> </span>
-      </a>
-    </div>
-  </li>
-
-</ul>
+  
+</div>
 <div class="listing-no-matching d-none">
 No matching items
 </div>
 </div>
+<div id="listing-education-listing" class="pb-0 quarto-listing quarto-listing-container-custom">
+<h2 class="section-title d-flex justify-content-between align-items-center pt-0 pb-0 mt-0 mb-1" style="font-size: 20px;">
+  Education
+  <iconify-icon icon="ph:graduation-cap-duotone"></iconify-icon>
+</h2>
+<div class="timeline">
+  
+    <div class="timeline-item mb-1" data-index="0">
+      <div class="timeline-dot"></div>
+      <div class="mb-0">
+        <div class="d-flex justify-content-between align-items-center mb-0">
+          <h3 class="mt-0 mb-0" style="font-size: 16px;">Colorado School of Mines</h3>
+          <span class="text-end text-muted" style="font-family: monospace; letter-spacing: -0.02em; font-size: 13px;">2009–2013</span>
+        </div>
+        <div class="d-flex justify-content-between align-items-baseline">
+          <h4 class="mt-0 mb-0" style="font-size: 16px;">PhD Environmental Science and Engineering Division</h4>
+          
+        </div>
+      </div>
+      
+    </div>
+  
+    <div class="timeline-item mb-1" data-index="1">
+      <div class="timeline-dot"></div>
+      <div class="mb-0">
+        <div class="d-flex justify-content-between align-items-center mb-0">
+          <h3 class="mt-0 mb-0" style="font-size: 16px;">Colorado School of Mines</h3>
+          <span class="text-end text-muted" style="font-family: monospace; letter-spacing: -0.02em; font-size: 13px;">2007–2009</span>
+        </div>
+        <div class="d-flex justify-content-between align-items-baseline">
+          <h4 class="mt-0 mb-0" style="font-size: 16px;">M.S. Environmental Engineering</h4>
+          
+        </div>
+      </div>
+      
+        <div class="class=" mt-0"="" style="font-size: 12px; font-weight: 400;">
+          <ul class="mb-0" style="padding-left: 16px;">
+            
+              <li>Biotechnology and Environmental Microbiology emphasis</li>
+            
+          </ul>
+        </div>
+      
+    </div>
+  
+    <div class="timeline-item mb-1" data-index="2">
+      <div class="timeline-dot"></div>
+      <div class="mb-0">
+        <div class="d-flex justify-content-between align-items-center mb-0">
+          <h3 class="mt-0 mb-0" style="font-size: 16px;">Colorado School of Mines</h3>
+          <span class="text-end text-muted" style="font-family: monospace; letter-spacing: -0.02em; font-size: 13px;">2002–2006</span>
+        </div>
+        <div class="d-flex justify-content-between align-items-baseline">
+          <h4 class="mt-0 mb-0" style="font-size: 16px;">B.S. Engineering, Environmental Science Specialty</h4>
+          
+        </div>
+      </div>
+      
+        <div class="class=" mt-0"="" style="font-size: 12px; font-weight: 400;">
+          <ul class="mb-0" style="padding-left: 16px;">
+            
+              <li>High Honors</li>
+            
+              <li>Outstanding Graduating Senior Award, 2006</li>
+            
+          </ul>
+        </div>
+      
+    </div>
+  
+</div>
+<div class="listing-no-matching d-none">
+No matching items
+</div>
+</div>
+</div>
+<div class="d-flex flex-row align-items-stretch p-0 m-0" style="height: 11in; width: 2in; background: #ADD8E6;">
+<div id="listing-sidebar-listing" class="d-flex flex-column justify-content-between mb-5 mt-5 pt-3 pb-3 quarto-listing quarto-listing-container-custom">
+
+<div>
+  <h2 class="text-uppercase font-monospace fw-light ps-1 pb-2 mb-0 border-0" style="font-size: 20px;">skills</h2>
+  <div class="d-flex flex-column ps-2">
+    
+      
+      <span class="text-muted f2-bold" style="font-size: 18px;">Python</span>
+      
+    
+      
+      <span class="text-muted f2-bold" style="font-size: 18px;">R</span>
+      
+    
+      
+      <span class="text-muted f2-bold" style="font-size: 18px;">AWS</span>
+      
+    
+      
+      <span class="text-muted f2-bold" style="font-size: 18px;">Docker</span>
+      
+    
+      
+      <span class="text-muted f2-bold" style="font-size: 18px;">Statistical inference</span>
+      
+    
+      
+      <span class="text-muted f2-bold" style="font-size: 18px;">ML/modeling</span>
+      
+    
+      
+      <span class="text-muted f2-bold" style="font-size: 18px;">HTML/CSS/JS</span>
+      
+    
+      
+      <span class="text-muted f2-bold" style="font-size: 18px;">Bash</span>
+      
+    
+      
+      <span class="text-muted f2-bold" style="font-size: 18px;">Linux</span>
+      
+    
+  </div>
+</div>
+
+<div>
+  <h2 class="text-uppercase font-monospace fw-light ps-1 pb-2 mb-0 border-0" style="font-size: 20px;">links</h2>
+  <div class="d-flex flex-column ps-2">
+    
+      
+      <a href="https://chuckpr.github.io" class="text-muted text-decoration-none f2-bold" style="font-size: 18px;">
+      <iconify-icon icon="ph:link-simple-horizontal"></iconify-icon> chuckpr.github.io
+      </a>
+      
+    
+      
+      <a href="https://github.com/chuckpr" class="text-muted text-decoration-none f2-bold" style="font-size: 18px;">
+      <iconify-icon icon="ph:link-simple-horizontal"></iconify-icon> GitHub
+      </a>
+      
+    
+      
+      <a href="https://scholar.google.com/citations?user=prJQG0oAAAAJ&amp;hl=en" class="text-muted text-decoration-none f2-bold" style="font-size: 18px;">
+      <iconify-icon icon="ph:link-simple-horizontal"></iconify-icon> Google Scholar
+      </a>
+      
+    
+      
+      <a href="https://LinkedIn.com/in/chuckpr" class="text-muted text-decoration-none f2-bold" style="font-size: 18px;">
+      <iconify-icon icon="ph:link-simple-horizontal"></iconify-icon> LinkedIn
+      </a>
+      
+    
+  </div>
+</div>
+
+<div>
+  <h2 class="text-uppercase font-monospace fw-light ps-1 pb-2 mb-0 border-0" style="font-size: 20px;">contact</h2>
+  <div class="d-flex flex-column ps-2">
+    
+      
+      <span class="text-muted f2-bold" style="font-size: 18px;">575-313-0993</span>
+      
+    
+      
+      <a href="mailto:chuck.peperanney@gmail.com" class="text-muted text-decoration-none f2-bold" style="font-size: 18px;">
+      <iconify-icon icon="ph:link-simple-horizontal"></iconify-icon> Email link
+      </a>
+      
+    
+  </div>
+</div>
+
+<div class="listing-no-matching d-none">
+No matching items
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 
 
 
-</section>
 
-</main> <!-- /main -->
+
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
