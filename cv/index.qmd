@@ -6,6 +6,7 @@ format:
     css: styles.css
     toc: false
     navbar: false
+    page-layout: custom
 listing:
   - id: experience-listing
     template: cv-item.ejs
@@ -26,8 +27,26 @@ listing:
       section-icon: "ph:graduation-cap-duotone"
 ---
 
-::: {#experience-listing}
-:::
-
-::: {#education-listing}
-:::
+<div class="sheet-outer letter">
+<div class="sheet">
+<div class="d-flex flex-row">
+<div class="d-flex flex-column justify-content-between ps-3 pe-2 pt-3 pb-3" style="height: 11in; width: 6.5in;">
+<div id="intro" class="mb-3 ps-3 border-start border-4 border-primary">
+<div class="d-flex flex-row justify-content-between">
+<h1 class="mt-0 mb-3">Chuck Pepe-Ranney</h1>
+<span class="text-muted fw-light font-monospace" style="font-size: 14px;">Data Scientist/Engineer</span>
+</div>
+<p class="mb-0" style="font-size: 16px;">Data Scientist with extensive DevOps, genomics, and data visualization
+experience. I have programmed in Python for over ten years and R for over six. I
+make sense of complex data using modern data science tools, cloud technology,
+and domain expertise.</p>
+</div>
+<div id="experience-listing" class="pb-0" ></div>
+<div id="education-listing"  class="pb-0"></div>
+</div>
+<div class="p-0 m-0" style="height: 11in; width: 2in; background: #4A95B9ff; opacity: 35%;">
+THIS IS A TEST
+</div>
+</div>
+</div>
+</div>

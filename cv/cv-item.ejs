@@ -1,27 +1,27 @@
 ```{=html}
-<h2>
+<h2 class="section-title d-flex justify-content-between align-items-center pt-0 pb-0 mt-0 mb-1" style="font-size: 20px;">
   <%= templateParams["section-title"] %>
-  <span class="icon-container">
-    <iconify-icon icon="<%= templateParams['section-icon'] %>"></iconify-icon>
-  </span>
+  <iconify-icon icon="<%= templateParams['section-icon'] %>"></iconify-icon>
 </h2>
-<div class="cv-list timeline">
+<div class="timeline">
   <% for (const item of items) { %>
-    <div class="cv-item timeline-item" <%= metadataAttrs(item) %>>
+    <div class="timeline-item mb-1" <%= metadataAttrs(item) %>>
       <div class="timeline-dot"></div>
-      <div class="cv-header">
-        <div class="cv-org-period">
-          <span class="cv-organization"><%= item.organization || item.institution %></span>
-          <span class="cv-period"><%= item.period || (item.begin + "–" + item.end) %></span>
+      <div class="mb-0">
+        <div class="d-flex justify-content-between align-items-center mb-0">
+          <h3 class="mt-0 mb-0" style="font-size: 16px;"><%= item.organization || item.institution %></h3>
+          <span class="text-end text-muted" style="font-family: monospace; letter-spacing: -0.02em; font-size: 13px;"><%= item.period || (item.begin + "–" + item.end) %></span>
         </div>
-        <h3 class="cv-title"><%= item.title || (item.degree + " " + item.field) %></h3>
-        <% if (item.location && item.location.trim() !== '') { %>
-          <div class="cv-location"><%= item.location %></div>
-        <% } %>
+        <div class="d-flex justify-content-between align-items-baseline">
+          <h4 class="mt-0 mb-0" style="font-size: 16px;"><%= item.title || (item.degree + " " + item.field) %></h4>
+          <% if (item.location && item.location.trim() !== '') { %>
+            <span class="float-end text-muted fst-italic" style="white-space: nowrap; font-size: 13px;"><%= item.location %></span>
+          <% } %>
+        </div>
       </div>
       <% if (item.notes && item.notes.length > 0) { %>
-        <div class="cv-notes">
-          <ul>
+        <div class="class="mt-0" style="font-size: 12px; font-weight: 400;">
+          <ul class="mb-0" style="padding-left: 16px;">
             <% for (const note of item.notes) { %>
               <li><%= note %></li>
             <% } %>
