@@ -1,8 +1,0 @@
----
-listing:
-  template: experience.ejs
-  contents: experience.yaml
-  sort:
-    - "begin desc"
----
-
