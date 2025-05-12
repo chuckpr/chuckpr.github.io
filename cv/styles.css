@@ -1,8 +1,44 @@
+/* Print friendly */
+body {
+  margin: 0;
+}
+
+.sheet-outer {
+  margin: 0;
+}
+
+.sheet {
+  margin: 0;
+  overflow: hidden;
+  position: relative;
+  box-sizing: border-box;
+  page-break-after: always;
+}
+
+.sheet-outer.letter .sheet { 
+  width: 8.5in; 
+  height: 11in; 
+}
+
+.sheet.padding-5mm {
+  padding: 5mm;
+}
+
+
+
+/* Hide */
+.footer {
+  display: none;
+}
+
+
+
+/* Timeline */
 .timeline {
   position: relative;
-  padding-left: 30px;
-  margin-left: 10px;
-  margin-bottom: 1em;
+  padding-left: 20px;
+  margin-left: 5px;
+  margin-bottom: 2px;
 }
 
 .timeline::before {
@@ -17,105 +53,55 @@
 
 .timeline-item {
   position: relative;
-  padding-bottom: 15px;
+  padding-bottom: 0;
 }
 
 .timeline-dot {
   position: absolute;
-  left: -35px;
+  left: -24px;
   top: 5px;
-  width: 12px;
-  height: 12px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   background: #4a86e8;
-  border: 2px solid white;
-  box-shadow: 0 0 0 2px #ccc;
+  margin-top: 3px;
+  /* border: 2px solid white; */
+  /* box-shadow: 0 0 0 2px #ccc; */
 }
 
-.cv-item {
-  margin-bottom: 0.8em;
+
+
+/* Media queries */
+@media screen {
+  body { 
+      background: #e0e0e0 
+  }
+  
+  .sheet {
+      background: white;
+      box-shadow: 0 .5mm 2mm rgba(0,0,0,.3); 
+      margin: 5mm auto;
+  }
 }
 
-.cv-header {
-  margin-bottom: 0.3em;
+@page {
+  size: letter portrait;
+  margin: 0
 }
 
-.cv-title {
-  margin-bottom: 0.1em;
-  margin-top: 0.5em;
-  color: #333;
-}
+@media print {
+  .sheet-outer.letter { 
+    margin: 0;
+    width: 8.5in; 
+  }
 
-.cv-organization {
-  font-weight: bold;
-  color: #555;
-}
+  .sheet {
+    background: white;
+    margin: 0;
+  }
 
-.cv-period {
-  font-style: italic;
-  color: #666;
-}
-
-.cv-location {
-  font-style: italic;
-  color: #777;
-}
-
-.cv-notes {
-  margin-top: 0.3em;
-}
-
-h2 {
-  margin-top: 1em;
-  margin-bottom: 0.5em;
-}
-
-footer, .footer, .nav-footer {
-  display: none !important;
-}
-
-h2 {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.icon-container {
-  order: 2; /* Places the icon after the text */
-  margin-left: auto; /* Pushes the icon to the far right */
-}
-
-.icon-container iconify-icon {
-  font-size: 1.2em;
-  color: #4a86e8; /* Match your timeline dot color */
-}
-
-.cv-location-period {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0.3em;
-}
-
-.cv-org-period {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0.2em;
-}
-
-.cv-period {
-  margin-left: auto;
-  text-align: right;
-  font-style: italic;
-  color: #666;
-}
-
-.cv-notes ul {
-  margin-top: 0.5em;
-  padding-left: 1.5em;
-}
-
-.cv-notes li {
-  margin-bottom: 0.3em;
+  /* Hide */
+  .footer {
+    display: none;
+  }
 }

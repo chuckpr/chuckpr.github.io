@@ -1,8 +1,18 @@
+- title: Assoc. Director Genomics Data Science/Discovery
+  organization: "LifeEdit"
+  location: "Durham, North Carolina"
+  begin: 2021
+  end: "present"
+  notes:
+    - I develop genomics workflows to process NGS data in support laboratory scientists.
+    - I visualize and statistically model experimental output.
+    - I am leading the development of LifeEdit's massive protein catalog for protein discovery.
+
 - title: "Data Scientist and Data Science Group Leader"
   organization: "AgBiome"
   location: "Durham, North Carolina"
   begin: 2016
-  end: "present"
+  end: 2021
   notes:
     - "Designed and led the development of AgBiome's AWS Genomics Data Platform"
     - "Developed cloud-based infrastructure and data scientist developer tooling to write and deploy data-driven monitoring and real-time analytics dashboards"
