@@ -1,3 +1,18 @@
+- heading: "contact"
+  items:
+    - name: 575-313-0993
+    - name: "chuck.peperanney [at] gmail.com"
+      url: "mailto:chuck.peperanney@gmail.com"
+- heading: "links"
+  items:
+    - name: "chuckpr.github.io"
+      url: "https://chuckpr.github.io"
+    - name: "GitHub"
+      url: "https://github.com/chuckpr"
+    - name: "Google Scholar"
+      url: "https://scholar.google.com/citations?user=prJQG0oAAAAJ&hl=en"
+    - name: "LinkedIn"
+      url: "https://LinkedIn.com/in/chuckpr"
 - heading: "skills"
   items:
     - name: "Python"
@@ -9,18 +24,3 @@
     - name: "HTML/CSS/JS"
     - name: "Bash"
     - name: "Linux"
-- heading: "links"
-  items:
-    - name: "chuckpr.github.io"
-      url: "https://chuckpr.github.io"
-    - name: "GitHub"
-      url: "https://github.com/chuckpr"
-    - name: "Google Scholar"
-      url: "https://scholar.google.com/citations?user=prJQG0oAAAAJ&hl=en"
-    - name: "LinkedIn"
-      url: "https://LinkedIn.com/in/chuckpr"
-- heading: "contact"
-  items:
-    - name: 575-313-0993
-    - name: Email link
-      url: "mailto:chuck.peperanney@gmail.com"

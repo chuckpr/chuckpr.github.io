@@ -5,11 +5,11 @@
   <div class="d-flex flex-column ps-2">
     <% for (const i of item.items) { %>
       <% if (i.url) { %>
-      <a href="<%= i.url %>" class="text-muted text-decoration-none f2-bold" style="font-size: 18px;">
-      <iconify-icon icon="ph:link-simple-horizontal"></iconify-icon> <%= i.name %>
+      <a href="<%= i.url %>" class="text-muted" style="font-size: <% if (i.name === 'chuck.peperanney [at] gmail.com') { %>12px<% } else { %>18px;<% } %>">
+      <%= i.name %>
       </a>
       <% } else { %>
-      <span class="text-muted f2-bold" style="font-size: 18px;"><%= i.name %></span>
+      <span class="text-muted" style="font-size: 18px;"><%= i.name %></span>
       <% } %>
     <% } %>
   </div>
