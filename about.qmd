@@ -1,7 +1,8 @@
 ---
 navbar: true
+pagetitle: about
 about:
-  template: jolla
+  template: solana
   links:
     - text: "{{< iconify ph:linkedin-logo-duotone title=hello label=hello >}} LinkedIn"
       href: https://linkedin.com/in/chuckpr/
@@ -11,4 +12,20 @@ about:
       href: https://bsky.app/profile/chuckpr.bsky.social
 ---
 
-About this blog
+# About me
+
+I'm a data scientist and educator with a focus on computational biology.
+I work as an Associate Director of Genomics Data Science at LifeEdit, where I
+develop genomics data pipelines for laboratory scientists, analyze
+experimental data, and lead and support protein engineering and discovery
+initiatives.
+
+I also serve as an adjunct faculty instructor at UNC-Chapel Hill, where I teach
+data science courses in both the Gillings School of Global Public Health and
+the School of Data Science and Society.
+
+You can find my UNC course materials on GitHub:
+
+- [DATA-730 Statistical Modeling and Inference for Data Science](https://github.com/UNC-DATA-730)
+- [BIOS-512 Data Science Basics](https://github.com/chuckpr/BIOS512)
+
