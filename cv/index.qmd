@@ -39,9 +39,8 @@ listing:
 <h1 class="mt-0 mb-3">Chuck Pepe-Ranney</h1>
 <span class="text-muted fw-light font-monospace" style="font-size: 14px;">Data Scientist/Engineer</span>
 </div>
-<p class="mb-0" style="font-size: 16px;">Data Scientist with extensive DevOps, genomics, and data visualization
-experience. I have programmed in Python for over ten years and R for over six. I
-make sense of complex data using modern data science tools, cloud technology,
+<p class="mb-0" style="font-size: 16px;">Data Scientist/Engineer with extensive DevOps, statistics, genomics, 
+and data visualization experience. I make sense of complex data using modern data science tools, cloud technology,
 and domain expertise.</p>
 </div>
 <div id="experience-listing" class="pb-0" ></div>
