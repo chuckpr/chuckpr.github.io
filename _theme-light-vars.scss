@@ -1,0 +1,10 @@
+/*-- scss:uses --*/
+@use 'sass:color';
+
+/*-- scss:defaults --*/
+
+// Light theme overrides
+$theme-link-hover-color: color.scale(#4A95B9ff, $lightness: -25%);
+$theme-listing-date-color: #6C675Fff;
+$theme-nav-link-color: #004366ff;
+$theme-active-category-color: color.scale(#F6A300ff, $lightness: -8%);

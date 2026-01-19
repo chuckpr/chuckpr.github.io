@@ -18,7 +18,7 @@ website:
     <!-- 100% privacy-first analytics -->
     <script async src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
   page-footer:
-    background: light
+    # background: light
     left: "{{< iconify fa6-regular:copyright label=copyright title=copyright >}} Copyright 2025, Chuck Pepe-Ranney"
     right: This website is built with [{{< iconify ph:github-logo-fill title=GitHub label=GitHub >}}](https://github.com/chuckpr/chuckpr.github.io){target=_blank} and [{{< iconify simple-icons:quarto title=Quarto label=Quarto >}}](https://quarto.org/){target=_blank}
   navbar:
@@ -48,5 +48,9 @@ format:
       - fish.xml
     fontsize: 1.15em
     theme:
-      - cosmo
-      - custom.scss
+      light:
+        - cosmo
+        - custom.scss
+      dark:
+        - solar
+        - custom-dark.scss

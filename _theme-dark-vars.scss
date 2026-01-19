@@ -1,0 +1,16 @@
+/*-- scss:uses --*/
+@use 'sass:color';
+
+/*-- scss:defaults --*/
+
+// Dark theme overrides
+$theme-link-hover-color: color.scale(#4A95B9ff, $lightness: +5%);
+$theme-listing-date-color: color.scale(#6C675Fff, $lightness: +35%);
+$theme-nav-link-color: color.scale(#b375d7, $lightness: -15%);
+$theme-active-category-color: color.scale(#F6A300ff, $lightness: +8%);
+
+// Dark-specific additional variables
+$code-bg: color.scale(#002b36ff, $lightness: +8%);
+$code-color: #b375d7;
+$navbar-bg: color.scale(#002b36ff, $lightness: -10%);
+$callout-border-width: 8px;
