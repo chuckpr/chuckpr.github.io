@@ -102,8 +102,9 @@ nav .nav-link {
 }
 
 .category.active,
-.navbar-nav .nav-link.active {
-    color: $theme-active-category-color;
+.navbar-nav .nav-link.active,
+.navbar-nav .nav-item .nav-link.active {
+    color: color.scale($orange-web, $lightness: -15%);
     font-weight: 700;
 }
 
@@ -115,8 +116,8 @@ nav .nav-link {
 
 /* Theme toggle icon customization */
 .quarto-color-scheme-toggle {
-  margin-left: 24px !important;
-  margin-right: 8px !important;
+  margin-left: 24px;
+  margin-right: 8px;
 }
 
 .quarto-color-scheme-toggle:not(.alternate) .bi::before {
