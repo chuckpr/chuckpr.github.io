@@ -135,3 +135,53 @@ pre, code, .sourceCode {
 .code-annotation-container-grid > dd > span {
   background: #4A95B911;
 }
+
+/* DNA helix decoration (homepage only) */
+.dna-helix {
+  width: 100%;
+  overflow: hidden;
+  text-align: center;
+  margin: 1.5rem 0;
+}
+
+.dna-helix pre {
+  font-family: $fira-code;
+  font-size: 0.85rem;
+  line-height: 1;
+  margin: 0;
+  user-select: none;
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+.dna-helix .s1 {
+  color: $blue-green;
+  text-shadow: 0 0 6px rgba(74, 149, 185, 0.5), 0 0 14px rgba(74, 149, 185, 0.3);
+}
+
+.dna-helix .s2 {
+  color: $orange-web;
+  text-shadow: 0 0 6px rgba(246, 163, 0, 0.5), 0 0 14px rgba(246, 163, 0, 0.3);
+}
+
+.dna-helix .rg {
+  color: $dim-gray;
+  text-shadow: 0 0 4px rgba(108, 103, 95, 0.25);
+}
+
+body.quarto-dark .dna-helix .s1 {
+  text-shadow: 0 0 8px rgba(74, 149, 185, 0.8), 0 0 20px rgba(74, 149, 185, 0.4);
+}
+
+body.quarto-dark .dna-helix .s2 {
+  text-shadow: 0 0 8px rgba(246, 163, 0, 0.8), 0 0 20px rgba(246, 163, 0, 0.4);
+}
+
+body.quarto-dark .dna-helix .rg {
+  color: color.scale($dim-gray, $lightness: +35%);
+}
+
+@media (max-width: 400px) {
+  .dna-helix { display: none; }
+}

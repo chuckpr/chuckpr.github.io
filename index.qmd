@@ -21,6 +21,11 @@ I'm Chuck Pepe-Ranney and this is my technical blog. I work as a data scientist/
 biology domain and teach data skills at UNC-Chapel Hill. This site serves to capture small things I am learning and longer
 analyses that I'd like to share.
 
+<div id="dna-helix" class="dna-helix" role="presentation" aria-hidden="true">
+  <pre id="dna-canvas"></pre>
+</div>
+<script src="dna-helix.js"></script>
+
 ## {{< iconify  ph:coffee-duotone title=new label=new >}} Last five posts...
 For all posts go [here](./til.qmd).
 
