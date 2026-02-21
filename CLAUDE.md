@@ -47,19 +47,19 @@ All new work — TIL posts, blog posts, and site features — should be develope
 
 ### Preview the site
 ```bash
-quarto preview
+pixi run preview
 ```
 Starts a local development server with live reload at http://localhost:4200
 
 ### Build the site
 ```bash
-quarto render
+pixi run render
 ```
 Generates the static site in `_site/` directory
 
 ### Pre-commit hooks
 ```bash
-pre-commit run --all-files
+pixi run lint
 ```
 Runs ruff format and isort on Jupyter notebooks via nbQA
 
@@ -93,19 +93,17 @@ The site uses a pre-render script to automatically generate metadata:
 
 ## Environment Setup
 
-### Conda Environment
-The project uses a conda environment defined in `environment.yaml`:
+### Pixi Environment
+The project uses pixi for dependency management, defined in `pixi.toml`:
 ```bash
-conda env create -f environment.yaml
-conda activate blog
+pixi install          # Install/update dependencies (generates pixi.lock)
+pixi shell            # Enter a shell with the environment activated
+pixi run <task>       # Run a defined task (preview, render, lint)
 ```
 
 Core dependencies:
 - R packages: rmarkdown, knitr, tidyverse, gt, reticulate
-- Python packages: polars, great_tables
-
-### Direnv Integration
-The `.envrc` file automatically activates the conda environment when entering the directory (requires direnv).
+- Python packages: polars, great_tables, nbformat, pyyaml
 
 ## Styling and Theming
 

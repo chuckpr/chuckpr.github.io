@@ -8,3 +8,4 @@ __pycache__
 **.venv/
 **index_files
 listing.yaml
+.pixi

@@ -1,0 +1,20 @@
+[project]
+name = "blog"
+channels = ["conda-forge", "bioconda"]
+platforms = ["osx-64", "osx-arm64"]
+
+[dependencies]
+r-rmarkdown = "*"
+r-knitr = "*"
+r-tidyverse = "*"
+r-gt = "*"
+r-reticulate = "*"
+polars = "*"
+great_tables = "*"
+nbformat = "*"
+pyyaml = "*"
+
+[tasks]
+preview = "quarto preview"
+render = "quarto render"
+lint = "pre-commit run --all-files"
