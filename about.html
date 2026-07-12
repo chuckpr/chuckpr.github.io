@@ -2,13 +2,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.31">
+<meta name="generator" content="quarto-1.9.38">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>about – chuckpr blog</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -36,14 +39,14 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-8ef56b68f8fa1e9d2ba328e99e439f80.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-0a6b7249c26820e032cb0bd839ff02b1.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-2adcb0f38fea1a615f8c39ad3796bdbd.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-3c0dc8d51c4f6331fd206bdc139deb8a.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-2adcb0f38fea1a615f8c39ad3796bdbd.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-11224adf52f3f6357643b31efc8d8d69.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-6e6751f0f9a49a49ccf6103d5a592274.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-11224adf52f3f6357643b31efc8d8d69.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script src="site_libs/quarto-contrib/iconify-2.1.0/iconify-icon.min.js"></script>
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
@@ -311,13 +314,15 @@ ul.task-list li input[type="checkbox"] {
 <script async="" src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
 <section id="about-me" class="level1">
 <h1>About me</h1>
-<p>I’m a data scientist and educator with a focus on computational biology. I work as an Associate Director of Genomics Data Science at LifeEdit, where I develop genomics data pipelines for laboratory scientists, analyze experimental data, and lead and support protein engineering and discovery initiatives.</p>
-<p>I also serve as an adjunct faculty instructor at UNC-Chapel Hill, where I teach data science courses in both the Gillings School of Global Public Health and the School of Data Science and Society.</p>
-<p>You can find my UNC course materials on GitHub:</p>
+<p>Hi, I’m Chuck Pepe-Ranney 👋 and welcome to my blog.</p>
+<p>I help teams make sense of data. I have deep experience in biotech and genomics, where I’ve built predictive models, LLM-powered tools, and reliable data pipelines, along with reporting systems people actually enjoy using.</p>
+<p>I also love teaching this stuff. I’ve developed three graduate data science courses at UNC:</p>
 <ul>
-<li><a href="https://github.com/UNC-DATA-730">DATA-730 Statistical Modeling and Inference for Data Science</a></li>
-<li><a href="https://github.com/chuckpr/BIOS512">BIOS-512 Data Science Basics</a></li>
+<li>Data Science Basics (BIOS 512)</li>
+<li><a href="https://github.com/UNC-DATA-730">Statistical Modeling and Inference for Data Science (DATA 730)</a>, materials on GitHub</li>
+<li>Data Science Methods in Biological &amp; Health Sciences (DATA 791)</li>
 </ul>
+<p>If you’re looking for help with data science, data engineering, machine learning, or analytics, I’d love to chat. The best way to reach me is <a href="https://linkedin.com/in/chuckpr/">LinkedIn</a>.</p>
 
 
 </section>
@@ -383,13 +388,14 @@ ul.task-list li input[type="checkbox"] {
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

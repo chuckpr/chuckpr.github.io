@@ -2,13 +2,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.31">
+<meta name="generator" content="quarto-1.9.38">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>old-posts – chuckpr blog</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -39,14 +42,14 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-8ef56b68f8fa1e9d2ba328e99e439f80.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-0a6b7249c26820e032cb0bd839ff02b1.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-2adcb0f38fea1a615f8c39ad3796bdbd.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-3c0dc8d51c4f6331fd206bdc139deb8a.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-2adcb0f38fea1a615f8c39ad3796bdbd.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-11224adf52f3f6357643b31efc8d8d69.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-6e6751f0f9a49a49ccf6103d5a592274.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-11224adf52f3f6357643b31efc8d8d69.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script src="site_libs/quarto-contrib/iconify-2.1.0/iconify-icon.min.js"></script>
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
@@ -85,9 +88,9 @@ ul.task-list li input[type="checkbox"] {
     }
 
     const options = {
-      valueNames: ['listing-project','listing-execute','listing-website','listing-format','listing-language','listing-comments','listing-date','listing-author','listing-title','listing-path','listing-outputHref','listing-date-modified','listing-description','listing-filename','listing-file-modified','listing-reading-time','listing-word-count','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-date-modified-sort'] },{ data: ['listing-file-modified-sort'] },{ data: ['listing-reading-time-sort'] },{ data: ['listing-word-count-sort'] }],
+      valueNames: ['listing-project','listing-execute','listing-website','listing-format','listing-engines','listing-language','listing-comments','listing-date','listing-author','listing-title','listing-path','listing-outputHref','listing-date-modified','listing-description','listing-filename','listing-file-modified','listing-reading-time','listing-word-count','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-date-modified-sort'] },{ data: ['listing-file-modified-sort'] },{ data: ['listing-reading-time-sort'] },{ data: ['listing-word-count-sort'] }],
       
-      searchColumns: ["listing-project","listing-execute","listing-website","listing-format","listing-language","listing-comments","listing-date","listing-author","listing-title","listing-path","listing-outputHref","listing-date-modified","listing-description","listing-filename","listing-file-modified","listing-reading-time","listing-word-count","listing-categories"],
+      searchColumns: ["listing-project","listing-execute","listing-website","listing-format","listing-engines","listing-language","listing-comments","listing-date","listing-author","listing-title","listing-path","listing-outputHref","listing-date-modified","listing-description","listing-filename","listing-file-modified","listing-reading-time","listing-word-count","listing-categories"],
     };
 
     window['quarto-listings'] = window['quarto-listings'] || {};
@@ -106,7 +109,7 @@ ul.task-list li input[type="checkbox"] {
   </script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -119,7 +122,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -383,7 +386,7 @@ Note
 <div class="quarto-listing quarto-listing-container-custom" id="listing-listing">
 <ul class="list list-group list-group-flush">
 
-  <li data-index="0" data-categories="cGh5bG9nZW55JTJDYm9rZWg=" data-listing-date-sort="1439352000000" data-listing-file-modified-sort="1749566942568" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1155" class="list-group-item d-sm-flex flex-sm-row-reverse justify-content-sm-between">
+  <li data-index="0" data-categories="cGh5bG9nZW55JTJDYm9rZWg=" data-listing-date-sort="1439352000000" data-listing-file-modified-sort="1783871186635" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1155" class="list-group-item d-sm-flex flex-sm-row-reverse justify-content-sm-between">
     <div>
       <p class="listing-date text-nowrap text-end mb-0 mb-md-3">Aug 12, 2015</p>
     </div>
@@ -395,7 +398,7 @@ Note
     </div>
   </li>
 
-  <li data-index="1" data-categories="cGh5bG9nZW55JTJDaVRvbA==" data-listing-date-sort="1438920000000" data-listing-file-modified-sort="1749566942547" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1073" class="list-group-item d-sm-flex flex-sm-row-reverse justify-content-sm-between">
+  <li data-index="1" data-categories="cGh5bG9nZW55JTJDaVRvbA==" data-listing-date-sort="1438920000000" data-listing-file-modified-sort="1783871186631" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1073" class="list-group-item d-sm-flex flex-sm-row-reverse justify-content-sm-between">
     <div>
       <p class="listing-date text-nowrap text-end mb-0 mb-md-3">Aug 7, 2015</p>
     </div>
@@ -407,7 +410,7 @@ Note
     </div>
   </li>
 
-  <li data-index="2" data-listing-date-sort="1429502400000" data-listing-file-modified-sort="1749566942374" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="508" class="list-group-item d-sm-flex flex-sm-row-reverse justify-content-sm-between">
+  <li data-index="2" data-listing-date-sort="1429502400000" data-listing-file-modified-sort="1783871186561" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="508" class="list-group-item d-sm-flex flex-sm-row-reverse justify-content-sm-between">
     <div>
       <p class="listing-date text-nowrap text-end mb-0 mb-md-3">Apr 20, 2015</p>
     </div>
@@ -419,7 +422,7 @@ Note
     </div>
   </li>
 
-  <li data-index="3" data-listing-date-sort="1429243200000" data-listing-file-modified-sort="1749566942379" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1026" class="list-group-item d-sm-flex flex-sm-row-reverse justify-content-sm-between">
+  <li data-index="3" data-listing-date-sort="1429243200000" data-listing-file-modified-sort="1783871186562" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1026" class="list-group-item d-sm-flex flex-sm-row-reverse justify-content-sm-between">
     <div>
       <p class="listing-date text-nowrap text-end mb-0 mb-md-3">Apr 17, 2015</p>
     </div>
@@ -431,7 +434,7 @@ Note
     </div>
   </li>
 
-  <li data-index="4" data-listing-date-sort="1428984000000" data-listing-file-modified-sort="1749566942375" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="754" class="list-group-item d-sm-flex flex-sm-row-reverse justify-content-sm-between">
+  <li data-index="4" data-listing-date-sort="1428984000000" data-listing-file-modified-sort="1783871186561" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="754" class="list-group-item d-sm-flex flex-sm-row-reverse justify-content-sm-between">
     <div>
       <p class="listing-date text-nowrap text-end mb-0 mb-md-3">Apr 14, 2015</p>
     </div>
@@ -510,13 +513,14 @@ Note
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

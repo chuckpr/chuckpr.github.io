@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.31">
+<meta name="generator" content="quarto-1.9.38">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -11,6 +11,9 @@
 
 <title>Making trees in the Jupyter notebook (part&nbsp;1&nbsp;-&nbsp;IToL) – chuckpr blog</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -74,14 +77,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-8ef56b68f8fa1e9d2ba328e99e439f80.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-0a6b7249c26820e032cb0bd839ff02b1.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-2adcb0f38fea1a615f8c39ad3796bdbd.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-3c0dc8d51c4f6331fd206bdc139deb8a.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../site_libs/bootstrap/bootstrap-2adcb0f38fea1a615f8c39ad3796bdbd.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-11224adf52f3f6357643b31efc8d8d69.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-6e6751f0f9a49a49ccf6103d5a592274.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-11224adf52f3f6357643b31efc8d8d69.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script src="../../site_libs/quarto-contrib/iconify-2.1.0/iconify-icon.min.js"></script>
 <script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
 <link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
@@ -375,30 +378,30 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script async="" src="https://scripts.simpleanalyticscdn.com/latest.js"></script><p>Let’s extend the previous post by scraping the CAZy website for accession numbers from genes in the glycoside hydrolase 5 (GH5) family. Then we can build a phylogenetic tree from these sequences and visualize how well the EC activities correspond to the phylogeny.</p>
 <p>Unfortunately the CAZy website spreads the information we need across multiple pages in tables that are not easily parsed. Luckily we have <code>rvest</code>. Let’s start by loading the libraries we’ll use.</p>
 <div id="cell-3" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;jupyter&quot;,&quot;value&quot;:{&quot;outputs_hidden&quot;:false}}" data-execution_count="21">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>load_ext rpy2.ipython</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>load_ext rpy2.ipython</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div id="cell-4" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;jupyter&quot;,&quot;value&quot;:{&quot;outputs_hidden&quot;:false}}" data-execution_count="22">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>R</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>R</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>library(rvest)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>library(magrittr)</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>library(plyr)<span class="op">;</span> library(dplyr)</span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>library(rentrez)</span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>library(ggplot2)</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>library(rwantshue)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>library(rwantshue)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>CAZy distinguishes between genes that have been biochemically characterized and those that haven’t. For this analysis we’ll stick the characterized genes. This is the website that we’ll be scraping:<br>
 <a href="http://www.cazy.org/GH5_characterized.html">www.cazy.org/GH5_characterized.html</a></p>
 <p>All we really need is a table of accessions and corresponding EC numbers but we might as well grab some other information provided by CAZy such as the subfamily membership of each gene and the organism.</p>
 <p>We’ll start by creating a session from the webpage above.</p>
 <div id="cell-8" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;jupyter&quot;,&quot;value&quot;:{&quot;outputs_hidden&quot;:false}}" data-execution_count="23">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>R</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>cazy <span class="op">=</span> html_session(<span class="st">"http://www.cazy.org/GH5_characterized.html"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>R</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>cazy <span class="op">=</span> html_session(<span class="st">"http://www.cazy.org/GH5_characterized.html"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>We need to grab the links to the pages that contain continued sections for our table. I use Chrome’s inspector tools or the <a href="http://selectorgadget.com/">SelectorGadget</a> to find the attributes and element data associated with the information I want to scrape. In this case, the webpage links we want are in span elements of the “pages” class. Each span element has a hyperlink tag (“a” below in <code>html_nodes</code>) and from that tag we want the value of the “href” attribute.</p>
 <div id="cell-10" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;jupyter&quot;,&quot;value&quot;:{&quot;outputs_hidden&quot;:false}}" data-execution_count="24">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>R</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>R</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>links <span class="op">=</span> cazy <span class="op">%&gt;%</span> html_nodes(<span class="st">"span.pages a"</span>) <span class="op">%&gt;%</span> html_attr(<span class="st">"href"</span>)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>links</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>links</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <pre><code>[1] "GH5_characterized.html?debut_PRINC=100#pagination_PRINC"
 [2] "GH5_characterized.html?debut_PRINC=200#pagination_PRINC"
@@ -410,12 +413,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Let’s start by scraping the first page (the page we’re currently on).</p>
 <p>The table has some rows that we don’t want (like the row that just points out the Domain of the organisms) which makes parsing this info a bit tricky. We need to scrub rows with the “royaume” class and rows with id “line_titre” (I think those are French words). So, to briefly summarize the command below, we’re grabbing rows (“tr”) from the table of class “listing” excluding rows of class “royaume” and id “line_titre”.</p>
 <div id="cell-13" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;jupyter&quot;,&quot;value&quot;:{&quot;outputs_hidden&quot;:false}}" data-execution_count="25">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>R</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>rows <span class="op">=</span> cazy <span class="op">%&gt;%</span> html_nodes(<span class="st">"table.listing tr:not(.royaume)[id!=line_titre]"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>R</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>rows <span class="op">=</span> cazy <span class="op">%&gt;%</span> html_nodes(<span class="st">"table.listing tr:not(.royaume)[id!=line_titre]"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>We’ll parse each row to get the accession, EC number, organism, and subfamily. I’m only grabbing the linked accession number. Some of the genes have multiple associated accession numbers but I think we’ll only need one. Also, I’m creating one row for each EC number so some of the genes will have two entries. I think I’ll eventually remove the genes with multiple EC activities from the tree but it might also be nice to point them out. Note how we use the <code>extract2</code> function from <code>magrittr</code> to get the correct column.</p>
 <div id="cell-15" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;jupyter&quot;,&quot;value&quot;:{&quot;outputs_hidden&quot;:false}}" data-execution_count="26">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>R</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>R</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>get_data <span class="op">=</span> function(row) {</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    cols <span class="op">=</span> row <span class="op">%&gt;%</span> html_nodes(<span class="st">"td"</span>)</span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    ec <span class="op">=</span> cols <span class="op">%&gt;%</span> extract2(<span class="dv">2</span>) <span class="op">%&gt;%</span> html_nodes(<span class="st">"font.E"</span>) <span class="op">%&gt;%</span> html_text() <span class="op">%&gt;%</span> unlist</span>
@@ -426,13 +429,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    }</span>
 <span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    subf <span class="op">=</span> cols <span class="op">%&gt;%</span> extract2(<span class="dv">7</span>) <span class="op">%&gt;%</span> html_text(trim <span class="op">=</span> TRUE)</span>
 <span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    data.frame(ec<span class="op">=</span>ec, organism<span class="op">=</span>organism, acc<span class="op">=</span>acc, subf<span class="op">=</span>subf)</span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>And now we’ll <code>ldply</code> it into a handy dataframe.</p>
 <div id="cell-17" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;jupyter&quot;,&quot;value&quot;:{&quot;outputs_hidden&quot;:false}}" data-execution_count="27">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>R</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>R</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>df.pg1 <span class="op">=</span> ldply(rows, get_data)</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>df.pg1 <span class="op">%&gt;%</span> head</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>df.pg1 <span class="op">%&gt;%</span> head</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <pre><code>        ec                                   organism        acc subf
 1  3.2.1.4        Desulfurococcaceae archaeon EBI-244 AEB53062.1     
@@ -445,7 +448,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Now we need to do that for all the other pages of the table. This function uses <code>jump_to</code> to go to a link and extract the information we need with the same code as we had above. We can append our page 1 information with <code>rbind</code> and we’re ready to go.</p>
 <div id="cell-19" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;jupyter&quot;,&quot;value&quot;:{&quot;outputs_hidden&quot;:false}}" data-execution_count="31">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>R</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>R</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>get_df <span class="op">=</span> function(link) {</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    session <span class="op">=</span> jump_to(cazy, link)</span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    rows <span class="op">=</span> session <span class="op">%&gt;%</span> html_nodes(<span class="st">"table.listing tr:not(.royaume)[id!=line_titre]"</span>)</span>
@@ -454,7 +457,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>df.<span class="bu">all</span> <span class="op">=</span> ldply(links, get_df) <span class="op">%&gt;%</span> rbind(df.pg1)</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>df.<span class="bu">all</span> <span class="op">%&gt;%</span> head</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>df.<span class="bu">all</span> <span class="op">%&gt;%</span> head</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <pre><code>        ec                             organism        acc subf
 1 3.2.1.78       Clostridium cellulovorans 743B ADL52789.1    7
@@ -467,7 +470,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>We now have all the information we need to make our tree in IToL that will give us a sense of how phylogenetically conserved the EC annotations are with phylogeny. But first let’s plot some counts of the different EC activities. There is clearly one predominant activity for this set of sequences.</p>
 <div id="cell-21" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;jupyter&quot;,&quot;value&quot;:{&quot;outputs_hidden&quot;:false}}" data-tags="[&quot;fullwidth&quot;]" data-execution_count="32">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>R <span class="op">-</span>h <span class="dv">300</span> <span class="op">-</span>w <span class="dv">600</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>R <span class="op">-</span>h <span class="dv">300</span> <span class="op">-</span>w <span class="dv">600</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>df.<span class="bu">all</span> <span class="op">%&gt;%</span></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    group_by(ec) <span class="op">%&gt;%</span></span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    summarize(count <span class="op">=</span> n()) <span class="op">%&gt;%</span> {</span>
@@ -478,7 +481,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>            theme_bw() <span class="op">+</span></span>
 <span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>            theme(axis.text.x <span class="op">=</span> element_text(angle <span class="op">=</span> <span class="dv">45</span>, hjust <span class="op">=</span> <span class="dv">1</span>),</span>
 <span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>                  axis.title <span class="op">=</span> element_text(size <span class="op">=</span> <span class="dv">16</span>))</span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>    }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>    }</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -488,12 +491,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div id="cell-22" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;jupyter&quot;,&quot;value&quot;:{&quot;outputs_hidden&quot;:false}}" data-execution_count="33">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>R</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>df.<span class="bu">all</span> <span class="op">%&gt;%</span> write.csv(<span class="st">"data/GH5_data.csv"</span>, row.names <span class="op">=</span> FALSE, quote <span class="op">=</span> FALSE)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>R</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>df.<span class="bu">all</span> <span class="op">%&gt;%</span> write.csv(<span class="st">"data/GH5_data.csv"</span>, row.names <span class="op">=</span> FALSE, quote <span class="op">=</span> FALSE)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>We should add one more bit of information to the dataframe, the colors for each EC number. We need to send this information to IToL. Below I’m using <a href="https://github.com/hoesler/rwantshue">rwantshue</a> to get a list of colors the same length as the number of observed EC numbers. We collect the colors for each EC number in a dataframe and then we can join that colors dataframe to our CAZy dataframe. We’ll also save the IToL information to a file. I am making what IToL refers to as a “colors definition” file. This file should include (in order) a column for the tip names on the tree (in our case this will be accessions), a column specifying what you want to color (“range” here see IToL website for details), the actual color, and the label (EC numbers in our case).</p>
 <div id="cell-24" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;jupyter&quot;,&quot;value&quot;:{&quot;outputs_hidden&quot;:false}}" data-execution_count="38">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>R</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>R</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>N <span class="op">=</span> df.all$ec <span class="op">%&gt;%</span> unique <span class="op">%&gt;%</span> length</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>scheme <span class="op">&lt;-</span> iwanthue()</span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>colors <span class="op">=</span> scheme$hex(N, color_space <span class="op">=</span> hcl_presets$intense)</span>
@@ -507,11 +510,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>    select(acc, ctype, colors, label) <span class="op">%&gt;%</span></span>
 <span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>    group_by(acc) <span class="op">%&gt;%</span> <span class="bu">filter</span>(row_number() <span class="op">==</span> <span class="dv">1</span>) <span class="op">%&gt;%</span> <span class="co"># just grab the first row for each seq. </span></span>
 <span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>                                                    <span class="co"># Some seqs have two EC numbers.</span></span>
-<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>    write.table(<span class="st">"data/color_defs.tsv"</span>, row.names <span class="op">=</span> FALSE, col.names <span class="op">=</span> FALSE, sep <span class="op">=</span> <span class="st">"</span><span class="ch">\t</span><span class="st">"</span>, quote <span class="op">=</span> FALSE)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>    write.table(<span class="st">"data/color_defs.tsv"</span>, row.names <span class="op">=</span> FALSE, col.names <span class="op">=</span> FALSE, sep <span class="op">=</span> <span class="st">"</span><span class="ch">\t</span><span class="st">"</span>, quote <span class="op">=</span> FALSE)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Here’s what that file looks like,</p>
 <div id="cell-26" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;jupyter&quot;,&quot;value&quot;:{&quot;outputs_hidden&quot;:false}}" data-execution_count="36">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>head <span class="op">-</span>n5 data<span class="op">/</span>color_defs.tsv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>head <span class="op">-</span>n5 data<span class="op">/</span>color_defs.tsv</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>ADL52789.1  range   #4FB197 3.2.1.78
 AAF06110.2  range   #4FB197 3.2.1.78
@@ -523,13 +526,13 @@ BAA12826.1  range   #CA55E1 3.2.1.4</code></pre>
 <p>Great! Now on to building the tree…</p>
 <p>We need to get the sequences first. Let’s use <a href="https://github.com/ropensci/rentrez">rentrez</a> to query Genbank for our accessions.</p>
 <div id="cell-29" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;jupyter&quot;,&quot;value&quot;:{&quot;outputs_hidden&quot;:false}}" data-execution_count="134">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>R</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>R</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>accs <span class="op">=</span> df.all$acc <span class="op">%&gt;%</span> <span class="im">as</span>.character <span class="op">%&gt;%</span> unique</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>seqs <span class="op">=</span> entrez_fetch(db<span class="op">=</span><span class="st">"nucleotide"</span>, <span class="bu">id</span><span class="op">=</span>accs, rettype<span class="op">=</span><span class="st">"fasta"</span>)</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>write(seqs, <span class="st">"data/GH5_characterized.fasta"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>write(seqs, <span class="st">"data/GH5_characterized.fasta"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div id="cell-30" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;jupyter&quot;,&quot;value&quot;:{&quot;outputs_hidden&quot;:false}}" data-execution_count="135">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>head <span class="op">-</span>n3 data<span class="op">/</span>GH5_characterized.fasta</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>head <span class="op">-</span>n3 data<span class="op">/</span>GH5_characterized.fasta</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&gt;gi|328834886|gb|AEB53062.1| putative glycoside hydrolase family 5 [Desulfurococcaceae archaeon EBI-244]
 MKKVHIIAIVVIIAIAFALILARYYTMQRGYETVTPTTPPQQTTTTETTPVPTEAGTTTPITEATVTQPP
@@ -538,10 +541,10 @@ QTPTTPSPQTPTTPTALPTPSPTPTAPSATVTETTSPQTPTTTITTETTTTPAPQPQVVFLKLPEGEEPK</code></p
 </div>
 <p>I’m going to align these sequences with <a href="http://www.drive5.com/muscle/">Muscle</a>.</p>
 <div id="cell-32" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;jupyter&quot;,&quot;value&quot;:{&quot;outputs_hidden&quot;:false}}" data-execution_count="136">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>muscle <span class="op">-</span><span class="kw">in</span> data<span class="op">/</span>GH5_characterized.fasta <span class="op">-</span>out data<span class="op">/</span>GH5_characterized.aln.fasta</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>muscle <span class="op">-</span><span class="kw">in</span> data<span class="op">/</span>GH5_characterized.fasta <span class="op">-</span>out data<span class="op">/</span>GH5_characterized.aln.fasta</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div id="cell-33" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;jupyter&quot;,&quot;value&quot;:{&quot;outputs_hidden&quot;:false}}" data-execution_count="137">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>head <span class="op">-</span>n5 data<span class="op">/</span>GH5_characterized.aln.fasta</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>head <span class="op">-</span>n5 data<span class="op">/</span>GH5_characterized.aln.fasta</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&gt;gi|190684977|gb|ACE82655.1| endo-1, 4-beta mannanase, man5C [Cellvibrio japonicus Ueda107]
 ------------------------------------------------------------
@@ -552,26 +555,26 @@ QTPTTPSPQTPTTPTALPTPSPTPTAPSATVTETTSPQTPTTTITTETTTTPAPQPQVVFLKLPEGEEPK</code></p
 </div>
 <p>Ok, we’re going to switch into Python mode now as we have a look at this alignment. Also, we’ll use Python to talk to IToL. Let’s just plot gap frequency by position.</p>
 <div id="cell-35" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;jupyter&quot;,&quot;value&quot;:{&quot;outputs_hidden&quot;:false}}" data-execution_count="13">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> skbio.alignment <span class="im">import</span> Alignment</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> skbio.alignment <span class="im">import</span> Alignment</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> skbio.sequence <span class="im">import</span> DNA</span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> itolapi <span class="im">import</span> Itol, ItolExport</span>
 <span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> Image</span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>matplotlib inline</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>matplotlib inline</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div id="cell-36" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;jupyter&quot;,&quot;value&quot;:{&quot;outputs_hidden&quot;:false}}" data-execution_count="144">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>aln <span class="op">=</span> Alignment.read(<span class="bu">file</span> <span class="op">=</span> <span class="st">"data/GH5_characterized.aln.fasta"</span>, <span class="bu">format</span><span class="op">=</span><span class="st">"fasta"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>aln <span class="op">=</span> Alignment.read(<span class="bu">file</span> <span class="op">=</span> <span class="st">"data/GH5_characterized.aln.fasta"</span>, <span class="bu">format</span><span class="op">=</span><span class="st">"fasta"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Our alignment is a bit gappy as you can see below. There are quite a few positions with few characters.</p>
 <div id="cell-38" class="cell page-columns page-full" data-quarto-private-1="{&quot;key&quot;:&quot;jupyter&quot;,&quot;value&quot;:{&quot;outputs_hidden&quot;:false}}" data-tags="[&quot;fullwidth&quot;]" data-execution_count="145">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>gap_freq <span class="op">=</span> [d[<span class="st">"-"</span>] <span class="cf">for</span> d <span class="kw">in</span> aln.position_frequencies()]</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>gap_freq <span class="op">=</span> [d[<span class="st">"-"</span>] <span class="cf">for</span> d <span class="kw">in</span> aln.position_frequencies()]</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>fig.set_size_inches([<span class="dv">16</span>, <span class="dv">3</span>])</span>
 <span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>ax.plot(np.arange(<span class="bu">len</span>(gap_freq)), gap_freq)</span>
 <span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"Position"</span>)</span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"Gap frequency"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"Gap frequency"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display page-columns page-full">
 <div class="quarto-figure quarto-figure-center page-columns page-full">
 <figure class="figure page-columns page-full">
@@ -582,17 +585,17 @@ QTPTTPSPQTPTTPTALPTPSPTPTAPSATVTETTSPQTPTTTITTETTTTPAPQPQVVFLKLPEGEEPK</code></p
 </div>
 <p>Let’s make a gap frequency filter to remove columns with greater than 60% gaps.</p>
 <div id="cell-40" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;jupyter&quot;,&quot;value&quot;:{&quot;outputs_hidden&quot;:false}}" data-execution_count="146">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>keepers, <span class="op">=</span> np.where(np.array(gap_freq)<span class="op">&lt;=</span><span class="fl">0.60</span>)</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>aln_masked <span class="op">=</span> aln.subalignment(positions_to_keep<span class="op">=</span>keepers)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>keepers, <span class="op">=</span> np.where(np.array(gap_freq)<span class="op">&lt;=</span><span class="fl">0.60</span>)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>aln_masked <span class="op">=</span> aln.subalignment(positions_to_keep<span class="op">=</span>keepers)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Ok, that looks better. We’ll use this filtered alignment to build the tree.</p>
 <div id="cell-42" class="cell page-columns page-full" data-quarto-private-1="{&quot;key&quot;:&quot;jupyter&quot;,&quot;value&quot;:{&quot;outputs_hidden&quot;:false}}" data-tags="[&quot;fullwidth&quot;]" data-execution_count="147">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>gap_freq2 <span class="op">=</span> [d[<span class="st">"-"</span>] <span class="cf">for</span> d <span class="kw">in</span> aln_masked.position_frequencies()]</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>gap_freq2 <span class="op">=</span> [d[<span class="st">"-"</span>] <span class="cf">for</span> d <span class="kw">in</span> aln_masked.position_frequencies()]</span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>fig.set_size_inches([<span class="dv">16</span>, <span class="dv">3</span>])</span>
 <span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>ax.plot(np.arange(<span class="bu">len</span>(gap_freq2)), gap_freq2)</span>
 <span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"Position"</span>)</span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"Gap frequency"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"Gap frequency"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display page-columns page-full">
 <div class="quarto-figure quarto-figure-center page-columns page-full">
 <figure class="figure page-columns page-full">
@@ -602,13 +605,13 @@ QTPTTPSPQTPTTPTALPTPSPTPTAPSATVTETTSPQTPTTTITTETTTTPAPQPQVVFLKLPEGEEPK</code></p
 </div>
 </div>
 <div id="cell-43" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;jupyter&quot;,&quot;value&quot;:{&quot;outputs_hidden&quot;:false}}" data-execution_count="148">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>aln_masked.write(<span class="st">"data/GH5_characterized.aln.masked.fasta"</span>, <span class="bu">format</span><span class="op">=</span><span class="st">"fasta"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>aln_masked.write(<span class="st">"data/GH5_characterized.aln.masked.fasta"</span>, <span class="bu">format</span><span class="op">=</span><span class="st">"fasta"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="148">
 <pre><code>'data/GH5_characterized.aln.masked.fasta'</code></pre>
 </div>
 </div>
 <div id="cell-44" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;jupyter&quot;,&quot;value&quot;:{&quot;outputs_hidden&quot;:false}}" data-execution_count="149">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>head <span class="op">-</span>n2 data<span class="op">/</span>GH5_characterized.aln.masked.fasta <span class="op">|</span> cut <span class="op">-</span>c1<span class="op">-</span><span class="dv">100</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>head <span class="op">-</span>n2 data<span class="op">/</span>GH5_characterized.aln.masked.fasta <span class="op">|</span> cut <span class="op">-</span>c1<span class="op">-</span><span class="dv">100</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&gt;gi|190684977|gb|ACE82655.1| endo-1, 4-beta mannanase, man5C [Cellvibrio japonicus Ueda107]
 HLISPRILTGLFVIGLAPAWSSSVSSSGIIVGAQCNWYGPVCQSGASLPAPGNSVL-SGSSPEGNSWLSPYS-SKVMDGTASYAFAEATVPVTYQGQGDG</code></pre>
@@ -616,7 +619,7 @@ HLISPRILTGLFVIGLAPAWSSSVSSSGIIVGAQCNWYGPVCQSGASLPAPGNSVL-SGSSPEGNSWLSPYS-SKVMDGT
 </div>
 <p>I’m going to make the tree with <a href="http://www.microbesonline.org/fasttree/">FastTree</a>. I’m doing a quick hack to make sure that the tips of our tree are just accession numbers and not the long identifiers returned from <code>rentrez</code>. The sed command just grabs the accession from each FASTA identifier line and scrubs the rest. I am using <a href="http://tldp.org/LDP/abs/html/process-sub.html">process substitution</a> but you could just as easily write the scrubbed FASTA to a file and send it to FastTree.</p>
 <div id="cell-46" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;jupyter&quot;,&quot;value&quot;:{&quot;outputs_hidden&quot;:false}}" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>head <span class="op">-</span>n6 data<span class="op">/</span>GH5_characterized.aln.masked.fasta <span class="op">|</span> sed <span class="st">'/^&gt;/ s/.*|.*|.*|</span><span class="er">\</span><span class="st">(.*</span><span class="er">\</span><span class="st">)|.*/&gt;</span><span class="ch">\1</span><span class="st">/'</span> <span class="op">|</span> cut <span class="op">-</span>c <span class="dv">1</span><span class="op">-</span><span class="dv">80</span> <span class="co">#for example...</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>head <span class="op">-</span>n6 data<span class="op">/</span>GH5_characterized.aln.masked.fasta <span class="op">|</span> sed <span class="st">'/^&gt;/ s/.*|.*|.*|</span><span class="er">\</span><span class="st">(.*</span><span class="er">\</span><span class="st">)|.*/&gt;</span><span class="ch">\1</span><span class="st">/'</span> <span class="op">|</span> cut <span class="op">-</span>c <span class="dv">1</span><span class="op">-</span><span class="dv">80</span> <span class="co">#for example...</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&gt;ACE82655.1
 HLISPRILTGLFVIGLAPAWSSSVSSSGIIVGAQCNWYGPVCQSGASLPAPGNSVL-SGSSPEGNSWLSPYS-SKVMDGT
@@ -627,26 +630,26 @@ MKAMTSVILPPVAAPALCLAAV---------WTTFNAVG------ANL-G-GW---LIDTTGAVDEWCGPVLEWITIDTL
 </div>
 </div>
 <div id="cell-47" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;jupyter&quot;,&quot;value&quot;:{&quot;outputs_hidden&quot;:false}}" data-execution_count="140">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>FastTree <span class="op">&lt;</span>(sed <span class="st">'/^&gt;/ s/.*|.*|.*|</span><span class="er">\</span><span class="st">(.*</span><span class="er">\</span><span class="st">)|.*/&gt;</span><span class="ch">\1</span><span class="st">/'</span> data<span class="op">/</span>GH5_characterized.aln.masked.fasta) <span class="op">&gt;</span> data<span class="op">/</span>GH5.tree <span class="dv">2</span><span class="op">&gt;/</span>dev<span class="op">/</span>null</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>bash</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>FastTree <span class="op">&lt;</span>(sed <span class="st">'/^&gt;/ s/.*|.*|.*|</span><span class="er">\</span><span class="st">(.*</span><span class="er">\</span><span class="st">)|.*/&gt;</span><span class="ch">\1</span><span class="st">/'</span> data<span class="op">/</span>GH5_characterized.aln.masked.fasta) <span class="op">&gt;</span> data<span class="op">/</span>GH5.tree <span class="dv">2</span><span class="op">&gt;/</span>dev<span class="op">/</span>null</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Cool, now we just need to upload the tree and the color definition file from above to IToL. There is a nice Python library to talk to IToL programatically called <a href="https://github.com/albertyw/itolapi">itolapi</a>. We’re using that to upload our info. The <code>itolapi</code> page has all the documentation required to use it effectively.</p>
 <div id="cell-49" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;jupyter&quot;,&quot;value&quot;:{&quot;outputs_hidden&quot;:false}}" data-execution_count="37">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>itol_uploader <span class="op">=</span> Itol.Itol()</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>itol_uploader <span class="op">=</span> Itol.Itol()</span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>itol_uploader.add_variable(<span class="st">'treeFile'</span>, <span class="st">'data/GH5.tree'</span>)</span>
 <span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>itol_uploader.add_variable(<span class="st">'treeFormat'</span>, <span class="st">'newick'</span>)</span>
 <span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>itol_uploader.add_variable(<span class="st">'treeName'</span>, <span class="st">'GH5'</span>)</span>
 <span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>itol_uploader.add_variable(<span class="st">"colorDefinitionFile"</span>, <span class="st">"data/color_defs.tsv"</span>)</span>
 <span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>status <span class="op">=</span> itol_uploader.upload()</span>
 <span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>itol_uploader.comm.upload_output</span>
-<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> itol_uploader.get_webpage()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> itol_uploader.get_webpage()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>http://itol.embl.de/external.cgi?tree=128841252312946714389719820&amp;restore_saved=1</code></pre>
 </div>
 </div>
 <p>You can also use <code>itolapi</code> to download the tree but I don’t think the IToL API supports exporting trees with full clade coloring. I could be wrong but I really wanted the full clade coloring as opposed to just a ring of colors around the tree. Anyway, I had to manually visit IToL to export this visualization (frown).</p>
 <div id="cell-51" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;jupyter&quot;,&quot;value&quot;:{&quot;outputs_hidden&quot;:false}}" data-tags="[&quot;fullwidth&quot;]" data-execution_count="16">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>Image(<span class="st">"data/GH5.tree.png"</span>, width<span class="op">=</span><span class="dv">600</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>Image(<span class="st">"data/GH5.tree.png"</span>, width<span class="op">=</span><span class="dv">600</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="16">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -726,13 +729,14 @@ MKAMTSVILPPVAAPALCLAAV---------WTTFNAVG------ANL-G-GW---LIDTTGAVDEWCGPVLEWITIDTL
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

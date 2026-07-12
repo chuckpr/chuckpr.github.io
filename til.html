@@ -2,13 +2,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.31">
+<meta name="generator" content="quarto-1.9.38">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>til – chuckpr blog</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -39,14 +42,14 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-8ef56b68f8fa1e9d2ba328e99e439f80.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-0a6b7249c26820e032cb0bd839ff02b1.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-2adcb0f38fea1a615f8c39ad3796bdbd.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-3c0dc8d51c4f6331fd206bdc139deb8a.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-2adcb0f38fea1a615f8c39ad3796bdbd.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-11224adf52f3f6357643b31efc8d8d69.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-6e6751f0f9a49a49ccf6103d5a592274.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-11224adf52f3f6357643b31efc8d8d69.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script src="site_libs/quarto-contrib/iconify-2.1.0/iconify-icon.min.js"></script>
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
@@ -85,9 +88,9 @@ ul.task-list li input[type="checkbox"] {
     }
 
     const options = {
-      valueNames: ['listing-project','listing-execute','listing-website','listing-format','listing-language','listing-comments','listing-author','listing-title','listing-date','listing-categories','listing-path','listing-outputHref','listing-date-modified','listing-description','listing-filename','listing-file-modified','listing-reading-time','listing-word-count','listing-fig-cap-location',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-date-modified-sort'] },{ data: ['listing-file-modified-sort'] },{ data: ['listing-reading-time-sort'] },{ data: ['listing-word-count-sort'] }],
+      valueNames: ['listing-project','listing-execute','listing-website','listing-format','listing-engines','listing-language','listing-comments','listing-author','listing-title','listing-date','listing-categories','listing-path','listing-outputHref','listing-date-modified','listing-description','listing-filename','listing-file-modified','listing-reading-time','listing-word-count','listing-fig-cap-location',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-date-modified-sort'] },{ data: ['listing-file-modified-sort'] },{ data: ['listing-reading-time-sort'] },{ data: ['listing-word-count-sort'] }],
       
-      searchColumns: ["listing-project","listing-execute","listing-website","listing-format","listing-language","listing-comments","listing-author","listing-title","listing-date","listing-categories","listing-path","listing-outputHref","listing-date-modified","listing-description","listing-filename","listing-file-modified","listing-reading-time","listing-word-count","listing-fig-cap-location"],
+      searchColumns: ["listing-project","listing-execute","listing-website","listing-format","listing-engines","listing-language","listing-comments","listing-author","listing-title","listing-date","listing-categories","listing-path","listing-outputHref","listing-date-modified","listing-description","listing-filename","listing-file-modified","listing-reading-time","listing-word-count","listing-fig-cap-location"],
     };
 
     window['quarto-listings'] = window['quarto-listings'] || {};
@@ -113,9 +116,9 @@ ul.task-list li input[type="checkbox"] {
     }
 
     const options = {
-      valueNames: ['listing-project','listing-execute','listing-website','listing-format','listing-language','listing-freeze','listing-title-block-banner','listing-comments','listing-title','listing-author','listing-date','listing-categories','listing-image','listing-path','listing-outputHref','listing-date-modified','listing-description','listing-filename','listing-file-modified','listing-reading-time','listing-word-count',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-date-modified-sort'] },{ data: ['listing-file-modified-sort'] },{ data: ['listing-reading-time-sort'] },{ data: ['listing-word-count-sort'] }],
+      valueNames: ['listing-project','listing-execute','listing-website','listing-format','listing-engines','listing-language','listing-freeze','listing-title-block-banner','listing-comments','listing-title','listing-author','listing-date','listing-categories','listing-image','listing-path','listing-outputHref','listing-date-modified','listing-description','listing-filename','listing-file-modified','listing-reading-time','listing-word-count',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-date-modified-sort'] },{ data: ['listing-file-modified-sort'] },{ data: ['listing-reading-time-sort'] },{ data: ['listing-word-count-sort'] }],
       
-      searchColumns: ["listing-project","listing-execute","listing-website","listing-format","listing-language","listing-freeze","listing-title-block-banner","listing-comments","listing-title","listing-author","listing-date","listing-categories","listing-image","listing-path","listing-outputHref","listing-date-modified","listing-description","listing-filename","listing-file-modified","listing-reading-time","listing-word-count"],
+      searchColumns: ["listing-project","listing-execute","listing-website","listing-format","listing-engines","listing-language","listing-freeze","listing-title-block-banner","listing-comments","listing-title","listing-author","listing-date","listing-categories","listing-image","listing-path","listing-outputHref","listing-date-modified","listing-description","listing-filename","listing-file-modified","listing-reading-time","listing-word-count"],
     };
 
     window['quarto-listings'] = window['quarto-listings'] || {};
@@ -134,7 +137,7 @@ ul.task-list li input[type="checkbox"] {
   </script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -147,7 +150,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -385,8 +388,8 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#today-i-learned" id="toc-today-i-learned" class="nav-link active" data-scroll-target="#today-i-learned"><iconify-icon role="img" inline="" icon="ph:note-blank-duotone" aria-label="til" title="til"></iconify-icon> Today I learned…</a></li>
-  <li><a href="#articles" id="toc-articles" class="nav-link" data-scroll-target="#articles"><iconify-icon role="img" inline="" icon="ph:books-duotone" aria-label="article" title="article"></iconify-icon> Articles</a></li>
+  <li><a href="#b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c2069636f6e6966792070683a6e6f74652d626c616e6b2d64756f746f6e65207469746c653d74696c206c6162656c3d74696c203e7d7d-today-i-learned" id="toc-b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c2069636f6e6966792070683a6e6f74652d626c616e6b2d64756f746f6e65207469746c653d74696c206c6162656c3d74696c203e7d7d-today-i-learned" class="nav-link active" data-scroll-target="#b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c2069636f6e6966792070683a6e6f74652d626c616e6b2d64756f746f6e65207469746c653d74696c206c6162656c3d74696c203e7d7d-today-i-learned"><iconify-icon role="img" inline="" icon="ph:note-blank-duotone" aria-label="til" title="til"></iconify-icon> Today I learned…</a></li>
+  <li><a href="#b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c2069636f6e6966792070683a626f6f6b732d64756f746f6e65207469746c653d61727469636c65206c6162656c3d61727469636c65203e7d7d-articles" id="toc-b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c2069636f6e6966792070683a626f6f6b732d64756f746f6e65207469746c653d61727469636c65206c6162656c3d61727469636c65203e7d7d-articles" class="nav-link" data-scroll-target="#b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c2069636f6e6966792070683a626f6f6b732d64756f746f6e65207469746c653d61727469636c65206c6162656c3d61727469636c65203e7d7d-articles"><iconify-icon role="img" inline="" icon="ph:books-duotone" aria-label="article" title="article"></iconify-icon> Articles</a></li>
   </ul>
 </nav>
     <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-unnumbered"><div class="category" data-category="YWx0YWly">altair</div><div class="category" data-category="YW5hbHlzaXM=">analysis</div><div class="category" data-category="YXdz">aws</div><div class="category" data-category="YmxvZ2dpbmc=">blogging</div><div class="category" data-category="Y29kZQ==">code</div><div class="category" data-category="ZHBseXI=">dplyr</div><div class="category" data-category="ZmlzaA==">fish</div><div class="category" data-category="Z2l0">git</div><div class="category" data-category="anVweXRlcg==">jupyter</div><div class="category" data-category="bGluZWFyJTIwcmVncmVzc2lvbg==">linear regression</div><div class="category" data-category="bWFya2Rvd24=">markdown</div><div class="category" data-category="bmV3cw==">news</div><div class="category" data-category="UG9sYXJz">Polars</div><div class="category" data-category="cXVhcnRv">quarto</div><div class="category" data-category="c2NpcHk=">scipy</div><div class="category" data-category="dGVhY2hpbmc=">teaching</div><div class="category" data-category="dGlkeXZlcnNl">tidyverse</div><div class="category" data-category="dG11eA==">tmux</div></div></div>
@@ -397,13 +400,13 @@ window.Quarto = {
 
 
 
-<section id="today-i-learned" class="level2">
-<h2 class="anchored" data-anchor-id="today-i-learned"><iconify-icon role="img" inline="" icon="ph:note-blank-duotone" aria-label="til" title="til"></iconify-icon> Today I learned…</h2>
+<section id="b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c2069636f6e6966792070683a6e6f74652d626c616e6b2d64756f746f6e65207469746c653d74696c206c6162656c3d74696c203e7d7d-today-i-learned" class="level2">
+<h2 class="anchored" data-anchor-id="b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c2069636f6e6966792070683a6e6f74652d626c616e6b2d64756f746f6e65207469746c653d74696c206c6162656c3d74696c203e7d7d-today-i-learned"><iconify-icon role="img" inline="" icon="ph:note-blank-duotone" aria-label="til" title="til"></iconify-icon> Today I learned…</h2>
 <p>Below are small posts to record the small things I learn <iconify-icon role="img" inline="" icon="fluent-emoji-high-contrast:brain" aria-label="brain" title="brain"></iconify-icon>.</p>
 <div id="listing-til" class="quarto-listing quarto-listing-container-custom">
 <ul class="list list-group list-group-flush">
 
-  <li data-index="0" data-categories="c2NpcHklMkNsaW5lYXIlMjByZWdyZXNzaW9uJTJDdGVhY2hpbmc=" data-listing-date-sort="1742184000000" data-listing-file-modified-sort="1749566942621" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="291" class="list-group-item d-sm-flex flex-sm-row-reverse justify-content-sm-between">
+  <li data-index="0" data-categories="c2NpcHklMkNsaW5lYXIlMjByZWdyZXNzaW9uJTJDdGVhY2hpbmc=" data-listing-date-sort="1742184000000" data-listing-file-modified-sort="1783871186647" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="291" class="list-group-item d-sm-flex flex-sm-row-reverse justify-content-sm-between">
     <div>
       <p class="listing-date text-nowrap text-end mb-0 mb-md-3">Mar 17, 2025</p>
     </div>
@@ -415,7 +418,7 @@ window.Quarto = {
     </div>
   </li>
 
-  <li data-index="1" data-categories="YWx0YWly" data-listing-date-sort="1740114000000" data-listing-file-modified-sort="1749566942582" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="208" class="list-group-item d-sm-flex flex-sm-row-reverse justify-content-sm-between">
+  <li data-index="1" data-categories="YWx0YWly" data-listing-date-sort="1740114000000" data-listing-file-modified-sort="1783871186638" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="208" class="list-group-item d-sm-flex flex-sm-row-reverse justify-content-sm-between">
     <div>
       <p class="listing-date text-nowrap text-end mb-0 mb-md-3">Feb 21, 2025</p>
     </div>
@@ -427,7 +430,7 @@ window.Quarto = {
     </div>
   </li>
 
-  <li data-index="2" data-categories="YWx0YWly" data-listing-date-sort="1739854800000" data-listing-file-modified-sort="1749566942596" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="169" class="list-group-item d-sm-flex flex-sm-row-reverse justify-content-sm-between">
+  <li data-index="2" data-categories="YWx0YWly" data-listing-date-sort="1739854800000" data-listing-file-modified-sort="1783871186641" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="169" class="list-group-item d-sm-flex flex-sm-row-reverse justify-content-sm-between">
     <div>
       <p class="listing-date text-nowrap text-end mb-0 mb-md-3">Feb 18, 2025</p>
     </div>
@@ -439,7 +442,7 @@ window.Quarto = {
     </div>
   </li>
 
-  <li data-index="3" data-categories="Z2l0JTJDYXdz" data-listing-date-sort="1738904400000" data-listing-file-modified-sort="1749566942584" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="275" class="list-group-item d-sm-flex flex-sm-row-reverse justify-content-sm-between">
+  <li data-index="3" data-categories="Z2l0JTJDYXdz" data-listing-date-sort="1738904400000" data-listing-file-modified-sort="1783871186639" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="275" class="list-group-item d-sm-flex flex-sm-row-reverse justify-content-sm-between">
     <div>
       <p class="listing-date text-nowrap text-end mb-0 mb-md-3">Feb 7, 2025</p>
     </div>
@@ -451,7 +454,7 @@ window.Quarto = {
     </div>
   </li>
 
-  <li data-index="4" data-categories="bWFya2Rvd24lMkNqdXB5dGVy" data-listing-date-sort="1737608400000" data-listing-file-modified-sort="1749567678114" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="169" class="list-group-item d-sm-flex flex-sm-row-reverse justify-content-sm-between">
+  <li data-index="4" data-categories="bWFya2Rvd24lMkNqdXB5dGVy" data-listing-date-sort="1737608400000" data-listing-file-modified-sort="1783877141222" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="169" class="list-group-item d-sm-flex flex-sm-row-reverse justify-content-sm-between">
     <div>
       <p class="listing-date text-nowrap text-end mb-0 mb-md-3">Jan 23, 2025</p>
     </div>
@@ -463,7 +466,7 @@ window.Quarto = {
     </div>
   </li>
 
-  <li data-index="5" data-categories="YWx0YWly" data-listing-date-sort="1736744400000" data-listing-file-modified-sort="1749566942587" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="74" class="list-group-item d-sm-flex flex-sm-row-reverse justify-content-sm-between">
+  <li data-index="5" data-categories="YWx0YWly" data-listing-date-sort="1736744400000" data-listing-file-modified-sort="1783871186639" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="74" class="list-group-item d-sm-flex flex-sm-row-reverse justify-content-sm-between">
     <div>
       <p class="listing-date text-nowrap text-end mb-0 mb-md-3">Jan 13, 2025</p>
     </div>
@@ -475,7 +478,7 @@ window.Quarto = {
     </div>
   </li>
 
-  <li data-index="6" data-categories="YWx0YWly" data-listing-date-sort="1734066000000" data-listing-file-modified-sort="1749566942626" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="53" class="list-group-item d-sm-flex flex-sm-row-reverse justify-content-sm-between">
+  <li data-index="6" data-categories="YWx0YWly" data-listing-date-sort="1734066000000" data-listing-file-modified-sort="1783871186648" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="53" class="list-group-item d-sm-flex flex-sm-row-reverse justify-content-sm-between">
     <div>
       <p class="listing-date text-nowrap text-end mb-0 mb-md-3">Dec 13, 2024</p>
     </div>
@@ -487,7 +490,7 @@ window.Quarto = {
     </div>
   </li>
 
-  <li data-index="7" data-categories="dGlkeXZlcnNlJTJDZHBseXI=" data-listing-date-sort="1729137600000" data-listing-file-modified-sort="1749566942589" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="45" class="list-group-item d-sm-flex flex-sm-row-reverse justify-content-sm-between">
+  <li data-index="7" data-categories="dGlkeXZlcnNlJTJDZHBseXI=" data-listing-date-sort="1729137600000" data-listing-file-modified-sort="1783871186640" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="45" class="list-group-item d-sm-flex flex-sm-row-reverse justify-content-sm-between">
     <div>
       <p class="listing-date text-nowrap text-end mb-0 mb-md-3">Oct 17, 2024</p>
     </div>
@@ -499,7 +502,7 @@ window.Quarto = {
     </div>
   </li>
 
-  <li data-index="8" data-categories="dG11eCUyQ2Zpc2g=" data-listing-date-sort="1727928000000" data-listing-file-modified-sort="1749566942592" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="127" class="list-group-item d-sm-flex flex-sm-row-reverse justify-content-sm-between">
+  <li data-index="8" data-categories="dG11eCUyQ2Zpc2g=" data-listing-date-sort="1727928000000" data-listing-file-modified-sort="1783871186641" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="127" class="list-group-item d-sm-flex flex-sm-row-reverse justify-content-sm-between">
     <div>
       <p class="listing-date text-nowrap text-end mb-0 mb-md-3">Oct 3, 2024</p>
     </div>
@@ -511,7 +514,7 @@ window.Quarto = {
     </div>
   </li>
 
-  <li data-index="9" data-categories="YmxvZ2dpbmclMkNxdWFydG8=" data-listing-date-sort="1727668800000" data-listing-file-modified-sort="1749566942594" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="92" class="list-group-item d-sm-flex flex-sm-row-reverse justify-content-sm-between">
+  <li data-index="9" data-categories="YmxvZ2dpbmclMkNxdWFydG8=" data-listing-date-sort="1727668800000" data-listing-file-modified-sort="1783871186641" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="92" class="list-group-item d-sm-flex flex-sm-row-reverse justify-content-sm-between">
     <div>
       <p class="listing-date text-nowrap text-end mb-0 mb-md-3">Sep 30, 2024</p>
     </div>
@@ -523,7 +526,7 @@ window.Quarto = {
     </div>
   </li>
 
-  <li data-index="10" data-categories="UG9sYXJz" data-listing-date-sort="1727323200000" data-listing-file-modified-sort="1749566942598" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="63" class="list-group-item d-sm-flex flex-sm-row-reverse justify-content-sm-between">
+  <li data-index="10" data-categories="UG9sYXJz" data-listing-date-sort="1727323200000" data-listing-file-modified-sort="1783871186642" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="63" class="list-group-item d-sm-flex flex-sm-row-reverse justify-content-sm-between">
     <div>
       <p class="listing-date text-nowrap text-end mb-0 mb-md-3">Sep 26, 2024</p>
     </div>
@@ -539,8 +542,8 @@ window.Quarto = {
 <div class="listing-no-matching d-none">No matching items</div>
 </div>
 </section>
-<section id="articles" class="level2">
-<h2 class="anchored" data-anchor-id="articles"><iconify-icon role="img" inline="" icon="ph:books-duotone" aria-label="article" title="article"></iconify-icon> Articles</h2>
+<section id="b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c2069636f6e6966792070683a626f6f6b732d64756f746f6e65207469746c653d61727469636c65206c6162656c3d61727469636c65203e7d7d-articles" class="level2">
+<h2 class="anchored" data-anchor-id="b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c2069636f6e6966792070683a626f6f6b732d64756f746f6e65207469746c653d61727469636c65206c6162656c3d61727469636c65203e7d7d-articles"><iconify-icon role="img" inline="" icon="ph:books-duotone" aria-label="article" title="article"></iconify-icon> Articles</h2>
 <p>The follow are longer articles on topics relevant to my professional and personal interests.</p>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -558,7 +561,7 @@ Warning
 <div id="listing-posts" class="quarto-listing quarto-listing-container-custom">
 <ul class="list list-group list-group-flush">
 
-  <li data-index="0" data-categories="bmV3cyUyQ2NvZGUlMkNhbmFseXNpcw==" data-listing-date-sort="1726804800000" data-listing-file-modified-sort="1749566942571" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="13" class="list-group-item d-sm-flex flex-sm-row-reverse justify-content-sm-between">
+  <li data-index="0" data-categories="bmV3cyUyQ2NvZGUlMkNhbmFseXNpcw==" data-listing-date-sort="1726804800000" data-listing-file-modified-sort="1783871186636" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="13" class="list-group-item d-sm-flex flex-sm-row-reverse justify-content-sm-between">
     <div>
       <p class="listing-date text-nowrap text-end mb-0 mb-md-3">Sep 20, 2024</p>
     </div>
@@ -570,7 +573,7 @@ Warning
     </div>
   </li>
 
-  <li data-index="1" data-categories="bmV3cw==" data-listing-date-sort="1726545600000" data-listing-file-modified-sort="1749566942572" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="32" class="list-group-item d-sm-flex flex-sm-row-reverse justify-content-sm-between">
+  <li data-index="1" data-categories="bmV3cw==" data-listing-date-sort="1726545600000" data-listing-file-modified-sort="1783871186637" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="32" class="list-group-item d-sm-flex flex-sm-row-reverse justify-content-sm-between">
     <div>
       <p class="listing-date text-nowrap text-end mb-0 mb-md-3">Sep 17, 2024</p>
     </div>
@@ -655,13 +658,14 @@ Warning
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

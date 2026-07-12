@@ -63,15 +63,15 @@
     "text": "Below are small posts to record the small things I learn .\n\n\n\n  \n    \n      Mar 17, 2025\n    \n    \n      \n        \n        Using Scipy optimize to estimate linear regression parameters \n      \n    \n  \n\n  \n    \n      Feb 21, 2025\n    \n    \n      \n        \n        Adjusting jitter width in Altair charts \n      \n    \n  \n\n  \n    \n      Feb 18, 2025\n    \n    \n      \n        \n        Adding a median line to a strip chart in Altair \n      \n    \n  \n\n  \n    \n      Feb 7, 2025\n    \n    \n      \n        \n        Setting up the git CLI to authenticate with AWS CodeCommit \n      \n    \n  \n\n  \n    \n      Jan 23, 2025\n    \n    \n      \n        \n        Dynamic markdown content in Jupyter Lab \n      \n    \n  \n\n  \n    \n      Jan 13, 2025\n    \n    \n      \n        \n        Centering Altair charts in Jupyter Lab \n      \n    \n  \n\n  \n    \n      Dec 13, 2024\n    \n    \n      \n        \n        Encoding point Z-order in Altair charts \n      \n    \n  \n\n  \n    \n      Oct 17, 2024\n    \n    \n      \n        \n        dplyR has a cume_dist function \n      \n    \n  \n\n  \n    \n      Oct 3, 2024\n    \n    \n      \n        \n        A Fish Shell function to select and enter tmux sessions \n      \n    \n  \n\n  \n    \n      Sep 30, 2024\n    \n    \n      \n        \n        Adding custom hover text to iconify icons \n      \n    \n  \n\n  \n    \n      Sep 26, 2024\n    \n    \n      \n        \n        Pivot longer-ing in Polars \n      \n    \n  \n\n\nNo matching items"
   },
   {
-    "objectID": "til.html#today-i-learned",
-    "href": "til.html#today-i-learned",
+    "objectID": "til.html#b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c2069636f6e6966792070683a6e6f74652d626c616e6b2d64756f746f6e65207469746c653d74696c206c6162656c3d74696c203e7d7d-today-i-learned",
+    "href": "til.html#b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c2069636f6e6966792070683a6e6f74652d626c616e6b2d64756f746f6e65207469746c653d74696c206c6162656c3d74696c203e7d7d-today-i-learned",
     "title": "chuckpr blog",
     "section": "",
     "text": "Below are small posts to record the small things I learn .\n\n\n\n  \n    \n      Mar 17, 2025\n    \n    \n      \n        \n        Using Scipy optimize to estimate linear regression parameters \n      \n    \n  \n\n  \n    \n      Feb 21, 2025\n    \n    \n      \n        \n        Adjusting jitter width in Altair charts \n      \n    \n  \n\n  \n    \n      Feb 18, 2025\n    \n    \n      \n        \n        Adding a median line to a strip chart in Altair \n      \n    \n  \n\n  \n    \n      Feb 7, 2025\n    \n    \n      \n        \n        Setting up the git CLI to authenticate with AWS CodeCommit \n      \n    \n  \n\n  \n    \n      Jan 23, 2025\n    \n    \n      \n        \n        Dynamic markdown content in Jupyter Lab \n      \n    \n  \n\n  \n    \n      Jan 13, 2025\n    \n    \n      \n        \n        Centering Altair charts in Jupyter Lab \n      \n    \n  \n\n  \n    \n      Dec 13, 2024\n    \n    \n      \n        \n        Encoding point Z-order in Altair charts \n      \n    \n  \n\n  \n    \n      Oct 17, 2024\n    \n    \n      \n        \n        dplyR has a cume_dist function \n      \n    \n  \n\n  \n    \n      Oct 3, 2024\n    \n    \n      \n        \n        A Fish Shell function to select and enter tmux sessions \n      \n    \n  \n\n  \n    \n      Sep 30, 2024\n    \n    \n      \n        \n        Adding custom hover text to iconify icons \n      \n    \n  \n\n  \n    \n      Sep 26, 2024\n    \n    \n      \n        \n        Pivot longer-ing in Polars \n      \n    \n  \n\n\nNo matching items"
   },
   {
-    "objectID": "til.html#articles",
-    "href": "til.html#articles",
+    "objectID": "til.html#b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c2069636f6e6966792070683a626f6f6b732d64756f746f6e65207469746c653d61727469636c65206c6162656c3d61727469636c65203e7d7d-articles",
+    "href": "til.html#b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c2069636f6e6966792070683a626f6f6b732d64756f746f6e65207469746c653d61727469636c65206c6162656c3d61727469636c65203e7d7d-articles",
     "title": "chuckpr blog",
     "section": " Articles",
     "text": "Articles\nThe follow are longer articles on topics relevant to my professional and personal interests.\n\n\n\n\n\n\nWarning\n\n\n\n This site is under construction and these posts are just placeholders. \n\n\n\n\n\n  \n    \n      Sep 20, 2024\n    \n    \n      \n        \n        Post With Code \n      \n    \n  \n\n  \n    \n      Sep 17, 2024\n    \n    \n      \n        \n        Welcome To My Blog \n      \n    \n  \n\n\nNo matching items"
@@ -91,15 +91,15 @@
     "text": "I’m Chuck Pepe-Ranney and this is my technical blog. I work as a data scientist/engineer in the computational biology domain and teach data skills at UNC-Chapel Hill. This site serves to capture small things I am learning and longer analyses that I’d like to share."
   },
   {
-    "objectID": "index.html#hello-and-welcome",
-    "href": "index.html#hello-and-welcome",
+    "objectID": "index.html#b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c2069636f6e6966792070683a626f6f6b2d6f70656e2d746578742d64756f746f6e65207469746c653d68656c6c6f206c6162656c3d68656c6c6f203e7d7d-hello-and-welcome",
+    "href": "index.html#b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c2069636f6e6966792070683a626f6f6b2d6f70656e2d746578742d64756f746f6e65207469746c653d68656c6c6f206c6162656c3d68656c6c6f203e7d7d-hello-and-welcome",
     "title": "chuckpr blog",
     "section": "",
     "text": "I’m Chuck Pepe-Ranney and this is my technical blog. I work as a data scientist/engineer in the computational biology domain and teach data skills at UNC-Chapel Hill. This site serves to capture small things I am learning and longer analyses that I’d like to share."
   },
   {
-    "objectID": "index.html#last-five-posts",
-    "href": "index.html#last-five-posts",
+    "objectID": "index.html#b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c2069636f6e696679202070683a636f666665652d64756f746f6e65207469746c653d6e6577206c6162656c3d6e6577203e7d7d-last-five-posts",
+    "href": "index.html#b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c2069636f6e696679202070683a636f666665652d64756f746f6e65207469746c653d6e6577206c6162656c3d6e6577203e7d7d-last-five-posts",
     "title": "chuckpr blog",
     "section": " Last five posts…",
     "text": "Last five posts…\nFor all posts go here.\n\n\n\n  \n    \n      Mar 17, 2025\n    \n    \n      \n        \n        \n        \n        Using Scipy optimize to estimate linear regression parameters \n      \n    \n  \n\n  \n    \n      Feb 21, 2025\n    \n    \n      \n        \n        \n        \n        Adjusting jitter width in Altair charts \n      \n    \n  \n\n  \n    \n      Feb 18, 2025\n    \n    \n      \n        \n        \n        \n        Adding a median line to a strip chart in Altair \n      \n    \n  \n\n  \n    \n      Feb 7, 2025\n    \n    \n      \n        \n        \n        \n        Setting up the git CLI to authenticate with AWS CodeCommit \n      \n    \n  \n\n  \n    \n      Jan 23, 2025\n    \n    \n      \n        \n        \n        \n        Dynamic markdown content in Jupyter Lab \n      \n    \n  \n\n\nNo matching items"
@@ -109,7 +109,7 @@
     "href": "about.html",
     "title": "About me",
     "section": "",
-    "text": "About me\nI’m a data scientist and educator with a focus on computational biology. I work as an Associate Director of Genomics Data Science at LifeEdit, where I develop genomics data pipelines for laboratory scientists, analyze experimental data, and lead and support protein engineering and discovery initiatives.\nI also serve as an adjunct faculty instructor at UNC-Chapel Hill, where I teach data science courses in both the Gillings School of Global Public Health and the School of Data Science and Society.\nYou can find my UNC course materials on GitHub:\n\nDATA-730 Statistical Modeling and Inference for Data Science\nBIOS-512 Data Science Basics"
+    "text": "About me\nHi, I’m Chuck Pepe-Ranney 👋 and welcome to my blog.\nI help teams make sense of data. I have deep experience in biotech and genomics, where I’ve built predictive models, LLM-powered tools, and reliable data pipelines, along with reporting systems people actually enjoy using.\nI also love teaching this stuff. I’ve developed three graduate data science courses at UNC:\n\nData Science Basics (BIOS 512)\nStatistical Modeling and Inference for Data Science (DATA 730), materials on GitHub\nData Science Methods in Biological & Health Sciences (DATA 791)\n\nIf you’re looking for help with data science, data engineering, machine learning, or analytics, I’d love to chat. The best way to reach me is LinkedIn."
   },
   {
     "objectID": "old-posts.html",

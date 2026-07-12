@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.31">
+<meta name="generator" content="quarto-1.9.38">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -11,6 +11,9 @@
 
 <title>Making trees in the Jupyter notebook (part&nbsp;2&nbsp;-&nbsp;Bokeh) – chuckpr blog</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -60,7 +63,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -74,14 +77,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-8ef56b68f8fa1e9d2ba328e99e439f80.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-0a6b7249c26820e032cb0bd839ff02b1.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-2adcb0f38fea1a615f8c39ad3796bdbd.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-3c0dc8d51c4f6331fd206bdc139deb8a.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../site_libs/bootstrap/bootstrap-2adcb0f38fea1a615f8c39ad3796bdbd.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-11224adf52f3f6357643b31efc8d8d69.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-6e6751f0f9a49a49ccf6103d5a592274.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-11224adf52f3f6357643b31efc8d8d69.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script src="../../site_libs/quarto-contrib/iconify-2.1.0/iconify-icon.min.js"></script>
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
@@ -110,7 +113,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
 
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
@@ -382,14 +385,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ol>
 <p>Ok, so (as always) we will first bring in all the modules we need. To get <code>Bokeh</code> plots to render inline in the <a href="https://jupyter.org/">Jupyter</a> notebook you have to call the <code>output_notebook</code> function.</p>
 <div id="cell-5" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;jupyter&quot;,&quot;value&quot;:{&quot;outputs_hidden&quot;:false}}" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> bokeh.io <span class="im">import</span> output_notebook, show</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> bokeh.io <span class="im">import</span> output_notebook, show</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> bokeh.models.glyphs <span class="im">import</span> Circle, Segment</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> bokeh.models <span class="im">import</span> ColumnDataSource, Range1d, DataRange1d, Plot</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> cogent.draw.dendrogram <span class="im">import</span> UnrootedDendrogram</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> cogent <span class="im">import</span> LoadTree</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> bokeh.models <span class="im">import</span> HoverTool, TapTool, BoxZoomTool, ResetTool, OpenURL</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>output_notebook()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>output_notebook()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <style>
             /* BEGIN /home/chuck/Envs/blog/local/lib/python2.7/site-packages/bokeh/server/static/css/bokeh.min.css */
@@ -613,13 +616,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>The <code>coords</code> method below returns a 2D array where every row represents a node.</p>
 <p>The rows/nodes information in the array are in order the node name, node ID, x position , y position, and a list of child nodes.</p>
 <div id="cell-9" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;jupyter&quot;,&quot;value&quot;:{&quot;outputs_hidden&quot;:false}}" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>tree <span class="op">=</span> LoadTree(<span class="st">"data/GH5.tree"</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>tree <span class="op">=</span> LoadTree(<span class="st">"data/GH5.tree"</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>dendrogram <span class="op">=</span> UnrootedDendrogram(tree)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>coords <span class="op">=</span> dendrogram.coords(<span class="dv">500</span>,<span class="dv">500</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>coords <span class="op">=</span> dendrogram.coords(<span class="dv">500</span>,<span class="dv">500</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Now I’ll define a couple functions to help us work with the <code>coords</code> array. The first just checks to see if the child nodes list is empty (an empty list denotes the node is a terminal node). The second function expands each row. That is to say it makes a row for each child of each parent node. This effectively converts our <code>coords</code> array from an array of nodes to an array of node <em>connections</em>. This is useful because when we plot the tree we are really drawing connections or edges as opposed to nodes. The <code>expand</code> functions skips terminal nodes (aka tips) because they don’t connect to any downstream nodes (hence “terminal”).</p>
 <div id="cell-11" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;jupyter&quot;,&quot;value&quot;:{&quot;outputs_hidden&quot;:false}}" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> is_tip(coord):</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> is_tip(coord):</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> coord[<span class="op">-</span><span class="dv">1</span>]:</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">True</span></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
@@ -636,41 +639,41 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>                l <span class="op">=</span> coord[<span class="dv">1</span>:<span class="dv">4</span>]</span>
 <span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>                l.append(child)</span>
 <span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>                data.append(l)</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> data</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>We will also want an dictionary of the x, y coordinates for each node keyed by node ID, a list/set of the tip node IDs, and a dictionary of tip node accessions keyed by corresponding node IDs. If you remember from our last post, the tree sequences are identified by their accession numbers and therefore each tip in the tree has an associated accession number.</p>
 <div id="cell-13" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;jupyter&quot;,&quot;value&quot;:{&quot;outputs_hidden&quot;:false}}" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>node_locs <span class="op">=</span> {r[<span class="dv">1</span>]: (r[<span class="dv">2</span>], r[<span class="dv">3</span>]) <span class="cf">for</span> r <span class="kw">in</span> coords}</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>node_locs <span class="op">=</span> {r[<span class="dv">1</span>]: (r[<span class="dv">2</span>], r[<span class="dv">3</span>]) <span class="cf">for</span> r <span class="kw">in</span> coords}</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>leaves <span class="op">=</span> <span class="bu">set</span>([r[<span class="dv">1</span>] <span class="cf">for</span> r <span class="kw">in</span> coords <span class="cf">if</span> is_tip(r)])</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>acc2id <span class="op">=</span> {r[<span class="dv">1</span>] : r[<span class="dv">0</span>] <span class="cf">for</span> r <span class="kw">in</span> coords <span class="cf">if</span> is_tip(r)}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>acc2id <span class="op">=</span> {r[<span class="dv">1</span>] : r[<span class="dv">0</span>] <span class="cf">for</span> r <span class="kw">in</span> coords <span class="cf">if</span> is_tip(r)}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Let’s also bring in the color definitions file from the last post. We uploaded this file to IToL last time to get the tree coloring we wanted. We’ll use it for the same purpose here.</p>
 <div id="cell-15" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;jupyter&quot;,&quot;value&quot;:{&quot;outputs_hidden&quot;:false}}" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>tip_info <span class="op">=</span> pd.read_csv(<span class="st">"data/color_defs.tsv"</span>, sep<span class="op">=</span><span class="st">"</span><span class="ch">\t</span><span class="st">"</span>, header<span class="op">=</span><span class="va">None</span>, names<span class="op">=</span>[<span class="st">"acc"</span>,<span class="st">"type"</span>,<span class="st">"color"</span>,<span class="st">"ec"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>tip_info <span class="op">=</span> pd.read_csv(<span class="st">"data/color_defs.tsv"</span>, sep<span class="op">=</span><span class="st">"</span><span class="ch">\t</span><span class="st">"</span>, header<span class="op">=</span><span class="va">None</span>, names<span class="op">=</span>[<span class="st">"acc"</span>,<span class="st">"type"</span>,<span class="st">"color"</span>,<span class="st">"ec"</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>As I wrote above, we plot edges not nodes. So, I want a dataframe where each row represents an edge and has all the information I need for plotting that edge. This information includes the beginning and ending coordinates of the edge, the accession number for terminal edges, and a column denoting whether the edge leads to a tip or not.</p>
 <div id="cell-17" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;jupyter&quot;,&quot;value&quot;:{&quot;outputs_hidden&quot;:false}}" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(expand(coords), columns <span class="op">=</span> [<span class="st">"parent"</span>,<span class="st">"x0"</span>,<span class="st">"y0"</span>,<span class="st">"child"</span>])</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(expand(coords), columns <span class="op">=</span> [<span class="st">"parent"</span>,<span class="st">"x0"</span>,<span class="st">"y0"</span>,<span class="st">"child"</span>])</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>df.set_index(<span class="st">"parent"</span>, inplace<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"x1"</span>] <span class="op">=</span> [node_locs[c][<span class="dv">0</span>] <span class="cf">for</span> c <span class="kw">in</span> df[<span class="st">"child"</span>].values]</span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"y1"</span>] <span class="op">=</span> [node_locs[c][<span class="dv">1</span>] <span class="cf">for</span> c <span class="kw">in</span> df[<span class="st">"child"</span>].values]</span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"acc"</span>] <span class="op">=</span> [acc2id[c] <span class="cf">if</span> c <span class="kw">in</span> acc2id <span class="cf">else</span> <span class="va">None</span> <span class="cf">for</span> c <span class="kw">in</span> df[<span class="st">"child"</span>].values]</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"is_tip"</span>] <span class="op">=</span> [<span class="va">True</span> <span class="cf">if</span> c <span class="kw">in</span> leaves <span class="cf">else</span> <span class="va">False</span> <span class="cf">for</span> c <span class="kw">in</span> df[<span class="st">"child"</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"is_tip"</span>] <span class="op">=</span> [<span class="va">True</span> <span class="cf">if</span> c <span class="kw">in</span> leaves <span class="cf">else</span> <span class="va">False</span> <span class="cf">for</span> c <span class="kw">in</span> df[<span class="st">"child"</span>]]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Now I’ll merge the color definition file info to our edge dataframe. For convenience I also want a dataframe of just terminal edges (<code>df_tips</code> below).</p>
 <div id="cell-19" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;jupyter&quot;,&quot;value&quot;:{&quot;outputs_hidden&quot;:false}}" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>df_all <span class="op">=</span> pd.merge(df, tip_info, on<span class="op">=</span>[<span class="st">"acc"</span>], how<span class="op">=</span><span class="st">"left"</span>)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>df_tips <span class="op">=</span> df_all[df_all[<span class="st">"is_tip"</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>df_all <span class="op">=</span> pd.merge(df, tip_info, on<span class="op">=</span>[<span class="st">"acc"</span>], how<span class="op">=</span><span class="st">"left"</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>df_tips <span class="op">=</span> df_all[df_all[<span class="st">"is_tip"</span>]]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>This is all the we need to make an unrooted tree figure in any charting library!</p>
 <p>To make the tree in <code>Bokeh</code> I’m going to use the <code>chart</code> interface. First I’ll set up a dictionary of plot options.</p>
 <div id="cell-22" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;jupyter&quot;,&quot;value&quot;:{&quot;outputs_hidden&quot;:false}}" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>plot_options <span class="op">=</span> <span class="bu">dict</span>(plot_width<span class="op">=</span><span class="dv">800</span>, plot_height<span class="op">=</span><span class="dv">800</span>, toolbar_location<span class="op">=</span><span class="va">None</span>, </span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>                    outline_line_color<span class="op">=</span><span class="va">None</span>, title <span class="op">=</span> <span class="st">"Characterized GH5 Tree"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>plot_options <span class="op">=</span> <span class="bu">dict</span>(plot_width<span class="op">=</span><span class="dv">800</span>, plot_height<span class="op">=</span><span class="dv">800</span>, toolbar_location<span class="op">=</span><span class="va">None</span>, </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>                    outline_line_color<span class="op">=</span><span class="va">None</span>, title <span class="op">=</span> <span class="st">"Characterized GH5 Tree"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Now I’ll make all the glyphs I want. We’ll use circle glyphs for terminal nodes and segment glyphs for edges. I am going to make the backbone tree in black and overlay segment glyphs for just the tip edges; the tip edges will be colored by their respective EC activities.</p>
 <div id="cell-24" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;jupyter&quot;,&quot;value&quot;:{&quot;outputs_hidden&quot;:false}}" data-execution_count="21">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>radius <span class="op">=</span> <span class="bu">dict</span>(value<span class="op">=</span><span class="dv">1</span>, units<span class="op">=</span><span class="st">"data"</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>radius <span class="op">=</span> <span class="bu">dict</span>(value<span class="op">=</span><span class="dv">1</span>, units<span class="op">=</span><span class="st">"data"</span>)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>leaf_glyph <span class="op">=</span> Circle(x<span class="op">=</span><span class="st">"x1"</span>, y<span class="op">=</span><span class="st">"y1"</span>, </span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>                    radius<span class="op">=</span>radius, </span>
@@ -686,29 +689,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>tip_glyph <span class="op">=</span> Segment(x0<span class="op">=</span><span class="st">"x0"</span>, y0<span class="op">=</span><span class="st">"y0"</span>, </span>
 <span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>                     x1<span class="op">=</span><span class="st">"x1"</span>, y1<span class="op">=</span><span class="st">"y1"</span>, </span>
 <span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>                     line_color<span class="op">=</span><span class="st">"color"</span>,</span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>                     line_width<span class="op">=</span><span class="fl">1.65</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>                     line_width<span class="op">=</span><span class="fl">1.65</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>When we add these glyphs to our plot we need to upload a corresponding <code>ColumnDataSource</code>. This function just converts or <code>Pandas</code> dataframes to <code>Bokeh</code> data sources.</p>
 <div id="cell-26" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;jupyter&quot;,&quot;value&quot;:{&quot;outputs_hidden&quot;:false}}" data-execution_count="22">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> df2ds(df):</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> ColumnDataSource(ColumnDataSource.from_df(df))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> df2ds(df):</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> ColumnDataSource(ColumnDataSource.from_df(df))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Below I make the plot and add the glyphs.</p>
 <div id="cell-28" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;jupyter&quot;,&quot;value&quot;:{&quot;outputs_hidden&quot;:false}}" data-execution_count="23">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>ydr <span class="op">=</span> DataRange1d(range_padding<span class="op">=</span><span class="fl">0.05</span>)  </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>ydr <span class="op">=</span> DataRange1d(range_padding<span class="op">=</span><span class="fl">0.05</span>)  </span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>xdr <span class="op">=</span> DataRange1d(range_padding<span class="op">=</span><span class="fl">0.05</span>)  </span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>plot <span class="op">=</span> Plot(x_range<span class="op">=</span>xdr, y_range<span class="op">=</span>ydr, <span class="op">**</span>plot_options)</span>
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>plot.add_glyph(df2ds(df_all), tree_glyph)</span>
 <span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>plot.add_glyph(df2ds(df_tips), tip_glyph)</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>plot.add_glyph(df2ds(df_tips), leaf_glyph)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>plot.add_glyph(df2ds(df_tips), leaf_glyph)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="23">
 <pre><code>&lt;bokeh.models.renderers.GlyphRenderer at 0x7f528b5c5a10&gt;</code></pre>
 </div>
 </div>
 <p>…and we render the plot inline with the <code>show</code> command. Voila! Pretty cool but no interaction yet…</p>
 <div id="cell-30" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;jupyter&quot;,&quot;value&quot;:{&quot;outputs_hidden&quot;:false}}" data-tags="[&quot;fullwidth&quot;,&quot;center&quot;]" data-execution_count="24">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>show(plot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>show(plot)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <script type="text/javascript">
         Bokeh.$(function() {
@@ -736,7 +739,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Let’s make the same plot with the hover and zoom action. We start as before but this time I’m going to put a toolbar on the plot that will let us hit a reset button to get back the original figure (It’s pretty essential to add the reset function in addition to box zoom).</p>
 <div id="cell-32" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;jupyter&quot;,&quot;value&quot;:{&quot;outputs_hidden&quot;:false}}" data-execution_count="25">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>plot_options <span class="op">=</span> <span class="bu">dict</span>(plot_width<span class="op">=</span><span class="dv">800</span>, plot_height<span class="op">=</span><span class="dv">800</span>, toolbar_location<span class="op">=</span><span class="st">"left"</span>, </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>plot_options <span class="op">=</span> <span class="bu">dict</span>(plot_width<span class="op">=</span><span class="dv">800</span>, plot_height<span class="op">=</span><span class="dv">800</span>, toolbar_location<span class="op">=</span><span class="st">"left"</span>, </span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>                    outline_line_color<span class="op">=</span><span class="va">None</span>, title <span class="op">=</span> <span class="st">"Characterized GH5 Tree"</span>)</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>ydr <span class="op">=</span> DataRange1d(range_padding<span class="op">=</span><span class="fl">0.05</span>)  </span>
@@ -745,11 +748,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>plot <span class="op">=</span> Plot(x_range<span class="op">=</span>xdr, y_range<span class="op">=</span>ydr, <span class="op">**</span>plot_options)</span>
 <span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>plot.add_glyph(df2ds(df_all), tree_glyph)</span>
 <span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>plot.add_glyph(df2ds(df_tips), tip_glyph)</span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>leaf <span class="op">=</span> plot.add_glyph(df2ds(df_tips), leaf_glyph)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>leaf <span class="op">=</span> plot.add_glyph(df2ds(df_tips), leaf_glyph)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Let’s make the hover tool tip. It’s just defined in <code>html</code>. I want to display the accession and EC information for each tip (add and “@” symbol to denote columns in the data source that you want to display in the tooltip).</p>
 <div id="cell-34" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;jupyter&quot;,&quot;value&quot;:{&quot;outputs_hidden&quot;:false}}" data-execution_count="26">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>tooltip <span class="op">=</span> <span class="st">"""</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>tooltip <span class="op">=</span> <span class="st">"""</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;div&gt;</span></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="st">        &lt;span style="font-size: 17px; font-weight: bold;"&gt;accession: &lt;/span&gt;</span></span>
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="st">        &lt;span style="font-size: 15px; color: #151515;"&gt;@acc&lt;/span&gt;</span></span>
@@ -758,16 +761,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="st">        &lt;span style="font-size: 17px; font-weight: bold;"&gt;EC: &lt;/span&gt;</span></span>
 <span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="st">        &lt;span style="font-size: 15px; color: #151515;"&gt;@ec&lt;/span&gt;</span></span>
 <span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;/div&gt;</span></span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Now we make our hover tool and add it to the plot. Be cause we assigned the renderer for our “nodes” (i.e.&nbsp;<code>leaf</code>) we can specify that we want this hover tool to be specific to that glyph in the plot.</p>
 <div id="cell-36" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;jupyter&quot;,&quot;value&quot;:{&quot;outputs_hidden&quot;:false}}" data-execution_count="27">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>hover <span class="op">=</span> HoverTool(renderers <span class="op">=</span> [leaf], tooltips<span class="op">=</span>tooltip)</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>plot.add_tools(hover, BoxZoomTool(), ResetTool())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>hover <span class="op">=</span> HoverTool(renderers <span class="op">=</span> [leaf], tooltips<span class="op">=</span>tooltip)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>plot.add_tools(hover, BoxZoomTool(), ResetTool())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Now <strong>hover over the points</strong> to see the accession and EC information for each tip. Also note the toolbar on the left. You can box zoom into the tree with your mouse to explore the topology at better resolution. <strong>Try it out!</strong> The reset button will get you back to the original orientation.</p>
 <div id="cell-38" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;jupyter&quot;,&quot;value&quot;:{&quot;outputs_hidden&quot;:false}}" data-tags="[&quot;fullwidth&quot;,&quot;center&quot;]" data-execution_count="28">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>show(plot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>show(plot)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <script type="text/javascript">
         Bokeh.$(function() {
@@ -795,10 +798,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>That’s everything I wanted to do except for the click action. As I stated above, it would be great if clicking on tip nodes brought you to the GenBank webpage for the protein that the each node represents. We can get this interaction with the <code>tap tool</code>. The following is a bit of a hack but the url takes the accession info and returns a url to a CGI script that searches the GenBank protein database for that accession value. In the end, clicking a tip takes you to a GenBank page. <strong>Give it a shot!</strong></p>
 <div id="cell-40" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;jupyter&quot;,&quot;value&quot;:{&quot;outputs_hidden&quot;:false}}" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>taptool <span class="op">=</span> TapTool(action<span class="op">=</span>OpenURL(url<span class="op">=</span><span class="st">"http://www.ncbi.nlm.nih.gov/protein/?term=@acc%5Bacc%5D"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>taptool <span class="op">=</span> TapTool(action<span class="op">=</span>OpenURL(url<span class="op">=</span><span class="st">"http://www.ncbi.nlm.nih.gov/protein/?term=@acc%5Bacc%5D"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div id="cell-41" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;jupyter&quot;,&quot;value&quot;:{&quot;outputs_hidden&quot;:false}}" data-tags="[&quot;fullwidth&quot;,&quot;center&quot;]" data-execution_count="30">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>plot_options <span class="op">=</span> <span class="bu">dict</span>(plot_width<span class="op">=</span><span class="dv">800</span>, plot_height<span class="op">=</span><span class="dv">800</span>, toolbar_location<span class="op">=</span><span class="st">"left"</span>, </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>plot_options <span class="op">=</span> <span class="bu">dict</span>(plot_width<span class="op">=</span><span class="dv">800</span>, plot_height<span class="op">=</span><span class="dv">800</span>, toolbar_location<span class="op">=</span><span class="st">"left"</span>, </span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>                    outline_line_color<span class="op">=</span><span class="va">None</span>, title <span class="op">=</span> <span class="st">"Characterized GH5 Tree"</span>)</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>ydr <span class="op">=</span> DataRange1d(range_padding<span class="op">=</span><span class="fl">0.05</span>)  </span>
@@ -812,7 +815,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>hover <span class="op">=</span> HoverTool(renderers <span class="op">=</span>[leaf],tooltips<span class="op">=</span>tooltip)</span>
 <span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>plot.add_tools(hover, BoxZoomTool(), ResetTool(), taptool)</span>
 <span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>show(plot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>show(plot)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <script type="text/javascript">
         Bokeh.$(function() {
@@ -907,13 +910,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
