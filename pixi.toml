@@ -13,6 +13,8 @@ polars = "*"
 great_tables = "*"
 nbformat = "*"
 pyyaml = "*"
+nbclient = ">=0.11.0,<0.12"
+jupyterlab = ">=4.6.1,<5"
 
 [tasks]
 preview = "quarto preview"
